@@ -1,0 +1,33 @@
+{template member:menu}
+
+
+{if !empty($list)}
+
+<div id="friend" class="userlist">
+
+<ul>
+      {for $list $value}
+        
+             <li><a href="space.php?app=8&uid={echo $value['uid']}" target="_blank">{echo $this->GetUserAvatar($value['uid'])}</a><p><a href="space.php?app=8&uid={echo $value['uid']}" target="_blank">{echo $value['username']}</a></p></li>
+
+      {/for} 
+</ul>
+
+</div>
+
+<div class="ajax_page">{echo $page->ShowPages()}</div>
+
+{else}
+
+ <p style="padding:10px">暂时没有好友</p>
+ 
+{/if}    
+      
+
+
+
+</td></tr></table>
+
+
+
+{template phpapp:footer}

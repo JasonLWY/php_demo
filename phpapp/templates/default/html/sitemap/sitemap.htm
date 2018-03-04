@@ -1,0 +1,35 @@
+{template phpapp:header}
+
+<link href="{TURL}sitemap.css" rel="stylesheet" type="text/css" />
+
+<div class="sitemap">
+
+        <h2>ÍøÕ¾µØÍ¼ SiteMap</h2>
+        
+        {if $sitenav}
+            <li>
+            <h3>{echo PHPAPP::$config['sitename']}µ¼º½</h3>
+            <p>
+               {for $sitenav $value}
+                        {if $value['site']==0}
+                                <a href="{echo SURL}/{echo $value['navurl']}"{if !$value['blank']} target="_blank"{/if}>{echo $value['navname']}</a>
+                   
+                        {else}
+                                <a href="{echo $value['navurl']}"{if !$value['blank']} target="_blank"{/if}>{echo $value['navname']}</a>
+                        {/if}
+               {/for}
+            </p>
+
+            </li>
+        
+        {/if}
+        
+        {template phpapp:category}
+                  
+          
+        </ul>
+</div>
+
+
+
+{template phpapp:footer}

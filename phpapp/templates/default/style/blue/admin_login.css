@@ -1,0 +1,91 @@
+body{
+	font-size: 12px;
+	background-image: url(./images/bg.gif);
+	background-repeat: repeat-x;
+	background-position: left top;
+	background-color: #deeffc;
+}
+
+*{
+	margin: 0px;
+	padding: 0px;
+}
+
+li{list-style-image:none;list-style-type:none;font-size:12px;font-weight:400;}
+img{border:0;}
+a:hover{text-decoration:underline;color:#F60;}
+a:link,a:visited,a:active{
+	text-decoration:none;
+	color:#333;
+}
+.color_999{color:#999;}
+.color_f60{
+	color:#F60;
+	font-weight: bold;
+}
+.login{
+	width: 380px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 160px;
+	border-top-width: 1px;
+	border-right-width: 2px;
+	border-bottom-width: 2px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #CCC;
+	border-right-color: #CCC;
+	border-bottom-color: #CCC;
+	border-left-color: #CCC;
+	padding-bottom: 20px;
+	background-color: #FFF;
+}
+
+.login h2{
+	background-image: url(./images/admin/login_h2.png);
+	background-repeat: repeat-x;
+	background-position: left bottom;
+	font-size: 16px;
+	line-height: 32px;
+	height: 32px;
+	padding-left: 12px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #F0F0F0;
+}
+
+.login ul{
+	padding-top: 20px;
+}
+.login ul li{
+	height: 34px;
+}
+
+.login ul li input{
+	line-height: 26px;
+	height: 26px;
+}
+#ShowSecCode{
+	float: right;
+}
+.adminfile{
+	font-size: 12px;
+	font-weight: bold;
+	color: #F30;
+	text-align: center;
+}
+.login_submit{
+	background-image: url(./images/admin/login_submit.gif);
+	height: 32px;
+	width: 92px;
+	border: 0px;
+	background-repeat: no-repeat;
+	background-position: left top;
+	line-height: 32px;
+	font-size: 16px;
+	font-weight: bold;
+	color: #FFF;
+}

@@ -1,0 +1,61 @@
+<script type="text/javascript">
+$(function(){	
+  
+    $("#loading").dialog({
+			  title:"空间风格",	
+			  width: 606,
+			  position: ['center',160],
+			  modal: true,
+			  autoOpen: false,
+              height:'auto'
+	});
+		 
+			  
+	$("#ListSpaceStyle").click( function () {
+					
+					
+		 $("#loading").html('<div class="loading">获取数据中...</div>');
+	     $("#loading").dialog('open');
+
+		 $.get(SURL+"/space.php",{app:8,action:2},
+			  
+		        function (data){
+				      $("#loading").html(data);
+		 });   			
+					
+																																																																						  });     
+	
+
+   
+});
+
+function ChangeStyle(id,dir){
+	
+		var spacestyle=dir+'/css/space.css';
+	   	$("#SpaceStyle").attr("href",spacestyle);						  
+										  
+	    //alert(id);
+	    $.ajax({
+				type: "POST",
+				url: SURL+'/space.php?app=8&action=2',
+				data: "&sid="+id
+	    });
+	  
+}
+
+function AjaxSpaceStyle(id,page,sqlorder,iforder){
+
+	     $("#loading").html('<div class="loading">读取数据中...</div>');
+
+	  	 $.ajax({
+				type: "GET",
+				url: SURL+'/space.php',
+				data: "app=8&action=2&page="+page,
+				success: function(data){
+					 $("#loading").html(data);
+					 
+				}
+	    });
+}
+
+</script>

@@ -1,0 +1,125 @@
+{template admin:header}
+
+{if $this->GET['op']>0 }
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">分类级别</td>
+    <td>
+
+       {php} $categoryarray=$this->GetMysqlArray('*'," ".$this->GetTable('category_city')." ");{/php}
+       
+       <select name="upid_d">
+       
+              <option value="0">一级分类</option>
+       
+              {for $categoryarray $value}
+                   <option value="{echo $value['catid']}" {if !empty($manage['upid'])}{if $manage['upid']==$value['catid']} selected="selected" {/if}{/if}>{echo $value['name']}</option>
+              {/for}
+              
+       </select>
+
+       
+      
+    </td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">名称</td>
+    <td> <input name="name_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['name'])}{echo $manage['name']}{/if}"/></td>
+  </tr>
+
+   <tr>
+    <td class="width_160">排序</td>
+    <td> <input name="displayorder_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['displayorder'])}{echo $manage['displayorder']}{/if}"/></td>
+  </tr>
+    
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+</form>
+
+
+{else}
+
+<p style="padding-bottom:10px;">
+<select id="SelectAppTemplate"  class="form_select_text">
+<option value="0">选择一级分类</option>
+{for $cityarr $value}
+    <option value="{echo $value['catid']}" {if $value['catid']==$catid}selected="selected"{/if}>{echo $value['name']}</option>
+{/for}
+</select>  
+</p>
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if !empty($list)}
+
+<div id="WindowsForm{echo $this->GET['menu']}">
+
+    <div class="datalist category_list">
+     
+        <ul>
+            <li>
+                <span class="checkbox_category"><input type="checkbox" name="checkboxall" value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</span>
+                <span>排序/分类名称</span>
+                <span class="category_edit">操作</span>
+                <span class="category_order">排序</span>
+            </li>
+            
+            <li class="category_item" id="CatidID0">
+                <span class="checkbox_category"></span>
+                <span class="add_category_one"><a class="small green awesome" onclick="AddCategoryOne(30)">添加一级分类</a></span>
+            </li>
+        
+            {echo $showlist}
+
+        
+        </ul>
+    </div>
+</div>
+
+<div class="phpapp_button"><input name="Add" type="submit" value="添加" class="form_button"/> <input name="Displayorder" type="submit" value="排序" class="form_button"/> <input name="Submit" type="submit" value="删除" class="form_button"/></div>
+
+
+{else}
+
+
+<p>没有分类数据!</p>
+
+{/if}
+
+</form>
+
+<script type="text/javascript">
+$("#SelectAppTemplate").change( function() {
+	   
+	  var catid=$(this).val();							  
+
+	  window.location.href='{echo $this->MakeGetParameterURL()}&catid='+catid;
+	  
+});
+
+$(function(){	
+	$.PHPAPPMouseover('.category_item','.show_add');
+});
+
+function AddCategoryOne(numpx){
+	 AutoCategoryID++; 
+	 var subclasshtml ='<li><span class="checkbox_category"><input type="checkbox" disabled="disabled"/></span><span class="subclass_icon" style="padding-left:'+numpx+'px"></span> <input name="addcategory[0]['+AutoCategoryID+'][displayorder]" type="text" class="form_input_text form_input_width_50 add_subclass" value="0"/> <input name="addcategory[0]['+AutoCategoryID+'][name]" type="text" class="form_input_text form_input_width_200" value=""/><input name="addcategory[0]['+AutoCategoryID+'][type]" type="hidden" value="0" /></li>';
+	 
+	 $('#CatidID0').after(subclasshtml);
+	 
+}
+
+</script>
+
+
+{/if}

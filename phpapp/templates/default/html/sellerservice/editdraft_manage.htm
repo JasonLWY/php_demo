@@ -1,0 +1,41 @@
+{template admin:header}
+
+
+{template adddraft}
+
+
+<script type="text/javascript">
+$(function(){	   
+	  $("#loading").dialog("close");	
+	  $("#SubmitEditDraft").click( function () {
+										   
+		      $.SaveContent(); //保存内容
+				
+	          var content=$("#Content");
+			  if (content.val()==""){
+				    alert("请输入内容!");
+				    content.focus();
+				    return false; 
+			  }
+			
+			  
+			  var forms=GetFormAll('#AddDraft');
+	
+			  $("#loading").html('<div class="loading">提交数据中...</div>');
+			
+			  $("#loading").dialog({ title: '修改稿件' });
+			  
+			  $("#loading").dialog('open');
+					
+			  $.ajax({
+						type: "POST",
+						url: "{echo $this->MakeGetParameterURL()}",
+						data: forms,
+						success: function(data){
+							 $("#loading").html(data);
+						}
+			 });
+			  
+	  });
+});		
+</script>

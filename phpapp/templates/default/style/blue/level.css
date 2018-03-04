@@ -1,0 +1,308 @@
+/* 用户头衔样式 ------------------------------------------------------------------------------------------------------------------*/
+.member_level1{
+	background-image: url(../images/member_level.png);
+	background-repeat: no-repeat;
+	display: block;
+	height: 18px;
+	margin-bottom: 4px;
+	margin-top: 4px;
+}
+
+.member_level2{
+	background-image: url(../images/member_level.png);
+	background-repeat: no-repeat;
+	display: block;
+	height: 18px;
+	margin-bottom: 4px;
+	margin-top: 4px;
+	background-position: left -18px;
+}
+
+.member_level3{
+	background-image: url(../images/member_level.png);
+	background-repeat: no-repeat;
+	display: block;
+	height: 18px;
+	margin-bottom: 4px;
+	margin-top: 4px;
+	background-position: left -36px;
+}
+
+.member_level4{
+	background-image: url(../images/member_level.png);
+	background-repeat: no-repeat;
+	display: block;
+	height: 18px;
+	margin-bottom: 4px;
+	margin-top: 4px;
+	background-position: left -54px;
+}
+
+
+.member_level5{
+	background-image: url(../images/member_level.png);
+	background-repeat: no-repeat;
+	display: block;
+	height: 18px;
+	margin-bottom: 4px;
+	margin-top: 4px;
+	background-position: left -72px;
+}
+
+
+.member_level6{
+	background-image: url(../images/member_level.png);
+	background-repeat: no-repeat;
+	display: block;
+	height: 18px;
+	margin-bottom: 4px;
+	margin-top: 4px;
+	background-position: left -90px;
+}
+
+.member_level7{
+	background-image: url(../images/member_level.png);
+	background-repeat: no-repeat;
+	display: block;
+	height: 18px;
+	margin-bottom: 4px;
+	margin-top: 4px;
+	background-position: left -108px;
+}
+
+.member_level8{
+	background-image: url(../images/member_level.png);
+	background-repeat: no-repeat;
+	display: block;
+	height: 18px;
+	margin-bottom: 4px;
+	margin-top: 4px;
+	background-position: left -126px;
+}
+
+.member_level9{
+	background-image: url(../images/member_level.png);
+	background-repeat: no-repeat;
+	display: block;
+	height: 18px;
+	margin-bottom: 4px;
+	margin-top: 4px;
+	background-position: left -144px;
+}
+
+.member_level10{
+	background-image: url(../images/member_level.png);
+	background-repeat: no-repeat;
+	display: block;
+	height: 18px;
+	margin-bottom: 4px;
+	margin-top: 4px;
+	background-position: left -162px;
+}
+
+
+/* 用户认证样式 ------------------------------------------------------------------------------------------------------------------*/
+
+.MobileIcon{
+	background-image: url(../images/CertificateIcon.png);
+	background-position: left -72px;
+	display: block;
+	height: 36px;
+	width: 36px;
+	float: left;
+	margin-right: 6px;
+	margin-bottom: 8px;
+}
+
+.MailIcon{
+	background-image: url(../images/CertificateIcon.png);
+	background-repeat: no-repeat;
+	display: block;
+	height: 36px;
+	width: 36px;
+	float: left;
+	margin-right: 6px;
+	margin-bottom: 8px;
+}
+
+.PersonalIcon{
+	background-image: url(../images/CertificateIcon.png);
+	background-repeat: no-repeat;
+	background-position: left -36px;
+	margin-bottom: 8px;
+	margin-right: 6px;
+	float: left;
+	display: block;
+	height: 36px;
+	width: 36px;
+}	
+
+.CompanyIcon{
+	background-image: url(../images/CertificateIcon.png);
+	background-repeat: no-repeat;
+	background-position: left -72px;
+	margin-bottom: 8px;
+	margin-right: 6px;
+	float: left;
+	display: block;
+	height: 36px;
+	width: 36px;
+}	
+
+
+
+
+/* 用户卖家积分样式 ------------------------------------------------------------------------------------------------------------------*/
+
+.seller_credit_level1,.seller_credit_level2,.seller_credit_level3,.seller_credit_level4,.seller_credit_level5,.seller_credit_level6,.seller_credit_level7,.seller_credit_level8,.seller_credit_level9,.seller_credit_level10,.seller_credit_level11,.seller_credit_level12,.seller_credit_level13,.seller_credit_level14,.seller_credit_level15,.seller_credit_level16,.seller_credit_level17,.seller_credit_level18,.seller_credit_level19,.seller_credit_level20{
+	background-repeat: no-repeat;
+	height: 16px;
+	margin-bottom: 6px;
+	padding-left: 88px;
+}
+
+.seller_credit_level1{
+	background-image: url(../images/seller_credit_level/level_1.gif);
+}
+
+
+.seller_credit_level2{
+	background-image: url(../images/seller_credit_level/level_2.gif);
+}
+
+.seller_credit_level3{
+	background-image: url(../images/seller_credit_level/level_3.gif);
+}
+
+.seller_credit_level4{
+	background-image: url(../images/seller_credit_level/level_4.gif);
+}
+
+.seller_credit_level5{
+	background-image: url(../images/seller_credit_level/level_5.gif);
+}
+
+.seller_credit_level6{
+	background-image: url(../images/seller_credit_level/level_6.gif);
+}
+
+.seller_credit_level7{
+	background-image: url(../images/seller_credit_level/level_7.gif);
+}
+.seller_credit_level8{
+	background-image: url(../images/seller_credit_level/level_8.gif);
+}
+.seller_credit_level9{
+	background-image: url(../images/seller_credit_level/level_9.gif);
+}
+.seller_credit_level10{
+	background-image: url(../images/seller_credit_level/level_10.gif);
+}
+.seller_credit_level11{
+	background-image: url(../images/seller_credit_level/level_11.gif);
+}
+.seller_credit_level12{
+	background-image: url(../images/seller_credit_level/level_12.gif);
+}
+.seller_credit_level13{
+	background-image: url(../images/seller_credit_level/level_13.gif);
+}
+.seller_credit_level14{
+	background-image: url(../images/seller_credit_level/level_14.gif);
+}
+.seller_credit_level15{
+	background-image: url(../images/seller_credit_level/level_15.gif);
+}
+.seller_credit_level16{
+	background-image: url(../images/seller_credit_level/level_16.gif);
+}
+.seller_credit_level17{
+	background-image: url(../images/seller_credit_level/level_17.gif);
+}
+.seller_credit_level18{
+	background-image: url(../images/seller_credit_level/level_18.gif);
+}
+.seller_credit_level19{
+	background-image: url(../images/seller_credit_level/level_19.gif);
+}
+.seller_credit_level20{
+	background-image: url(../images/seller_credit_level/level_20.gif);
+}
+
+/* 用户买家积分样式------------------------------------------------------------------------------------------------------------------*/
+
+
+.buyer_credit_level1,.buyer_credit_level2,.buyer_credit_level3,.buyer_credit_level4,.buyer_credit_level5,.buyer_credit_level6,.buyer_credit_level7,.buyer_credit_level8,.buyer_credit_level9,.buyer_credit_level10,.buyer_credit_level11,.buyer_credit_level12,.buyer_credit_level13,.buyer_credit_level14,.buyer_credit_level15,.buyer_credit_level16,.buyer_credit_level17,.buyer_credit_level18,.buyer_credit_level19,.buyer_credit_level20{
+	background-repeat: no-repeat;
+	height: 16px;
+	margin-bottom: 6px;
+	padding-left: 88px;
+}
+
+.buyer_credit_level1{
+	background-image: url(../images/buyer_credit_level/level_1.gif);
+}
+
+
+.buyer_credit_level2{
+	background-image: url(../images/buyer_credit_level/level_2.gif);
+}
+
+.buyer_credit_level3{
+	background-image: url(../images/buyer_credit_level/level_3.gif);
+}
+
+.buyer_credit_level4{
+	background-image: url(../images/buyer_credit_level/level_4.gif);
+}
+
+.buyer_credit_level5{
+	background-image: url(../images/buyer_credit_level/level_5.gif);
+}
+
+.buyer_credit_level6{
+	background-image: url(../images/buyer_credit_level/level_6.gif);
+}
+
+.buyer_credit_level7{
+	background-image: url(../images/buyer_credit_level/level_7.gif);
+}
+.buyer_credit_level8{
+	background-image: url(../images/buyer_credit_level/level_8.gif);
+}
+.buyer_credit_level9{
+	background-image: url(../images/buyer_credit_level/level_9.gif);
+}
+.buyer_credit_level10{
+	background-image: url(../images/buyer_credit_level/level_10.gif);
+}
+.buyer_credit_level11{
+	background-image: url(../images/buyer_credit_level/level_11.gif);
+}
+.buyer_credit_level12{
+	background-image: url(../images/buyer_credit_level/level_12.gif);
+}
+.buyer_credit_level13{
+	background-image: url(../images/buyer_credit_level/level_13.gif);
+}
+.buyer_credit_level14{
+	background-image: url(../images/buyer_credit_level/level_14.gif);
+}
+.buyer_credit_level15{
+	background-image: url(../images/buyer_credit_level/level_15.gif);
+}
+.buyer_credit_level16{
+	background-image: url(../images/buyer_credit_level/level_16.gif);
+}
+.buyer_credit_level17{
+	background-image: url(../images/buyer_credit_level/level_17.gif);
+}
+.buyer_credit_level18{
+	background-image: url(../images/buyer_credit_level/level_18.gif);
+}
+.buyer_credit_level19{
+	background-image: url(../images/buyer_credit_level/level_19.gif);
+}
+.buyer_credit_level20{
+	background-image: url(../images/buyer_credit_level/level_20.gif);
+}

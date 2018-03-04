@@ -1,0 +1,99 @@
+{template member:menu}
+
+<link href="{TURL}refund.css" rel="stylesheet" type="text/css" />
+
+<form id="RefundForm" action="{echo $this->MakeGetParameterURL()}" method="post" enctype="multipart/form-data">
+
+<div class="refund_table">
+   <h2>订单流水号 {echo $consumearr['serial']} 退款申请</h2>
+   <ul>
+       <li>退款金额： <input name="money_f" type="text" id="Money" size="3"  maxlength="12" class="form_input_text form_input_width_100"  value="{if !empty($refund['money'])}{echo $refund['money']}{else}1{/if}" title="请输入你需要退款的金额"/> 最高可以退 <span class="color_f60" id="Amount">{echo $consumearr['amount']+$consumearr['fee']}</span> 元</li>
+       
+       <li>退款原因：
+           {if $refunditemarr}
+               <select name="pid">
+                         {for $refunditemarr $value}
+                         		<option value="{echo $value['pid']}"{if $refund['pid']==$value['pid']} selected="selected"{/if}>{echo $value['project']}</option>
+                         {/for}
+               </select>
+           {/if}
+       </li>
+       
+       <li>退款说明：</li>
+       <li style="padding-left:74px;height:220px;"><textarea name="buyercontent_s" id="Content" class="form_editor" style="width:500px;height:200px;">{if !empty($refund['buyercontent'])}{echo $this->str($refund['buyercontent'],999999,0,0,1,0,0,1)}{else}协商一致{/if}</textarea></li>
+       
+       <li>上传凭证： <input name="buyerphoto" type="file" id="photo"/> <span style="color:#999">文件格式：jpg,gif,png 文件最大： 800k</span></li>
+       
+       {if !empty($refund['buyerphoto'])}
+  
+        <p id="logophotoshow" style="padding-top:20px;padding-bottom:20px;">
+            {php}
+            $photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$refund[buyerphoto]'");{/php}
+            {if $photo}  
+                 <a href="{SURL}/index.php?app=18&fid={echo $refund['buyerphoto']}"><img src="{echo $photo['thumb']}"/></a>
+            {/if}
+        </p>   
+       
+       {/if}
+     
+   </ul>
+   
+   <div style="text-align:center;padding-top:20px;"><input name="submit" type="submit" value="提交申请" id="SubmitAdd" class="form_button"/></div>
+</div>
+
+</form>
+
+
+<script type="text/javascript">
+
+$(function() {
+		   
+	    $("#SubmitAdd").click( function () {
+
+			  var money=$("#Money");
+			  var amount=parseFloat($("#Amount").html());
+			  
+			  if (!money.val() || money.val()<1){
+		            alert("退款金额不能为空或为0!");
+		            money.focus();
+		            return false; 
+	          }
+			  
+			  
+              if (isNaN(money.val())){
+		            alert("您输入的退款金额格式错误，请重新输入!");
+		            money.focus();
+		            return false; 
+	          }
+
+			  if(money.val() > amount){
+				    alert("您输入的退款金额不能大于"+amount+"元，请重新输入!");
+				    money.focus();
+		            return false; 
+			  }
+			  
+			  var content=$("#Content");
+			  if (content.val()==""){
+				    alert("请输入退款说明!");
+				    content.focus();
+				    return false; 
+			  }
+		
+			  if (content.val().length<"4"){
+		            alert("退款说明内容不能小于4个字节!");
+		            content.focus();
+		            return false; 
+	          }
+			  
+			  
+              $("#RefundForm").submit();
+			  
+	    });
+	  
+		
+});	
+
+</script>
+
+
+{template phpapp:footer}

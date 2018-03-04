@@ -1,0 +1,285 @@
+{template header}
+
+{if $this->GET['op']==4}
+<div id="ShowAdvancedSearch" class="showadvancedsearch" {if !empty($this->GET['opensearch'])}style="display:block"{/if}>
+<form method="get" action="{echo $this->MakeGetParameterURL()}">
+
+<input type="hidden" name="lang" value="{echo $this->lang}" />
+<input type="hidden" name="app" value="{echo $this->app}" />
+<input type="hidden" name="menu" value="{echo $this->GET['menu']}" />
+<input type="hidden" name="action" value="{echo $this->ac}" />
+<input type="hidden" name="page" value="{echo $this->GET['page']}" />
+<input type="hidden" name="opensearch" value="{echo $this->GET['opensearch']}" />
+<input type="hidden" name="op" value="4" />
+
+<table border="0" cellspacing="0" cellpadding="0">
+
+  <tr>
+    <td class="search_h2">ID编号</td>
+    <td><input name="fid" type="text" size="50" maxlength="255" class="form_input_text form_input_width_100"  value="{if !empty($selectarray['fid'])}{echo $selectarray['fid']}{/if}"/> </td>
+    <td class="search_h2">文件名</td>
+    <td><input name="filename" type="text" size="50" maxlength="255" class="form_input_text form_input_width_200"  value="{if !empty($selectarray['filename'])}{echo $selectarray['filename']}{/if}"/></td>
+  </tr>
+
+  <tr>
+    <td class="search_h2">用户ID </td>
+    <td><input name="uid" type="text" size="50" maxlength="255" class="form_input_text form_input_width_100"  value="{if !empty($selectarray['uid'])}{echo $selectarray['uid']}{/if}"/> (用户UID)</td>
+    <td class="search_h2">用户名</td>
+    <td><input name="username" type="text" size="50" maxlength="255" class="form_input_text form_input_width_200"  value="{if !empty($selectarray['username'])}{echo $selectarray['username']}{/if}"/> (组合查询时用用户ID)</td>
+  </tr>
+
+  <tr>
+    <td class="search_h2">上传时间 </td>
+    <td><input name="dateline1" type="text" class="form_input_text dateline" size="10" value="{if !empty($selectarray['dateline1'])}{echo $selectarray['dateline1']}{/if}" style="width:70px;"/> ~ <input name="dateline2" type="text" class="form_input_text dateline" size="10" value="{if !empty($selectarray['dateline2'])}{echo $selectarray['dateline2']}{/if}" style="width:70px;"/> 格式 (YYYY-MM-DD)</td>
+  </tr>
+  
+  
+   
+</table>
+
+<li style="text-align:center;padding-top:20px;">
+   <input name="SelectData" type="submit" value="搜索" class="form_button"/>
+</li>
+
+</form>
+
+</div>
+
+<div class="advancedsearch">
+{if empty($this->GET['opensearch'])}
+<a href="{echo $this->MakeGetParameterURL(array('opensearch'=>1,'op'=>4))}">[打开筛选]</a>
+{else}
+<a href="{echo $this->MakeGetParameterURL(array('opensearch'=>0,'op'=>4))}">[关闭筛选]</a>
+{/if}
+</div>
+
+<script type="text/javascript">
+	$(function() {
+		 $(".dateline").datepicker();
+		 $(".dateline").datepicker('option',{dateFormat:'yy-mm-dd'});
+		 $(".dateline").datepicker('option',$.datepicker.regional['zh-CN']);
+
+	});
+</script>
+{/if}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $this->GET['op']==4}
+
+
+{if $list}
+    
+    <div id="WindowsForm{echo $this->GET['menu']}">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+      <tr>
+        <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1" onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+        
+        {for $orderarr $key=>$value}
+        <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+        {/for} 
+      </tr>
+    
+    {for $list $key=>$value}
+      <tr>
+        <td><input name="checkbox[]" type="checkbox" value="{echo $value['fid']}"/></td>
+        <td>{echo $value['fid']}</td>
+        <td>{echo $value['uid']}</td>
+        <td><a href="space.php?app=8&uid={echo $value['uid']}" target="_blank" title="{echo $value['username']}">{echo $value['username']}</a></td>
+        <td><a href="index.php?app=18&fid={echo $value['fid']}" target="_blank"><img src="{echo $this->ShowFileIcon($value['filename'])}"/></a> <a href="index.php?app=18&fid={echo $value['fid']}" target="_blank">{echo $value['filename']}</a></td>
+        <td><a href="index.php?app=18&fid={echo $value['fid']}" target="_blank">{echo $value['filepath']}</a></td>	
+        <td>{echo floor($value['filesize']/1024/1024*100)/100}</td>
+        <td>{if $value['ftp']>0}远程{else}本地{/if}</td>
+        <td>{echo $this->Date("Y/m/d H:m:s",$value['dateline'])}</td>
+      </tr>
+     {/for} 
+    
+    </table>
+    </div>
+    
+    <div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+    
+    <div class="phpapp_button"><input name="Submit" type="submit" value="删除" class="form_button"/></div>
+    
+{else}  
+    <p>暂时没有数据!</p>
+{/if}
+
+
+
+{elseif $this->GET['op']==2 || $this->GET['op']==3}
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+    
+    <tr>
+    <td class="width_160">格式</td>
+    <td> <input name="form_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['form'])}{echo $manage['form']}{/if}"/></td>
+  </tr>
+  
+  
+    <tr>
+    <td class="width_160">图标</td>
+    <td> <input name="icon_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['icon'])}{echo $manage['icon']}{/if}"/></td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">类型</td>
+    <td> <input name="type_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['type'])}{echo $manage['type']}{/if}"/></td>
+  </tr>
+  
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+
+
+{elseif $this->GET['op']==1}
+
+
+   {if $list}
+    
+    <div id="WindowsForm{echo $this->GET['menu']}">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+      <tr>
+        <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1" onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+        
+        {for $orderarr $key=>$value}
+        <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+        {/for} 
+        
+        <td class="datalist_h2">操作</td>
+      </tr>
+    
+    {for $list $key=>$value}
+      <tr>
+        <td><input name="checkbox[]" type="checkbox" value="{echo $value['fid']}"/></td>
+        <td>{$value['fid']}</td>
+        <td>{$value['form']}</td>
+        <td><img src="{echo SURL.'/'.$value['icon']}"/></td>
+        <td>{echo $value['type']}</td>
+        <td><a href="{echo $this->MakeGetParameterURL(array('op'=>3,'id'=>$value['fid']))}">[编辑]</a></td>
+      </tr>
+     {/for} 
+    
+    </table>
+    </div>
+    
+    <div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+    
+    <div class="phpapp_button"><input name="Submit" type="submit" value="删除" class="form_button"/></div>
+    
+    
+    
+    {/if}
+
+
+
+
+{else}
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+<tr>
+<td class="width_160">上传文件类型判断:</td>
+<td><input class="radio" type="radio" name="fileinfomime_d" value="0"  {if PHPAPP::$config['fileinfomime']==0}checked{/if}>&nbsp;普通 <input class="radio" type="radio" name="fileinfomime_d" value="1" {if PHPAPP::$config['fileinfomime']==1}checked{/if}>&nbsp;高级</td>
+<td class="color_999">设置普通系统判断文件扩展名,设置高级系统判断文件MIME类型,(高级需要在 php.ini 开启 php_fileinfo.dll <a href="http://bbs.phpapp.cn/forum-21-1.html" target="_blank">查看帮助</a>)</td>
+</tr>
+
+<tr>
+<td class="width_160">图片格式:</td>
+<td><input name="uploadphototype_s" value="{echo PHPAPP::$config['uploadphototype']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">用户上传图片格式 多个用,分开</td>
+</tr>
+
+<tr>
+<td class="width_160">文件格式:</td>
+<td><input name="uploadfiletype_s" value="{echo PHPAPP::$config['uploadfiletype']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">用户上传文件格式 多个用,分开</td>
+</tr>
+
+<tr>
+<td class="width_160">音乐格式:</td>
+<td><input name="uploadmusictype_s" value="{echo PHPAPP::$config['uploadmusictype']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">用户上传文件格式 多个用,分开</td>
+</tr>
+
+<tr>
+<td class="width_160">单个图片上传大小(bit):</td>
+<td><input name="oneimageuploadsize_d" value="{echo PHPAPP::$config['oneimageuploadsize']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999"><p>用户上传单个图片大小</p><p>(单位bit 1024bit=1KB , 1024KB=1M )</p></td>
+</tr>
+
+<tr>
+<td class="width_160">总图片上传大小(bit):</td>
+<td><input name="totalimageuploadsize_d" value="{echo PHPAPP::$config['totalimageuploadsize']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999"><p>用户每次上传总图片大小</p><p>(单位bit 1024bit=1KB , 1024KB=1M )</p></td>
+</tr>
+
+<tr>
+<td class="width_160">单个文件上传大小(bit):</td>
+<td><input name="onefileuploadsize_d" value="{echo PHPAPP::$config['onefileuploadsize']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999"><p>用户上传文件大小</p><p>(单位bit 1024bit=1KB , 1024KB=1M )</p></td>
+</tr>
+
+<tr>
+<td class="width_160">总文件上传大小(bit):</td>
+<td><input name="totalfileuploadsize_d" value="{echo PHPAPP::$config['totalfileuploadsize']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999"><p>用户上传总文件大小</p><p>(单位bit 1024bit=1KB , 1024KB=1M )</p></td>
+</tr>
+
+
+<tr>
+<td class="width_160">上传图片缩略:</td>
+<td><input class="radio" type="radio" name="isthumb_d" value="0"  {if PHPAPP::$config['isthumb']==0}checked{/if}>&nbsp;启用 <input class="radio" type="radio" name="isthumb_d" value="1" {if PHPAPP::$config['isthumb']==1}checked{/if}>&nbsp;关闭</td>
+<td class="color_999">用户上传图片是否生成缩略图，生成缩略图可快速显示图片与减少带宽压力</td>
+</tr>
+
+<tr>
+<td class="width_160">图片最小缩略宽度:</td>
+<td><input name="thumbwidth_d" value="{echo PHPAPP::$config['thumbwidth']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">图片最小缩略宽度 px</td>
+</tr>
+
+<tr>
+<td class="width_160">图片最小缩略高度:</td>
+<td><input name="thumbheight_d" value="{echo PHPAPP::$config['thumbheight']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">图片最小缩略高度 px</td>
+</tr>
+
+
+<tr>
+<td class="width_160">开启FTP上传:</td>
+<td><input class="radio" type="radio" name="ftp_open_d" value="0"  {if PHPAPP::$config['ftp_open']==0}checked{/if}>&nbsp;关闭 <input class="radio" type="radio" name="ftp_open_d" value="1" {if PHPAPP::$config['ftp_open']==1}checked{/if}>&nbsp;开启</td>
+<td class="color_999"></td>
+</tr>
+
+<tr>
+<td class="width_160">FTP服务器IP地址:</td>
+<td><input name="ftp_server_s" value="{echo PHPAPP::$config['ftp_server']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">FTP服务器IP地址</td>
+</tr>
+
+<tr>
+<td class="width_160">FTP用户名:</td>
+<td><input name="ftp_username_s" value="{echo PHPAPP::$config['ftp_username']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">FTP用户名</td>
+</tr>
+
+<tr>
+<td class="width_160">FTP密码:</td>
+<td><input name="ftp_password_s" value="{echo PHPAPP::$config['ftp_password']}" type="password" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">FTP密码</td>
+</tr>
+
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="提交" class="form_button"/></div>
+
+{/if}
+
+</form>

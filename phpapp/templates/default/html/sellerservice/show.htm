@@ -1,0 +1,365 @@
+{template member:menu}
+
+<link href="{TURL}sellerservice.css" rel="stylesheet" type="text/css" />
+
+<link href="{TURL}member.css" rel="stylesheet" type="text/css" />
+
+<link href="{TURL}form.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="{TURL}js/member.js"></script>
+
+{template show.js}
+
+{if $task['status']==1}
+
+{if $task['process']>3}
+<script type="text/javascript">
+	  window.setInterval("showtime()", 1000);
+		  var setseconds=1000;
+		  function showtime()
+		  
+		  {
+		  var servernowdate='{$nowdate}';
+		  var servertime=servernowdate.split(",");
+		  var nowdate= new Date(servertime[0],servertime[1]-1,servertime[2],servertime[3],servertime[4],servertime[5]);  
+		  var nowtime=nowdate.getTime();
+		  var nowtime=setseconds+nowtime;
+		  setseconds=setseconds+1000;
+		  var taskendtime='{$taskendtime}';
+		  var taskendtime=taskendtime.split(",");
+		  var servertasktime = new Date(taskendtime[0],taskendtime[1]-1,taskendtime[2],taskendtime[3],taskendtime[4],taskendtime[5]); 
+		  var tasktime=servertasktime.getTime();
+			  
+			  if(nowtime>tasktime){
+			  $('#task_endtime').html('服务已过期');
+			  }else{
+				  var endtime=tasktime-nowtime;
+				  var days=parseInt(endtime/(1000 * 60 * 60 * 24));
+				  var Hours=parseInt(endtime/(1000 * 60 * 60))-days*24;
+				  var Minutes=parseInt(endtime/(1000 * 60))-((days *24* 60)+(Hours* 60));
+				  var Seconds=parseInt(endtime/(1000))-((days*24* 60* 60)+(Hours* 60* 60)+(Minutes* 60));
+				  var showseconds='<b style="color:#F60">'+Seconds+'</b>秒';
+				  if(days){
+					  var showdays='<b style="color:#F60">'+days+'</b>天';
+					  var showhours='<b style="color:#F60">'+Hours+'</b>小时';
+					  var showminutes='<b style="color:#F60">'+Minutes+'</b>分';
+				  }else{
+					  var showdays='';
+					  if(Hours){
+						   var showhours='<b style="color:#F60">'+Hours+'</b>小时';
+						   var showminutes='<b style="color:#F60">'+Minutes+'</b>分'
+					  }else{
+						   var showhours='';
+						   if(Minutes){
+							   var showminutes='<b style="color:#F60">'+Minutes+'</b>分</font>'
+							   var showseconds='<b style="color:#F60">'+Seconds+'</b>秒</font>';
+						   }else{
+							   var showminutes='';
+							   var showseconds='<b style="color:#F60">'+Seconds+'</b>秒</font>';
+						   }
+					  }
+				  }
+					  
+			  $('#task_endtime').html(showdays+showhours+showminutes+showseconds);
+			  
+			  }
+		  }
+</script>
+{/if}
+{/if}
+
+<p><a href="member.php?app={echo $this->app}&action={echo $this->ac}" class="small blue awesome">返回服务列表</a></p>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="task_table_line">
+
+<tr>
+
+<td class="task_show_right task_contact_bg" valign="top">
+<div class="task_contact">
+
+     <div class="task_subject">
+     {if $task['status']==1}
+     {if $task['process']!=9}
+     
+           {if $task['process']>3} <dfn class="task_endtime"><strong>剩余时间：</strong>{if $task['process']==8}服务已结束{else}<span id="task_endtime"> </span>{/if}{/if}</dfn> {/if}
+     {/if}
+     
+     <h1>{$task['subject']}</h1>
+     </div>
+      
+     <div class="task_data">
+     
+     <div class="task_shang">
+     赏
+     </div>
+     
+     <div class="task_shang_money">
+      <p style="padding-left:2px">
+      {if $task['process']>3 && $task['process']!=9}
+      已担保支付
+      {else}
+      未担保或未审核
+      {/if}
+
+      </p>
+      <p><span>￥ {echo $task['money']}</span></p>
+      {php} $taskfee=$this->GetTaskFeeValue('task_seller_usergroup','taskfee',$task['money'],0,$this->uid);{/php}
+      {if $taskfee>0}
+           <p>手续费 <span class="color_f60" style="font-size:16px">{echo $taskfee}</span> 元</p>
+      {/if}
+     </div>
+     
+     <div class="task_show_data">
+
+     
+            <div class="task_data_box">
+     
+                 <p class="task_win_shu">周期</p>
+                 <em><span class="col_f60">{echo $task['time']}</span>天</em>
+      
+           </div>
+
+                 
+           <div class="task_data_box">
+     
+                 <p class="task_handshake_shu">交易诚信</p>
+                 <em>
+                    {if $task['status']==0}等待卖方确认{elseif $task['status']==1}卖方已同意{elseif $task['status']==2}卖方不同意{/if}
+                 </em>
+      
+           </div>     
+
+     
+     </div>
+     
+     
+     </div>
+ 
+     <div class="task_user_transaction">
+           <dl>
+                <h3>雇主</h3>
+                <div class="task_avatar">{echo $this->GetUserAvatar($task['uid'],0,1)}</div>
+           		<dt><a href='{echo SURL}/space.php?app=8&uid={echo $task['uid']}' target="_blank" title="{echo $buyersinfo['username']}">{echo $buyersinfo['username']}</a></dt>
+                <dd><a class="small blue awesome" href="javascript:;" onclick="AddSMS('{echo $task['uid']}')"> <span class="send_message">发消息</span></a></dd>
+           </dl>
+           
+          
+           <dl>
+                {if $task['seller']>0}
+                <h3>威客</h3>
+                <div class="task_avatar">{echo $this->GetUserAvatar($task['seller'],0,1)}</div>
+                <dt><a href='{echo SURL}/space.php?app=8&uid={echo $task['seller']}' target="_blank" title="{echo $sellerinfo['username']}">{echo $sellerinfo['username']}</a></dt>
+                <dd><a class="small blue awesome" href="javascript:;" onclick="AddSMS('{echo $task['seller']}')"> <span class="send_message">发消息</span></a></dd>
+                {else}
+                <h3>威客</h3>
+                <p>雇主未确认</p>
+                {/if}
+           </dl>
+           
+           
+     
+     </div>
+     
+     
+     <div class="task_add_draft">
+          <div class="task_operate">操作区</div>
+          <div style="text-align:center;height:40px;">
+          
+          {if $task['process']>7}
+          
+           <p style="text-align:center">服务已结束</p>
+          
+          {else}
+         
+                {if $task['uid']==$this->uid}
+                       {if $task['status']==1}
+                       
+                             {if $task['process']==4}
+                                   
+                                   {if $this->NowTime()>$task['endtime']}
+                                   <a href="javascript:;" onclick="TaskRefund();" class="large green awesome">申请退款</a> 
+                                   {else}
+                                   <a href="javascript:;" onclick="SetTaskSuccess()" class="large blue awesome">采纳卖家作品</a> 
+                                   {/if}
+                                   
+                             {elseif $task['process']==8}
+                                   
+                                   <div class="task_submit_draft">已结束</div>
+                                   
+                                   
+                             {elseif $task['process']==9}
+                                   
+                                   <div class="task_submit_draft">已关闭</div>
+                                   
+                             {else}
+                             
+                                   <a class="large green awesome" href="javascript:;" onclick="SubmitPayTask()">支付担保金</a>
+                             
+                             {/if} 
+                       {else}
+                             <a class="large green awesome" href="index.php?app={echo $this->app}&action=2&tid={echo $this->tid}&op=1">修改要求</a>
+                       {/if} 
+                {else}
+                
+                {if $task['status']==1}
+                    
+                      {if $task['process']==4}
+                      <a class="large green awesome" href="javascript:;" onclick="AddDraft('{echo $task['tid']}','{echo $task['uid']}');">{if $draft['did']>0}修改作品{else}提交作品{/if}</a>
+                      {else}
+                       <p style="text-align:center">暂无操作!</p>
+                      {/if} 
+                      
+                {elseif !$task['status']}
+                      <div style="padding-left:200px;height:40px;">
+                      <div class="task_submit_draft" style="float:left;margin-right:20px;"><a href="javascript:;" onclick="SellerAgree('{echo $this->tid}',1);">同意要求</a></div>
+                      
+                      <div class="task_submit_draft" style="float:left"><a href="javascript:;" onclick="SellerAgree('{echo $this->tid}',2);">不同意要求</a></div>
+                      </div>
+                 {else}
+                      <p style="text-align:center">暂无操作!</p>
+                 {/if} 
+                {/if} 
+          {/if} 
+          
+          </div>
+     </div>
+     
+    <div class="task_warning">
+           <h3>服务提示：</h3>
+           <p>
+           {if $task['process']==1}
+           
+           {if $task['status']==0}
+           <strong>等待卖方确认</strong>
+           {elseif $task['status']==1}
+           <strong>等待雇主支付担保金</strong>
+           {else}
+           <strong>
+           卖方不同意要求
+           
+               {if $task['uid']==$this->uid}
+                   ,重新修改要求
+               {/if}
+           
+           </strong>
+           {/if}
+           
+           {elseif $task['process']==2}
+           <strong>买家已支付担保金未审核</strong>
+           {elseif $task['process']==3}
+           <strong>审核中</strong>
+           {elseif $task['process']==4}
+           
+                {if $task['task_success']>0}
+                      
+                      
+                      <strong>双方已达成协议</strong>
+                
+                {else}
+                       <strong>服务进行中</strong> 时间完成但卖家未完成要求,买家有权力退款.
+           
+                {/if}
+           
+           {elseif $task['process']==8}
+           <strong>服务已结束</strong>
+           {elseif $task['process']==9}
+           <strong>服务已关闭</strong>
+           {/if}
+           
+            {if $task['process']<4}   
+                {if $task['edittime']}
+                买家最新修改要求时间： {echo $this->Date('Y-m-d H:i:s',$task['edittime'],1)}
+                {/if}
+            {/if}
+
+           </p>
+     </div>
+     
+     {if $task['status']==2}
+     <div class="task_info_h2">卖家拒绝原因</div>
+     <p style="margin-bottom:20px;">{if $task['disagree']}{echo $this->str($task['disagree'],200,0,1,1,0,1)}{else}没写{/if}</p>
+     {/if}
+     
+     
+     {if $fieldarray=$this->GetTableFieldArray('task_seller')}
+     <!-- 自定义字段-->
+     <div class="fieldlist">
+           {for $fieldarray $field}
+           <p><strong>{echo $field['name_phpapp']}</strong>： {echo $this->str($task[$field['field_phpapp']],99999,0,1,0,0,1)}</p>
+           {/for}
+     </div>
+     <!-- 自定义字段 end-->
+     {/if}
+     
+     <div class="task_info_h2">买家要求</div>
+     
+     
+     <div class="task_info" id="task_info_all" style="white-space:normal; word-break:break-all;">
+     
+     {php}
+     
+            echo $this->HideDecode($this->str($task['content'],999999,0,1,0,0,1),1);
+									
+			$files=$this->FileList($task['tid'],2);
+					
+				
+       {/php}                                 
+     {template file}
+     </div>
+     
+     
+     
+     <div class="task_info_h2">卖家提交作品区</div>
+     {if !empty($draft)}
+           <p>{echo $this->str($draft['content'],999999,0,1,0,0,1)}</p>
+           {php}$files=$this->FileList($draft['did'],3);{/php} 
+     
+           {if !empty($files)}
+               {template phpapp:file}
+           {/if}
+     
+     {/if}
+     </p>
+     
+     <div class="task_show_button"><a href="javascript:;" onclick="TaskRepotr('{echo $task["tid"]}',0)" class="message_ico"><strong>举报服务</strong></a></div>
+     
+</div>
+
+
+
+</td>
+
+</tr>
+
+</table>
+
+  
+<div id="task_tabs" style="border: none;padding:0px;">
+    
+    <ul>
+        <li><a href="#DraftShow-2" onclick="ShowMessage()"><span>留言</span></a></li>
+        <li><a href="#DraftShow-3" onclick="ShowCredit()"><span>雇主评价</span></a></li>
+    </ul>
+
+    
+    <div id="DraftShow-2" style="padding-left:0px;padding-right:0px;">
+    
+          <div class="loading">读取数据中...</div>
+          <script type="text/javascript">ShowMessage();</script>
+   
+    </div>
+    
+    <div id="DraftShow-3" style="padding-left:0px;padding-right:0px;">
+    
+          <div class="loading">读取数据中...</div>
+         
+   
+    </div>
+
+</div>
+
+
+
+</td></tr></table>
+	 
+{template phpapp:footer}

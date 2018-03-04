@@ -1,0 +1,35 @@
+{template phpapp:header}
+
+<link href="{TURL}webpage.css" rel="stylesheet" type="text/css" />
+
+<div class="webpage">
+       <div class="webpage_menu">
+
+           <ul>
+           
+           {for $this->GetAction(23) $value}
+
+                   <li{if $this->ac==$value['aid_phpapp']} class='focus'{/if}><a href='{echo SURL}/index.php?app=23&action={echo $value['aid_phpapp']}'>{echo $value['title_phpapp']}</a></li>
+ 
+              
+           {/for}
+           
+           
+           </ul>
+       
+       
+       </div>
+       
+
+        <div class="webpage_content">
+        <h2>联系我们</h2>
+        <ul>
+           {echo $this->str(PHPAPP::$config['contact'],0,0,1,0,0,1)}
+        </ul>
+        </div>
+
+</div>
+
+
+
+{template phpapp:footer}

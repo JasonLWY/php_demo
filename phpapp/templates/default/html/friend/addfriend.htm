@@ -1,0 +1,52 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="member_form">
+
+ <tr>
+    <td class="addtask_text" style="width:60px;"><a href="space.php?app=8&uid={echo $this->GET['fuid']}" target="_blank">{echo $this->GetUserAvatar($this->GET['fuid'])}</a>
+    
+<p style="padding-top:6px;"><a href="space.php?app=8&uid={echo $this->GET['fuid']}" target="_blank">{echo $user['username']}</a></p>
+
+</td>
+    <td>附言：(50个字内)<br />
+         <input type="text"  id="FriendMessage" size="50" maxlength="50" class="form_input_text form_input_width_300"/></td>
+  </tr>
+
+  
+    <tr>
+    <td colspan="2" style="height:60px;text-align:center;"><input type="button" value="发送申请" id="SubmitFriend" class="form_button" style="width:80px"/></td>
+  </tr>
+  
+  
+</td></tr></table>
+
+
+<script type="text/javascript">
+
+$(function() {
+		   
+	    $("#SubmitFriend").click( function () {
+											
+			   var message=$("#FriendMessage");
+			   
+			   if (message.val().length>"50"){
+					  alert("附言不能大于50个字!");
+					  message.focus();
+					  return false; 
+			   }	
+			   
+			   
+			   $("#loading").html('<div class="loading">处理数据中...</div>');	
+ 
+               $.ajax({
+					  type: "POST",
+					  url: 'index.php?app=17&action=4&op=1&fuid={echo $this->GET["fuid"]}',
+					  data: '&message_s='+message.val(),
+					  success: function(data){
+						   $("#loading").html(data);
+					  }
+		       });		
+			   
+										  
+		});	 
+		   
+});			   		   
+</script>

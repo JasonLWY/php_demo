@@ -1,0 +1,91 @@
+<div class="task_bid_field">
+      <ul>
+          <li style="float:left;width:520px;padding-left: 14px;">投稿者({echo $ajaxpage->GetTotal()})</li><li style="width:142px;">信用</li>
+      </ul>
+</div>
+                  
+<div id="TaskBidItem">
+
+    {for $list $key=>$value}
+           <div class="task_bid_show{if $value['openflash']} flashbid{/if}">
+           
+				 {if $value['topbid']>0}<div class="bid_top" title="推荐"></div>{/if}
+                 
+                 <div class="task_bid_main">
+                      <div class="task_bid_avatar">
+                          {echo $this->GetUserAvatar($value['uid'],1)}
+                          
+                          <p class="task_bid_username"><a href="{echo SURL}/space.php?app=8&uid={echo $value['uid']}" target="_blank" title="{echo $task['username']}" class="DraftUserID{echo $value['uid']}">{echo $value['username']}</a></p>
+                          
+                          <p><a class="small blue awesome" href="javascript:;" onclick="AddSMS('{echo $value['uid']}')"><span class="send_message">发消息</span></a></p>
+                      </div>
+                      
+
+                          {if $value['share']}
+                              {if $value['uid']==$uid || $task['uid']==$uid || $this->IsService($task['serviceuid'])}
+                                  
+                                   {template user}
+                       		 {else}
+                           
+                                  <div class="bid_hide_info draft_hide_info">
+                                  <p>该稿件已隐藏,只有雇主和投标本人登录后可见!</p>
+                                  </div>
+                              
+                           	 {/if}
+                             
+                          {else}
+                               
+                                   {if !$task['hidedraft']}
+                                         {template user}
+                                   {else}  
+                                   
+                                   
+                                         {if $value['uid']==$uid || $task['uid']==$uid || $this->IsService($task['serviceuid'])}
+                                         
+                                               {template user}
+
+                                         {else}
+                                         
+                                                <div class="bid_hide_info draft_hide_info">
+                                                <p>该稿件已隐藏,只有雇主和投标本人登录后可见!</p>
+                                                </div>
+                                            
+                                         {/if}
+                                   
+                                     
+                                   {/if}
+                          
+                          {/if}
+                        
+                  
+                 </div>
+                 
+                 
+                 <div class="task_draft_operate">
+                         
+                          {if $task['uid']==$uid || $this->IsService($task['serviceuid']) || $this->IsAdmin()}
+                          <div class="task_draft_mumber">#{echo $value['did']} <input class="check_box_id" type="checkbox" value="{echo $value['did']}" id="CheckBoxID_{echo $value['did']}" onclick="AddCheckBox('{echo $value['did']}')"/></div>
+                          <ul>
+                                {if $value['process']==0}
+                                <li><a class="small green awesome" onclick="OpenOperate('{echo $value['did']}')"><span class="all_ico">批量</span></a></li> 
+                                <li><a class="small orange awesome" onclick="ApplyDraft('{echo $value['did']}',1,'中标')"><span class="right_ico">中标</span></a></li>
+                                <li><a class="small blue awesome" onclick="ApplyDraft('{echo $value['did']}',0,'不合格')"><span class="cross_ico">不合格</span></a></li> 
+                                {/if}
+                                
+                          {/if}
+                          <ul>
+                          
+                          {if $value['uid']==$uid}
+                                
+                                <li><a class="small blue awesome" onclick="AddDraft('{echo $this->tid}','{echo $value['did']}')"><span class="pencil_ico">修改</span></a></li>
+                          {/if} 
+                                <li><a class="small blue awesome" onclick="TaskReport('{echo $this->tid}','{echo $value['did']}')"><span class="report_pencil_ico">举报</span></a></li>
+                          </ul>
+                 </div>  
+                
+                 
+         </div>
+    
+    {/for}
+    
+</div>

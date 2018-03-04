@@ -1,0 +1,39 @@
+{template admin:header}
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr id="AddSkills">
+    <td class="datalist_h2" style="width:68px;">排序</td>
+    <td class="datalist_h2" >名称</td>
+    <td class="datalist_h2" >路径</td>
+    <td class="datalist_h2" >Title</td>
+    <td class="datalist_h2" >Keywords</td>
+    <td class="datalist_h2" >Description</td>
+  </tr>
+  
+
+</table>            
+
+<div class="phpapp_button"><input type="button" value="添加新技能表单" class="form_button" onclick="AddCategoryOne()"/> <input name="Add" type="submit" value="确定" class="form_button"/></div>
+</form>
+
+
+<script type="text/javascript">
+$(function(){	
+	$.PHPAPPMouseover('.category_item','.show_add');
+	
+});
+
+AddCategoryOne();
+
+function AddCategoryOne(){
+	 AutoCategoryID++; 
+	 var subclasshtml ='<tr><td><input name="addskills['+AutoCategoryID+'][displayorder]" type="text" class="form_input_text form_input_width_50 add_subclass" value="0"/></td><td><input name="addskills['+AutoCategoryID+'][name]" type="text" class="form_input_text form_input_width_200" value=""/></td><td><input name="addskills['+AutoCategoryID+'][route]" type="text" class="form_input_text form_input_width_100" value=""/></td><td><input name="addskills['+AutoCategoryID+'][title]" type="text" class="form_input_text form_input_width_200" value=""/></td><td><input name="addskills['+AutoCategoryID+'][keywords]" type="text" class="form_input_text form_input_width_200" value=""/></td><td><input name="addskills['+AutoCategoryID+'][description]" type="text" class="form_input_text form_input_width_200" value=""/></td></tr>';
+	 
+	 $('#AddSkills').after(subclasshtml);
+	 
+}
+
+</script>

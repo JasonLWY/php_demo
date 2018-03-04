@@ -1,0 +1,128 @@
+{if !$issdd}
+{template member:menu}
+<script type="text/javascript" src="{echo TURL}js/skills.js"></script>
+{/if}
+<link href="{TURL}skills.css" rel="stylesheet" type="text/css" />
+
+
+<div class="set_myskills">
+{if $issdd}
+<h5 style="color:#09C">尊敬的用户：为了方便您获得更多的任务,请您先设置行业分类与技能后再投稿！</h5>
+{/if}
+
+<h5>行业分类：<span class="help_small" title="请选择一个行业分类"> </span></h5>
+<p id="catid" style="height:24px">
+{if !empty($memberinfo['catid'])}
+     {echo $this->GetSelectCategory('category',$memberinfo['catid'],'catid',49,1)}
+{else} 
+     {echo $this->SetSelectCategory('category',0,'catid',49,1)}
+{/if} 
+</p>
+
+
+<h5>我的技能：<span class="help_small" title="我会使用的技能"> </span></h5>
+
+
+<div id="SelectSkills" class="select_skills">
+</div>
+
+{if !$issdd}
+<div class="select_more_skills"><a href="javascript:void(0);" class="select_more_skills" id="SelectMoreSkills" title="点击获更多技能选择">点击获更多技能</a></div>
+{else}
+<p><a href="{echo SURL}/member.php?app=27">[点击设置更多技能]</a></p>
+{/if}
+
+
+<div id="SelectMoreSkillsView" class="header_member_default more_skills_view">
+    <h3></h3>
+    <ul id="MoreSkillsList" class="skills_data_list">
+    </ul>
+    <div class="more_skills_updown"><a href="javascript:void(0);" onclick="SetScrollBox('#MoreSkillsList',1);" title="技能往上显示">向上</a><a href="javascript:void(0);" onclick="SetScrollBox('#MoreSkillsList',2);" title="技能往下显示" style="float:right">向下</a></div>
+</div>
+
+
+<input type="hidden" id="SkillsSelected" name="skills_s" value=""/>
+
+<p style="margin-top:20px;"><input name="Submit" type="button" value="保存技能" id="SubmitSetSkills" class="form_button"/></p>
+
+
+{if !empty($member['skills'])}
+<script type="text/javascript">
+	$(function(){	
+		$('#SelectSkills').html('');
+		$('#SkillsSelected').val('');
+		$.PHPAPPGetAllSkills('{echo $memberinfo["catid"]}','{echo $member["skills"]}');
+	});
+</script>
+{else}
+<script type="text/javascript">
+	$(function(){	
+		 $.PHPAPPGetAllSkills('{echo $memberinfo["catid"]}','{echo $member["skills"]}');
+	});
+</script>	 
+{/if}
+
+
+
+<script type="text/javascript">
+$(function(){	
+	   $("#SelectMoreSkills").click( function () { $.PHPAPPHeaderItem('SelectMoreSkills','SelectMoreSkillsView',0,28,232,0,0,1); });
+	
+	   $('#SelectMoreSkills').poshytip({
+				 className: 'tip-green',
+				 offsetX: -7,
+				 offsetY: 16,
+				 allowTipHover: false
+	   });	
+	   
+	   
+	   $("#SubmitSetSkills").click( function () {
+	          
+			  var catids='';
+			  var selects='';
+			  $("#catid").find("select").each(function(){
+					  catids=catids+1;							   
+					  var value=$(this).val();
+					   
+					  if(value){
+						   selects=selects+1;
+					  }			 				 
+			  }); 
+			  
+	          if(catids!=selects){
+			        alert("请选择行业分类!");
+					return false;  
+			  }
+			  
+			  var catid=$("#catid select[name='catid']").val();
+			  
+		      var skills=$('#SkillsSelected').val();					 
+	  
+			  $("#loading").html('<div class="loading">提交数据中...</div>');
+				  
+			  $("#loading").dialog({ title: '提交数据' });
+
+			  $("#loading").dialog('open');
+			  
+              $.PHPAPPOPENLOADING();
+			  $.ajax({
+					type: "POST",
+					url: SURL+"/member.php?app=27&action=1",
+					data: "Submit=1&skills="+skills+"&catid="+catid,
+					success: function(data){
+					    $.PHPAPPCLOSELOADING();
+						$("#loading").html(data);
+					}
+			  });
+			
+	 });
+	 
+}); 
+</script>
+
+
+</div>
+
+{if !$issdd}
+{template phpapp:footer}
+{/if}

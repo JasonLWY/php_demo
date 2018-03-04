@@ -1,0 +1,73 @@
+{template phpapp:header}
+
+<link href="{echo TURL}login.css" rel="stylesheet" type="text/css" />
+
+<link href="{echo TURL}sns.css" rel="stylesheet" type="text/css" />
+
+{template login.js}
+
+<div id="register" class="user_register">
+<h1>会员登录</h1>
+
+
+<div class="register_left">
+
+</div>
+
+
+<div class="register_right">
+   <div class="register_right_bgline_top"></div>
+   <form id="LoginForm">
+   <div class="register_right_reg register_right_line">
+   
+        <dl>
+           <dt>通过合作网站登录到{echo PHPAPP::$config['sitename']}网</dt>
+           <dd>
+           
+             {if $snsarray}
+                   {for $snsarray $value}
+                   
+                         <li><a href="{echo SURL}/index.php?app={echo $value['app_phpapp']}" class="{echo $value['icon_small_phpapp']}">使用{echo $value['name_phpapp']}帐号登录</a></li>
+                         
+                   {/for}
+             {/if}
+           
+           </dd>
+           </dd>
+        </dl>
+   
+    <ul style="height:270px;padding-top:40px;">
+    
+     <li><label class="form_input_label" id="UserNameLabel">用户名：</label> <input name="UserName_s" id="SiteLoginUserName" type="text" maxlength="80"  class="form_input_text form_input_width_200 loginusername" value="" title="用户名/邮箱/手机"/><span id="SiteAjaxUserNameError"></span></li>
+    
+    
+    <li><label class="form_input_label">密码：</label> <input name="Password_s" id="SiteLoginPassword" type="password" maxlength="32"  class="form_input_text form_input_width_200" autocomplete="off" value="" title="登录密码"/><span id="SiteAjaxPasswordError"></span></li>
+
+    
+    {if PHPAPP::$config['loginiscode']}
+    <li style="width:388px;"><label class="form_input_label">验证码：</label> <input name="SecCode" id="SiteSecCode" type="text" maxlength="4"  class="form_input_text" style="width:120px;float:left;" value="点击这里显示验证码" title="验证码"/><div id="ShowSecCode"></div><span id="SiteAjaxSecCodeError"></span></li>
+    {/if}
+    
+    <li style="padding-left:120px"><input name="CookieTime_d" type="checkbox" id="CookieTime" value="{echo PHPAPP::$config['cookie_time']}" checked /> 下次自动登录 <a href="index.php?app=2&action=13" style="margin-left:10px;">忘记密码?</a></li>
+
+    </ul>
+    
+    <div class="register_right_bgline_bottom"></div>
+    
+    <div class="submitregister"><input name="SubmitRegister" type="submit" value="登录" class="form_button" onclick="return SubmitLogin();"/></div>
+    
+    
+   </div>
+   <input type="hidden" name="SecurityForm_s" value="{echo $this->SecurityForm()}"/>
+   </form>
+   
+  
+</div>
+
+</div>
+
+
+
+
+<span class="loginrefresh" style="display:none">2</span> 
+{template phpapp:footer}

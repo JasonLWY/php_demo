@@ -1,0 +1,112 @@
+{template admin:header}
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">关联应用</td>
+    <td>
+    <select name="appid">
+    {for $appsarr $value}
+    <option value="{echo $value['id_phpapp']}"{if !empty($manage['appid'])}{if $manage['appid']==$value['id_phpapp']} selected="selected"{/if}{/if}>{echo $value['name_phpapp']}</option>
+    {/for}
+    </select>
+    </td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">前台用户组</td>
+    <td><select name="usergroup">
+{for $usergrouparr $value}
+  <option value="{$value['gid']}" {if !empty($manage['usergroup'])}{if $manage['usergroup']==$value['gid']} selected="selected" {/if}{/if}>{$value['groupname']}</option>
+{/for}
+</select></td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">名称</td>
+    <td> <input name="subject_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['subject'])}{echo $manage['subject']}{/if}"/></td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">使用天数</td>
+    <td> <input name="day_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['day'])}{echo $manage['day']}{/if}"/> ( 0 不限)</td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">出售价格</td>
+    <td> <input name="price_f" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['price'])}{echo $manage['price']}{/if}"/> 元</td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">ICON</td>
+    <td> <input name="icon_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['icon'])}{echo $manage['icon']}{/if}"/></td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">排序</td>
+    <td> <input name="displayorder_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['displayorder'])}{echo $manage['displayorder']}{/if}"/></td>
+  </tr>
+  
+  <!--
+   <tr>
+    <td class="width_160">是否参与数目统计</td>
+    <td><select name="count">
+  <option value="0" {if !empty($manage['count'])}{if $manage['count']==0} selected="selected" {/if}{/if}>启用</option>
+  <option value="1" {if !empty($manage['count'])}{if $manage['count']==1} selected="selected" {/if}{/if}>关闭</option>
+</select> </td>
+  </tr>
+  -->
+  
+  
+   <tr>
+    <td class="width_160">介绍</td>
+    <td><textarea  rows="6"  name="content_s" cols="50" class="form_textarea form_input_width_300">{if !empty($manage['content'])}{echo $manage['content']}{/if}</textarea></td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">是否出售</td>
+    <td>
+        <select name="sell">
+        <option value="0" {if !empty($manage['sell'])}{if $manage['sell']==0} selected="selected" {/if}{/if}>出售</option>
+        <option value="1" {if !empty($manage['sell'])}{if $manage['sell']==1} selected="selected" {/if}{/if}>本站内置</option>
+        </select> 
+       </td>
+    </tr>
+    
+   <tr>
+    <td class="width_160">库存数量</td>
+    <td> <input name="buynum_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['buynum'])}{echo $manage['buynum']}{/if}"/> 个 <span style="color:#999">(许可用户购买库存数量)</span></td>
+  </tr>
+  
+    
+     <tr>
+    <td class="width_160">道具类型</td>
+    <td><select name="type_d">
+  <option value="0" {if !empty($manage['type'])}{if $manage['type']==0} selected="selected" {/if}{/if}>任务类</option>
+  <option value="1" {if !empty($manage['type'])}{if $manage['type']==1} selected="selected" {/if}{/if}>稿件类</option>
+  <option value="2" {if !empty($manage['type'])}{if $manage['type']==2} selected="selected" {/if}{/if}>服务类</option>
+</select> </td>
+  </tr>
+  
+     <tr>
+    <td class="width_160">是否启用</td>
+    <td><select name="status">
+  <option value="0" {if !empty($manage['status'])}{if $manage['status']==0} selected="selected" {/if}{/if}>启用</option>
+  <option value="1" {if !empty($manage['status'])}{if $manage['status']==1} selected="selected" {/if}{/if}>关闭</option>
+</select> </td>
+  </tr>
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+</form>
+
+

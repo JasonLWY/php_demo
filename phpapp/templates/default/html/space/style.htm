@@ -1,0 +1,24 @@
+<div class="stylelist">
+
+      <ul>
+      
+         {if $list}
+              
+              {for $list $value}
+              <li>
+                  <a href="javascript:;" title="{echo $value['style']}" onclick="ChangeStyle('{echo $value['sid']}','{TURL}space/themes/{echo $value['dir']}');"><img src="{TURL}space/themes/{echo $value['dir']}/images/show.png"/>
+                  <p>{echo $value['style']}</p>
+                  </a>
+              </li>
+              {/for}
+         {else}
+              <li>没有风格</li>
+         {/if}
+     </ul>  
+</div>
+
+{if $ajaxpage->ShowPages()}
+
+     <div class="ajax_page" style="float:right;height:30px;">{echo $ajaxpage->ShowPages()}</div>
+
+{/if}

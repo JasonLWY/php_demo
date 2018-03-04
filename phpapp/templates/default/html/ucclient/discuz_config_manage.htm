@@ -1,0 +1,95 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+<tr>
+<td class="width_160">通行证整合:</td>
+<td><input class="radio" type="radio" name="uc_open_d" value="1"  {if PHPAPP::$config['uc_open']==1}checked{/if}>&nbsp;开启 <input  type="radio" name="uc_open_d" value="0" {if PHPAPP::$config['uc_open']==0}checked{/if}>&nbsp;关闭</td>
+<td class="color_999">是否开启整合</td>
+</tr>
+
+<tr>
+<td class="width_160">整合类型:</td>
+<td><input class="radio" type="radio" name="uc_apitype_d" value="0"  {if PHPAPP::$config['uc_apitype']==0}checked{/if}>&nbsp;Discuz UC 1.x <input  type="radio" name="uc_apitype_d" value="1" {if PHPAPP::$config['uc_apitype']==1}checked{/if}>&nbsp;PHPWind8.x <input  type="radio" name="uc_apitype_d" value="2" {if PHPAPP::$config['uc_apitype']==2}checked{/if}>&nbsp;PHPWind9.x</td>
+<td class="color_999">整合的程序接口</td>
+</tr>
+
+<tr>
+<td class="width_160">数据库连接:</td>
+<td><input class="radio" type="radio" name="uc_linktype_s" value="mysql"  {if PHPAPP::$config['uc_linktype']=='mysql'}checked{/if}>&nbsp;MySQL <input  type="radio" name="uc_linktype_s" value="" {if !PHPAPP::$config['uc_linktype']}checked{/if}>&nbsp;fscoketopen</td>
+<td class="color_999">同一数据库使用 MySQL 连接,非同数据库使用fscoketopen连接</td>
+</tr>
+
+<tr>
+<td class="width_160">数据库主机:</td>
+<td><input name="uc_dbhost_s" value="{echo PHPAPP::$config['uc_dbhost']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">UCenter 数据库主机</td>
+</tr>
+
+<tr>
+<td class="width_160">数据库用户名:</td>
+<td><input name="uc_dbuser_s" value="{echo PHPAPP::$config['uc_dbuser']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">UCenter 数据库用户名</td>
+</tr>
+
+<tr>
+<td class="width_160">数据库密码:</td>
+<td><input name="uc_dbpw_s" value="{echo PHPAPP::$config['uc_dbpw']}" type="password"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">UCenter 数据库密码</td>
+</tr>
+
+<tr>
+<td class="width_160">数据库名称:</td>
+<td><input name="uc_dbname_s" value="{echo PHPAPP::$config['uc_dbname']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">UCenter 数据库名称</td>
+</tr>
+
+<tr>
+<td class="width_160">数据库字符集:</td>
+<td><input name="uc_dbcharset_s" value="{echo PHPAPP::$config['uc_dbcharset']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">UCenter 数据库字符集</td>
+</tr>
+
+<tr>
+<td class="width_160">数据库表前缀:</td>
+<td><input name="uc_dbpre_s" value="{echo PHPAPP::$config['uc_dbpre']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">UCenter 数据库表前缀</td>
+</tr>
+
+<tr>
+<td class="width_160">通信密钥:</td>
+<td><input name="uc_key_s" value="{echo PHPAPP::$config['uc_key']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">与 UCenter 的通信密钥, 要与 UCenter 保持一致</td>
+</tr>
+
+<tr>
+<td class="width_160">URL 地址:</td>
+<td><input name="uc_api_s" value="{echo PHPAPP::$config['uc_api']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">UCenter 的 URL 地址</td>
+</tr>
+
+<tr>
+<td class="width_160">UCenter 的字符集:</td>
+<td><input name="uc_charset_s" value="{echo PHPAPP::$config['uc_charset']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">UCenter 的页面字符集</td>
+</tr>
+
+<tr>
+<td class="width_160">UCenter 的 IP:</td>
+<td><input name="uc_ip_s" value="{echo PHPAPP::$config['uc_ip']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">UCenter 的 IP,当前应用服务器解析域名有问题时, 请设置此值</td>
+</tr>
+
+<tr>
+<td class="width_160">当前应用的 ID:</td>
+<td><input name="uc_appid_s" value="{echo PHPAPP::$config['uc_appid']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">当前UCenter里应用的 ID</td>
+</tr>
+
+</table>
+
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button"/></div>
+
+</form>

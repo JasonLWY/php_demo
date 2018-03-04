@@ -1,0 +1,17 @@
+<div class="default_service">
+      <ul>
+           <h2>{echo PHPAPP::$config['sitename']}推广工具</h2>
+           {php} $appaction=$this->GetMysqlArray('*'," ".$this->GetTable('apps_action')." WHERE apps_phpapp='20' AND type_phpapp=0 AND status_phpapp=0");{/php}
+           {if $appaction}
+           
+                  {for $appaction $key=>$value}
+           
+                   <li class="union_menu{echo $key}"><a href="index.php?app=20&action={echo $value['aid_phpapp']}">{echo $value['name_phpapp']}</a></li>
+           
+                  {/for}
+           {/if}
+           
+            <li class="union_menu4"><a href="member.php?app=20">查看推广提成</a></li>
+           
+      </ul>
+ </div>

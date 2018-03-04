@@ -1,0 +1,30 @@
+.stylelist{
+	overflow: hidden;
+}
+
+.stylelist ul {
+	width: 620px;
+	padding-left: 30px;
+}
+
+.stylelist ul li{
+	background-color: #f8f8f8;
+	float: left;
+	height: 160px;
+	width: 130px;
+	margin-right: 56px;
+	margin-bottom: 20px;
+	text-align: center;
+	overflow: hidden;
+}
+
+.stylelist ul li p{
+	line-height: 24px;
+}
+.stylelist ul li a{
+	display: block;
+	padding-top: 4px;
+}
+.stylelist ul li a:hover{
+	background-color: #FC0;
+}

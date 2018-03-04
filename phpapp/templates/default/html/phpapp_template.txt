@@ -1,0 +1,486 @@
+99bill                 |send.htm                   |快钱接口模板                 |前台显示
+
+admin                  |admin.htm                  |后台框架模板                 |后台显示
+admin                  |admin_manage.htm           |后台用户组模板               |后台显示
+admin                  |admin_menu_manage.htm      |后台菜单模板                 |后台显示
+admin                  |annexset_manage.htm        |附件模板                     |后台显示
+admin                  |application_manage.htm     |应用管理模板                 |后台显示
+admin                  |apps_action_manage.htm     |应用动作管理模板             |后台显示
+admin                  |autotask_manage.htm        |计划任务管理模板             |后台显示
+admin                  |bankname_manage.htm        |银行模板                     |后台显示
+admin                  |cataloglist_manage.htm     |桌面模板(桌面操作时使用)     |后台显示
+admin                  |config_manage.htm          |网站配置模板                 |后台显示
+admin                  |credit_level_manage.htm    |积分等级模板                 |后台显示
+admin                  |customerservice_manage.htm |网站客服模板                 |后台显示
+admin                  |datatest.htm               |数据测试模板                 |后台显示
+admin                  |emailset_manage.htm        |邮箱设置模板                 |后台显示
+admin                  |field_manage.htm           |字段模板                     |后台显示
+admin                  |getdata_manage.htm         |调用数据模板                 |后台显示
+admin                  |header.htm                 |后台头部模板                 |后台显示
+admin                  |language_manage.htm        |语言管理模板                 |后台显示
+admin                  |links_manage.htm           |友情链接模板                 |后台显示
+admin                  |login.htm                  |后台登录模板                 |后台显示
+admin                  |member_feed_manage.htm     |会员动态模板                 |后台显示
+admin                  |member_level_manage.htm    |会员等级模板                 |后台显示
+admin                  |member_sms_manage.htm      |会员站内短信模板             |后台显示
+admin                  |member_type_manage.htm     |会员类型模板                 |后台显示
+admin                  |member_union_manage.htm    |会员推广模板                 |后台显示
+admin                  |optimizationset_manage.htm |优化模板                     |后台显示
+admin                  |phpinfo_manage.htm         |服务器环境模板               |后台显示
+admin                  |portconfig_manage.htm      |接口分配模板                 |后台显示
+admin                  |rewrite_manage.htm         |伪静态模板                   |后台显示
+admin                  |setoperation_manage.htm    |后台操作设置模板             |后台显示
+admin                  |sharecodeset_manage.htm    |共享代码模板                 |后台显示
+admin                  |sitenav_manage.htm         |网站导航模板                 |后台显示
+admin                  |siteset_manage.htm         |站点设置模板                 |后台显示
+admin                  |sitetopnav_manage.htm      |网站顶部菜单模板             |后台显示
+admin                  |sqlbackup_manage.htm       |备份数据模板                 |后台显示
+admin                  |templates_manage.htm       |模板管理                     |后台显示
+admin                  |termfilter_manage.htm      |词语过虑模板                 |后台显示
+admin                  |updatecache_manage.htm     |更新缓存模板                 |后台显示
+admin                  |usergroup_manage.htm       |用户组模板                   |后台显示
+admin                  |verifycodeset_manage.htm   |验证码模板                   |后台显示
+admin                  |watermarkset_manage.htm    |水印模板                     |后台显示
+admin                  |copytool_manage.htm        |复制器模板                   |后台显示
+admin                  |credit_manage.htm          |积分管理模板                 |后台显示
+admin                  |menulist.htm               |后台菜单列表模板             |后台显示
+admin                  |tabmenu.htm                |后台导航菜单列表模板         |后台显示
+
+
+
+
+advertising            |add_manage.htm             |添加广告模板                 |后台显示
+advertising            |list_manage.htm            |广告列表模板                 |后台显示
+advertising            |show_manage.htm            |广告显示模板                 |后台显示
+
+
+
+alipay                 |alipay_config_manage.htm   |配置模板                     |后台显示
+alipay                 |send.htm                   |发送模板                     |后台显示
+
+
+
+apppay                 |accountdown_manage.htm     |财务数据下载模板             |后台显示
+apppay                 |certificate_manage.htm     |查看认证模板                 |后台显示
+apppay                 |config_manage.htm          |配置模板                     |后台显示
+apppay                 |consume_manage.htm         |交易记录模板                 |后台显示
+apppay                 |consume_member.htm         |交易记录模板                 |会员中心
+apppay                 |deposit_manage.htm         |充值模板                     |后台显示
+apppay                 |deposit_member.htm         |充值模板                     |会员中心
+apppay                 |total_manage.htm           |统计模板                     |后台显示
+apppay                 |userpay_manage.htm         |手动充值模板                 |后台显示
+apppay                 |withdraw_member.htm        |提现模板                     |会员中心
+
+
+
+case                   |add_manage.htm             |添加案例模板                 |后台显示
+case                   |list.htm                   |案例列表模板                 |前台显示
+case                   |list_manage.htm            |案例列表模板                 |后台显示
+case                   |show.htm                   |案例显示模板                 |前台显示
+
+
+
+
+member                 |avatar_member.htm          |会员头像模板                 |会员中心
+member                 |contact_member.htm         |会员联系方式模板             |会员中心
+member                 |copyright_manage.htm       |关于会员应用模板             |后台管理
+member                 |edit_manage.htm            |编辑会员信息模板             |后台管理
+member                 |getpassword.htm            |找回密码模板                 |前台显示
+member                 |getsms.htm                 |获取提醒模板                 |前台显示
+member                 |info_member.htm            |会员信息模板                 |会员中心
+member                 |list_manage.htm            |用户管理模板                 |后台管理
+member                 |login.htm                  |会员登录模板                 |前台显示
+member                 |login.js.htm               |会员登录JS模板               |前台显示
+member                 |login_now.htm              |会员临时登录窗口模板         |前台显示
+member                 |member.htm                 |会员管理中心模板             |会员中心
+member                 |menu.htm                   |会员管理中心菜单模板         |会员中心
+member                 |password_member.htm        |设置密码模板                 |会员中心
+member                 |register.htm               |注册页面模板                 |前台显示
+member                 |status.htm                 |会员登录状态模板             |前台显示
+member                 |system_member.htm          |会员空间配置模板             |会员中心
+member                 |addmember_manage.htm       |添加会员模板                 |后台管理
+
+
+
+memberhome             |home_member.htm            |会员中心首页模板             |会员中心
+
+
+
+pay                    |add_manage.htm             |添加模板                     |后台显示
+pay                    |taskpay.htm                |任务支付模板                 |前台显示
+pay                    |show_manage.htm            |显示管理模板                 |后台显示
+
+
+
+
+
+phpapp                 |buyer_order.js.htm         |买家订单操作JS模板(公用)     |会员中心
+phpapp                 |default.htm                |网站首页模板                 |前台显示
+phpapp                 |default_login.htm          |网站首页顶部登录模板         |前台显示
+phpapp                 |draft.js.htm               |任务稿件操作JS模板(公用)     |前台显示
+phpapp                 |file.htm                   |上传文件显示模板(公用)       |前台显示
+phpapp                 |footer.htm                 |网站底部模板(公用)           |前台显示
+phpapp                 |header.htm                 |网站头部模板(公用)           |前台显示
+phpapp                 |header_top.htm             |网站头部顶部模板(公用)       |前台显示
+phpapp                 |list_manage.htm            |网站首页调用列表模板         |前台显示
+phpapp                 |member.htm                 |网站会员中心头部模板(公用)   |会员中心
+phpapp                 |menu.htm                   |网站顶部菜单模板(公用)       |前台显示
+phpapp                 |refresh.htm                |网站跳转页面(公用)           |前台显示
+phpapp                 |refresh.htm                |网站跳转页面(公用)           |前台显示
+phpapp                 |seller_order.js.htm        |卖家订单操作JS模板(公用)     |会员中心
+phpapp                 |share.js.htm               |共享代码模板(公用)           |前台显示
+phpapp                 |task_list.js.htm           |任务列表JS模板(公用)         |前台显示
+phpapp                 |wap.htm                    |WAP手机首页模板              |前台显示
+
+
+
+help                   |add_manage.htm             |添加帮助模板                 |后台显示
+help                   |list.htm                   |帮助列表模板                 |前台显示
+help                   |list_manage.htm            |列表管理模板                 |后台显示
+help                   |show.htm                   |显示帮助模板                 |前台显示
+
+
+
+realcompany            |config_manage.htm          |认证配置模板                 |后台显示
+realcompany            |edit_manage.htm            |认证编辑模板                 |后台显示
+realcompany            |list_manage.htm            |认证列表模板                 |后台显示
+realcompany            |realcompany.htm            |实名认证申请模板             |会员中心
+realcompany            |show_manage.htm            |认证显示模板                 |后台显示
+
+
+realpersonal           |config_manage.htm          |认证配置模板                 |后台显示
+realpersonal           |edit_manage.htm            |认证编辑模板                 |后台显示
+realpersonal           |list_manage.htm            |认证列表模板                 |后台显示
+realpersonal           |realpersonal.htm           |实名认证申请模板             |会员中心
+realpersonal           |show_manage.htm            |认证显示模板                 |后台显示
+
+
+
+
+space                  |about.htm                  |空间关于我们模板             |会员中心
+space                  |column.htm                 |空间侧栏菜单模板             |会员中心
+space                  |default.htm                |空间首页模板                 |会员中心
+space                  |header.htm                 |空间头部模板                 |会员中心
+space                  |space.js.htm               |空间JS模板                   |会员中心
+space                  |style.htm                  |风格样式模板                 |会员中心
+
+
+
+
+taskone                |add.htm                    |添加任务模板                 |前台显示
+taskone                |addallow_manage.htm        |任务权限模板                 |后台显示
+taskone                |adddraft.htm               |添加稿件模板                 |前台显示
+taskone                |addmessage.htm             |添加留言模板                 |前台显示
+taskone                |addselect_manage.htm       |添加筛选模板                 |后台显示
+taskone                |allow_manage.htm           |权限管理模板                 |后台显示
+taskone                |buyer_member.htm           |买家订单管理模板             |会员中心
+taskone                |buyer_order_info_manage.htm|买家订单信息模板             |后台显示
+taskone                |buyer_order_manage.htm     |买家订单管理模板             |后台显示
+taskone                |category.htm               |列表右上分类模板             |前台显示
+taskone                |comment.htm                |点评模板                     |前台显示
+taskone                |comment_manage.htm         |点评管理模板                 |后台显示
+taskone                |config_manage.htm          |配置模板                     |后台显示
+taskone                |copyright_manage.htm       |应用版权模板                 |后台显示
+taskone                |credit.htm                 |评价模板                     |会员中心
+taskone                |draft.htm                  |稿件显示模板                 |前台显示
+taskone                |draft_manage.htm           |稿件管理模板                 |后台显示
+taskone                |draft_member.htm           |稿件管理模板                 |会员中心
+taskone                |draft_space.htm            |稿件空间显示模板             |会员空间
+taskone                |edittask_manage.htm        |编辑任务模板                 |后台显示
+taskone                |edittask_member.htm        |编辑任务模板                 |会员空间
+taskone                |feed.htm                   |任务列表动态右栏模板         |前台显示
+taskone                |file.htm                   |文件显示列表                 |前台显示
+taskone                |increase_member.htm        |任务加价                     |会员中心
+taskone                |list.htm                   |任务列表                     |前台显示
+taskone                |message.htm                |任务留言列表                 |前台显示
+taskone                |message_manage.htm         |任务留言管理列表             |后台显示
+taskone                |message_manage.htm         |任务留言管理列表             |后台显示
+taskone                |project.htm                |任务发布项目列表             |前台显示
+taskone                |refund_member.htm          |退款模板                     |会员中心
+taskone                |repotr.htm                 |举报模板                     |前台显示
+taskone                |select_manage.htm          |筛选管理模板                 |前台显示
+taskone                |seller_member.htm          |卖家订单管理模板             |会员中心
+taskone                |seller_order_info_manage.htm|卖家订单信息管理模板        |后台显示
+taskone                |seller_order_manage.htm    |卖家订单管理模板             |后台显示
+taskone                |sellorder_member.htm       |卖家订单管理模板             |会员中心
+taskone                |settask_member.htm         |任务设置管理模板             |会员中心
+taskone                |show.htm                   |任务显示页面模板             |前台显示
+taskone                |show.js.htm                |任务显示页面JS模板           |前台显示
+taskone                |task.js.htm                |任务发布JS模板               |前台显示
+taskone                |task_config_member.htm     |任务配置管理模板             |会员中心
+taskone                |task_manage.htm            |任务管理模板                 |后台显示
+taskone                |task_member.htm            |任务管理模板                 |会员中心
+taskone                |task_related.htm           |相关任务列表模板             |前台显示
+taskone                |task_space.htm             |空间任务列表模板             |会员空间
+taskone                |taskone_form.htm           |发布任务表单模板             |前台显示
+taskone                |taskrefund_manage.htm      |任务退款申请管理模板         |后台显示
+taskone                |taskreport_manage.htm      |任务举报管理模板             |后台显示
+taskone                |transaction_space.htm      |空间任务交易记录模板         |会员空间
+taskone                |user.htm                   |任务列表用户信息模板         |前台显示
+
+
+
+taskcount              |add.htm                    |添加任务模板                 |前台显示
+taskcount              |addallow_manage.htm        |任务权限模板                 |后台显示
+taskcount              |adddraft.htm               |添加稿件模板                 |前台显示
+taskcount              |addmessage.htm             |添加留言模板                 |前台显示
+taskcount              |addselect_manage.htm       |添加筛选模板                 |后台显示
+taskcount              |allow_manage.htm           |权限管理模板                 |后台显示
+taskcount              |buyer_member.htm           |买家订单管理模板             |会员中心
+taskcount              |buyer_order_info_manage.htm|买家订单信息模板             |后台显示
+taskcount              |buyer_order_manage.htm     |买家订单管理模板             |后台显示
+taskcount              |category.htm               |列表右上分类模板             |前台显示
+taskcount              |comment.htm                |点评模板                     |前台显示
+taskcount              |comment_manage.htm         |点评管理模板                 |后台显示
+taskcount              |config_manage.htm          |配置模板                     |后台显示
+taskcount              |copyright_manage.htm       |应用版权模板                 |后台显示
+taskcount              |credit.htm                 |评价模板                     |会员中心
+taskcount              |draft.htm                  |稿件显示模板                 |前台显示
+taskcount              |draft_manage.htm           |稿件管理模板                 |后台显示
+taskcount              |draft_member.htm           |稿件管理模板                 |会员中心
+taskcount              |draft_space.htm            |稿件空间显示模板             |会员空间
+taskcount              |edittask_manage.htm        |编辑任务模板                 |后台显示
+taskcount              |edittask_member.htm        |编辑任务模板                 |会员空间
+taskcount              |feed.htm                   |任务列表动态右栏模板         |前台显示
+taskcount              |file.htm                   |文件显示列表                 |前台显示
+taskcount              |increase_member.htm        |任务加价                     |会员中心
+taskcount              |list.htm                   |任务列表                     |前台显示
+taskcount              |message.htm                |任务留言列表                 |前台显示
+taskcount              |message_manage.htm         |任务留言管理列表             |后台显示
+taskcount              |message_manage.htm         |任务留言管理列表             |后台显示
+taskcount              |project.htm                |任务发布项目列表             |前台显示
+taskcount              |refund_member.htm          |退款模板                     |会员中心
+taskcount              |repotr.htm                 |举报模板                     |前台显示
+taskcount              |select_manage.htm          |筛选管理模板                 |前台显示
+taskcount              |seller_member.htm          |卖家订单管理模板             |会员中心
+taskcount              |seller_order_info_manage.htm|卖家订单信息管理模板        |后台显示
+taskcount              |seller_order_manage.htm    |卖家订单管理模板             |后台显示
+taskcount              |sellorder_member.htm       |卖家订单管理模板             |会员中心
+taskcount              |settask_member.htm         |任务设置管理模板             |会员中心
+taskcount              |show.htm                   |任务显示页面模板             |前台显示
+taskcount              |show.js.htm                |任务显示页面JS模板           |前台显示
+taskcount              |task.js.htm                |任务发布JS模板               |前台显示
+taskcount              |task_config_member.htm     |任务配置管理模板             |会员中心
+taskcount              |task_manage.htm            |任务管理模板                 |后台显示
+taskcount              |task_member.htm            |任务管理模板                 |会员中心
+taskcount              |task_related.htm           |相关任务列表模板             |前台显示
+taskcount              |task_space.htm             |空间任务列表模板             |会员空间
+taskcount              |taskone_form.htm           |发布任务表单模板             |前台显示
+taskcount              |taskrefund_manage.htm      |任务退款申请管理模板         |后台显示
+taskcount              |taskreport_manage.htm      |任务举报管理模板             |后台显示
+taskcount              |transaction_space.htm      |空间任务交易记录模板         |会员空间
+taskcount              |user.htm                   |任务列表用户信息模板         |前台显示
+
+
+
+
+
+taskgrab               |add.htm                    |添加任务模板                 |前台显示
+taskgrab               |addallow_manage.htm        |任务权限模板                 |后台显示
+taskgrab               |adddraft.htm               |添加稿件模板                 |前台显示
+taskgrab               |addmessage.htm             |添加留言模板                 |前台显示
+taskgrab               |addselect_manage.htm       |添加筛选模板                 |后台显示
+taskgrab               |allow_manage.htm           |权限管理模板                 |后台显示
+taskgrab               |buyer_member.htm           |买家订单管理模板             |会员中心
+taskgrab               |buyer_order_info_manage.htm|买家订单信息模板             |后台显示
+taskgrab               |buyer_order_manage.htm     |买家订单管理模板             |后台显示
+taskgrab               |category.htm               |列表右上分类模板             |前台显示
+taskgrab               |comment.htm                |点评模板                     |前台显示
+taskgrab               |comment_manage.htm         |点评管理模板                 |后台显示
+taskgrab               |config_manage.htm          |配置模板                     |后台显示
+taskgrab               |copyright_manage.htm       |应用版权模板                 |后台显示
+taskgrab               |credit.htm                 |评价模板                     |会员中心
+taskgrab               |draft.htm                  |稿件显示模板                 |前台显示
+taskgrab               |draft_manage.htm           |稿件管理模板                 |后台显示
+taskgrab               |draft_member.htm           |稿件管理模板                 |会员中心
+taskgrab               |draft_space.htm            |稿件空间显示模板             |会员空间
+taskgrab               |edittask_manage.htm        |编辑任务模板                 |后台显示
+taskgrab               |edittask_member.htm        |编辑任务模板                 |会员空间
+taskgrab               |feed.htm                   |任务列表动态右栏模板         |前台显示
+taskgrab               |file.htm                   |文件显示列表                 |前台显示
+taskgrab               |increase_member.htm        |任务加价                     |会员中心
+taskgrab               |list.htm                   |任务列表                     |前台显示
+taskgrab               |message.htm                |任务留言列表                 |前台显示
+taskgrab               |message_manage.htm         |任务留言管理列表             |后台显示
+taskgrab               |message_manage.htm         |任务留言管理列表             |后台显示
+taskgrab               |project.htm                |任务发布项目列表             |前台显示
+taskgrab               |refund_member.htm          |退款模板                     |会员中心
+taskgrab               |repotr.htm                 |举报模板                     |前台显示
+taskgrab               |select_manage.htm          |筛选管理模板                 |前台显示
+taskgrab               |seller_member.htm          |卖家订单管理模板             |会员中心
+taskgrab               |seller_order_info_manage.htm|卖家订单信息管理模板        |后台显示
+taskgrab               |seller_order_manage.htm    |卖家订单管理模板             |后台显示
+taskgrab               |sellorder_member.htm       |卖家订单管理模板             |会员中心
+taskgrab               |settask_member.htm         |任务设置管理模板             |会员中心
+taskgrab               |show.htm                   |任务显示页面模板             |前台显示
+taskgrab               |show.js.htm                |任务显示页面JS模板           |前台显示
+taskgrab               |task.js.htm                |任务发布JS模板               |前台显示
+taskgrab               |task_config_member.htm     |任务配置管理模板             |会员中心
+taskgrab               |task_manage.htm            |任务管理模板                 |后台显示
+taskgrab               |task_member.htm            |任务管理模板                 |会员中心
+taskgrab               |task_related.htm           |相关任务列表模板             |前台显示
+taskgrab               |task_space.htm             |空间任务列表模板             |会员空间
+taskgrab               |taskone_form.htm           |发布任务表单模板             |前台显示
+taskgrab               |taskrefund_manage.htm      |任务退款申请管理模板         |后台显示
+taskgrab               |taskreport_manage.htm      |任务举报管理模板             |后台显示
+taskgrab               |transaction_space.htm      |空间任务交易记录模板         |会员空间
+taskgrab               |user.htm                   |任务列表用户信息模板         |前台显示
+
+
+
+sellerservice          |add.htm                    |添加任务模板                 |前台显示
+sellerservice          |addallow_manage.htm        |任务权限模板                 |后台显示
+sellerservice          |adddraft.htm               |添加稿件模板                 |前台显示
+sellerservice          |addmessage.htm             |添加留言模板                 |前台显示
+sellerservice          |addselect_manage.htm       |添加筛选模板                 |后台显示
+sellerservice          |allow_manage.htm           |权限管理模板                 |后台显示
+sellerservice          |buyer_member.htm           |买家订单管理模板             |会员中心
+sellerservice          |buyer_order_info_manage.htm|买家订单信息模板             |后台显示
+sellerservice          |buyer_order_manage.htm     |买家订单管理模板             |后台显示
+sellerservice          |category.htm               |列表右上分类模板             |前台显示
+sellerservice          |comment.htm                |点评模板                     |前台显示
+sellerservice          |comment_manage.htm         |点评管理模板                 |后台显示
+sellerservice          |config_manage.htm          |配置模板                     |后台显示
+sellerservice          |copyright_manage.htm       |应用版权模板                 |后台显示
+sellerservice          |credit.htm                 |评价模板                     |会员中心
+sellerservice          |draft.htm                  |稿件显示模板                 |前台显示
+sellerservice          |draft_manage.htm           |稿件管理模板                 |后台显示
+sellerservice          |draft_member.htm           |稿件管理模板                 |会员中心
+sellerservice          |draft_space.htm            |稿件空间显示模板             |会员空间
+sellerservice          |edittask_manage.htm        |编辑任务模板                 |后台显示
+sellerservice          |edittask_member.htm        |编辑任务模板                 |会员空间
+sellerservice          |feed.htm                   |任务列表动态右栏模板         |前台显示
+sellerservice          |file.htm                   |文件显示列表                 |前台显示
+sellerservice          |increase_member.htm        |任务加价                     |会员中心
+sellerservice          |list.htm                   |任务列表                     |前台显示
+sellerservice          |message.htm                |任务留言列表                 |前台显示
+sellerservice          |message_manage.htm         |任务留言管理列表             |后台显示
+sellerservice          |message_manage.htm         |任务留言管理列表             |后台显示
+sellerservice          |project.htm                |任务发布项目列表             |前台显示
+sellerservice          |refund_member.htm          |退款模板                     |会员中心
+sellerservice          |repotr.htm                 |举报模板                     |前台显示
+sellerservice          |select_manage.htm          |筛选管理模板                 |前台显示
+sellerservice          |seller_member.htm          |卖家订单管理模板             |会员中心
+sellerservice          |seller_order_info_manage.htm|卖家订单信息管理模板        |后台显示
+sellerservice          |seller_order_manage.htm    |卖家订单管理模板             |后台显示
+sellerservice          |sellorder_member.htm       |卖家订单管理模板             |会员中心
+sellerservice          |settask_member.htm         |任务设置管理模板             |会员中心
+sellerservice          |show.htm                   |任务显示页面模板             |前台显示
+sellerservice          |show.js.htm                |任务显示页面JS模板           |前台显示
+sellerservice          |task.js.htm                |任务发布JS模板               |前台显示
+sellerservice          |task_config_member.htm     |任务配置管理模板             |会员中心
+sellerservice          |task_manage.htm            |任务管理模板                 |后台显示
+sellerservice          |task_member.htm            |任务管理模板                 |会员中心
+sellerservice          |task_related.htm           |相关任务列表模板             |前台显示
+sellerservice          |task_space.htm             |空间任务列表模板             |会员空间
+sellerservice          |taskone_form.htm           |发布任务表单模板             |前台显示
+sellerservice          |taskrefund_manage.htm      |任务退款申请管理模板         |后台显示
+sellerservice          |taskreport_manage.htm      |任务举报管理模板             |后台显示
+sellerservice          |transaction_space.htm      |空间任务交易记录模板         |会员空间
+sellerservice          |user.htm                   |任务列表用户信息模板         |前台显示
+
+    
+
+taskweibo              |add.htm                    |添加任务模板                 |前台显示
+taskweibo              |addallow_manage.htm        |任务权限模板                 |后台显示
+taskweibo              |adddraft.htm               |添加稿件模板                 |前台显示
+taskweibo              |addmessage.htm             |添加留言模板                 |前台显示
+taskweibo              |addselect_manage.htm       |添加筛选模板                 |后台显示
+taskweibo              |allow_manage.htm           |权限管理模板                 |后台显示
+taskweibo              |buyer_member.htm           |买家订单管理模板             |会员中心
+taskweibo              |buyer_order_info_manage.htm|买家订单信息模板             |后台显示
+taskweibo              |buyer_order_manage.htm     |买家订单管理模板             |后台显示
+taskweibo              |category.htm               |列表右上分类模板             |前台显示
+taskweibo              |comment.htm                |点评模板                     |前台显示
+taskweibo              |comment_manage.htm         |点评管理模板                 |后台显示
+taskweibo              |config_manage.htm          |配置模板                     |后台显示
+taskweibo              |copyright_manage.htm       |应用版权模板                 |后台显示
+taskweibo              |credit.htm                 |评价模板                     |会员中心
+taskweibo              |draft.htm                  |稿件显示模板                 |前台显示
+taskweibo              |draft_manage.htm           |稿件管理模板                 |后台显示
+taskweibo              |draft_member.htm           |稿件管理模板                 |会员中心
+taskweibo              |draft_space.htm            |稿件空间显示模板             |会员空间
+taskweibo              |edittask_manage.htm        |编辑任务模板                 |后台显示
+taskweibo              |edittask_member.htm        |编辑任务模板                 |会员空间
+taskweibo              |feed.htm                   |任务列表动态右栏模板         |前台显示
+taskweibo              |file.htm                   |文件显示列表                 |前台显示
+taskweibo              |increase_member.htm        |任务加价                     |会员中心
+taskweibo              |list.htm                   |任务列表                     |前台显示
+taskweibo              |message.htm                |任务留言列表                 |前台显示
+taskweibo              |message_manage.htm         |任务留言管理列表             |后台显示
+taskweibo              |message_manage.htm         |任务留言管理列表             |后台显示
+taskweibo              |project.htm                |任务发布项目列表             |前台显示
+taskweibo              |refund_member.htm          |退款模板                     |会员中心
+taskweibo              |repotr.htm                 |举报模板                     |前台显示
+taskweibo              |select_manage.htm          |筛选管理模板                 |前台显示
+taskweibo              |seller_member.htm          |卖家订单管理模板             |会员中心
+taskweibo              |seller_order_info_manage.htm|卖家订单信息管理模板        |后台显示
+taskweibo              |seller_order_manage.htm    |卖家订单管理模板             |后台显示
+taskweibo              |sellorder_member.htm       |卖家订单管理模板             |会员中心
+taskweibo              |settask_member.htm         |任务设置管理模板             |会员中心
+taskweibo              |show.htm                   |任务显示页面模板             |前台显示
+taskweibo              |show.js.htm                |任务显示页面JS模板           |前台显示
+taskweibo              |task.js.htm                |任务发布JS模板               |前台显示
+taskweibo              |task_config_member.htm     |任务配置管理模板             |会员中心
+taskweibo              |task_manage.htm            |任务管理模板                 |后台显示
+taskweibo              |task_member.htm            |任务管理模板                 |会员中心
+taskweibo              |task_related.htm           |相关任务列表模板             |前台显示
+taskweibo              |task_space.htm             |空间任务列表模板             |会员空间
+taskweibo              |taskone_form.htm           |发布任务表单模板             |前台显示
+taskweibo              |taskrefund_manage.htm      |任务退款申请管理模板         |后台显示
+taskweibo              |taskreport_manage.htm      |任务举报管理模板             |后台显示
+taskweibo              |transaction_space.htm      |空间任务交易记录模板         |会员空间
+taskweibo              |user.htm                   |任务列表用户信息模板         |前台显示
+
+
+
+taskguide              |add_manage.htm             |添加向导模板                 |后台显示
+taskguide              |config_manage.htm          |配置模板                     |后台显示
+taskguide              |guide.htm                  |向导显示模板                 |前台显示
+taskguide              |list_manage.htm            |列表管理模板                 |后台显示
+ 
+
+
+templateblock          |add_manage.htm             |添加模块模板                 |后台显示
+templateblock          |block_manage.htm           |修改模块模板                 |后台显示
+templateblock          |list_manage.htm            |列表模块模板                 |后台显示
+
+
+templateblock          |defaulthelp.htm            |首页帮助模块模板             |前台显示
+templateblock          |defaultlink.htm            |首页友情链接模块模板         |前台显示
+templateblock          |defaultslide.htm           |首页幻灯片模块模板           |前台显示
+templateblock          |memberhome.htm             |会员首页模块模板             |会员中心
+templateblock          |publish.htm                |首页保障公告等模块模板       |前台显示
+templateblock          |scrollad.htm               |首页滚动广告模块模板         |前台显示
+templateblock          |search.htm                 |搜索选项模块模板             |前台显示
+templateblock          |sellerserviceshow.htm      |首页卖家服务推荐模块模板     |前台显示
+templateblock          |shortcutmenu.htm           |首页左上方菜单模块模板       |前台显示
+templateblock          |taskcountshow.htm          |首页计件悬赏模块模板         |前台显示
+templateblock          |taskgrabshow.htm           |首页抢标悬赏模块模板         |前台显示
+templateblock          |taskoneshow.htm            |首页单人悬赏模块模板         |前台显示
+templateblock          |taskweiboshow.htm          |首页微博悬赏模块模板         |前台显示
+
+
+
+union                  |add_manage.htm             |添加推广模板                 |后台显示
+union                  |config_manage.htm          |配置推广模板                 |后台显示
+union                  |email.htm                  |邮件推广模板                 |前台显示
+union                  |home.htm                   |推广首页模板                 |前台显示
+union                  |link.htm                   |链接推广模板                 |前台显示
+union                  |menu.htm                   |推广工具菜单模板             |前台显示
+union                  |photo.htm                  |图片推广模板                 |前台显示
+union                  |result_member.htm          |推广提成模板                 |会员中心
+union                  |show_manage.htm            |推广显示模板                 |后台显示
+union                  |union.js.htm               |推广JS模板                   |后台显示
+union                  |user_member.htm            |推广会员列表模板             |会员中心
+
+
+
+webpage                |aboutus.htm                |关于我们模板                 |前台显示
+webpage                |contact.htm                |联系我们模板                 |前台显示
+webpage                |links.htm                  |友情链接模板                 |前台显示
+webpage                |sitemap.htm                |网站地图模板                 |前台显示
+
+
+
+

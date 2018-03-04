@@ -1,0 +1,162 @@
+{template phpapp:header}
+
+<link href="{TURL}skills.css" rel="stylesheet" type="text/css" />
+<link href="{TURL}task.css" rel="stylesheet" type="text/css" />
+<link href="{TURL}form.css" rel="stylesheet" type="text/css" />
+<link href="{TURL}member.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">var moreselect='{echo $this->GET["more"]}';</script>
+
+<script type="text/javascript" src="{echo TURL}js/list.js?v={echo $this->GetFileVersion()}"></script>
+
+{if $selectctarray[1] || $selectctarray[0]}
+       <div class="select_ctarray">
+           {if $selectctarray[0]}<h1>{echo $selectctarray[0]}{if $skill}技能{else}分类{/if} &nbsp; <a class="small blue awesome" onclick="MyFollow('{echo $catid}','{echo $skill}')">关注</a></h1>{/if}
+           <ul>
+                  {echo $selectctarray[1]}
+           </ul>
+       </div>
+{/if}
+
+<p style="padding:2px;text-align:right;">
+{if $this->GET['more']==0}
+	 <a class="small blue awesome" href="{echo $selectclass->GetSelectAllURL('more',1)}" id="NowOpenSelect">打开筛选</a>
+{else}
+	 <a class="small blue awesome" href="{echo $selectclass->GetSelectAllURL('more',0)}" id="NowOpenSelect">关闭筛选</a>
+{/if}
+</p>
+
+{if $selectitem[0]}
+    <div class="task_select_title select_now">          
+    <ul>
+        <li><h2>您已选择:</h2><p class="select_skills">{echo $selectitem[0]}</p></li>
+    </ul>
+    </div>  
+{/if}
+
+<div id="OpenSelect" style="display:none">
+
+    <div class="task_select_title">
+                 
+    <ul> 
+       {echo $selectitem[1]}         
+    </ul>
+    
+    </div>
+</div>
+
+
+<div class="task_list_nav">
+<ul>
+    {if $this->GET['tab']==1}
+    <li class="listshow_icon"><a href="{echo $selectclass->GetSelectAllURL('tab',0)}" title="切换列表" class="help_small"></a></li>
+    {else}
+    <li class="mapshow_icon"><a href="{echo $selectclass->GetSelectAllURL('tab',1)}" title="切换地图" class="help_small"></a></li>
+    {/if}
+    <li class="focus"><a href="{echo SURL}/index.php?app=49">任务列表</a> </li>
+    <li><a href="{echo SURL}/index.php?app=55">找人才</a></li>
+    <li><a href="{echo SURL}/index.php?app=82">买服务</a></li>
+</li>
+</ul>
+ <span style="padding-left:10px;float:right;">
+     <select id="TaskSelectSort"  style="margin-top:8px">
+          {for $selectarray $select}
+               {if $select['id']=='sort'}
+        
+                      {for $select['data'] $key=>$value}
+                      
+                           <option value="{echo $selectclass->GetSelectAllURL($select['id'],$key)}" {if $key==$this->GET["$select[id]"]}selected="selected"{/if} >{echo $value}</option>
+                      
+                      {/for}
+        
+               {/if}
+          {/for}
+     </select>
+ </span>
+         
+</div>
+
+
+{if $this->GET['tab']==1}
+
+       
+      {template map:task_maps}
+
+
+{else}
+
+        <div class="task_parameter">
+            <ul>
+                <li>用户</li>
+                <li style="width: 380px;">标题</li>
+                <li style="width: 120px;">投稿/中标</li>
+                <li style="width: 160px;">技能</li>
+                <li style="width: 120px;">截止时间</li>
+                <li>操作</li>
+             </ul>
+        </div>
+        
+        <!--
+        {if $page->ShowPages()}
+        <div class="ajax_page" style="margin-bottom:10px;">{echo $page->ShowPages()}</div>
+        {/if}
+        -->
+         
+        {if $list}
+          
+              {for $list $key=>$value}
+                 <div class="task_bid_show task_item{if $value['openflash']} flashbid{/if}">
+                   {if $value['topbid']>0}<div class="task_top" title="推荐"></div>{/if}
+                    <div class="task_item_info">
+                        <div class="task_list_avatar">{echo $this->GetUserAvatar($value['uid'],0,1)}</div>
+                        <div class="task_list_subject">
+                        <p><span class="color_f60">￥{if $value['price1']>0}{echo $value['price1']}-{echo $value['price2']}{else}{echo $value['money']}{/if}</span> 
+                        
+                        {if $value['credit']==1}<span class="task_list_credit">保证选标</span>{elseif $value['credit']==2}<span class="task_list_credit">不保证选标</span>{/if}
+                        {if $value['appid']==80}<span class="task_list_credit">悬赏</span>{elseif $value['appid']==83}<span class="task_list_credit">招标</span>{/if}
+                        </p>
+                        <p><a href="{echo SURL}{echo $value['url']}" target="_blank">{echo $value['subject']} {if $value['addmoney']>0} <b>+{echo $value['addmoney']}</b>{/if}</a> {if $value['topid']>0}<span class="top_icon" title="推荐置顶"></span>{/if}
+                        </p>
+                        </div>
+                        <div class="task_list_draft">{echo $value['draft_number']}/{echo $value['draft_success']}</div>
+                        <div class="task_skill">
+                            {php} $skillsarr=$skilldata->GetSkillURL($value['skills']);{/php}
+                            <ul>
+                                {if $skillsarr}
+                                    {php}$newkey=0;{/php}
+                                    {for $skillsarr $key=>$skill}
+                                         {php}$newkey++;{/php}
+                                         <li><a href="{echo $skill['url']}">{echo $skill['name']}{if $newkey!=count($skillsarr)},{/if}</a></li>
+                                    {/for}
+                                {/if}
+                            </ul>
+                        </div>
+                        <div class="task_endtime">{echo $this->Date('Y-m-d',$value['endtime'])}</div>
+                        <a href="{echo SURL}{echo $value['url']}" class="small blue awesome viewtask">查看任务</a>
+                    </div>
+                    
+                    <p class="task_description">
+                    	{if $value['hide']}{if !$this->uid}<span class="color_f60">任务内容已隐藏,请登录后查看！</span>{else}简介：{echo $value['description']}{/if}{else}简介：{echo $value['description']}{/if}
+                    </p>
+                 </div>
+              {/for}
+          
+       {else}
+             <p>暂时没有任务!</p>
+       {/if}
+         
+        
+       {if $page->ShowPages()}
+       		 <div class="ajax_page">{echo $page->ShowPages()}</div>
+       {/if}
+
+{/if}
+
+<script type="text/javascript">
+$(function(){	
+	$.PHPAPPMouseover('.task_item','.task_description');
+	$.PHPAPPTaskFlash('.flashbid',5000);
+});
+</script>
+
+{template phpapp:footer}

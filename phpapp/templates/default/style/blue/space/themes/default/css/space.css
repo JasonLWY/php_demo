@@ -1,0 +1,480 @@
+body{
+
+}
+
+.space_main {
+	overflow: hidden;
+}
+.space_main_left{
+	overflow: hidden;
+	float: left;
+}
+.space_main_right{
+	overflow: hidden;
+	float: right;
+}
+
+.space_main_right_content{
+	overflow: hidden;
+}
+
+/* 空间招牌 */
+.space_sign{
+	height: 100px;
+	margin-bottom: 12px;
+	background-color: #FFF;
+	overflow: hidden;
+}
+.space_sign_left{
+	float: left;
+	padding-top: 16px;
+}
+
+.space_sign_right{
+	float: right;
+	width: 180px;
+	padding-top: 20px;
+}
+
+.space_sign_name{
+	font-family: "微软雅黑";
+	font-weight: bold;
+	color: #09C;
+	font-size: 18px;
+}
+.space_sign_url{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	padding-bottom: 10px;
+}
+.space_hire{
+	background-color: #09C;
+	overflow: hidden;
+}
+.space_hire img{
+	float: left;
+	margin-right: 10px;
+}
+
+.space_hire_avatar{
+	float: left;
+	padding: 2px;
+}
+.space_hire p{text-align: center;}
+.space_hire p a{
+	font-family: "微软雅黑";
+	font-size: 22px;
+	font-weight: bold;
+	display: block;
+	color: #FFF;
+	padding: 10px;
+}
+.space_hire p a:hover{
+	color: #FFF;
+}
+.space_hire em{
+	font-style: normal;
+	font-size: 14px;
+	display: block;
+	overflow: hidden;
+}
+
+.space_style{
+	background-image: url(./images/style.png);
+	background-repeat: no-repeat;
+	margin-left: 16px;
+	padding-left: 20px;
+	height: 20px;
+	background-position: left top;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+
+
+/* 导航 */
+.space_navigation{
+	overflow: hidden;
+}
+.space_navigation ul{
+}
+.space_navigation ul li{
+	overflow: hidden;
+	line-height: 32px;
+	height: 32px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #EEE;
+}
+
+.space_navigation ul li a{
+	overflow: hidden;
+	line-height: 32px;
+	display: block;
+	font-size: 14px;
+	padding-left: 12px;
+	font-weight: bold;
+	color: #666;
+	height: 32px;
+	background-image: url(../images/navigation_arrow.gif);
+	background-repeat: no-repeat;
+	background-position: 206px 12px;
+}
+.space_navigation ul li a:hover{
+	text-decoration:none;
+	color:#09C;
+	background-color: #D1E4EF;
+}
+.space_navigation ul li.tab{
+    background-image: url(../images/navigation_bg.gif);
+}
+.space_navigation ul li.tab a{
+	background-image: url(../images/navigation_arrow.gif);
+	background-repeat: no-repeat;
+	background-position: 206px -28px;
+	font-weight: bold;
+	color: #FFF;
+}
+
+/* 动态 */
+
+.feed{
+	padding-bottom: 12px;
+	padding-bottom: 10px;
+	overflow: hidden;
+}
+.feed ul{
+	height: 232px;
+	overflow: hidden;
+	padding-top: 10px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+}
+.feed ul li{
+	line-height: 18px;
+	height: 32px;
+	font-size: 13px;
+	border-bottom-width: 1px;
+	border-bottom-style: dashed;
+	border-bottom-color: #EBEBEB;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+.feed ul li em{
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: bold;
+	color: #F60;
+}
+
+
+
+/* 高度 */
+.space_main_left_width{
+	width: 230px;
+	overflow: hidden;
+
+}
+.space_main_right_width{
+	overflow: hidden;
+	width: 72%;
+}
+.sidebar_width{
+	width: 230px;
+	float: right;
+	overflow: hidden;
+}
+
+/* 框架 */
+.space_box{
+	overflow: hidden;
+	background-color: #FFF;
+	margin-bottom: 10px;
+}
+.space_box h2{
+	background-color: #F0FAFF;
+	font-size: 14px;
+	line-height: 28px;
+	padding-left: 16px;
+	color: #09C;
+}
+.space_box h2 em{
+	font-size: 12px;
+	font-style: normal;
+	color: #999;
+	float: right;
+	padding-right: 10px;
+	font-weight: normal;
+}
+.space_box h2 em a{
+	color: #999;
+	font-weight: normal;
+}
+
+/* 个人信息 */
+.avatar{
+	text-align: center;
+	border: 1px solid #EEE;
+	padding: 10px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}
+
+.username{
+	line-height: 26px;
+	font-weight: bold;
+	text-align: center;
+}
+.user_info{
+	padding-bottom: 20px;
+	line-height: 24px;
+}
+.userlevel{
+	text-align:center;
+}
+.about{
+	line-height: 20px;
+	padding: 20px;
+}
+.friend ul{
+	overflow: hidden;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-left: 10px;
+}
+.friend ul li{
+	float: left;
+	width: 70px;
+	margin-bottom: 10px;
+	text-align: center;
+	line-height: 28px;
+}
+.friend ul li img{
+	padding: 1px;
+	border: 1px solid #E6E6E6;
+}
+
+/* 任务 */
+
+.space_list{
+	padding-bottom: 10px;
+}
+
+.space_residecity{
+	font-size: 12px;
+	color: #09C;
+	line-height: 36px;
+}
+
+
+
+/* 图片 */
+
+.photo_list{
+	overflow: hidden;
+	padding-top: 20px;
+	padding-right: 0px;
+}
+
+.photo_list ul{overflow: hidden;}
+
+.photo_list ul li {
+	float: left;
+	margin-right: 10px;
+	height: 240px;
+	width: 200px;
+	overflow: hidden;
+	margin-bottom: 10px;
+	border: 2px solid #E6E6E6;
+	padding-top: 3px;
+	padding-right: 3px;
+	padding-bottom: 10px;
+	padding-left: 3px;
+}
+
+.photo_list ul li h5{
+	font-size: 12px;
+	line-height: 26px;
+	height: 26px;
+	clear: both;
+	color: #333;
+	overflow: hidden;
+}
+.photo_list ul li div.photo{
+	text-align: center;
+	width: 200px;
+	height: 200px;
+	vertical-align:middle;
+	display:table-cell;
+	text-align: center;
+	overflow: hidden;
+	background-color: #F0FAFF;
+}
+
+
+
+
+
+/* 服务 */
+
+.service_show{
+	overflow: hidden;
+}
+
+.service_info{
+	overflow: hidden;
+}
+
+.service_info .photo{
+	border: 5px solid #E6E6E6;
+	float: left;
+	margin-right: 50px;
+}
+
+.service_info .photo img{
+	width: 200px;
+}
+
+.service_info .sellnum{
+	font-size: 20px;
+	color: #F30;
+	font-family: Arial, Helvetica, sans-serif;
+	font-style: italic;
+	font-weight: bold;
+}
+
+.service_parameter{
+	float: left;
+	line-height: 32px;
+	color: #666;
+}
+.service_parameter h5{
+	color: #333;
+	font-size: 16px;
+}
+
+.service_map{
+	padding-bottom: 20px;
+}
+.service_map h4{
+	line-height: 26px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #E6E6E6;
+	margin-bottom: 10px;
+}
+
+.service_content{
+	overflow: hidden;
+	line-height: 22px;
+}
+
+.service_content h4{
+	line-height: 26px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #E6E6E6;
+	margin-bottom: 10px;
+}
+.buy_service{
+	margin-top: 20px;
+}
+.buy_service a{
+	background-image: url(../images/buy_service.gif);
+	display: block;
+	height: 36px;
+	width: 105px;
+	overflow: hidden;
+	font-size: 16px;
+	font-weight: bold;
+	padding-left: 45px;
+	line-height: 38px;
+}
+
+
+/*评分*/
+
+.user_score{
+	height: 50px;
+	background-color: #F0FAFF;
+	border: 1px solid #EEE;
+	padding: 6px;
+}
+.seller_score_name{
+	float: left;
+	width: 50px;
+	padding-right: 10px;
+}
+.seller_score_name p{
+	line-height: 17px;
+	overflow: hidden;
+	height: 17px;
+}
+.seller_score{float: left;}
+
+
+.myskill{
+	overflow: hidden;
+}
+.myskill ul{
+	padding: 10px;
+	overflow: hidden;
+}
+.myskill ul a{
+	background-color: #0578BF;
+	padding-right: 12px;
+	padding-left: 12px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	color: #FFF;
+	text-decoration: none;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	margin-right: 10px;
+}
+
+.myskill ul a:hover{
+	background-color: #FC0;
+	color: #000;
+}
+
+.seller_credit{
+	overflow: hidden;
+}
+.seller_credit ul{
+	padding: 10px;
+	overflow: hidden;
+}
+
+
+.seller_credit h3{
+	font-size: 12px;
+	line-height: 20px;
+	color: #666;
+	overflow: hidden;
+	padding: 10px;
+}
+.seller_credit ul li{
+	overflow: hidden;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #DDD;
+}
+.seller_credit ul li div{
+	float: left;
+	width: 50px;
+	margin-right: 10px;
+}
+.seller_credit_username a{
+	color: #09C;
+}
+.seller_credit_hao{
+	color: #090;
+}
+.seller_credit_username dfn{
+	font-style: normal;
+	float: right;
+}

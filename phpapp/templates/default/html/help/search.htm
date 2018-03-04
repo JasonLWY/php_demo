@@ -1,0 +1,44 @@
+{template phpapp:header}
+
+{template search_top}
+
+<link href="{TURL}search.css" rel="stylesheet" type="text/css" />
+
+<div class="search_list">
+
+{if $list}        
+
+<h5>搜到 <strong>{echo $page->GetShowNum()}</strong> 个帮助</h5> 
+
+ 
+      {for $list $key=>$value}
+           {if $value['subject']}
+                  <dl>
+                  <dt>
+                  <a href="index.php?app=57&action=2&hid={echo $value['hid']}" title="{echo $value['subject']}">{echo $this->ReplaceRed($search,$value['subject'])}</a>
+                  </dt>
+                  </dl>
+                 
+           {/if}
+      {/for}  
+      
+
+{if $page->ShowPages()}
+      <div class="ajax_page">{echo $page->ShowPages()}</div>
+{/if}
+
+      
+{else} 
+     <dl>
+          <dt>
+          找不到数据!
+          </dt>
+     </dl>
+    
+{/if}
+
+</div>
+
+
+
+{template phpapp:footer}

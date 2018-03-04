@@ -1,0 +1,147 @@
+{template phpapp:header_top}
+
+<link href="{TURL}member.css" rel="stylesheet" type="text/css" />
+
+<link href="{TURL}form.css" rel="stylesheet" type="text/css" />
+
+
+<div class="member_left"> 
+    
+     
+     {php}   
+      //菜单数组
+      
+      $MemberMenu=array(
+               array('icon'=>'member_home','name'=>'首页','usertype'=>0,'appid'=>9,'menu'=>0),
+               array('name'=>'我的需求','usertype'=>0,'hide'=>0,'menu'=>array(
+                       array('icon'=>'member_order','name'=>'订单','usertype'=>0,'appid'=>48),
+                       array('icon'=>'member_task','name'=>'任务','usertype'=>1,'appid'=>49,'action'=>10),
+                       array('icon'=>'member_draft','name'=>'中标','usertype'=>2,'appid'=>49,'action'=>11),
+                       array('icon'=>'member_comment','name'=>'评论','usertype'=>0,'appid'=>49,'action'=>12),
+                       array('icon'=>'member_favorites','name'=>'收藏','usertype'=>0,'appid'=>49,'action'=>13),
+                       array('icon'=>'member_follow','name'=>'关注','usertype'=>0,'appid'=>49,'action'=>14)
+               )),
+
+               array('name'=>'我的服务','usertype'=>1,'appid'=>82,'menu'=>array(
+                       array('icon'=>'member_hire','name'=>'发布服务','usertype'=>2,'appid'=>82,'action'=>1),
+                       array('icon'=>'member_hire','name'=>'出售中的服务','usertype'=>2,'appid'=>82,'action'=>3),
+                       array('icon'=>'member_hire','name'=>'已卖出的服务','usertype'=>2,'appid'=>82,'action'=>5)
+                       
+                )),
+                       
+               array('name'=>'我的雇用','usertype'=>2,'appid'=>82,'menu'=>array(
+               		   array('icon'=>'member_hire','name'=>'雇用的服务','usertype'=>1,'appid'=>82,'action'=>6)
+               )),
+      
+               array('name'=>'我的消息','usertype'=>0,'hide'=>0,'menu'=>array(
+                       array('icon'=>'member_sms','name'=>'收信箱','usertype'=>0,'appid'=>7),
+                       array('icon'=>'member_notice','name'=>'通知','usertype'=>0,'appid'=>45)
+               )),   
+                   
+               array('name'=>'我的帐号','usertype'=>0,'menu'=>array(
+                       array('icon'=>'member_basic','name'=>'基本信息','usertype'=>0,'appid'=>2),
+                       array('icon'=>'member_skills','name'=>'技能','usertype'=>0,'appid'=>27),
+                       array('icon'=>'member_minute','name'=>'积分','usertype'=>0,'appid'=>4),
+                       array('icon'=>'member_net','name'=>'帐号通','usertype'=>0,'appid'=>19),
+                       array('icon'=>'member_maps','name'=>'地图','usertype'=>0,'appid'=>70)
+               )),  
+               
+               array('name'=>'我的金钱','usertype'=>0,'hide'=>0,'appid'=>5,'menu'=>array(
+                       array('icon'=>'member_transaction','name'=>'交易记录','usertype'=>0,'appid'=>5,'action'=>1),
+                       array('icon'=>'member_pay','name'=>'充值','usertype'=>0,'appid'=>5,'action'=>2),
+                       array('icon'=>'member_payout','name'=>'提现','usertype'=>0,'appid'=>5,'action'=>3)
+               )),
+               
+               /*
+               
+               array('name'=>'消费者保障服务','usertype'=>1,'hide'=>0,'appid'=>44,'menu'=>array(
+                       array('icon'=>'member_security','name'=>'申请保障服务','usertype'=>0,'appid'=>44,'action'=>1),
+                       array('icon'=>'member_security_manage','name'=>'保证金管理','usertype'=>0,'appid'=>44,'action'=>2),
+                       array('icon'=>'member_security_use','name'=>'保证金使用','usertype'=>0,'appid'=>44,'action'=>3)
+               )),
+               
+               */
+           
+               
+               array('name'=>'我的认证','usertype'=>0,'menu'=>array(
+                       array('icon'=>'member_vip','name'=>'VIP认证','usertype'=>0,'appid'=>26),
+                       array('icon'=>'member_email','name'=>'邮箱认证','usertype'=>0,'appid'=>14),
+                       array('icon'=>'member_mobile','name'=>'手机认证','usertype'=>0,'appid'=>21),
+                       array('icon'=>'member_realname','name'=>'实名认证','usertype'=>0,'appid'=>15)
+               )),
+               
+               array('name'=>'我的道具','usertype'=>0,'hide'=>0,'appid'=>11,'menu'=>array(
+               		   array('icon'=>'member_props','name'=>'道具商店','usertype'=>0,'appid'=>11)
+               )),
+               
+               array('name'=>'我的推广','usertype'=>0,'hide'=>1,'appid'=>20,'menu'=>array(
+               		   array('icon'=>'member_union','name'=>'推广业绩','usertype'=>0,'appid'=>20)
+               )),
+               
+               array('name'=>'我的维权','usertype'=>0,'hide'=>0,'menu'=>array(
+                       array('icon'=>'member_refund','name'=>'退款管理','usertype'=>0,'appid'=>43,'action'=>3),
+               		   array('icon'=>'member_rights','name'=>'维权管理','usertype'=>0,'appid'=>42,'action'=>3),
+              		   array('icon'=>'member_report','name'=>'举报管理','usertype'=>0,'appid'=>47)
+               ))
+      );
+     
+
+     $usertype=intval($LoginMemberArray['userpost']);
+     
+     {/php}  
+
+        <div class="member_menu">
+            
+             {for $MemberMenu $mkey=>$value}
+                   
+                  {if $value['icon']}
+                      <ul>
+                           <li{if $this->app==$value['appid'] && $this->ac==$value['action']} class="tab"{elseif $this->app==$value['appid'] && !$value['action'] && $this->ac } class="tab"{/if}><a href="{SURL}/member.php?app={echo $value['appid']}{if $value['action']}&action={echo $value['action']}{/if}" class="{echo $value['icon']}">{echo $value['name']}</a></li>
+                      </ul>
+                  {else}
+                  
+                      <h2><a id="MemberMenuIconID{echo $mkey}" class="member_menu_add{if $this->app!=$value['appid']}{if $usertype==$value['usertype'] || $value['hide']} remove{/if}{/if}" href="javascript:void(0);" onclick="ShowMemberMenu({echo $mkey});">{echo $value['name']}</a></h2>
+                      
+                      <ul id="MemberMenuID{echo $mkey}"{if $this->app!=$value['appid']}{if $usertype==$value['usertype'] || $value['hide']} style="display:none;"{/if}{/if}>
+                            {for $value['menu'] $childmenu}
+                                    <li{if $this->app==$childmenu['appid'] && $this->ac==$childmenu['action']} class="tab"{elseif $this->app==$childmenu['appid'] && !$childmenu['action'] && $this->ac } class="tab"{/if}><a href="{SURL}/member.php?app={echo $childmenu['appid']}{if $childmenu['action']}&action={echo $childmenu['action']}{/if}" class="{echo $childmenu['icon']}">{echo $childmenu['name']}</a></li>                                
+                            {/for}
+
+                      </ul>
+                   
+                  {/if}
+           
+             {/for}
+  
+        
+        </div>
+
+</div>
+              
+<div class="member_right">
+     
+   {if $this->app!=9}     
+         {php}   
+         $appaction=$this->GetMysqlArray('*'," ".$this->GetTable('apps_action')." WHERE apps_phpapp=".$this->app." AND type_phpapp=2  ORDER BY displayorder_phpapp ASC");
+         {/php} 
+          
+          {if $appaction}
+          <div class="manage_menu" id="ManageMenu">
+          <ul>
+              {for $appaction $key=>$value}
+                   {if $this->ac==0}
+                        {if $key==0} 
+                             <li class="now_meun_tab"><a href="{SURL}/member.php?app={echo $this->app}">{echo $value['name_phpapp']}</a></li>
+                        {else}    
+                        <li{if $this->ac==$value['aid_phpapp']} class="now_meun_tab"{else}{if $value['menu_phpapp']==1} style="display:none"{/if}{/if}><a href="{SURL}/member.php?app={echo $this->app}&action={echo $value['aid_phpapp']}">{echo $value['name_phpapp']}</a></li>
+                        
+                        {/if}
+                   {else}
+           <li{if $this->ac==$value['aid_phpapp']} class="now_meun_tab"{else}{if $value['menu_phpapp']==1} style="display:none"{/if}{/if}><a href="{if $value['menu_phpapp']==1}{SURL}/member.php{echo $this->MakeGetParameterURL()}{else}{SURL}/member.php?app={echo $this->app}&action={echo $value['aid_phpapp']}{/if}">{echo $value['name_phpapp']}</a></li>
+                   {/if}
+              {/for}
+          </ul>
+          </div>
+          {/if}
+    {/if}
+          

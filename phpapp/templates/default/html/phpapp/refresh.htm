@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={echo S_CHARSET}" />
+<title>系统提示页面</title>
+
+{if !$istime}
+<meta http-equiv="refresh" content="2;url={echo $url}">
+{/if}
+
+<link href="{TURL}refresh.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+<div class="showmsg">
+
+<h2>系统提示</h2>
+
+<ul><p>{echo $msg}<p></ul>
+
+{if !$istime}
+<div class="opmenu"><a href="{echo $url}">手动跳转</a> | <a href="{echo SURL}">返回首页</a></div>
+{/if}
+
+</div>
+<div class="footer"><p>&copy; {echo $this->Date("Y",$this->NowTime())} {echo PHPAPP::$config['sitename']} 版权所有</p></div>
+
+</body>
+
+</html>

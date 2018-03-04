@@ -1,0 +1,88 @@
+{template phpapp:header}
+
+<link href="{TURL}case.css" rel="stylesheet" type="text/css" />
+
+
+<div class="help_list">
+
+
+<div class="list_left"> 
+
+      <div class="showhelp">
+            <h2>{echo $show['subject']}</h2>
+
+            
+            {if $fieldarray=$this->GetTableFieldArray('case')}
+           <!-- 自定义字段-->
+           <div class="fieldlist">
+                 {for $fieldarray $field}
+                 <p><strong>{echo $field['name_phpapp']}</strong>： {echo $this->str($show[$field['field_phpapp']],99999,0,1,0,0,1)}</p>
+                 {/for}
+           </div>
+           <!-- 自定义字段 end-->
+           {/if}
+     
+     
+            <div style="padding:20px;">
+                {echo $this->str($show['content'],9999999,0,1,0,0,1)}
+            </div>
+            
+  
+      </div>
+      
+      <p style="text-align:right;"><a href="{echo SURL}/index.php?app=122">[返回]</a></p>
+      
+      
+      {php} $uptask=$this->GetMysqlOne('cid,subject'," ".$this->GetTable('case')."  WHERE cid<'$cid'  ORDER BY cid DESC LIMIT 0,1"); {/php}
+{php} $nexttask=$this->GetMysqlOne('cid,subject'," ".$this->GetTable('case')."  WHERE cid>'$cid' LIMIT 0,1"); {/php}
+<div class="nexttask" style="font-size:16px">
+<ul>
+  <li><strong>上一条案例：</strong>{if $uptask}<a href="index.php?app={echo $this->app}&action={echo $this->ac}&cid={echo $uptask['cid']}" title="{echo $uptask['subject']}">{echo $uptask['subject']}</a>{else}暂无数据{/if}</li>
+  <li><strong>下一条案例：</strong>{if $nexttask}<a href="index.php?app={echo $this->app}&action={echo $this->ac}&cid={echo $nexttask['cid']}" title="{echo $nexttask['subject']}">{echo $nexttask['subject']}</a>{else}暂无数据{/if}</li>
+</ul>
+</div>
+      
+
+</div>
+
+
+
+
+<div class="list_right"> 
+ 
+ <div class="task_box_right help_category">
+          <h2>案例分类</h2>
+          
+          <ul id="HelpCategory">
+             {php}
+                 $category=$this->GetMysqlArray('*'," ".$this->GetTable('category')." WHERE type='49' AND upid=0  ORDER BY displayorder ASC");
+             {/php}
+             
+             {if $category}
+                   {for $category $value}
+                      <li><a href='{echo SURL}/index.php?app=10&action={echo $value['catid']}&type=122' {if $value['classname']} class="{echo $value['classname']}"{/if}>{echo $value['name']}</a></li>
+                   {/for}
+             {/if}
+          
+          </ul>
+          
+          </div>
+          <script type="text/javascript">
+          $(function(){	
+                    $("#HelpCategory li:last-child").css("border","0"); 
+                        
+          });
+          </script>
+          
+    
+</div>
+
+
+
+
+     
+</div>
+
+
+
+{template phpapp:footer}

@@ -1,0 +1,7 @@
+<p>上传文件交接内容：</p>
+{template editor:editor}
+<script type="text/javascript">$(function(){$.PHPAPPEditor('SellContent','660','260');});</script>
+<textarea id="SellContent" class="form_editor">{if !empty($draftorder['content'])}{echo $this->str($draftorder['content'],999999,0,1,0,1,1)}{/if}</textarea>
+<p style="text-align:center;padding:10px;">
+<input name="Submit" type="button" value="提交"  onclick="UploadOrderFile('{echo $draftorder['oid']}')" class="form_button"/>
+</p>

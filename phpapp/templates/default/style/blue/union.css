@@ -1,0 +1,690 @@
+/*ÍÆ¹ã*/
+
+.union_top{
+	background-image: url(./images/union/union_top.png);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	height: 60px;
+	border: 1px solid #E8E8E8;
+	margin-bottom: 10px;
+}
+.union_top ul{
+	padding-left: 200px;
+	padding-top: 12px;
+}
+.union_top ul li{
+	float: left;
+	width: 162px;
+}
+.uniontopnum{
+	color:#666;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.uniontop ul{
+	padding-top: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	padding-left: 14px;
+}
+.uniontop ul li{
+	line-height: 22px;
+}
+
+.union_box{
+	border: 1px solid #E1E1E1;
+	overflow: hidden;
+}
+
+.union_box h2{
+	background-image: url(./images/h2_bg.png);
+	background-repeat: repeat-x;
+	line-height: 32px;
+	padding-left: 12px;
+	background-position: left bottom;
+	font-size: 12px;
+}
+
+.union_member ul{
+	padding:16px;
+	overflow: hidden;
+}
+
+.union_member ul li{
+	float: left;
+}
+
+.union_member ul li p{
+	line-height: 24px;
+}
+
+.union_member_avatar{
+	border: 1px solid #E1E1E1;
+	padding: 1px;
+	float: left;
+}
+
+
+.union_item{
+	margin-bottom: 10px;
+}
+.union_item ul{
+	padding-top: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+}
+
+.union_item ul li{
+	float: left;
+	line-height: 28px;
+	font-size: 13px;
+}
+
+.default_service .union_menu0 a:hover{
+	background-image: url(./images/union/menu.png);
+	background-repeat: no-repeat;
+	background-position: 2px top;
+}
+
+.default_service .union_menu1 a:hover{
+	background-image: url(./images/union/menu.png);
+	background-repeat: no-repeat;
+	background-position: 2px -31px;
+}
+
+.default_service .union_menu2 a:hover{
+	background-image: url(./images/union/menu.png);
+	background-repeat: no-repeat;
+	background-position: 2px -62px;
+}
+
+.default_service .union_menu3 a:hover{
+	background-image: url(./images/union/menu.png);
+	background-repeat: no-repeat;
+	background-position: 2px -93px;
+}
+
+.default_service .union_menu4 a:hover{
+	background-image: url(./images/union/menu.png);
+	background-repeat: no-repeat;
+	background-position: 2px -124px;
+}
+
+.link_right{
+	overflow: hidden;
+}
+
+.link_right ul,.link_right2 ul{
+	padding: 20px;
+}
+
+.link_right ul li{
+	height: 50px;
+}
+
+
+.link_right h3,.link_right2 h3{
+	line-height: 36px;
+	font-size: 12px;
+	color: #F60;
+	padding-left: 20px;
+}
+
+.link_right2 p{line-height: 26px;}
+
+.default_main{
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+.default_service{
+	background-image: url(./images/union/menu.png);
+	height: 260px;
+	width: 192px;
+	border: 1px solid #ffc9a0;
+	background-color: #fffce6;
+	float: left;
+	margin-right: 12px;
+	background-repeat: no-repeat;
+	background-position: 10px 32px;
+}
+
+.default_service ul{
+	padding-right: 8px;
+	padding-left: 8px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+.default_service h2{
+	font-size: 14px;
+	font-weight: bold;
+	color: #000;
+	font-family: "Î¢ÈíÑÅºÚ";
+	line-height: 28px;
+}
+
+.default_service ul li{
+	line-height: 30px;
+	font-size: 13px;
+	font-weight: normal;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #ffedce;
+}
+
+.default_service ul li a{
+	line-height: 30px;
+	display: block;
+	padding-left: 34px;
+}
+
+.default_service ul li a:hover{
+	text-decoration: none;
+	color: #F60;
+	background-color: #FFF;
+}
+
+.default_service ul li dfn{
+	padding-right: 8px;
+	float: right;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 12px;
+	color: #F60;
+}
+
+.default_service ul li dfn a:hover{
+	text-decoration: none;
+	color: #F60;
+	background-color: #fffce6;
+}
+
+.default_service ul li .new{
+	background-image: url(./images/union/new.gif);
+	background-repeat: no-repeat;
+	background-position: 10px 6px;
+	position: absolute;
+	height: 20px;
+	width: 32px;
+	display: block;
+	margin-top: -10px;
+	margin-left: 70px;
+}
+
+.default_ad{
+	float: left;
+	overflow: hidden;
+	width: 441px;;
+}
+
+.default_slide{
+	overflow: hidden;
+	height: 260px;
+	background-color: #999;
+}
+
+.default_slide ul li{
+	overflow: hidden;
+}
+
+	
+.slidetitle{
+	overflow: hidden;
+	height: 24px;
+}
+	
+.slidetitle li{
+	float: left;
+	display: block;
+}
+.slidetitle li a{
+	display: block;
+	padding-right: 18px;
+	padding-left: 18px;
+	line-height: 26px;
+	color: #FFF;
+}
+
+.slidetitle li.focus a,.slidetitle li.focus a:hover{
+	color: #000;
+	background-color: #F3F3F3;
+	font-weight: bold;
+}
+
+.default_weight_task{
+	background-image: url(./images/union/box_bottom_bg.png);
+	background-repeat: repeat-x;
+	border: 1px solid #E1E1E1;
+	height: 130px;
+	margin-top: 10px;
+	overflow: hidden;
+	background-position: left bottom;
+}
+.default_weight_task .leftarrow{
+	float: left;
+	overflow: hidden;
+	width: 24px;
+}
+.default_weight_task .leftarrow a{
+	background-image: url(./images/union/leftarrow.png);
+	background-repeat: no-repeat;
+	width: 24px;
+	display: block;
+	height: 130px;
+	background-position: center center;
+}
+
+
+.default_weight_task .rightarrow{
+	float: left;
+	overflow: hidden;
+	width: 24px;
+}
+.default_weight_task .rightarrow a{
+	background-image: url(./images/union/rightarrow.png);
+	background-repeat: no-repeat;
+	width: 24px;
+	display: block;
+	height: 130px;
+	background-position: center center;
+}
+
+.default_weight_task ul{
+	float: left;
+	width: 452px;
+	overflow: hidden;
+	height: 130px;
+}
+
+.default_weight_task ul div{
+	width: 500px;
+}
+
+.default_weight_task ul li{
+	float: left;
+	width: 222px;
+	height: 118px;
+	margin-right: 14px;
+	text-align: center;
+	padding-top: 12px;
+}
+
+.default_left{
+	float: left;
+	width: 648px;
+	overflow: hidden;
+}
+.default_right{
+	float: right;
+	overflow: hidden;
+	width: 260px;
+}
+.banner{
+	margin-bottom: 10px;
+}
+
+#NoticeTab .defaultnotice{
+	padding-left:10px;
+	padding-right:0px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-right-color: #E1E1E1;
+	border-bottom-color: #E1E1E1;
+	border-left-color: #E1E1E1;
+}
+
+#NoticeTab .defaultnotice li{
+	line-height: 22px;
+}
+
+#NoticeTab .defaultnotice li dfn{
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	color: #999;
+}
+
+#TaskOneRight .task_list_24{
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-right-color: #E1E1E1;
+	border-bottom-color: #E1E1E1;
+	border-left-color: #E1E1E1;
+}
+
+.banner_260{padding-bottom: 10px;}
+
+.task_feed{
+	padding-bottom: 12px;
+}
+.task_feed ul{
+	height: 261px;
+	overflow: hidden;
+	padding-right: 12px;
+	padding-left: 12px;
+}
+.task_feed ul li{
+	line-height: 18px;
+	height: 59px;
+	font-size: 13px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #EBEBEB;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+.task_feed ul li em{
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: bold;
+	color: #F60;
+}
+
+
+.default_register{
+	background-image: url(./images/union/h2_bg.png);
+	background-repeat: repeat-x;
+	background-position: left bottom;
+	border: 1px solid #E1E1E1;
+	overflow: hidden;
+	margin-bottom: 8px;
+	height: 32px;
+}
+
+.default_register ul{
+	overflow: hidden;
+	background-image: url(./images/union/login.png);
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	height: 32px;
+}
+
+.default_register ul li{
+	float: left;
+	line-height: 34px;
+	font-family: "Î¢ÈíÑÅºÚ";
+	font-size: 14px;
+	font-weight: bold;
+	color: #F60;
+	padding-left: 35px;
+}
+
+.default_task_list ul h3{
+	float: left;
+	font-family: "Î¢ÈíÑÅºÚ";
+	font-size: 16px;
+	line-height: 32px;
+	font-weight: bold;
+	width: 114px;
+}
+
+.default_task_list ul dfn{
+	font-style: normal;
+	font-weight: normal;
+	float: right;
+	margin-right: 10px;
+	line-height: 32px;
+}
+
+
+#TaskOne .defaulttaskline,#TaskOneRight .defaulttaskline{
+	padding-left:10px;
+	padding-right:0px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-right-color: #E1E1E1;
+	border-bottom-color: #E1E1E1;
+	border-left-color: #E1E1E1;
+	background-image: url(./images/union/box_bottom_bg.png);
+	background-repeat: repeat-x;
+	background-position: left bottom;
+}
+
+.default_site_help{
+	border: 3px solid #E8E8E8;
+	overflow: hidden;
+}
+
+.default_site_help ul{
+	float: left;
+	width: 230px;
+	overflow: hidden;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.default_site_help ul li{
+	padding-left: 80px;
+	line-height: 26px;
+}
+
+
+.default_site_help .site_help{
+	background-image: url(./images/union/help.png);
+	background-repeat: no-repeat;
+	background-position: 46px 4px;
+	font-family: "Î¢ÈíÑÅºÚ";
+	font-size: 16px;
+	line-height: 36px;
+	font-weight: bold;
+	color: #000;
+}
+
+.default_site_help .site_auction{
+	background-image: url(./images/union/auction.png);
+	background-repeat: no-repeat;
+	background-position: 46px 4px;
+	font-family: "Î¢ÈíÑÅºÚ";
+	font-size: 16px;
+	line-height: 36px;
+	font-weight: bold;
+	color: #000;
+}
+
+
+.default_site_help .site_pay{
+	background-image: url(./images/union/pay.png);
+	background-repeat: no-repeat;
+	background-position: 46px 4px;
+	font-family: "Î¢ÈíÑÅºÚ";
+	font-size: 16px;
+	line-height: 36px;
+	font-weight: bold;
+	color: #000;
+}
+
+.default_site_help .site_heart{
+	background-image: url(./images/union/heart.png);
+	background-repeat: no-repeat;
+	background-position: 46px 4px;
+	font-family: "Î¢ÈíÑÅºÚ";
+	font-size: 16px;
+	line-height: 36px;
+	font-weight: bold;
+	color: #000;
+}
+.default_link{
+	border-top-width:1px;
+	border-top-style:solid;
+	border-top-color:#E7E7E7;
+	overflow: hidden;
+}
+.default_link h2{
+	background:#F9F9F9;
+	line-height: 30px;
+	padding-left: 12px;
+	overflow: hidden;
+}
+
+.default_link h2 dfn{
+	font-style: normal;
+	font-weight: normal;
+	float: right;
+	font-size: 12px;
+	padding-right: 10px;
+}
+
+.default_link ul{
+	overflow: hidden;
+	padding-left: 12px;
+}
+
+.default_link ul li{
+	float: left;
+	width: 120px;
+	overflow: hidden;
+}
+
+.default_link ul li a{
+	line-height: 28px;
+}
+
+.taskcategory{overflow: hidden;}
+.taskcategory h4{
+	overflow: hidden;
+	line-height: 28px;
+	height: 52px;
+	float: left;
+	width: 80px;
+	color: #0092d2;
+}
+
+.taskcategory h4 a{
+	color: #0092d2;
+}
+
+.taskcategory h4 a:hover{
+	color: #0092d2;
+}
+
+.taskcategory ul{
+	overflow: hidden;
+	padding-left: 8px;
+}
+.taskcategory ul li{
+	float: left;
+}
+
+.taskcategory ul li a{
+	display: block;
+	line-height: 26px;
+	width: 150px;
+	overflow: hidden;
+}
+
+.taskcategory ul li a:hover{
+	color: #F60;
+}
+
+.datalist tr td{
+	background-image: url(./images/union/line.png);
+	background-repeat: repeat-x;
+	background-position: center bottom;
+	color: #666;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	line-height: 30px;
+}
+.datalist tr.over td {
+	background-color: #F5F5F5;
+}
+
+.task_list_money{
+	padding-left: 20px;
+	width: 80px;
+}
+.task_list_subject{width: 320px;font-size: 13px;}
+.task_list_draft{
+	width: 90px;
+	text-align: center;
+}
+.task_list_credit{width: 100px;}
+
+.tasklist a:hover{
+	color: #F60;
+}
+
+/* Ó¦ÓÃÐ¡Í¼±êÑùÊ½------------------------------------------------------------------------------------------------------------------*/
+
+
+.coins_ico{
+	background-image: url(./images/union/icon/coins_ico.png);
+	background-repeat: no-repeat;
+	background-position: 10px 6px;
+}
+
+
+.apppay_ico{
+	background-image: url(./images/union/icon/apppay_ico.png);
+	background-repeat: no-repeat;
+	background-position: 10px 6px;
+}
+
+.siteservice_ico{
+	background-image: url(./images/union/icon/siteservice_ico.png);
+	background-repeat: no-repeat;
+	background-position: 10px 4px;
+}
+
+.certificate_ico{
+	background-image: url(./images/union/certificate_ico.png);
+	background-repeat: no-repeat;
+	background-position: 10px 4px;	
+}
+
+
+.email_ico{
+	background-image: url(./images/union/email_ico.png);
+	background-repeat: no-repeat;
+	background-position: 10px 4px;	
+}
+
+.realpersonal_ico{
+	background-image: url(./images/union/icon/realpersonal_ico.png);
+	background-repeat: no-repeat;
+	background-position: 10px 6px;	
+}
+
+
+.realcompany_ico{
+	background-image: url(./images/union/icon/realcompany_ico.png);
+	background-repeat: no-repeat;
+	background-position: 10px 6px;	
+}
+
+
+.phone_ico{
+	background-image: url(./images/union/icon/phone_ico.png);
+	background-repeat: no-repeat;
+	background-position: 9px 6px;	
+}
+
+.union_ico{
+	background-image: url(./images/union/icon/union_ico.png);
+	background-repeat: no-repeat;
+	background-position: 10px 6px;	
+}
+
+.sns_ico{
+	background-image: url(./images/union/icon/sns_ico.png);
+	background-repeat: no-repeat;
+	background-position: 10px 4px;	
+}
+

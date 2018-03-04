@@ -1,0 +1,89 @@
+.sina_icon_small,.qqweibo_icon_small,.qq_icon_small,.taobao_icon_small,.netease_icon_small,.renren_icon_small,.sohu_icon_small{
+	background-repeat: no-repeat;
+	display: block;
+	background-position: 0px 5px;
+	line-height: 30px;
+	padding-left: 20px;
+}
+
+
+.sina_icon_big,.qqweibo_icon_big,.qq_icon_big,.taobao_icon_big,.netease_icon_big,.renren_icon_big,.sohu_icon_big{
+	background-repeat: no-repeat;
+	display: block;
+	height: 100px;
+	width: 100px;
+	background-color: #F6F6F6;
+	background-position: center center;
+}
+
+.sina_icon_small{
+	background-image: url(./images/sina_icon_small.png);
+}
+
+.sina_icon_big{
+	background-image: url(./images/sina_icon_big.png);
+}
+
+
+.qqweibo_icon_small{
+	background-image: url(./images/qqweibo_icon_small.png);
+}
+
+.qqweibo_icon_big{
+	background-image: url(./images/qqweibo_icon_big.png);
+}
+
+.qq_icon_small{
+	background-image: url(./images/qq_icon_small.png);
+}
+
+
+.qq_icon_big{
+	background-image: url(./images/qq_icon_big.png);
+}
+
+
+.taobao_icon_small{
+	background-image: url(./images/taobao_icon_small.png);
+}
+
+.taobao_icon_big{
+	background-image: url(./images/taobao_icon_big.png);
+}
+
+
+.netease_icon_small{
+	background-image: url(./images/netease_icon_small.png);
+}
+
+.netease_icon_big{
+	background-image: url(./images/netease_icon_big.png);
+}
+
+.renren_icon_small{
+	background-image: url(./images/renren_icon_small.png);
+}
+
+.renren_icon_big{
+	background-image: url(./images/renren_icon_big.png);
+}
+
+.sohu_icon_small{
+	background-image: url(./images/sohu_icon_small.png);
+}
+
+.sohu_icon_big{
+	background-image: url(./images/sohu_icon_big.png);
+}
+
+
+
+.sns_down{
+	background-image: url(./images/down.png);
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+.weibologin{
+	line-height: 20px;
+	padding-left: 20px;
+}

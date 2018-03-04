@@ -1,0 +1,25 @@
+{template admin:header}
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+<tr>
+<td class="width_160">同一手机认证次数:</td>
+<td><input name="mobileusenumber_d" value="{echo PHPAPP::$config['mobileusenumber']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">同一个手机号码能认证多少次</td>
+</tr>
+<tr>
+<td class="width_160">多少小时到再能发送短信:</td>
+<td><input name="mobilecertificatetime_d" value="{echo PHPAPP::$config['mobilecertificatetime']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">例如：填 24 为24小时后用户才能再发送短信</td>
+</tr>
+<tr>
+<td class="width_160">规定时间内能发送次数:</td>
+<td><input name="mobilecertificatenumber_d" value="{echo PHPAPP::$config['mobilecertificatenumber']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">例如：填 2 为 24 小时内能发送2次短信</td>
+</tr>
+</table>
+
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button"/></div>
+</form>

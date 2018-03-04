@@ -1,0 +1,83 @@
+{php}
+ 		//分类
+		$taskcategory=$this->GetMysqlArray('total,name,catid,nexts,color'," ".$this->GetTable('category')." WHERE type=49 AND upid=0 ORDER BY displayorder ASC LIMIT 0,6");
+
+{/php}
+
+
+<div class="data_list">
+<div class="data_category">
+    
+    <ul>
+      {if $taskcategory}
+           {for $taskcategory $category}
+           	 	 <li><a href="index.php?app=10&action={echo $category['catid']}&type=55">{echo $category['name']}</a></li>
+           {/for}
+      {/if}
+      <a href="{echo SURL}/index.php?app=55" class="small blue awesome" style="margin-top:5px;margin-left:20px;">更多人才分类</a>
+    </ul>
+    <h1>找人才</h1>
+</div>
+
+<ul class="box_list">
+
+    {if $taskcategory}
+      
+        {for $taskcategory $category}
+       
+                       
+                 {php} $userarr=$this->GetMysqlArray('a.uid,a.username,b.*'," ".$this->GetTable('member')." AS a JOIN ".$this->GetTable('member_info')." AS b ON a.uid=b.uid WHERE b.catid IN($category[nexts]) $citysql ORDER BY b.selltotal DESC,a.uid DESC LIMIT 0,7");
+                 {/php}
+                 
+                 {if $userarr}
+                 
+                     <li class="box_show">
+  
+                    <div class="task_list">
+             
+                    <h2><dfn><a href="index.php?app=10&action={echo $category['catid']}&type=55" class="small orange awesome">更多</a></dfn><span><a href="index.php?app=10&action={echo $category['catid']}&type=55">{echo $category['name']}人才</a></span></h2>
+       
+                     <ul class="task_show_big">
+                        
+                         <li class="task_list_big">
+                     
+                            <div class="task_avatar_big">{echo $this->GetUserAvatar($userarr[0]['uid'],1)}</div>
+                            
+                           <p class="task_money"><a href="{echo SURL}/space.php?app=8&uid={echo $userarr[0]['uid']}" target="_blank" title="{echo $userarr[0]['username']}" class="DraftUserID{echo $userarr[0]['uid']}">{echo $userarr[0]['username']}</a></p>
+                           <p class="task_subject">出售服务 <strong>{echo $userarr[0]['selltotal']}</strong> 次                     
+                           <a href="index.php?app=82&action=2&&uid={echo $userarr[0]['uid']}" class="small blue awesome">雇用我</a> 
+                           </p>
+                         </li>
+                     
+                     </ul>
+                       
+
+                     <ul class="user_list">
+                          {for $userarr $key=>$value}    
+                                
+                            {if $key>0}
+                          
+                                 <li style="background-image:none;">
+                                        {echo $this->GetUserAvatar($value['uid'],1)}
+                                 </li>
+                        
+                            {/if}
+                            
+                         {/for}
+                     
+                      </ul>
+
+                     </div>
+                
+                    </li>
+     
+                {/if}
+                        
+ 
+         {/for}
+     {else}   
+     	  <p>暂无任务分类</p>
+     {/if}
+</ul>
+
+</div>

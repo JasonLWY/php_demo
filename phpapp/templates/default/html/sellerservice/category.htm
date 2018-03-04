@@ -1,0 +1,23 @@
+<div class="task_box_right task_category">
+<h2>服务分类</h2>
+
+<ul id="TaskCategory">
+   {php}
+       $category=$this->GetMysqlArray('*'," ".$this->GetTable('category')." WHERE type='$this->app' AND upid=0  ORDER BY displayorder ASC");
+   {/php}
+   
+   {if $category}
+         {for $category $value}
+            <li><em>({echo $value['total']})</em><a href="{echo $selectclass->GetSelectAllURL('catid',$value['catid'],array(1=>array($value['catid'])))}" {if $value['classname']} class="{echo $value['classname']}"{/if}>{echo $value['name']}</a></li>
+         {/for}
+   {/if}
+
+</ul>
+
+</div>
+<script type="text/javascript">
+$(function(){	
+		  $("#TaskCategory li:last-child").css("border","0"); 
+		   	  
+});
+</script>

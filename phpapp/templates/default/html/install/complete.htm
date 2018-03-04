@@ -1,0 +1,31 @@
+{template install:header}
+
+<div class="install_complete">
+<h2>恭喜您！安装完成！感谢您安装PHPAPP！</h2>
+    <ul>
+        <li>
+        <a href="{SURL}">首页地址 {SURL}</a>
+        </li>
+        
+        <li>
+        <a href="{SURL}/admin.php">后台地址 {SURL}/admin.php</a>
+        </li>
+        
+        <li>
+           <p style="color:#F60">提示：请先删除本文件 install.php ,然后登录后台还需要配置任务,用户组权限及伪静态等并更新缓存！(登录后台请刷新一次后台)</p>
+        </li>
+    </ul>
+</div>
+
+<div class="install_now">
+<a href="{SURL}" class="large blue awesome" title="访问首页" style="margin-right:10px;" target="_blank">访问首页</a>
+
+<a href="{SURL}/admin.php" class="large green awesome" title="访问后台" target="_blank">访问后台</a>
+
+</div>
+
+
+
+
+
+{template install:footer}

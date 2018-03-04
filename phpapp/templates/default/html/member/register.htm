@@ -1,0 +1,112 @@
+{template phpapp:header}
+
+<link href="{echo TURL}login.css" rel="stylesheet" type="text/css" />
+
+<link href="{echo TURL}sns.css" rel="stylesheet" type="text/css" />
+
+{template register.js}
+
+<div id="register" class="user_register">
+    <h1>欢迎注册成为{echo PHPAPP::$config['sitename']}会员</h1>
+
+    <div class="register_right">
+       <div class="register_right_bgline_top"></div>
+       <form id="RegisterForm">
+       
+       <div class="register_form">
+       
+       <div class="register_right_reg register_right_line">
+    
+
+         <dl>
+           <dt>通过合作网站登录到{echo PHPAPP::$config['sitename']}网</dt>
+           <dd>
+           
+             {if $snsarray}
+                   {for $snsarray $value}
+                   
+                         <li><a href="{echo SURL}/index.php?app={echo $value['app_phpapp']}" class="{echo $value['icon_small_phpapp']}">使用{echo $value['name_phpapp']}帐号登录</a></li>
+                         
+                   {/for}
+             {/if}
+           
+           </dd>
+           <p style="padding-top:20px;"><strong>提示：</strong><span style="color:#999">如果您已经是本站会员请直接登录后绑定微博帐号</span></p>
+
+           </dd>
+        </dl>
+        
+        
+        <ul>
+        
+         {if $membertypearr}
+             <div id="MemberTypeRadio" class="membertype" title="您是个人请选择个人注册">
+                <script>$(function() {$("#MemberTypeRadio").buttonset();});</script>
+                 {for $membertypearr $key=>$value}
+                        <input type="radio" id="MemberType{echo $key}" name="UserType"{if $key==0} checked="checked"{/if} value="{echo $value['id_phpapp']}"/><label for="MemberType{echo $key}">{echo $value['name_phpapp']}注册</label>
+                 {/for}
+             </div>
+        {/if}
+        
+         <li><label class="form_input_label" id="UserNameLabel">用户名：</label> <input name="UserName_s" id="UserName" type="text" maxlength="15"  class="form_input_text form_input_width_200" autocomplete="off" value="" title="输入一个用户名(特殊字符除外！)"/><span id="AjaxUserNameError"></span></li>
+
+        
+        
+        <li><label class="form_input_label">Email 地址：</label> <input name="EMail_s" id="EMail" type="text" maxlength="32"  class="form_input_text form_input_width_200" autocomplete="off" value="" title="输入一个有效的邮箱地址！"/><span id="AjaxEMailError"></span></li>
+     
+        
+        <li><label class="form_input_label">创建密码：</label> <input name="Password_s" id="Password" type="password" maxlength="32"  class="form_input_text form_input_width_200" autocomplete="off" value="" title="输入字母与数字组合的密码！"/><span id="AjaxPasswordError"></span></li>
+ 
+        
+         <li><label class="form_input_label">确认密码：</label> <input name="CheckPassword_s" id="CheckPassword" type="password" maxlength="32"  class="form_input_text form_input_width_200" autocomplete="off" value="" title="重复输入以上密码！"/><span id="AjaxCheckPasswordError"></span></li>
+       </ul>
+
+        <div id="MemberProfession" class="membertype memberprofession" title="您发任务请选择雇主,投标选择威客.">
+       
+                 <input type="radio" id="MemberPosition1" name="userpost_d" value="1" checked="checked"/><label for="MemberPosition1">雇主</label>
+                 
+                 <input type="radio" id="MemberPosition2" name="userpost_d" value="2"/><label for="MemberPosition2">威客</label>
+                   
+       </div>
+       
+        <script>$(function() {$("#MemberProfession").buttonset();});</script>
+    
+        
+        {if PHPAPP::$config['registeriscode']}
+   
+        <div class="input_seccode">
+            <label class="form_input_label">验证码：</label> <input name="SecCode" id="SecCode" type="text" maxlength="4"  class="form_input_text" style="width:120px;" value="点击这里显示验证码"/><span id="ShowSecCode"></span><span id="AjaxSecCodeError"></span>
+        </div>
+  
+        {/if}
+        
+        
+        <div class="membertype agreement">
+          <a href="javascript:;" id="GetAgreement" title="{echo PHPAPP::$config['sitename']}网站注册协议">《{echo PHPAPP::$config['sitename']}注册协议》</a><input name="Agreement" value="1" id="Agreement" type="hidden" checked="checked"/> 
+        </div>
+          
+          <div id="ShowAgreement" style="display:none;">{echo $this->str(PHPAPP::$config['register_agreement'],99999,0,1,0,0,1)}</div>
+        <div id="AjaxAgreement">{if $this->errors['Agreement']}<div class="register_reg_tips_error"></div><div class="register_reg_tips">{echo $this->errors['Agreement']}</div>{else}<p></p>{/if}</div>
+
+
+       </div>
+       
+       <input type="hidden" name="SecurityForm_s" value="{echo $this->SecurityForm()}"/>
+       
+      </div>
+       
+       <div class="register_right_bgline_bottom"></div>
+       
+      
+       <div class="submitregister">
+           <input id="SubmitRegisterTitle" title="同意以上注册协议并注册成为{echo PHPAPP::$config['sitename']}会员" name="SubmitRegister" type="submit" value="同意以上协议并注册" class="form_button_big" onclick="return SubmitRegisterInfo();"/>
+       </div>
+       
+       </form>
+    </div>
+    
+</div>
+
+<span class="loginrefresh" style="display:none">2</span> 
+
+{template phpapp:footer}

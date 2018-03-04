@@ -1,0 +1,101 @@
+{template admin:header}
+
+
+<div class="authinfo">
+
+<div class="authh2">系统提示 </div>
+
+<div  class="site_remind">
+<ul>
+
+<li><a href="?app=5&menu=10&action=3" target="_blank" class="help_small" title="有 {echo intval($deposit)} 个提现未处理"><span class="color_f60">{echo intval($deposit)}</span> 提现申请中</a></li>
+
+<li><a href="?sqlorder=7&iforder=1&menu=102&app=15&action=0" target="_blank" class="help_small" title="有 {echo intval($personalcertificate)} 个会员认证中"><span class="color_f60">{echo intval($personalcertificate)}</span> 会员认证中</a></li>
+
+<li><a href="?sqlorder=7&iforder=1&menu=103&app=16&action=0" target="_blank" class="help_small" title="有 {echo intval($companycertificate)} 个企业认证中"><span class="color_f60">{echo intval($companycertificate)}</span> 企业认证中</a></li>
+
+<li><a href="?sqlorder=4&iforder=1&app=21&menu=45&action=7" target="_blank" class="help_small" title="有 {echo intval($mobilecertificate)} 手机认证中"><span class="color_f60">{echo intval($mobilecertificate)}</span> 手机认证中</a></li>
+
+<li><a href="?sqlorder=4&iforder=1&menu=133&app=14&action=0" target="_blank" class="help_small" title="有 {echo intval($mailcertificate)} 邮箱认证中"><span class="color_f60">{echo intval($mailcertificate)}</span> 邮箱认证中</a></li>
+
+</ul>
+
+<ul>
+<li><a href="?sqlorder=7&iforder=1&menu=44&app=47&action=0" target="_blank" class="help_small" title="有 {echo intval($mailcertificate)} 举报未处理"><span class="color_f60">{echo intval($report)}</span> 举报</a></li>
+
+<li><a href="?sqlorder=7&iforder=1&menu=126&app=42&action=0" target="_blank" class="help_small" title="有 {echo intval($rights)} 维权未处理"><span class="color_f60">{echo intval($rights)}</span> 维权</a></li>
+
+<li><a href="?sqlorder=7&iforder=1&menu=129&app=49&action=1" target="_blank" class="help_small" title="有 {echo intval($taskrefund)} 任务退款未处理"><span class="color_f60">{echo intval($taskrefund)}</span> 任务退款</a></li>
+
+<li><a href="?sqlorder=7&iforder=1&menu=43&app=43&action=0" target="_blank" class="help_small" title="有 {echo intval($orderrefund)} 订单退款未处理"><span class="color_f60">{echo intval($orderrefund)}</span> 订单退款</a></li>
+
+
+<li><a href="?app=5&menu=10&page=0&opensearch=1&paytype=3&dateline1={echo $newdate}&SelectData=1" target="_blank" class="help_small" title="今日有 {echo intval($userpay)} 笔充值"><span class="color_f60">{echo intval($userpay)}</span> 今日充值</a></li>
+
+<li><a href="?app=45&menu=130&action=1" target="_blank" class="help_small" title="清空通知可以减少服务器的资源">清空通知</a></li>
+
+</ul>
+
+<ul>
+{if $this->IsSQL('apps',"WHERE class_phpapp='TaskCount'")}
+{php} $taskcheck=$this->IsSQL('task',"WHERE appid=80 AND process=3 ");{/php}
+<li>
+<a href="?app=80&menu=113&action=&page=0&opensearch=1&subject=&tid=&oid=&uid=&username=&serviceuid=&process=3&dateline1=&dateline2=&endtime1=&endtime2=&SelectData=1" target="_blank" class="help_small" title="有 {echo intval($taskcheck)} 悬赏任务未审核 "><span class="color_f60">{echo intval($taskcheck)}</span> 悬赏未审核</a>
+</li>
+{/if}
+
+{if $this->IsSQL('apps',"WHERE class_phpapp='TaskGrab'")}
+{php} $taskcheck=$this->IsSQL('task',"WHERE appid=83 AND process=3 ");{/php}
+<li>
+<a href="?app=83&menu=114&action=&page=0&opensearch=1&subject=&tid=&serial=&uid=&username=&serviceuid=&process=3&dateline1=&dateline2=&endtime1=&endtime2=&SelectData=1" target="_blank" class="help_small" title="有 {echo intval($taskcheck)} 招标任务未审核 "><span class="color_f60">{echo intval($taskcheck)}</span> 招标未审核</a>
+</li>
+{/if}
+
+
+{if $this->IsSQL('apps',"WHERE class_phpapp='TaskWeiJi'")}
+{php} $taskcheck=$this->IsSQL('task',"WHERE appid=78 AND process=3 ");{/php}
+<li>
+<a href="?app=78&menu=114&action=&page=0&opensearch=1&subject=&tid=&serial=&uid=&username=&serviceuid=&process=3&dateline1=&dateline2=&endtime1=&endtime2=&SelectData=1" target="_blank" class="help_small" title="有 {echo intval($taskcheck)} 微计任务未审核 "><span class="color_f60">{echo intval($taskcheck)}</span> 微计未审核</a>
+</li>
+{/if}
+
+
+{if $this->IsSQL('apps',"WHERE class_phpapp='TaskWeiBo'")}
+{php} $taskcheck=$this->IsSQL('task',"WHERE appid=84 AND process=3 ");{/php}
+<li>
+<a href="?app=84&menu=114&action=&page=0&opensearch=1&subject=&tid=&serial=&uid=&username=&serviceuid=&process=3&dateline1=&dateline2=&endtime1=&endtime2=&SelectData=1" target="_blank" class="help_small" title="有 {echo intval($taskcheck)} 微博任务未审核 "><span class="color_f60">{echo intval($taskcheck)}</span> 微博未审核</a>
+</li>
+{/if}
+
+
+</ul>
+
+
+</div>
+
+</div>
+
+<div class="authinfo">
+
+<div class="authh2">&#x672C;&#x673A;&#x73AF;&#x5883;&#x4FE1;&#x606F;-&#x672C;&#x6E90;&#x7801;&#x6765;&#x81EA;&#x65B0;&#x777F;&#x793E;&#x533A;&#xFF01;</div>
+<ul>
+<p>PHPAPP版本 {echo PHPAPP::$config['phpappversion']}</p>
+
+<p>PHP 版本 {echo $os}</p>
+
+<p>MySQL 版本	{echo $mysqlarray[0]['version']}</p>
+
+<p>服务器最大上传许可 {echo $fileupload}</p>
+
+<p>当前数据库尺寸	<?php echo $Data_length; ?> MB</p>
+
+<p>
+register_globals 状态 
+{if (ini_get('register_globals'))}
+    <span style="color:#F00; font-weight:bold">开启 (当您看到开启时为了程序运行安全请手动设置php.ini配置为关闭)</span>
+{else}
+	关闭(正常)
+{/if}
+</p>
+</ul>
+</div>

@@ -1,0 +1,111 @@
+<script type="text/javascript">
+
+$(function(){	
+		   
+	 $("#AddTask").click( function () {
+		     NowLogin();
+	 });
+	  
+	
+	$("#taskagree").dialog({
+			width: 700,
+			position: ['center',160],
+			modal: true,
+			autoOpen: false,
+			height:'auto'
+	  });
+
+	 
+	 $("#openaddtaskagree").click( function () {
+			$("#taskagree").dialog('open');												  
+	 });
+	 
+	  
+});
+
+function SubmitAddTask(){
+	  var subject=$("#subject");
+	  if (subject.val()==""){
+			alert("请输入任务标题!");
+			subject.focus();
+			return false; 
+	  }
+	  
+	  if (subject.val().length<"6"){
+			alert("标题不能小于6个字节!");
+			subject.focus();
+			return false; 
+	  }
+	  
+	  
+	  var money=$("#money");
+	  
+	  if (!money.val() || money.val()<1){
+			alert("赏金不能为空或为0!");
+			money.focus();
+			return false; 
+	  }
+	  
+	  if (money.val()<10){
+			alert("赏金不能小于10!");
+			money.focus();
+			return false; 
+	  }
+	  
+	  
+	  if (isNaN(money.val())){
+			alert("您输入的赏金格式错误，请重新输入!");
+			money.focus();
+			return false; 
+	  }
+	  
+	  
+	  var endtime=$("#time");
+	  
+	  if (!endtime.val() || endtime.val()<1){
+			alert("时间不能为空或为0!");
+			endtime.focus();
+			return false; 
+	  }
+	  
+	  
+	  if (isNaN(endtime.val())){
+			alert("您输入的时间格式错误，请重新输入!");
+			endtime.focus();
+			return false; 
+	  }
+	  
+	  
+	  $.SaveContent(); //保存内容
+	  
+	  var content=$("#Content");
+	  if (content.val()==""){
+			alert("请输入任务内容!");
+			content.focus();
+			return false; 
+	  }
+
+	  if (content.val().length<"6"){
+			alert("任务内容不能小于6个字节!");
+			content.focus();
+			return false; 
+	  }
+				
+	 
+	  var addtaskagree=$("#addtaskagree").attr("checked");
+	  if(!addtaskagree){
+			alert("对不起!您未同意发布任务服务协议不能发布任务!");
+			return false;
+	  } 
+		  
+	  if(!NowLogin()){
+			return false;
+	  }
+}
+
+</script>
+
+
+
+
+

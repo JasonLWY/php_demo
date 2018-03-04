@@ -1,0 +1,47 @@
+{template member:menu}
+
+
+
+
+{if $list}
+
+<div id="UnionList">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+    <tr class="manage_process">
+      <td class="datalist_h2" style="width:200px;">会员名称</td>
+      <td class="datalist_h2" style="width:200px;">最近登录时间</td>
+      <td class="datalist_h2">注册时间</td>
+      <td class="datalist_h2">推广过期时间</td>
+    </tr>
+    {for $list $value}
+      <tr>
+        <td class="datalist_h2" style="padding:8px;"><a href="space.php?app=8&uid={echo $value['uid']}" target="_blank">{echo $this->GetUserAvatar($value['uid'])}</a><p style="line-height:20px;"><a href="space.php?app=8&uid={echo $value['uid']}" target="_blank">{echo $value['username']}</a></p></td>
+        <td class="datalist_h2">{echo $this->Date("Y/m/d H:i:s",$value['logintime'])}</td>
+        <td class="datalist_h2">{echo $this->Date("Y/m/d H:i:s",$value['dateline'])}</td>
+        <td class="datalist_h2">{if $value['uniontime']}{echo $this->Date("Y/m/d H:i:s",$value['uniontime'])}{else}不限{/if}</td>
+      </tr>
+    {/for}
+</table>
+
+</div>
+
+<div class="ajax_page">{echo $page->ShowPages()}</div>
+{else}
+
+ <p style="padding:10px">您暂时没有推广数据</p>
+ 
+{/if}   
+
+
+</td></tr></table>
+
+<script type="text/javascript">
+
+$(function(){	
+       $("#ManageMenu ul").append('<li><a href="index.php?app=20">推广联盟</a></li>');
+});
+
+</script>
+
+{template phpapp:footer}

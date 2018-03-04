@@ -1,0 +1,51 @@
+<script type="text/javascript">
+function CopyURL(id){
+var copytxt=$("#"+id).val();
+	if($.browser.msie) {
+		window.clipboardData.setData('Text',copytxt);
+		alert ("网址“"+copytxt+"”\n已经复制到您的剪贴板中\n您可以使用Ctrl+V快捷键粘贴到需要的地方");
+	} else {
+		prompt("非IE游览器,请手动复制网址!",copytxt); 
+	}
+}
+
+$(function(){	
+		   
+	 $("#PhotoLinkRadio input").click( function () {
+		     
+			var photolink=$("#PhotoLinkRadio input:checked").val();
+			
+			var imgurl='<img src="{echo SURL}/images/union/'+photolink+'.gif"/>';
+			
+			$("#PhotoLinkURL").html(imgurl);
+			
+			$("#txturl02").val($("#PhotoLink").html());
+			
+	 });
+	 
+	 
+	 $("#SendEMail").click( function () {
+			
+			var email=$("#EMail").val();
+			
+			//POST
+			$("#loading").html('<div class="loading">提交数据中...</div>');
+			$("#loading").dialog('open');
+			$("#loading").dialog({ title: '发送邮件' });
+				  
+			$.ajax({
+				  type: "POST",
+				  url: "index.php?app=20&action=4&op=1",
+				  data: '&email='+email,
+				  success: function(data){
+					  $("#loading").html(data);
+				  }
+			});				  
+									  
+									  
+	 });   
+});
+
+</script>
+
+

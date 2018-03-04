@@ -1,0 +1,118 @@
+{template space:column}
+
+<style type="text/css">
+<!--
+.user_photo_url{
+	width: 50px;
+}
+-->
+</style>
+              
+<p>发布任务 <span class="color_f60">{echo $taskcount['tasknum']}</span> 个 &nbsp; 任务投稿 <span class="color_f60">{echo $taskcount['draftnum']}</span> 个 &nbsp; 中标 <span class="color_f60">{echo $taskcount['successnum']}</span> 个 </p>
+
+<div class="space_box">
+    <h2>{if $spacemember['userpost']==2}买家雇主给他的评价{else}卖家威客给他的评价{/if}</h2>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" id="TaskCredit">
+<tr>
+    <td style="padding-top:0px;padding-bottom:0px;width:90px;">
+     <input name="credit" type="radio" value="0"{if !$this->GET['op']} checked{/if}/> <strong>全部</strong>
+    </td>
+    
+    <td>
+    <input name="credit" type="radio" value="1"{if $this->GET['op']==1} checked{/if}/>好评 &nbsp;&nbsp;
+    <input name="credit" type="radio" value="2"{if $this->GET['op']==2} checked{/if}/>中评 &nbsp;&nbsp;
+    <input name="credit" type="radio" value="3"{if $this->GET['op']==3} checked{/if}/>差评
+    </td>
+
+</tr>
+
+{if $list}
+
+    {for $list $key=>$value}
+    
+       <tr>
+            <td colspan="2" class="table_list">{if $value['appid']!=82}<a href="{echo SURL.$value['url']}" target="_blank"><span style="color:#09C">{echo $value['tsubject']}</span></a>{else}<span style="color:#09C">{echo $value['tsubject']}[雇用私密]</span>{/if}</td>
+       </tr>
+    
+        <tr>
+            
+            
+            <td {if @ceil($key%2) == 0} style="padding:10px"  class="table_list"{else}style="padding:10px"{/if}>
+                 <a href="space.php?app=8&uid={echo $value['uid']}" target="_blank">{echo $this->GetUserAvatar($value['uid'])}</a>
+                 <p><a href="space.php?app=8&uid={echo $value['uid']}" target="_blank" title="{echo $value['username']}">{echo $value['username']}</a></p>
+      </td>
+            
+            <td valign="top" {if @ceil($key%2) == 0} style="padding:10px;white-space:normal;width:860px;word-break:break-all;"  class="table_list" {else}style="padding:10px;white-space:normal;word-break:break-all;width:860px;"{/if}>
+            
+                     <p>{if $value['level']==2}<span class="color_f60">差评</span>{elseif $value['level']==1}中评{else}<span class="seller_credit_hao">好评</span>{/if}</p>
+                     
+                     <p>
+                     {if $value['auto']}
+                           系统自动评价
+                     {else}
+                           {if $value['content']}{echo $value['content']}{else}无评语{/if}
+                     {/if}
+                     </p>
+              <p>{echo $this->Date('Y-m-d',$value['dateline'],1)}</p>
+            </td>
+        </tr>
+        
+    {/for}
+
+{else}
+<tr>
+<td colspan="2" style="padding-left:10px">
+     暂时没有评价!
+</td>
+</tr>
+{/if}
+</table>  
+
+{if $page->ShowPages()}
+       <div class="ajax_page" style="height:30px">{echo $page->ShowPages()}</div>
+{/if}
+
+</div>
+
+
+
+<script type="text/javascript">
+
+$(function(){	
+		   
+	  $("#TaskCredit :radio").click( function () {
+		    
+			  var op=$('#TaskCredit input:checked').val();
+
+			  window.location.href='space.php?app={echo $this->app}&action=3&uid={echo $this->spaceuid}&op='+op;
+			
+	  
+	  });
+		   
+		   
+});
+
+</script>
+
+
+
+
+      </div>
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+{template phpapp:footer}

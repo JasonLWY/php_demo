@@ -1,0 +1,302 @@
+<script type="text/javascript">
+	  
+$(function(){	
+		   
+	  
+	 $("#task_tabs").tabs();	
+	 
+			
+});		
+
+function TaskRepotr(tid,did){
+	
+	if(NowLogin()>0){
+		 
+		   $("#loading").dialog({
+				title:"举报服务",	
+				width: 500,
+				position: ['center',160],
+				modal: true,
+				height:'auto'
+		   });
+		   
+		   
+		   $("#loading").dialog('open');
+		 
+		   $("#loading").html('<div class="loading">读取数据中...</div>');
+		   
+		   $.ajax({
+				type: "GET",
+				url: 'member.php?app={echo $this->app}&action=16&tid='+tid+'&did='+did,
+				success: function(data){
+					$("#loading").html(data);
+				}
+		   }); 
+		   
+		 
+	}else{
+		  return false;
+	}
+	 
+}
+
+
+
+function AddMessage(){
+	
+	if(NowLogin()>0){
+		 
+		 $("#loading").dialog({
+			  title:"留言",	
+			  width: 500,
+			  position: ['center',160],
+			  modal: true,
+              height:'auto'
+		 });
+		 
+		 $("#loading").dialog('open');
+		 
+		 $("#loading").html('<div class="loading">读取数据中...</div>');
+		 $.get("member.php",{lang:'{echo $this->lang}',app:'{echo $this->app}',action:'7'},
+			  
+		        function (data){
+				       $("#loading").html(data);
+		 });   
+		  
+	}else{
+		  return false;
+	}	
+	
+	
+}
+
+
+
+function SubmitAddTaskMessage(){
+	
+	        var content=$("#AddTaskMessage");
+	
+
+		    if (content.val()==""){
+					alert("请输入留言内容!");
+					content.focus();
+					return false; 
+			}	
+					
+	
+            $.ajax({
+						type: "POST",
+						url: "member.php?app={echo $this->app}&action=7",
+						data: 'tid_d={echo $this->tid}&Submit=1&content_s='+content.val(),
+						success: function(data){
+							  $("#loading").html(data);
+							  ShowMessage()
+						}
+		   });			
+	
+}
+		
+function ShowMessage(){
+	
+	  $.get("member.php",{lang:'{echo $this->lang}',app:'{echo $this->app}',action:'8',tid:'{echo $this->tid}'},
+			  
+		        function (data){
+				      $("#DraftShow-2").html(data);
+					  
+	  });   
+	
+}	
+
+
+function ShowCredit(){
+	
+	  $.get("member.php",{lang:'{echo $this->lang}',app:'{echo $this->app}',action:'9',tid:'{echo $this->tid}'},
+			  
+		        function (data){
+				      $("#DraftShow-3").html(data);
+					  
+	  });   
+	
+}	
+
+
+function AjaxMessage(tid,page,sqlorder,iforder){
+
+	     $("#DraftShow-2").html('<div class="loading">读取数据中...</div>');
+
+	  	 $.ajax({
+				type: "GET",
+				url: 'member.php',
+				data: "app={echo $this->app}&action=8&tid="+tid+"&page="+page,
+				success: function(data){
+					 $("#DraftShow-2").html(data);
+					 
+				}
+	    });
+}
+
+
+
+
+function SellerAgree(tid,id){
+	
+	if(NowLogin()>0){
+		 
+		 $("#loading").dialog({
+			  title:"接受操作",	
+			  width: 500,
+			  position: ['center',160],
+			  modal: true,
+              height:'auto'
+		 });
+		 
+		 $("#loading").dialog('open');
+		 
+		 
+
+         if(id==2){
+			 
+				
+				 var message='<p>拒绝原因(200字内)</p><textarea id="AddTaskDisagree" class="form_input_text" style="width:450px;height:160px;margin-bottom:10px;"></textarea><p style="text-align:center;margin-top:10px;"><input name="Submit" type="button" value="提交" onclick="SubmitDisagree('+tid+','+id+')" class="form_button"/></p>';
+				 
+				 
+				 $("#loading").html(message);
+				
+			 
+		 }else{
+			 
+			    $("#loading").html('<div class="loading">读取数据中...</div>');
+
+		         SubmitAgree(tid,1,'');  
+		 
+		 }
+		  
+	}else{
+		  return false;
+	}	
+	
+	
+}
+
+function SubmitDisagree(tid,id){
+	  
+	var disagree=$("#AddTaskDisagree").val();
+	SubmitAgree(tid,id,disagree);
+	
+}
+
+function SubmitAgree(tid,id,disagree){
+	
+	
+	    $.ajax({
+				type: "POST",
+				url: "member.php?app={echo $this->app}&action=5&op=3&tid="+tid+"&agree="+id,
+				data: "disagree_s="+disagree,
+				success: function(data){
+					 $("#loading").html(data);
+				}
+	    });
+	
+	
+}
+
+
+
+
+function SubmitPayTask() {
+			  
+			  
+			    $("#loading").dialog({
+					   title:"确认支付",
+					   width: 800,
+					   position: ['center',160],
+					   height:'auto'
+                });
+			  
+			  
+                $("#loading").dialog('open');
+						
+		        $("#loading").html('<div class="loading">读取数据中...</div>');
+
+			  
+			    $.ajax({
+						  type: "POST",
+						  url: "member.php?app={echo $this->app}&action=4&tid={echo $this->tid}",
+						  success: function(data){
+								$("#loading").html(data);
+						  }
+                });	
+}
+
+
+function SetTaskSuccess(){
+	
+	
+		$("#loading").dialog({
+			   title:"采纳操作"
+		});
+
+		$("#loading").dialog('open');
+				
+		$("#loading").html('<div class="loading">读取数据中...</div>');
+
+	  
+		$.ajax({
+				  type: "POST",
+				  url: "member.php?app={echo $this->app}&action=6&op=4&tid={echo $this->tid}",
+				  success: function(data){
+						$("#loading").html(data);
+				  }
+		});	
+	
+}
+
+
+function AddDraft(tid){
+	
+
+	   $("#loading").dialog({
+			title:"提交作品",	
+			width: 706,
+			position: ['center',160],
+			modal: true,
+			height:'auto'
+	   });
+	   
+	   $("#loading").dialog('open');
+	   
+	   $("#loading").html('<div class="loading">读取数据中...</div>');
+	   
+	   $.ajax({
+			type: "GET",
+			url: 'member.php?app={echo $this->app}&action=11&tid='+tid,
+			success: function(data){
+				$("#loading").html(data);
+			}
+	   });  
+		  
+	
+}
+
+
+function TaskRefund(){
+										 
+		$("#loading").html('<div class="loading">获取数据中...</div>');
+		$("#loading").dialog('open');
+		$("#loading").dialog({ title: '申请退款' });							
+		$.ajax({
+			  type: "GET",
+			  url: "member.php?app={echo $this->app}&action=42&op=6&tid={echo $this->tid}",
+			  success: function(data){
+				  $("#loading").html(data);
+			  }
+		});								
+											
+}
+		
+</script>
+
+
+
+
+

@@ -1,0 +1,130 @@
+{template member:menu}
+
+
+       {php}
+            $sortarray=array('1'=>'关注的分类','2'=>'关注的技能');
+       {/php}
+
+      <div class="manage_process">
+      <ul>
+      {for $sortarray $key=>$value}
+      <li{if $key==$sort} class="nowsort"{/if}><a href="member.php?app={echo $this->app}&action=14&page={echo $this->page}&sort={echo $key}">{echo $value}</a></li>
+      {/for}
+      </ul>
+      </div>
+      
+{if $sort==1}  
+     
+        {if $list}
+        
+        <div id="tasklist">
+        
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+          <tr>
+            <td class="datalist_h2">名称</td>
+            <td class="datalist_h2">操作</td>
+          </tr>
+        
+        {for $list $value}
+          <tr>
+            <td style="width:600px;"><a href="{echo $category->GetCategoryURL($value['catid'],$value['route'],$apps)}" target="_blank">{echo $value['name']}</a></td>
+
+            <td>
+            {if $value['process']!=1}<p><a href="javascript:;" onclick="FollowCancel('{echo $value['catid']}','{echo $sort}')" class="small blue awesome">取消关注</a></p>{/if}
+            </td>
+          </tr>
+        
+         {/for} 
+        
+        </table>
+        
+        </div>
+        
+        {if $page->ShowPages()}
+                <div class="ajax_page">{echo $page->ShowPages()}</div>
+        {/if}
+        
+        {else}
+        
+         <p style="padding:10px">您暂时没有关注分类</p>
+         
+        {/if}      
+             
+{elseif $sort==2}    
+ 
+       {if $list}
+        
+        <div id="tasklist">
+        
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+          <tr>
+            <td class="datalist_h2">名称</td>
+            <td class="datalist_h2">操作</td>
+          </tr>
+        
+        {for $list $value}
+          <tr>
+            <td style="width:600px;"><a href="{echo $skillarr[$value['sid']]['url']}" target="_blank">{echo $value['name']}</a>
+
+            </td>
+
+            <td>
+            {if $value['process']!=1}<p><a href="javascript:;" onclick="FollowCancel('{echo $value['sid']}','{echo $sort}')" class="small blue awesome">取消关注</a></p>{/if}
+            </td>
+          </tr>
+        
+         {/for} 
+        
+        </table>
+        
+        </div>
+        
+        {if $page->ShowPages()}
+                <div class="ajax_page">{echo $page->ShowPages()}</div>
+        {/if}
+        
+        {else}
+        
+         <p style="padding:10px">您暂时没有关注技能</p>
+         
+        {/if}   
+{/if}  
+
+
+
+<script type="text/javascript">
+ 
+
+function FollowCancel(id,type){
+		     
+		if(confirm("是否取消关注?")){
+			
+				$("#loading").dialog({
+						title:"取消关注操作",	
+						width: 300,
+						height:'auto'
+				});
+				   
+				$("#loading").dialog('open');
+				
+				$("#loading").html('<div class="loading">提交数据中...</div>');
+			
+				 $.ajax({
+					  type: "GET",
+					  url: SURL+"/member.php?app=49&action=14&sort="+type+'&id='+id,
+					  success: function(data){
+							$("#loading").html(data);
+					  }
+				 });	
+			 
+		
+		
+		}
+		   
+}
+ 
+ 
+ 
+</script>
+
+{template phpapp:footer}

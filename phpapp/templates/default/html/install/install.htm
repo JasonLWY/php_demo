@@ -1,0 +1,88 @@
+{template install:header}
+
+
+<script type="text/javascript" src="{echo TURL}js/default.js"></script>
+<link href="{echo TURL}default.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.grid_slide{
+	height: 360px;
+}
+
+</style>
+{if $issession}
+    
+    <div class="install_description">
+           <div class="grid_slide" id="SlideList">
+     
+           <ul id="Slide" style="height:360px;overflow:hidden;">
+               
+                     <li id="Slide_IMG_1"><img src="./images/ad/grid_big_slide.jpg"/></li>
+                     <li id="Slide_IMG_2"><img src="./images/ad/phpapp2_big_slide.jpg"/></li>
+
+           </ul>
+            
+        </div>
+        
+        
+         <div class="grid_slidetitle" id="SlideTitle">
+               <ul>
+              
+                     <li id="Title_Slide_IMG_1" class="focus"><a href="javascript:;"></a></li>
+                     <li id="Title_Slide_IMG_2"><a href="javascript:;"></a></li>
+           
+               </ul>
+         </div>
+    
+                   
+        <script type="text/javascript">
+                   SetSlide('#SlideList','#Slide','#SlideTitle',4000);
+        </script>
+    </div>
+    
+    <div class="install_mysqldata">
+        <div class="install_progress" id="InstallProgress"></div>
+        
+        <div class="install_percentage">安装进度 <span id="PercentageShow">0</span> %</div>
+    </div>
+    
+
+{else}
+
+     <div class="install_wrong">很遗憾！您的空间不支持 SESSION 功能！请联系空间商在 php.ini 开启 SESSION,然后再安装!</div>
+	
+{/if}
+
+
+
+{if $issession}
+
+
+<p><a href="javascript:;" onclick="OpenInstallDetail()">[查看安装细节]</a></p>
+
+<iframe width="0" height="0" name="main" style="display:none;" class="install_data"></iframe>
+ 
+
+<script type="text/javascript">
+
+$.PHPAPPOPENLOADING();
+
+function GetInstallData(){
+	iframe=window.parent.frames["main"];
+	iframe.window.location.href='{echo SURL}/install.php?step=3';
+}
+
+GetInstallData();
+
+function OpenInstallDetail(){
+	if($('.install_data').is(":hidden")){
+		 $('.install_data').show();
+	}else{
+		 $('.install_data').hide();	
+	}
+}
+</script>
+
+{/if}
+
+{template install:footer}

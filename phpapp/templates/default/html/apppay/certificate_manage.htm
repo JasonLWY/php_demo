@@ -1,0 +1,49 @@
+{template admin:header}
+
+
+
+
+{if $certificate}
+
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" class="member_form">
+            <tr>
+                            <td class="form_input_width_150 addtask_text">用户名：</td>
+                            <td>{echo $userinfo['username']}</td>
+            </tr>
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">认证状态：</td>
+                            <td>已认证</td>
+            </tr>
+                          
+                          <tr>
+                            <td class="form_input_width_150 addtask_text">认证实名：</td>
+                            <td>{if !empty($certificate['realname'])}{echo $certificate['realname']}{/if}</td>
+                          </tr>
+      
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">认证帐户：</td>
+                            <td>{if $certificate['type']==1}{for $bankarr $value}{if $value['bankid']==$certificate['bankid']}{echo $value['bankname']}{/if}{/for} 卡号（{echo $certificate['bankcard']}）
+       {elseif $certificate['type']==2}
+                            
+              {for $onlinebank $value}
+                     {if $value['id_phpapp']==$certificate['bankid']}{echo $value['name_phpapp']}{/if} 
+              {/for}
+                    {echo $certificate['bankcard']} 
+              {/if}</p>
+                            </td>
+            </tr>
+                          
+                                                    
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">认证时间：</td>
+                            <td>{echo $this->Date('Y/d/m H:i:s',$certificate['dateline'])}</td>
+            </tr>
+           
+  
+                          
+   </table>
+   
+
+{else}
+<p>无认证信息</p>
+{/if}

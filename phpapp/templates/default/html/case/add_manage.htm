@@ -1,0 +1,149 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post" enctype="multipart/form-data">
+
+<style type="text/css">.adstyle p {height:32px;}</style>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">关联分类</td>
+    <td id="catid">
+    {if !empty($manage['catid'])}
+         {echo $this->GetSelectCategory('category',$manage['catid'],'catid',49)}
+    {else} 
+         {echo $this->SetSelectCategory('category',0,'catid',49)}
+    {/if}
+    </td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">标题</td>
+    <td> <input name="subject_s" type="text" class="form_input_text form_input_width_300" value="{if !empty($manage['subject'])}{echo $manage['subject']}{/if}"/></td>
+  </tr>
+  
+  {if $fieldarray=$this->GetTableFieldArray('case')}
+  <!-- 自定义字段 -->
+      {for $fieldarray $field}
+       <tr>
+        <td class="width_160">{echo $field['name_phpapp']}：</td>
+        <td>
+        {echo $this->GetTableFieldForm($field,empty($manage)?'':$manage)}
+        </td>
+      </tr>
+      {/for}
+  <!-- 自定义字段 end -->
+  {/if}
+  
+    <tr>
+    <td class="width_160">链接</td>
+    <td> <input name="link_s" type="text" class="form_input_text form_input_width_300" value="{if !empty($manage['link'])}{echo $manage['link']}{/if}"/></td>
+   </tr>
+
+   <tr>
+    <td class="width_160">SEO Keywords</td>
+    <td> <input name="keywords_s" type="text" class="form_input_text form_input_width_300" value="{if !empty($manage['keywords'])}{echo $manage['keywords']}{/if}"/></td>
+   </tr>
+   
+   <tr>
+    <td class="width_160">SEO Description</td>
+    <td> <input name="description_s" type="text" class="form_input_text form_input_width_300" value="{if !empty($manage['description'])}{echo $manage['description']}{/if}"/></td>
+   </tr>
+   
+   
+   <tr>
+    <td class="width_160">封面最大缩略宽度</td>
+    <td> <input name="width_d" type="text" class="form_input_text form_input_width_300" value="{if !empty($manage['width'])}{echo $manage['width']}{else}200{/if}"/> PX</td>
+  </tr>
+  
+     <tr>
+    <td class="width_160">封面最大缩略高度</td>
+    <td> <input name="height_d" type="text" class="form_input_text form_input_width_300" value="{if !empty($manage['height'])}{echo $manage['height']}{else}200{/if}"/> PX</td>
+  </tr>
+
+    <tr>
+    <td class="width_160">案例封面：</td>
+    <td style="padding-top:20px;padding-bottom:20px;">
+     <input name="photo" type="file" id="logo"/> <span style="color:#999">文件格式：jpg,gif,png</span>
+     
+     <p id="logophotoshow" style="padding-top:20px;padding-bottom:20px;">
+     {if !empty($manage['photo'])}
+     
+                {php}
+                $photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$manage[photo]'");{/php}
+                {if $photo}  
+                     <img src="{echo $photo['thumb']}"/>
+                {/if}
+                        
+     {/if}
+     </p>
+    </td>
+    </tr>
+    
+    <tr>
+    <td class="width_160">显示内容页面</td>
+    <td> 
+    <select name="show" id="ShowCase">
+      <option value="0" {if !empty($manage['show'])}{if $manage['show']==0} selected="selected" {/if}{/if}>显示</option>
+      <option value="1" {if !empty($manage['show'])}{if $manage['show']==1} selected="selected" {/if}{/if}>不显示</option>
+    </select> 
+    (设置显示时,以上 "链接" 不可用。)
+    <script type="text/javascript">
+	     
+	    $("#ShowCase").change( function(){
+               
+			  var showcase=$("#ShowCase");
+			  if (showcase.val()==0){
+				  
+				     $("#ShowContent").show();
+
+			  }else{
+				    
+				     $("#ShowContent").hide();
+
+			  }
+			   
+			   
+        });
+		
+	</script>
+    </td>
+  </tr>
+
+  <tr id="ShowContent" {if !empty($manage['show'])}{if $manage['show']==1}style="display:none" {/if}{/if}>
+    <td class="width_160">案例内容</td>
+    <td style="padding-top:20px;padding-bottom:20px;"> 
+     {template editor:editor}
+     <script type="text/javascript">$(function(){$.PHPAPPEditor('Content','624','280');});</script>
+     <textarea name="content_s" id="Content" class="form_editor">{if !empty($manage['content'])}{echo $this->str($manage['content'],999999,0,1,0,1,1)}{/if}</textarea>
+    </td>
+  </tr>
+ 
+   
+</table>
+
+<p style="padding-top:10px;">提示：<span style="color:#F30">( 案例字段功能可以在 全局 ->自定义字段中添加 案例表 phpapp_case)</span></p>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button" onclick="SubmitInfo();"/></div>
+</form>
+
+ <script type="text/javascript">
+ 
+   function SubmitInfo(){
+   
+          var showcase=$("#ShowCase");
+		  if (showcase.val()==0){
+			  
+	            SubmitContent();
+	  
+		  }
+		  
+   }
+ 
+ 
+ </script>
+

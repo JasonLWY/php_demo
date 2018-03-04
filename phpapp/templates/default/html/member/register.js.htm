@@ -1,0 +1,374 @@
+<script type="text/javascript">
+
+function CheckRight(num,type){
+	 var oknum=$(".checkright").length;	
+
+	 if(num==oknum){
+		 
+		  if(type==1){
+				$("#SubmitForm").click();
+		  }else{
+			    $("#SubmitLoginForm").click();
+		  }
+	 }
+}
+
+
+function seccode(){
+	 var img='{echo SURL}/index.php?app=2&action=9&rand='+Math.random();  
+	 $('#ShowSecCode').html('<a href="javascript:;" onclick="refreshcode()" style="cursor:hand;" title="点击换一张验证码"><img id="img_seccode" src="'+img+'" align="absmiddle"></a>');
+	 $("#SecCode").val("");
+}
+
+function refreshcode() {
+	
+	var img ='{echo SURL}/index.php?app=2&action=9&rand='+Math.random(); 
+	if(document.getElementById('img_seccode')) {
+		$('#img_seccode').attr("src",img)
+	}
+}
+
+function SetToolType(id) {
+	 $('#ToolType').val(id);
+}
+
+var loading='<img src="{TURL}images/loading.gif" alt="正在读取数据中..." />';
+var right='<img src="{TURL}images/right.png" alt="正确" class="checkright" />';
+var error='<img src="{TURL}images/error.png" alt="错误" />';
+
+
+$(function(){
+	   
+	  $('#UserName,#EMail,#Password,#CheckPassword').poshytip({
+			className: 'tip-green',
+			showOn: 'focus',
+			alignTo: 'target',
+			alignX: 'right',
+			alignY: 'center',
+			offsetX: 5
+      });
+	   
+	  $('#SubmitRegisterTitle,#MemberTypeRadio,#MemberProfession,#GetAgreement').poshytip({
+			 className: 'tip-green',
+			 offsetX: -7,
+			 offsetY: 16,
+			 allowTipHover: false
+	  });
+	 
+	 
+	 $("#loading").dialog({
+                 close: function() { 
+					   refreshcode();
+				 }
+	  });
+	 
+	 $("#loading").dialog({
+			width: 600,
+			position: ['center',160],
+			modal: true,
+			autoOpen: false
+	  });
+
+
+	 $("#GetAgreement").click( function () {
+					 
+			$("#loading").dialog('open');
+			$("#loading").dialog({ title: '注册使用协议' });
+			$("#loading").html($("#ShowAgreement").html());
+	 });
+		   
+		   
+	 $("#SecCode").one("click", function(){
+			seccode();
+	 });
+		   
+	 $("#Agreement").click( function () {
+		   var agreement=$("#Agreement").attr("checked");
+		   if(agreement){
+			   $("#Agreement").val(1);
+			   $('#AjaxAgreement').html('');
+		   }else{
+			   $("#Agreement").val(0);
+		   }
+	 });
+	 
+	 
+	 $("#UserName").blur( function () { 
+		  
+		  $('#AjaxUserNameError').html(loading);
+
+		   $.post(SURL+"/index.php?app=2&action=2&checktype=1&rand="+Math.random(),{UserName_s:$("#UserName").val()},function(data){
+			  if(data=='yes'){
+				   $('#AjaxUserNameError').html(right);
+				   CheckRight(4,1);
+				   var data='用户名正确!';
+			  }else{
+				   $('#AjaxUserNameError').html(error);
+			  }
+
+			  $('#UserName').poshytip('update',data);
+
+		  }); 
+		  
+     });
+	 
+	 
+	 $("#EMail").blur( function () { 
+	
+		  $('#AjaxEMailError').html(loading);
+		  $.post(SURL+"/index.php?app=2&action=2&checktype=2&rand="+Math.random(),{EMail_s:$("#EMail").val()},function(data){
+			  if(data=='yes'){
+				   $('#AjaxEMailError').html(right);
+				   var data='邮箱正确！';
+				   CheckRight(4,1);
+			  }else{
+				   $('#AjaxEMailError').html(error);
+			  }
+
+			  $('#EMail').poshytip('update',data);
+			  
+		  }); 
+	 });
+
+
+	 $("#Password").blur( function () { 
+	      
+		  $('#AjaxPasswordError').html(loading);
+		   $.post(SURL+"/index.php?app=2&action=2&checktype=3&rand="+Math.random(),{Password_s:$("#Password").val()},function(data){
+			  if(data=='yes'){
+				   $('#AjaxPasswordError').html(right);
+				   var data='创建密码正确！';
+				   CheckRight(4,1);
+			  }else{
+				   $('#AjaxPasswordError').html(error);
+			  }
+			  
+			  $('#Password').poshytip('update',data);
+		  }); 
+		  
+	 });
+	  
+	  
+	 $("#CheckPassword").blur( function () { 
+	      
+		      var checkpassword=$("#CheckPassword").val();
+			  var password=$("#Password").val();
+			  if(checkpassword==password  && password){
+	               var data='确认密码正确！';
+				   $('#AjaxCheckPasswordError').html(right);
+			
+			  }else{
+				   if(!password.length){
+					   var data='请输入创建密码！';
+				   }else{
+				       var data='您输入两次密码不相同！';
+				   }
+				   $('#AjaxCheckPasswordError').html(error);
+			  }
+			  
+			  $('#CheckPassword').poshytip('update',data);
+		  
+	 });
+	  
+     $("#SecCode").blur(function(){
+		  
+			  $('#AjaxSecCodeError').html(loading);
+			  $.post(SURL+"/index.php?app=2&action=2&checktype=4&rand="+Math.random(),{SecCode:$("#SecCode").val()},
+					function(data){
+						if(data=='yes'){   
+							 $('#AjaxSecCodeError').html(right);
+
+							 if($("#RegisterForm").length){
+								  CheckRight(4,1);
+							 }else{
+								  CheckRight(1,0);
+							 } 
+							 
+						}else{
+							 $('#AjaxSecCodeError').html(error);
+							 
+						}
+					}
+			  ); 		
+				
+     });
+	 
+	 
+	 $("#CookieTime").click( function () {
+									   
+			var CookieTime=$("#CookieTime").attr("checked");
+			if(CookieTime=='checked'){
+				 $("#CookieTime").val('{echo PHPAPP::$config["cookie_time"]}');	
+			}else{
+				 $("#CookieTime").val(0);
+			}
+									   
+	 });
+	 
+
+    $("#PasswordTab").tabs();	
+    
+	
+	$("#SubmitPasswordForm").click( function() {
+													  
+             var type=$("#ToolType").val();
+			 
+			 var username=$("#UserName");	
+			 var email=$("#EMail");	
+			 var mobile=$("#Mobile");	
+			 
+			 if(username.val()==""){
+					   
+						  alert("请输入用户名!");
+						  username.focus();
+						  return false; 
+			 }
+			 
+			 if(type==0){
+				 
+				   if(email.val()==""){
+					   
+						  alert("请输入邮箱!");
+						  email.focus();
+						  return false; 
+				   }
+				   
+			 }else{
+				 
+				   if(mobile.val()==""){
+					   
+						  alert("请输入手机号码!");
+						  mobile.focus();
+						  return false; 
+				   }
+				   
+			 }
+			 
+
+					
+             var SecCode=$("#SecCode").val();
+			 if (SecCode==""){
+				    alert("请输入验证码!");
+				    $("#SecCode").focus();
+				    return false; 
+			 }
+			  
+
+			$("#loading").html('<div class="loading">提交数据中...</div>');
+			$("#loading").dialog('open');
+			$("#loading").dialog({ title: '找回密码' });
+				
+			$.ajax({
+				  type: "POST",
+				  url: SURL+"/index.php?app=2&action=13&rand="+Math.random(),
+				  data: '&SecCode='+SecCode+'&type_d='+type+'&EMail_s='+email.val()+'&Mobile_s='+mobile.val()+'&UserName_s='+username.val(),
+				  success: function(data){
+					   $("#loading").html(data);
+				  }
+			});  
+			  
+													  
+	});												  
+													  
+
+
+	 
+});
+
+ 		 
+function SubmitRegisterInfo() {
+					  
+			 var agreement=$("#Agreement").val();
+			 if(agreement==0){
+			     $('#Agreement').focus();
+			     $('#AjaxAgreement').html('<div class="register_reg_tips_error"></div><div class="register_reg_tips">对不起!您未接受使用协议不能注册!</div>');
+		         return false; 
+			 }
+			 
+			 			 
+			 var username=$("#UserName").val();
+			 if(!username.length){
+			     $('#UserName').focus();
+		         return false; 
+			 }
+
+			  //email
+		     var email=$("#EMail").val();
+			 if(!email.length){
+			     $('#EMail').focus();
+		         return false; 
+			 }
+			 
+			 var password=$("#Password").val();
+			 if(!password.length){
+			     $('#Password').focus();
+		         return false; 
+			 }
+             
+			 
+			 var checkpassword=$("#CheckPassword").val();
+			 if(!checkpassword.length){
+			     $('#CheckPassword').focus();
+		         return false; 
+			 }else{
+				  if(password!=checkpassword){
+					   $('#Password').poshytip('update','您输入两次密码不相同！');
+					   $('#Password').focus();
+					   return false; 
+				  }
+			 }
+
+			 
+			 {if PHPAPP::$config['registeriscode']}
+			 var seccode=$("#SecCode").val();
+			 if(!seccode.length){
+			     $('#SecCode').focus();
+				 $('#AjaxSecCodeError').html(error);
+			     $('#AjaxSecCode').html('<div class="register_reg_tips">对不起!请输入验证码!</div>');
+		         return false; 
+			 }else{
+				 if(seccode.length!=4){
+					 $('#SecCode').focus();
+				     $('#AjaxSecCodeError').html(error);
+			         $('#AjaxSecCode').html('<div class="register_reg_tips">对不起!请输入4位验证码!</div>');
+		             return false; 
+				 }
+			
+			 }	
+			 
+			{/if}
+			
+		    /*
+			 var agreement=$("#Agreement").attr("checked");
+	         if(!agreement){
+		            alert("对不起!您未同意协议不能注册!");
+		            return false;
+	         } 
+			*/
+			
+			$("#loading").html('<div class="loading">提交数据中...</div>');
+			$("#loading").dialog('open');
+			$("#loading").dialog({ title: '提交注册框' });
+			
+			var forms=GetFormAll('#RegisterForm');
+			
+			$.ajax({
+   			type: "POST",
+   			url: SURL+"/index.php?app=2&action=2&rand="+Math.random(),
+  			data: forms,
+   			success: function(data){
+				
+				$("#loading").html(data);
+				if(data.indexOf('成功')>0){
+					 window.location.href=SURL+'/index.php?app=2&action=16';
+				}else{
+					 return false; 
+				}
+   			}
+			});
+			return false; 
+		  
+}
+	 
+
+</script>

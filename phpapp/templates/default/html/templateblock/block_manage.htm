@@ -1,0 +1,13 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<p>当前模板路径：{echo $dir}{echo $manage['quote_phpapp']}.htm</p>
+
+<textarea name="content" class="form_textarea" style="width:98%;height:500px;">{echo $template}</textarea>
+
+<input name="filename_s" type="hidden" value="{echo $manage['quote_phpapp']}.htm"/>
+
+<div class="phpapp_button"><input name="Submit_s" type="submit" value="保存" class="form_button"/></div>
+
+</form>

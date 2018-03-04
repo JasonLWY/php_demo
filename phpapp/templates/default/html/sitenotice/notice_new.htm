@@ -1,0 +1,21 @@
+{php}
+$noticearr=$this->GetMysqlArray('*'," ".$this->GetTable('member_notice')." WHERE uid='$this->uid' AND new=1 ORDER BY nid DESC LIMIT 0,10");  $noticenum=count($noticearr);
+{/php}
+
+{if $noticearr}
+    {for $noticearr $value}
+          <li>
+          <dl>
+          <dt>
+          {echo $value['subject']}
+          </dt>
+          <dd>
+          {echo $this->str($value['content'],0,0,1,0,0,1)}
+          <p style="text-align:right">{echo $this->Date('Y-m-d H:i:s',$value['dateline'])}</p>
+          <p style="text-align:right"><a class="small blue awesome" onclick="DeleteMemberNotice('{echo $value['nid']}')">É¾³ý</a></p>
+          </dd>
+          </dl>
+          </li>
+    {/for}
+
+{/if}

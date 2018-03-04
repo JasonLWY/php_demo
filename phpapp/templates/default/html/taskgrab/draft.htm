@@ -1,0 +1,180 @@
+{template show.js}
+
+{php}
+
+		   include_once(Core.'/class/pages_ajax_class_phpapp.php');
+		   
+		   $uid=$this->uid;
+           
+           $task=$this->GetMysqlOne('uid,money,tid,serviceuid,hidedraft'," ".$this->GetTable('task')." WHERE tid='$this->tid'");
+		   
+		   if(!empty($this->GET['did'])){
+				$did=intval($this->GET['did']);				 
+				$order=" AND a.did='$did' ORDER BY topbid DESC ,did DESC";	 			
+		   }else{
+			    $order=' AND a.process=0 ORDER BY topbid DESC,did DESC';
+		   }
+		  		   
+		   if($this->GET['type']==1 || $this->GET['type']==4){
+                 
+                 if($this->GET['type']==4){
+                      $usersql=" AND a.uid='$this->uid' ";
+                 }else{
+                      $usersql=' AND a.process>0 ';
+                 }
+  
+                 
+			     //已审核的投标
+				 $order='ORDER BY a.topbid DESC,a.process DESC';
+				 
+			     $ajaxpage=new AjaxPages(10,$this->GET['page'],$this->tid,$this->GET['sqlorder'],$this->GET['iforder'],'DraftPage',"SELECT a.*,b.username,b.dateline AS regtime,b.logintime,c.certificate,d.credit,d.wealth,credits,credittype,f.tasknum,f.draftnum,f.successnum,g.speed,g.attitude,g.quality FROM  (((((".$this->GetTable('task_draft')." AS a LEFT JOIN ".$this->GetTable('member')." AS b ON a.uid=b.uid)LEFT JOIN ".$this->GetTable('member_info')." AS c ON b.uid=c.uid)LEFT JOIN ".$this->GetTable('member_account')." AS d ON b.uid=d.uid) LEFT JOIN ( SELECT type AS credittype,credit AS credits,uid FROM ".$this->GetTable('credit')." WHERE type=1 ) AS e ON b.uid=e.uid )LEFT JOIN ".$this->GetTable('task_total')." AS f ON b.uid=f.uid) LEFT JOIN ".$this->GetTable('credit_score')." AS g ON c.uid=g.uid WHERE a.tid='$this->tid'  $usersql $order");
+				 
+		   }else{
+			      
+			     $ajaxpage=new AjaxPages(10,$this->GET['page'],$this->tid,$this->GET['sqlorder'],$this->GET['iforder'],'DraftPage',"SELECT a.*,b.username,b.dateline AS regtime,b.logintime,c.certificate,d.credit,d.wealth,credits,credittype,f.tasknum,f.draftnum,f.successnum,g.speed,g.attitude,g.quality FROM  (((((".$this->GetTable('task_draft')." AS a LEFT JOIN ".$this->GetTable('member')." AS b ON a.uid=b.uid)LEFT JOIN ".$this->GetTable('member_info')." AS c ON b.uid=c.uid)LEFT JOIN ".$this->GetTable('member_account')." AS d ON b.uid=d.uid) LEFT JOIN ( SELECT type AS credittype,credit AS credits,uid FROM ".$this->GetTable('credit')." WHERE type=1 ) AS e ON b.uid=e.uid )LEFT JOIN ".$this->GetTable('task_total')." AS f ON b.uid=f.uid)LEFT JOIN ".$this->GetTable('credit_score')." AS g ON c.uid=g.uid WHERE  a.tid='$this->tid' AND a.process=0 $order");
+
+			   
+		   }
+
+		   
+		   $list=$ajaxpage->ShowResult();
+           
+{/php}
+
+
+{if !empty($list)}
+
+<script type="text/javascript">
+$(function(){	
+		$(".UserPhotoFilter").hover(function(e) {
+             $(this).find("div").each(function(){
+				   $(this).fadeIn('fast');
+			 }); 
+			
+		}, function(e) {
+		    
+			 $(this).find(".user_photo_url").each(function(){
+					$(this).fadeOut('fast');
+			 }); 
+		
+		});
+		
+		$.PHPAPPTaskFlash('.flashbid',500);
+});
+function AjaxComment(did,page,sqlorder,iforder){
+
+	     $.PHPAPPOPENLOADING();	
+	  	 $.ajax({
+				type: "GET",
+				url: SURL+'/index.php',
+				data: "app={echo $this->app}&action=13&did="+did+"&page="+page,
+				success: function(data){
+				 	 $.PHPAPPCLOSELOADING();
+					 $("#DraftComment_"+did).html(data);
+				}
+	    });
+}
+</script>
+
+<div class="task_bid_field">
+      <ul>
+          <li style="float:left;width:520px;padding-left: 14px;">投标者({echo $ajaxpage->GetTotal()})</li><li>报价/完成时间</li><li>诚信</li> 
+      </ul>
+</div>
+                  
+<div id="TaskBidItem">
+
+    {for $list $key=>$value}
+           <div class="task_bid_show{if $value['openflash']} flashbid{/if}">
+           
+				 {if $value['topbid']>0}<div class="bid_top" title="推荐"></div>{/if}
+                 
+                 <div class="task_bid_main">
+                      <div class="task_bid_avatar">
+                          {echo $this->GetUserAvatar($value['uid'],1)}
+                          <p class="task_bid_username"><a href="{echo SURL}/space.php?app=8&uid={echo $value['uid']}" target="_blank" title="{echo $task['username']}" class="DraftUserID{echo $value['uid']}">{echo $value['username']}</a></p>
+                          <p><a class="small blue awesome" href="javascript:;" onclick="AddSMS('{echo $value['uid']}')"><span class="send_message">发消息</span></a></p>
+                      </div>
+                      
+                          {if $value['share']}
+                              {if $value['uid']==$uid || $task['uid']==$uid || $this->IsService($task['serviceuid'])}
+                                  
+                                   {template user}
+                       		 {else}
+                           
+                                  <div class="bid_hide_info draft_hide_info">
+                                  <p>该稿件已隐藏,只有雇主和投标本人登录后可见!</p>
+                                  </div>
+                              
+                           	 {/if}
+                             
+                          {else}
+                               
+                                   {if !$task['hidedraft']}
+                                         {template user}
+                                   {else}  
+                                   
+                                   
+                                         {if $value['uid']==$uid || $task['uid']==$uid || $this->IsService($task['serviceuid'])}
+                                         
+                                               {template user}
+                                               
+                                         {else}
+                                         
+                                                <div class="bid_hide_info draft_hide_info">
+                                                <p>该稿件已隐藏,只有雇主和投标本人登录后可见!</p>
+                                                </div>
+                                            
+                                         {/if}
+                                   
+                                     
+                                   {/if}
+                          
+                          {/if}
+                        
+                  
+                 </div>
+                 
+                 
+                 <div class="task_draft_operate">
+                          <div class="task_draft_mumber">#{echo $value['did']}</div>
+                          <ul>
+                          {if $task['uid']==$uid || $this->IsService($task['serviceuid']) || $this->IsAdmin()}
+                                {if $value['process']==0}
+                                <li><a class="small orange awesome" onclick="ApplyDraft('{echo $value['did']}',1,'中标')"><span class="right_ico">中标</span></a></li>
+                                <li><a class="small blue awesome" onclick="ApplyDraft('{echo $value['did']}',2,'删除')"><span class="cross_ico">删除</span></a></li> 
+                                {elseif $value['process']==1}
+                                
+                                {php}$order=$this->GetMysqlOne('oid,cid'," ".$this->GetTable('task_order')." WHERE did='$value[did]' AND tid='$this->tid' ORDER BY oid DESC");{/php}
+                                {if $order}
+                                <li><a class="small blue awesome" onclick="PaymentOrders({echo $order['cid']},{echo $this->tid})"><span class="right_ico">支付</span></a></li>
+                                {/if}
+                                <li><a class="small blue awesome" onclick="ApplyDraft('{echo $value['did']}',3,'取消')"><span class="cross_ico">取消</span></a></li>
+                                {/if}
+                          {elseif $value['uid']==$uid}
+                                <li><a class="small blue awesome" onclick="TaskBids('{echo $this->tid}','{echo $value['did']}')"><span class="pencil_ico">修改</span></a></li>
+                          {/if} 
+                                <li><a class="small blue awesome" onclick="TaskReport('{echo $this->tid}','{echo $value['did']}')"><span class="report_pencil_ico">举报</span></a></li>
+                          </ul>
+                 </div>  
+                
+                 
+         </div>
+    
+    {/for}
+    
+</div>
+
+
+{if $ajaxpage->ShowPages()}
+<div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+{/if}
+
+{template phpapp:draft.js}
+
+
+{else}
+<p>目前暂时没有投标!</p>
+{/if}
+
+

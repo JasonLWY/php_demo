@@ -1,0 +1,40 @@
+<script type="text/javascript">
+$(function(){	
+		   
+
+	 $("#AddService").click( function () {
+		     NowLogin();
+	 });
+	 
+	 $("#SubmitEdit").click( function () {
+	         window.location.href='{echo SURL}/member.php?app=82&action=1&sid={echo $this->sid}'
+	 });
+	 
+	 $("#SubmitConfirmService").click( function () {
+			    $("#loading").dialog('close');
+				$("#loading").dialog({
+					 title:"发布服务确认",
+					 width: 680,
+					 position: ['center',160],
+					 height:'auto'
+				});
+	
+				$("#loading").dialog('open');
+		        $("#loading").html('<div class="loading">读取数据中...</div>');
+
+			    $.ajax({
+						  type: "POST",
+						  url: SURL+"/member.php?app=82&action=2&sid={echo $this->sid}",
+						  data:"&Submit=1",
+						  success: function(data){
+								$("#loading").html(data);
+						  }
+                });	
+	 });
+});
+</script>
+
+
+
+
+

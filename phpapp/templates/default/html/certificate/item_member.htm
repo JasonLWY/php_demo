@@ -1,0 +1,65 @@
+{template member:menu}
+
+
+<link href="{TURL}certificate.css" rel="stylesheet" type="text/css" />
+
+
+<div id="Certificate">
+
+{if $list}
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr class="manage_process">
+    <td class="datalist_h2" style="width:130px;">项目</td>
+    <td class="datalist_h2" style="width:360px;">描述</td>
+    <td class="datalist_h2">时间(工作日)</td>
+    <td class="datalist_h2">收费标准(元)</td>
+    <td class="datalist_h2">状态</td>
+  </tr>
+
+{for $list $value}
+
+    {php} $mycertificate=array('status'=>0);{/php}
+    
+    {if $value['table_phpapp']}
+         {php}  $mycertificate=$this->GetMysqlOne('status',"  ".$this->GetTable($value['table_phpapp'])." WHERE uid='$this->uid' ");{/php}
+    {/if}
+  <tr>
+    <td class="datalist_h2" style="height:120px;"><div class="{echo $value['icon_big_phpapp']}" title="{echo $value['name_phpapp']}"></div></td>
+    <td class="datalist_h2" valign="top" style="padding-top:20px;color:#666;line-height:22px;">{echo $this->str($value['description_phpapp'],99999,0,1,0,0,1)}</td>
+    <td class="datalist_h2">{echo $value['time_phpapp']}</td>
+    <td class="datalist_h2"><span class="color_f60">{if $value['price_phpapp']=='0.00'}免费{else}{echo $value['price_phpapp']}{/if}</span></td>
+    <td class="datalist_h2">{if $mycertificate['status']<=4 AND $mycertificate['status']>0}<strong><p>认证中</p></strong><p><a href="javascript:void(0);" onclick="ShowCertificate('{echo $value['app_phpapp']}');return false;">查看详情</a></p>
+    {elseif $mycertificate['status']==5}<strong>已认证</strong><p><a href="javascript:void(0);" onclick="ShowCertificate('{echo $value['app_phpapp']}');return false;">查看详情</a></p>
+    {elseif $mycertificate['status']==6}<strong>认证失败</strong><p><a href="javascript:void(0);" onclick="ShowCertificate('{echo $value['app_phpapp']}');return false;">查看详情</a></p>{else}
+    <a href="javascript:void(0);" onclick="ShowCertificate('{echo $value['app_phpapp']}');return false;">立即认证</a>{/if}</td>
+  </tr>
+ {/for} 
+
+</table>
+
+{else}
+
+ <p style="padding:10px">暂时没有认证项目</p>
+ 
+{/if}    
+      
+
+</div>
+
+
+<script type="text/javascript">
+	
+	function ShowCertificate(appid){
+		    
+		    window.location.href='member.php?app='+appid;		 
+
+	}
+
+</script>
+
+
+</div>
+
+{template phpapp:footer}

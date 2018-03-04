@@ -1,0 +1,117 @@
+.select_skills {
+	overflow: hidden;
+	padding-bottom: 6px;
+}
+.select_skills a{
+	background-image: url(./images/close_blue_ico.gif);
+	background-repeat: no-repeat;
+	background-position: right center;
+	background-color: #0578BF;
+	padding-right: 22px;
+	padding-left: 12px;
+	border: 1px solid #046CAA;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	color: #FFF;
+	text-decoration: none;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	margin-right: 10px;
+	line-height: 30px;
+	display: block;
+	float: left;
+	margin-bottom: 8px;
+}
+.task_select_title .select_skills a{
+	padding-left: 12px;padding-right: 22px;
+}
+
+.select_skills a:link,.select_skills a:visited,.select_skills a:active{
+	background-color: #0578BF;
+	color: #FFF;
+	text-decoration: none;
+}
+.select_skills a:hover{
+	background-color: #1FA8FA;
+	color: #039;
+}
+.select_more_skills{
+}
+.select_more_skills a{
+	background-image: url(./images/widget-header.gif);
+	background-repeat: repeat-x;
+	background-position: left bottom;
+	border: 1px solid #999;
+	color: #333;
+	font-weight: bold;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-decoration: none;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	margin-right: 10px;
+	padding-right: 14px;
+	padding-left: 14px;
+}
+.skills_data_list{
+	background-color: #F9F9F9;
+	padding-right: 16px;
+	padding-bottom: 16px;
+	padding-left: 16px;
+	overflow: hidden;
+	height: 109px;
+	width: 199px;
+}
+.skills_data_list li a{
+	display: block;
+	padding-left: 6px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #E0E0E0;
+	line-height: 20px;
+}
+.skills_data_list li a:hover{
+	background-color: #DDF1FF;
+}
+
+.more_skills_view h3{
+	font-size: 12px;
+	padding-left: 22px;
+	padding-right: 22px;
+	line-height: 24px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #CCC;
+}
+.more_skills_view h3 span{
+	color: #F60;
+}
+.more_skills_updown a{
+	float: left;
+	width: 115px;
+	line-height: 26px;
+	text-align: center;
+	font-weight: bold;
+	color: #FFF;
+	font-size: 12px;
+	background-color: #0578BF;
+}
+.more_skills_updown a:link,.more_skills_updown a:visited,.more_skills_updown a:active{
+	color: #FFF;
+}
+.more_skills_updown a:hover{
+	background-color: #B0DFFF;
+	color: #06C;
+}
+
+.set_myskills h5{
+	font-size: 14px;
+	line-height: 30px;
+}
+
+.more_skills_view{
+	margin-left: 120px;
+	margin-top: -28px;
+}

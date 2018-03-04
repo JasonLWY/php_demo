@@ -1,0 +1,116 @@
+{template member:menu}
+
+
+<script type="text/javascript">
+
+$(function() {
+
+
+		$("#VerifyMobile").click( function () {
+										  
+				 var verify=$("#verify");
+				  
+				 if (verify.val()==""){
+						alert("请输入验证码!");
+						verify.focus();
+						return false; 
+				 }
+				  
+		
+				
+				 
+				 $("#loading").dialog({
+						title:"验证码校验",	
+						width: 300,
+						modal: true,
+						height:'auto'
+				 });
+				 
+				 $("#loading").dialog('open');
+				 
+				 $("#loading").html('<div class="loading">验证中...</div>');								  
+						
+						
+				 $.ajax({
+						type: "POST",
+						url: 'member.php?app=21&action=2&op=1',
+						data: '&verify_d='+verify.val(),
+						success: function(data){
+							 $("#loading").html(data);
+						}
+		        });										  
+						
+			  
+				
+		 });
+		
+		$("#VerifyMobileAgain").click( function () {
+				window.location.href='member.php?app=21&action=1';				
+		});
+
+});
+
+
+var verifytime=180;
+
+VerifyMobileTime=setInterval(function(){
+	  if(verifytime<=0){	
+	        clearInterval(VerifyMobileTime);
+			$("#VerifyMobileAgain").val('点击重发');
+			$("#VerifyMobileAgain").attr('disabled',false);
+	  }else{
+		    $("#VerifyMobileAgain").val(verifytime+' 秒');
+		    verifytime--;
+	  }
+   
+},1000);
+
+
+
+</script>
+
+<link href="{echo TURL}mobile.css" rel="stylesheet" type="text/css" />
+
+<div class="personal_certificate">
+
+      <div class="order_process" style="width:480px;">
+
+      <ul class="order_process_schedule" style="background-position: left -56px;">
+      
+          <li>1.填写手机号码</li>
+          
+          <li>2.验证手机码</li>
+          
+          <li>3.认证成功</li>
+      
+      </ul>
+      </div>
+      
+</div>
+     
+
+
+<div class="mobile_certificate">
+
+<p>手机号码 {if !empty($this->member['mobile'])}{echo $this->member['mobile']}{/if}</p>
+
+<p>验证码： <input name="verify" type="text"  id="verify" size="50" maxlength="8" class="form_input_text form_input_width_200"  value=""/>
+</p>
+<p style="padding-left:54px;"><input name="Submit" type="submit" value="确认验证" id="VerifyMobile" class="form_button" style="margin-right:20px;"/> 
+<input name="Submit" type="submit" value="点击重发" id="VerifyMobileAgain" class="form_button" disabled="disabled"/> 可重新发送验证码! </p>
+
+
+<h4>手机认证后享受的服务</h4>
+<p>
+<b>手机登录</b> 可直接使用“手机”登录<br>
+<b>重要事件提醒 </b>进行（支付/提现/选稿/中标）时，自动发送提醒<br>
+<b>找回账号密码</b> 忘记密码时，可使用手机短信找回密码。
+</p>
+</div>
+
+
+
+
+</div>
+
+{template phpapp:footer}

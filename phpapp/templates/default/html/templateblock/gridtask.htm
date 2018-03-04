@@ -1,0 +1,75 @@
+{php}
+ 		//分类
+		$taskcategory=$this->GetMysqlArray('total,name,catid,nexts,color'," ".$this->GetTable('category')." WHERE type=49 AND upid=0 ORDER BY displayorder ASC LIMIT 0,6");
+
+{/php}
+
+
+<div class="data_list">
+<div class="data_category">
+    
+    <ul>
+      {if $taskcategory}
+           {for $taskcategory $category}
+           	 	 <li><a href="index.php?app=10&action={echo $category['catid']}&type=49">{echo $category['name']}</a></li>
+           {/for}
+      {/if}
+      <a href="{echo SURL}/index.php?app=49" class="small blue awesome" style="margin-top:5px;margin-left:20px;">更多任务分类</a>
+    </ul>
+    <h1>热门任务</h1>
+</div>
+
+<ul class="box_list">
+
+    {if $taskcategory}
+      
+        {for $taskcategory $category}
+
+                 {php} $taskarr=$this->GetMysqlArray('tid,subject,appid,catid,url,money,price1,price2,endtime,dateline,process,draft_number,draft_success,credit,addmoney'," ".$this->GetTable('task')." WHERE process>1 AND process!=8 AND process!=9 AND appid!=82 AND catid IN($category[nexts]) $citysql ORDER BY topbid DESC,dateline DESC LIMIT 0,4");
+                 {/php}
+                 
+                 {if $taskarr}
+                         
+                       <li class="box_show">
+       
+                        <div class="task_list">
+     
+                                 <h2><dfn><a href="{echo SURL}/index.php?app=49&action=1&tid={echo $taskarr[0]['tid']}" class="small orange awesome" title="发布类似任务" target="_blank">我也需要</a></dfn><span><a href="index.php?app=10&action={echo $category['catid']}&type=49">{echo $category['name']}</a></span></h2>
+                                 <ul class="task_show_big">           
+                                 <li class="task_list_big">
+                             
+                                    <div class="task_avatar_big">{echo $this->GetUserAvatar($taskarr[0]['uid'],0,1)}</div>
+                                    
+                                   <p class="task_money"><span class="color_f60">￥{if $taskarr[0]['price1']>0}{echo $taskarr[0]['price1']}-{echo $taskarr[0]['price2']}{else}{echo $taskarr[0]['money']}{/if}</span></p>
+                                   <p class="task_subject"><a href="{echo $taskarr[0]['url']}" target="_blank" title="{echo $taskarr[0]['subject']}">{echo $taskarr[0]['subject']}</a>                        
+                                   </p>
+                                 </li>
+                                </ul>
+                                         
+                        
+                               <ul>
+                               {for $taskarr $key=>$value}
+                                     {if $key!=0}
+                                         <li{if $key==3} style="background-image:none;"{/if}>
+                                         <p><dfn>{echo $this->Date('Y-m-d',$value['dateline'])} 发布</dfn><span class="color_f60">￥{if $value['price1']>0}{echo $value['price1']}-{echo $value['price2']}{else}{echo $value['money']}{/if}</span> </p>
+                                         <p><a href="{echo $value['url']}" target="_blank" title="{echo $value['subject']}">{echo $value['subject']}</a></p>
+                                         </li>
+                            
+                                    {/if}
+                              {/for}
+                              </ul>
+                     
+                        </div>
+                    
+                     </li>
+                     
+               {/if}
+                        
+    
+           {/for}
+     {else}   
+     	  <p>暂无任务分类</p>
+     {/if}
+</ul>
+
+</div>

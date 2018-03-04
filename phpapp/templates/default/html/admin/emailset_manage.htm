@@ -1,0 +1,94 @@
+{template header}
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $this->GET['op']==1}
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+<tr>
+<td class="width_160">接收邮箱:</td>
+<td><input name="receivemail_s" value="" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">接收邮箱</td>
+</tr>
+
+<tr>
+<td class="width_160">发送邮件标题:</td>
+<td><input name="emailtitle_s" value="" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">发送邮件标题</td>
+</tr>
+
+<tr>
+<td class="width_160">发送邮件内容:</td>
+<td><textarea  rows="6"  name="emailcontent_s" cols="50" class="form_textarea form_input_width_300"></textarea></td>
+<td class="color_999">发送邮件内容</td>
+</tr>
+
+</table>
+
+{else}
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+<tr>
+<td class="width_160">网站默认邮箱:</td>
+<td><input name="sitemail_s" value="{echo PHPAPP::$config['sitemail']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">发送者缺省时系统会使用网站默认邮箱</td>
+</tr>
+
+<tr>
+<td class="width_160">是否允许后台处理发送:</td>
+<td><input class="radio" type="radio" name="mailsendsystem_d" value="1"  {if PHPAPP::$config['mailsendsystem']==1}checked{/if}>&nbsp;是<input class="radio" type="radio" name="mailsendsystem_d" value="0"  {if PHPAPP::$config['mailsendsystem']==0}checked{/if}>&nbsp;否</td>
+<td class="color_999">当发送时间久时,允许后台处理可以直接关闭页面程序后台保持处理</td>
+</tr>
+
+
+<tr>
+<td class="width_160">发送编码:</td>
+<td><input class="radio" type="radio" name="mailsendcharset_d" value="0"  {if PHPAPP::$config['mailsendcharset']==0}checked{/if}>&nbsp;默认<input class="radio" type="radio" name="mailsendcharset_d" value="1"  {if PHPAPP::$config['mailsendcharset']==1}checked{/if}>&nbsp;GBK <input class="radio" type="radio" name="mailsendcharset_d" value="2"  {if PHPAPP::$config['mailsendcharset']==2}checked{/if}>&nbsp;UTF8</td>
+<td class="color_999">当出现乱码时选择其它编码处理</td>
+</tr>
+
+<tr>
+<td class="width_160">使用操作系统:</td>
+<td><input class="radio" type="radio" name="mailos_d" value="1"  {if PHPAPP::$config['mailos']==1}checked{/if}>&nbsp;Windows<input class="radio" type="radio" name="mailos_d" value="0"  {if PHPAPP::$config['mailos']==0}checked{/if}>&nbsp;Linux<input class="radio" type="radio" name="mailos_d" value="2"  {if PHPAPP::$config['mailos']==2}checked{/if}>&nbsp;Mac</td>
+<td class="color_999">当前程序使用的操作系统</td>
+</tr>
+
+<tr>
+<td class="width_160">发送email方式:</td>
+<td><input class="radio" type="radio" name="sendmailmode_d" value="1"  {if PHPAPP::$config['sendmailmode']==1}checked{/if}>&nbsp;SOCKET <input class="radio" type="radio" name="sendmailmode_d" value="2"  {if PHPAPP::$config['sendmailmode']==2}checked{/if}>&nbsp;FSOCK <input class="radio" type="radio" name="sendmailmode_d" value="3"  {if PHPAPP::$config['sendmailmode']==3}checked{/if}>&nbsp;FSOCKET <input class="radio" type="radio" name="sendmailmode_d" value="0"  {if PHPAPP::$config['sendmailmode']==0}checked{/if}>&nbsp;PHPmail</td>
+<td class="color_999">通过 SOCKET 连接 SMTP 服务器发送(支持 ESMTP 验证),通过 PHP 函数的 sendmail 发送</td>
+</tr>
+
+<tr>
+<td class="width_160">SMTP 服务器:</td>
+<td><input name="mailsmtp_s" value="{echo PHPAPP::$config['mailsmtp']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">设置 SMTP 服务器的地址</td>
+</tr>
+
+
+<tr>
+<td class="width_160">SMTP 端口:</td>
+<td><input name="mailsmtpport_d" value="{echo PHPAPP::$config['mailsmtpport']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">设置 SMTP 服务器的端口，默认为 25</td>
+</tr>
+
+<tr>
+<td class="width_160">SMTP 身份验证用户名:</td>
+<td><input name="mailloginname_s" value="{echo PHPAPP::$config['mailloginname']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">邮箱地址</td>
+</tr>
+
+<tr>
+<td class="width_160">SMTP 身份验证密码:</td>
+<td><input name="mailloginpassword_s" value="{echo PHPAPP::$config['mailloginpassword']}" type="password" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">邮箱密码</td>
+</tr>
+
+</table>
+
+{/if}
+
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button"/></div>
+
+</form>

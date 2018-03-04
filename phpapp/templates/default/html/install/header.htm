@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={echo S_CHARSET}" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=8" />
+
+<title>PHPAPP2.5安装</title>
+
+<meta name="keywords" content="PHPAPP威客程序,威客系统,威客程序,开源威客程序" />
+
+<meta name="description" content="PHPAPP威客程序" />
+
+
+{php}$siteframewidth=1000;{/php}
+<style type="text/css">
+.wrap,.header_widescreen{
+	width:{echo $siteframewidth}px;
+}
+.header_width,.navigation_box,.footer{
+	width:{echo $siteframewidth-80}px;
+}
+.navigation_wrap{
+	width:{echo $siteframewidth-90}px;
+}
+.sw_categorys_nav .allcategorys .sublist {
+	width:{echo $siteframewidth-102}px;
+}
+.allcategorys .sublist li {
+	width:{echo $siteframewidth/5}px;
+}
+.user_list{
+	width:{echo $siteframewidth-70}px;
+}
+.user_box,.user_box_show{
+	width:{echo $siteframewidth/4-30}px;
+}
+</style>
+</head>
+
+<link rel="shortcut icon" href="{echo SURL}/favicon.ico" />
+
+<!-- CSS -->
+{template phpapp:css}
+
+<link href="{echo TURL}install/css/install.css" rel="stylesheet" type="text/css" />
+
+<body>
+
+<!-- JS -->
+<script type="text/javascript">
+var SURL ='{echo SURL}';
+var TURL ='{echo TURL}';
+var Language='{echo $this->lang}';
+</script>
+
+
+<!--  Public  -->
+<script type="text/javascript" src="{echo TURL}js/jquery.js?v={echo $this->GetFileVersion()}"></script>
+
+<script type="text/javascript" src="{echo TURL}js/dialog.js?v={echo $this->GetFileVersion()}"></script>
+<!--  input  -->
+<script type="text/javascript" src="{echo TURL}js/input.js?v={echo $this->GetFileVersion()}"></script>
+
+<script type="text/javascript" src="{echo TURL}js/header.js?v={echo $this->GetFileVersion()}"></script>
+<script type="text/javascript" src="{echo TURL}js/phpapp.js?v={echo $this->GetFileVersion()}"></script>
+
+<!-- poshytip -->
+<script type="text/javascript" src="{echo TURL}poshytip/jquery.poshytip.js?v={echo $this->GetFileVersion()}"></script>
+
+
+<!-- Loading -->
+<div id="TopLoading" style="display:none" title="loading..."></div>
+<div id="loading" style="display:none" title="读取数据中..."></div>
+
+
+
+
+<div id="SiteBigWrap">  
+   <div id="SiteMiddleWrap">
+        <div id="SiteSmallWrap">
+
+            <div id="Header">
+                <div id="HeaderTop" class="header_default header_widescreen">  
+                      <div class="header_width">  
+                          <div class="header_before">
+                              <div id="header_logo">
+                                  <a href="{echo SURL}" title="{echo PHPAPP::$config['sitename']}"></a>
+                              </div>
+                               <div id="HeaderCity" class="header_city">
+                                 站长梦的开始！！！
+                              </div>
+                          </div>
+                          
+                          <div class="site_install">
+                             PHPAPP安装
+                          </div>
+
+                      </div>
+
+                </div> <!--HeaderTop End-->
+
+
+<div class="navigation_box">
+         <div id="Navigation">  
+              <div class="navigation_wrap">
+              
+                
+                <div class="navigation">
+                      <ul>   
+               
+                      <li><a href="{echo SURL}/install.php">安装PHPAPP 2.5</a></li>
+                      <li><a href="http://www.phpapp.cn/buy.html">购买授权</a></li>
+                             
+                      </ul>
+                     
+                </div> <!--navigation End-->
+                
+    
+            </div>   <!--navigation_wrap End-->
+    
+     </div> <!--Navigation End-->
+
+</div>
+
+
+<div class="wrap">
+<div class="content">

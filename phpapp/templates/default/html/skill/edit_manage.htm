@@ -1,0 +1,72 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">名称</td>
+    <td> <input name="name_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['name'])}{echo $manage['name']}{/if}"/></td>
+  </tr>
+  
+  </tr>
+  
+    <tr>
+    <td class="width_160">路径名称</td>
+    <td> <input name="route_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['route'])}{echo $manage['route']}{/if}"/> (URL地址名称,只能输入纯字母组合)</td>
+  </tr>
+
+
+  <tr>
+    <td class="width_160">颜色</td>
+    <td> <input name="color_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['color'])}{echo $manage['color']}{/if}"/> (例如：<span style="color:#FF0000">红色</span>填 #FF0000)</td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">排序</td>
+    <td> <input name="displayorder_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['displayorder'])}{echo $manage['displayorder']}{/if}"/></td>
+  </tr>
+  
+
+   <tr>
+    <td class="width_160">统计</td>
+    <td> <input name="total_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['total'])}{echo $manage['total']}{/if}"/> (系统自动设置)</td>
+  </tr>
+
+  
+  <tr>
+    <td class="width_160">图标样式名</td>
+    <td> <input name="classname_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['classname'])}{echo $manage['classname']}{/if}"/></td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">SEO Title</td>
+    <td> <input name="title_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['title'])}{echo $manage['title']}{/if}"/></td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">SEO Keywords</td>
+    <td> <input name="keywords_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['keywords'])}{echo $manage['keywords']}{/if}"/></td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">SEO Description</td>
+    <td> <input name="description_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['description'])}{echo $manage['description']}{/if}"/></td>
+  </tr>
+ 
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+
+</form>
+
+
+
+<script type="text/javascript">
+$("#RadioPhotoList").buttonset();
+</script>

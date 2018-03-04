@@ -1,0 +1,97 @@
+/* ÆÀ·ÖÑùÊ½ ------------------------------------------------------------------------------------------------------------------*/
+
+.task_score{
+	padding-top: 10px;
+	padding-bottom: 20px;
+}
+.task_score p{
+	line-height: 26px;
+}
+.score_level{
+	height: 22px;
+	width: 100px;
+	overflow: hidden;
+}
+
+.score_level li{
+	background-image: url(./images/score_level.gif);
+	background-repeat: no-repeat;
+	background-position: left 6px;
+	float: left;
+	height: 22px;
+	width: 16px;
+	margin-right: 4px;
+}
+
+.score_level li.focus{
+	background-image: url(./images/score_level.gif);
+	background-repeat: no-repeat;
+	background-position: left bottom;
+}
+
+.score_works_peed{
+	line-height: 28px;
+}
+
+.score_works_attitude{
+	line-height: 28px;
+}
+
+.score_works_quality{
+	line-height: 28px;
+}
+
+
+
+.seller_score_works_peed,.seller_score_works_attitude,.seller_score_works_quality{
+	background-image: url(./images/score_level.gif);
+	background-repeat: no-repeat;
+	background-position: left top;
+	overflow: hidden;
+	height: 16px;
+	width: 80px;
+}
+.seller_score_works_peed ul,.seller_score_works_attitude ul,.seller_score_works_quality ul{
+	background-image: url(./images/score_level.gif);
+	background-repeat: no-repeat;
+	background-position: left -63px;
+	overflow: hidden;
+	height: 16px;
+	width: 0px;
+}
+
+.credit_level{
+	height: 55px;
+}
+
+.credit_level ul{
+	height: 26px;
+}
+
+.credit_level ul li{
+	float: left;
+	width: 100px;
+}
+.credit_hao{
+	background-image: url(./images/credit_level.gif);
+	background-repeat: no-repeat;
+	background-position: left top;
+	height: 26px;
+	width: 100px;
+}
+
+.credit_zhong{
+	background-image: url(./images/credit_level.gif);
+	background-repeat: no-repeat;
+	background-position: left -68px;
+	height: 26px;
+	width: 100px;
+}
+
+.credit_cha{
+	background-image: url(./images/credit_level.gif);
+	background-repeat: no-repeat;
+	background-position: left -138px;
+	height: 26px;
+	width: 100px;
+}

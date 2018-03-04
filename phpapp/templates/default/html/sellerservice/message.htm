@@ -1,0 +1,41 @@
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+<tr>
+    <td class="datalist_h2" style="padding-top:0px;padding-bottom:0px;">
+     留言
+    </td>
+    <td class="datalist_h2"><div style="float:right;padding-right:10px;"><a href="javascript:;" class="add_message" onclick="AddMessage()">发布留言</a></div></td>
+</tr>
+
+{if !empty($list)}
+
+{for $list $value}
+  <tr>
+    <td style="width:100px">
+    <div class="comment_avatar">{echo $this->GetUserAvatar($value['uid'],0,1)}</div>
+    <p><a href="space.php?app=8&uid={echo $value['uid']}" target="_blank" title="{echo $value['username']}">{echo $value['username']}</a></p>
+    </td>
+    <td>
+    <div style="word-break:break-all;width:600px; overflow:auto;">{echo $this->str($value['content'],200,0,1,0,0,1)}</div>
+    <p><span style="font-family:Georgia, 'Times New Roman', Times, serif;font-size:9px">{echo $this->Date("Y/m/d H:i:s",$value['dateline'])}</span></p>
+    </td>
+  </tr>
+ {/for} 
+
+
+</table>  
+
+<div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+
+{else}
+
+
+<tr>
+<td colspan="2" style="padding-left:10px">
+    暂时没有任务留言!
+</tr>
+
+</table>  
+    
+{/if}
+

@@ -1,0 +1,10 @@
+{template phpapp:header_top}
+
+{if PHPAPP::$config['sitecloseguide']==0}
+<div id="SiteTool"> 
+   <div class="site_share">{template phpapp:share.js}</div>
+   <div id="SiteGuide" class="site_guide"><a class="small awesome" onclick="OpenWebsiteGuide({echo $this->app})"><span class="balloon_ico">新手操作引导</span></a></div>
+   <div id="WebsiteGuide" style="display:none">
+   </div>
+</div>
+{/if}

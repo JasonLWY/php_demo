@@ -1,0 +1,54 @@
+{template admin:header}
+
+<link href="{echo TURL}skills.css" rel="stylesheet" type="text/css" />
+<link href="{echo TURL}task.css" rel="stylesheet" type="text/css" />
+
+<div class="taskmode_menu">
+     <ul>
+      <li><a href="{echo $this->MakeGetParameterURL()}">修改 {echo $task['tid']} 号任务</a></li>
+     </ul>
+</div>
+
+<form id="AddTask" action="{echo $this->MakeGetParameterURL()}" method="post" class="add_task">
+
+<style type="text/css">
+<!--
+.edittask tr td{
+	height: 36px;
+}
+.submitsetmap{
+	position: relative;
+	float: right;
+}
+-->
+</style>
+
+{template task.js}
+
+{template taskfree_form}
+  
+
+<p style="padding-top:20px;" id="SubmitTaskForm"><input name="Submit" type="submit" value="修改"  class="form_button" onclick="SubmitContent();"/></p>
+ 
+<p id="SubmitLoadingForm" style="display:none;padding-top:20px;"></p>
+
+</form>
+<script type="text/javascript">
+$(function(){	
+	  var  price='{echo $task["price2"]}';
+	  $("#price2 option[value='"+parseInt(price)+"']").attr('selected','selected');
+});  
+</script>
+
+{if $this->uid!=1}
+
+<script type="text/javascript">
+
+$(function(){	
+	 $("#money").attr("disabled","disabled");
+	 $("#price1").attr("disabled","disabled");
+});
+
+</script>
+
+{/if}

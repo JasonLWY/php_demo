@@ -1,0 +1,108 @@
+{template member:menu}
+
+
+{if $list}
+
+<div id="friend">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr class="manage_process">
+    <td class="datalist_h2" style="width:46px"><input name="checkboxall" id="CheckboxAll" onclick="CheckboxAll('friend')" type="checkbox" value="1" /> 全选 </td>
+    <td class="datalist_h2" style="width:130px;">好友</td>
+    <td class="datalist_h2" style="width:380px;">附言</td>
+    <td class="datalist_h2">申请时间</td>
+  </tr>
+
+{for $list $value}
+  <tr>
+    <td><input name="checkbox"  type="checkbox" value="{echo $value['uid']}"/></td>
+    <td class="datalist_h2" style="padding:8px;"><a href="space.php?app=8&uid={echo $value['uid']}" target="_blank">{echo $this->GetUserAvatar($value['uid'])}</a><p style="line-height:20px;"><a href="space.php?app=8&uid={echo $value['uid']}" target="_blank">{echo $value['username']}</a></p></td>
+    <td class="datalist_h2">{echo $value['message']}</td>
+    <td class="datalist_h2">{echo $this->Date("Y/m/d H:i:s",$value['dateline'])}</td>
+  </tr>
+{/for} 
+
+</table>
+
+
+</div>
+
+<div class="ajax_page">{echo $page->ShowPages()}</div>
+
+<div style="text-align:center"><input id="Submit" name="Submit" type="button" value="批准" class="form_button"/></div>
+
+{else}
+
+ <p style="padding:10px">暂时没有数据</p>
+ 
+{/if}    
+      
+
+
+
+</td></tr></table>
+
+
+<script type="text/javascript">
+ 
+ $(function(){	
+		   
+	 $("#Submit").click( function () {
+		     
+			 
+			      var OderID='';
+                   $("#friend").find("input:checked[name!='checkboxall']").each(function(){
+                           var value=$(this).val();  
+                           
+                           if($(this).attr("disabled")!='disabled'){
+                           
+                           if(OderID){
+                                OderID+=','+value;
+                           }else{
+                                OderID=value;
+                           }
+                           }
+              
+                   }); 	
+                   
+                   if(!OderID){
+                       
+                        alert("请选择好友操作!");
+                        return false;
+                   }
+				   
+				   
+
+				  $("#loading").dialog({
+						  title:"申请批准操作",	
+						  width: 300,
+						  height:'auto'
+				  });
+					 
+				  $("#loading").dialog('open');
+				  
+				  $("#loading").html('<div class="loading">提交数据中...</div>');
+			  
+	  
+				   $.ajax({
+						type: "POST",
+						url: "member.php?app={echo $this->app}&action=3&op=1",
+						data: 'uid='+OderID,
+						success: function(data){
+							  $("#loading").html(data);
+						}
+				   });	
+			    
+		 
+	 });
+	
+ });
+ 
+ 
+</script>
+
+
+
+
+
+{template phpapp:footer}

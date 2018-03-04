@@ -1,0 +1,79 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">使用表</td>
+    <td> <input name="table_phpapp_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['table_phpapp'])}{echo $manage['table_phpapp']}{/if}"/></td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">名称</td>
+    <td> <input name="name_phpapp_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['name_phpapp'])}{echo $manage['name_phpapp']}{/if}"/></td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">用户类型</td>
+    <td>
+    <select name="type_phpapp_d">
+    <option value="0" {if !empty($manage['type_phpapp'])}{if 0==$manage['type_phpapp']} selected="selected" {/if}{/if}>不限</option>
+    {for $membertype $value}
+        <option value="{echo $value['id_phpapp']}" {if !empty($manage['type_phpapp'])}{if $value['id_phpapp']==$manage['type_phpapp']} selected="selected" {/if}{/if}>{echo $value['name_phpapp']}</option>
+    {/for}
+     </select> 
+   </td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">小图标样式名</td>
+    <td> <input name="icon_small_phpapp_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['icon_small_phpapp'])}{echo $manage['icon_small_phpapp']}{/if}"/> </td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">中图标样式名</td>
+    <td> <input name="icon_middle_phpapp_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['icon_middle_phpapp'])}{echo $manage['icon_middle_phpapp']}{/if}"/> </td>
+  </tr>
+  
+       <tr>
+    <td class="width_160">大图标样式名</td>
+    <td> <input name="icon_big_phpapp_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['icon_big_phpapp'])}{echo $manage['icon_big_phpapp']}{/if}"/> </td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">认证价格</td>
+    <td> <input name="price_phpapp_f" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['price_phpapp'])}{echo $manage['price_phpapp']}{/if}"/> 0 为免费</td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">认证时间</td>
+    <td> <input name="time_phpapp_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['time_phpapp'])}{echo $manage['time_phpapp']}{/if}"/> 天</td>
+  </tr>
+  
+
+     <tr>
+    <td class="width_160">介绍</td>
+    <td><textarea  rows="6"  name="description_phpapp_s" cols="50" class="form_textarea form_input_width_300">{if !empty($manage['description_phpapp'])}{echo $manage['description_phpapp']}{/if}</textarea></td>
+  </tr>
+  
+  
+  
+   <tr>
+    <td class="width_160">是否启用</td>
+    <td><select name="status_phpapp">
+  <option value="0" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==0} selected="selected" {/if}{/if}>启用</option>
+  <option value="1" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==1} selected="selected" {/if}{/if}>关闭</option>
+</select> </td>
+  </tr>
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+</form>
+
+

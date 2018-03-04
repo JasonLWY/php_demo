@@ -1,0 +1,160 @@
+{template admin:header}
+
+<div id="ShowAdvancedSearch" class="showadvancedsearch" {if !empty($this->GET['opensearch'])}style="display:block"{/if}>
+<form method="get" action="{echo $this->MakeGetParameterURL()}">
+
+<input type="hidden" name="app" value="{echo $this->app}" />
+<input type="hidden" name="menu" value="{echo $this->GET['menu']}" />
+<input type="hidden" name="action" value="{echo $this->ac}" />
+<input type="hidden" name="page" value="{echo $this->GET['page']}" />
+<input type="hidden" name="opensearch" value="{echo $this->GET['opensearch']}" />
+
+<table border="0" cellspacing="0" cellpadding="0">
+  
+  <tr>
+    <td class="search_h2">编号</td>
+    <td><input name="oid" type="text" size="50" maxlength="255" class="form_input_text form_input_width_100"  value="{if !empty($selectarray['oid'])}{echo $selectarray['oid']}{/if}"/> (交易编号)</td>
+    <td class="search_h2">流水号</td>
+    <td><input name="serial" type="text" size="50" maxlength="255" class="form_input_text form_input_width_200"  value="{if !empty($selectarray['cid'])}{echo $selectarray['cid']}{/if}"/> (交易流水号)</td>
+  </tr>
+
+  <tr>
+    <td class="search_h2">任务ID </td>
+    <td><input name="tid" type="text" size="50" maxlength="10" class="form_input_text form_input_width_100"  value="{if !empty($selectarray['tid'])}{echo $selectarray['tid']}{/if}"/> </td>
+    <td class="search_h2">稿件ID</td>
+    <td><input name="did" type="text" size="50" maxlength="255" class="form_input_text form_input_width_200"  value="{if !empty($selectarray['did'])}{echo $selectarray['did']}{/if}"/> </td>
+  </tr>
+  
+   <tr>
+    <td class="search_h2">交易流程 </td>
+    <td>
+    <select name="process">
+        <option value="0">不限</option>
+        <option value="1" {if !empty($selectarray['process'])}{if $selectarray['process']==1} selected="selected"{/if}{/if}>等待买家付款</option>
+        <option value="2" {if !empty($selectarray['process'])}{if $selectarray['process']==2} selected="selected"{/if}{/if}>买家已付款，等待卖家发货</option>
+        <option value="3" {if !empty($selectarray['process'])}{if $selectarray['process']==3} selected="selected"{/if}{/if}>卖家已发货,等待买家确认</option>
+        <option value="4" {if !empty($selectarray['process'])}{if $selectarray['process']==4} selected="selected"{/if}{/if}>买家退款中</option>
+        <option value="5" {if !empty($selectarray['process'])}{if $selectarray['process']==5} selected="selected"{/if}{/if}>买家确认,成功订单</option>
+        <option value="6" {if !empty($selectarray['process'])}{if $selectarray['process']==6} selected="selected"{/if}{/if}>关闭订单</option>
+    </select> 
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="search_h2">交易金额 </td>
+    <td><input name="amount1" type="text" class="form_input_text" size="10" value="{if !empty($selectarray['amount1'])}{echo $selectarray['amount1']}{/if}" style="width:70px;"/> ~ <input name="amount2" type="text" class="form_input_text" size="10" value="{if !empty($selectarray['amount2'])}{echo $selectarray['amount2']}{/if}" style="width:70px;"/> 格式 10~20</td>
+  </tr>
+  
+  <tr>
+    <td class="search_h2">交易手续费 </td>
+    <td><input name="fee1" type="text" class="form_input_text" size="10" value="{if !empty($selectarray['fee1'])}{echo $selectarray['fee1']}{/if}" style="width:70px;"/> ~ <input name="fee2" type="text" class="form_input_text" size="10" value="{if !empty($selectarray['fee2'])}{echo $selectarray['fee2']}{/if}" style="width:70px;"/> 格式 10~20</td>
+  </tr>
+  
+  
+  <tr>
+    <td class="search_h2">创建时间 </td>
+    <td><input name="dateline1" type="text" class="form_input_text dateline" size="10" value="{if !empty($selectarray['dateline1'])}{echo $selectarray['dateline1']}{/if}" style="width:70px;"/> ~ <input name="dateline2" type="text" class="form_input_text dateline" size="10" value="{if !empty($selectarray['dateline2'])}{echo $selectarray['dateline2']}{/if}" style="width:70px;"/> 格式 (YYYY-MM-DD)</td>
+  </tr>
+  
+  
+   
+</table>
+
+<li style="text-align:center;padding-top:20px;">
+   <input name="SelectData" type="submit" value="搜索" class="form_button"/>
+</li>
+
+</form>
+
+</div>
+
+<div class="advancedsearch">
+{if empty($this->GET['opensearch'])}
+<a class="small green awesome" href="{echo $this->MakeGetParameterURL(array('opensearch'=>1))}">打开筛选</a>
+{else}
+<a class="small green awesome" href="{echo $this->MakeGetParameterURL(array('opensearch'=>0))}">关闭筛选</a>
+{/if}
+</div>
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+
+{if $list}
+
+
+<div id="WindowsForm{echo $this->GET['menu']}">
+
+      <div id="orderlist">
+      
+        <p><input type="checkbox" name="checkboxall"  value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选订单</p>
+        
+           {for $list $value}
+                <table width="100%" border="0" cellpadding="0" cellspacing="0" class="manage_table">
+                  <tr>
+                   <td colspan="5" class="order"><input name="checkbox[]" type="checkbox" value="{echo $value['cid']}" {if $value['process']>1 && $value['process']<6}{if $value['seller']}disabled="disabled"{/if}{else}disabled="disabled"{/if}/> 订单编号：{echo $value['oid']} <span style="float:right;padding-right:10px;">成交时间：{echo $this->Date("Y-m-d H:i:s",$value['dateline'])}</span></td>
+                  </tr>
+                  <tr>
+                    <td style="width:40%">
+                    <p>{php} $buyer=$this->GetMysqlOne('a.uid,a.appid,b.username,a.url'," ".$this->GetTable('task')." AS a LEFT JOIN ".$this->GetTable('member')." AS b ON a.uid=b.uid WHERE tid='$value[tid]'");{/php}<a href="{echo SURL}{echo $buyer['url']}" target="_blank">{echo $value['tid']}号悬赏任务</a></p>
+                    <p><a href="{echo SURL}/index.php?app={echo $buyer['appid']}&action=5&tid={echo $value['tid']}&did={echo $value['did']}" target="_blank"><strong>{echo $value['did']}号</strong>稿件中标</a></p>
+                    
+                    </td>
+                    <td style="width:15%"><strong>{echo $value['money']}</strong></td>
+                    <td style="width:15%">
+                    <p>买家</p>
+                    <p>
+                    <a href="space.php?app=8&uid={echo $buyer['uid']}" target="_blank" title="{echo $buyer['username']}">{echo $buyer['username']}</a>
+                    </p></td>
+                    <td style="width:15%">
+                    <p>
+
+                    {if ($value['buyer']+$value['seller'])==2} 
+                         双方已评价
+                    {else}
+                     
+                        {if $value['buyer']==1} 
+                             对方已评价
+                        {elseif $value['seller']==1}
+                            我已评价
+                        {/if}
+
+                    {/if}
+          
+                   
+                    </p>
+                    
+                    <p><a href="{echo $this->MakeGetParameterURL(array('action'=>2,'id'=>$value['oid']))}">订单详情</a></p>
+                    </td>
+
+                  </tr>
+                </table>
+          {/for}
+
+      
+      </div>
+      
+
+</div>
+
+ <p><input type="checkbox" name="checkboxall"  value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选订单</p>
+
+{if $ajaxpage->ShowPages()}
+		<div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+{/if}
+
+
+<div class="phpapp_button"><input name="Delivery" type="submit" value="代发货" class="form_button"/> <input name="Delete" type="submit" value="删除" class="form_button"/></div>
+
+
+
+{else}
+
+
+<p>没有数据!</p>
+
+{/if}
+
+
+
+</form>

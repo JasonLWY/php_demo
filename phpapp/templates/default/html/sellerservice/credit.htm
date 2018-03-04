@@ -1,0 +1,30 @@
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" id="TaskCredit">
+
+{if $list}
+
+    {for $list $key=>$value}
+    
+        <tr>
+            <td {if @ceil($key%2) == 0} style="background-color:#F7F7F7;padding:10px"{else}style="padding:10px"{/if}>
+                 <a href="space.php?app=8&uid={echo $value['uid']}" target="_blank">{echo $this->GetUserAvatar($value['uid'])}</a>
+                 <p><a href="space.php?app=8&uid={echo $value['uid']}" target="_blank" title="{echo $value['username']}">{echo $value['username']}</a></p>
+            </td>
+            
+            <td valign="top" {if @ceil($key%2) == 0} style="background-color:#F7F7F7;padding:10px;white-space:normal;width:860px;word-break:break-all;"{else}style="padding:10px;white-space:normal;word-break:break-all;width:860px;"{/if}>
+                 {echo $value['content']}
+                 <p>{echo $this->Date('Y-m-d',$value['dateline'],1)}</p>
+            </td>
+        </tr>
+        
+    {/for}
+
+{else}
+<tr>
+<td colspan="2" style="padding-left:10px">
+     暂时没有评价!
+</td>
+</tr>
+{/if}
+</table>  

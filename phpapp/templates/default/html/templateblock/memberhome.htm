@@ -1,0 +1,107 @@
+<link href="{echo TURL}member_home.css" rel="stylesheet" type="text/css" />
+
+<div class="memberhome_box">
+
+    <div class="member_info">
+    
+         <div class="avatar">{echo $this->GetUserAvatar($this->uid,1,1)}</div>
+         
+         <div class="member_show_info">
+              <p class="username usergroup_personal_ico" title="个人用户">
+              
+              <a href="{SURL}/space.php?app=8&uid={echo $this->uid}">{echo $user['username']}</a>
+              
+              
+              
+        {if $user['credittype']==1}
+     
+            {if $user['credits']}<span class="{echo $this->GetCreditLevel($user['credits'],1)}" title="卖家信用积分 {echo $user['credits']}"></span>{else}暂无信用值{/if}
+
+        {elseif $user['credittype']==2}
+
+            {if $user['credits']}<span class="{echo $this->GetCreditLevel($user['credits'],2)}" title="买家信用积分 {echo $user['credits']}"></span>{else}暂无信用值{/if} 
+   
+         {/if}
+             
+                {if $user['usertype']==1}
+               
+                     {if !$this->IsSQL('member_personal_certificate',"WHERE status=5 AND uid='$this->uid'")}
+                     <span style="font-size:12px">您未实名认证无法提现！<a href="{SURL}/member.php?app=15">点击实名认证！</a></span>
+                     {/if}
+               
+               {else}
+            
+                     {if !$this->IsSQL('member_company_certificate',"WHERE status=5 AND uid='$this->uid'")}
+                     <span style="font-size:12px">您未实名认证无法提现！<a href="{SURL}/member.php?app=16">点击实名认证！</a></span>
+                     {/if}   
+               {/if}
+               
+               </p>
+        
+        
+               {php} $level=$this->GetUserLevel($user['credit']);{/php}
+               
+               <div class="{echo $level['style']}" title="用户等级"></div>
+                
+              <p title="用户头衔" class="userlevel">
+              用户头衔：{echo $level['title']}      
+              </p> 
+              
+              <p id="residecity">
+                {if $user['residecity']}
+                     所在地： {echo $this->GetSelectCategory('category_city',$user['residecity'],'residecity','','',1)}
+                {else}
+                所在地未设置 <a href="{SURL}/member.php?app=2">[点击设置]</a>
+                {/if}
+             </p>
+             
+            
+        
+        <p style="display:inline-block;padding-top:6px;">{echo $this->GetCertificateIcon($user['certificate'],array('Mobile'=>'手机','Mail'=>'邮箱','Personal'=>'个人实名','Company'=>'公司实名'))}</p>
+        
+
+      </div>
+         
+    </div>
+    
+    <div class="member_money">
+    <ul>
+    
+      <p>可用金额： <span class="color_f60">{echo $user['money']}</span> 元  &nbsp;&nbsp; 推广提成: <span class="color_f60">{echo $user['union']}</span> 元  &nbsp;&nbsp;  冻结金额: <span class="color_f60">{echo $moneylock}</span> 元   &nbsp;&nbsp;  <a class="small blue awesome" href="{SURL}/member.php?app=5&action=2">充值</a> <a href="{SURL}/member.php?app=5&action=3" class="small orange awesome">提现</a></p>
+    </ul>
+    </div>
+    
+    <div class="member_money">
+    <ul>
+      <p> 
+
+      任务发布 <span class="color_f60">{echo intval($user['tasknum'])}</span>  &nbsp;&nbsp;  投标 <span class="color_f60">{echo intval($user['draftnum'])}</span> &nbsp;&nbsp;  中标 <span class="color_f60">{echo intval($user['successnum'])}</span>
+      </p>
+    </ul>
+    </div>
+
+</div>
+
+
+
+{sql memberfeed}
+
+
+
+
+
+
+
+
+{sql memberhelp}
+
+
+
+</div>
+
+
+
+
+
+
+</div>  <!-- 左边End -->

@@ -1,0 +1,40 @@
+{template phpapp:header}
+
+<link href="{echo TURL}skills.css" rel="stylesheet" type="text/css" />
+<link href="{echo TURL}addtask.css" rel="stylesheet" type="text/css" />
+<link href="{echo TURL}task.css" rel="stylesheet" type="text/css" />
+
+{if $taskmode}
+    <div class="taskmode_menu">
+         <ul>
+         {for $taskmode $key=>$value}
+                <li{if $value['appid']==$this->app} class="focus"{elseif $key==0 && $this->app==49} class="focus"{/if}><a href='{echo SURL}/index.php?app={echo $value['appid']}&action=1'>{if $value['appid']==$this->app}{if !empty($edittid)}修改{else}发布{/if}{else}发布{/if}{echo $value['name']}</a></li>
+         {/for}
+         </ul>
+    </div>
+{/if}
+
+{template task.js}
+
+<form id="AddTask" class="add_task">
+
+<div class="post_project_tag" style="margin-left:{echo intval(PHPAPP::$config["siteframewidth"]-254)}px;"><h3>悬赏</h3><p>发布任务</p></div>
+
+{template taskcount_form}
+  
+ <input type="checkbox" value="1" checked="checked" id="addtaskagree"/> <a href="javascript:;" style="text-decoration: underline;" id="openaddtaskagree">我已阅读并接受{echo PHPAPP::$config['sitename']}网服务协议</a><div id="taskagree" style="display:none;padding:20px;" title="发布协议">{echo $this->str(PHPAPP::$config['task_count_agree'],0,0,1,0,0,1)}</div>
+
+<p style="padding-top:20px;" id="SubmitTaskForm"><input name="Submit" type="button" value="立即发布任务" id="SubmitAddTask" class="form_button" style="height:
+40px;"/></p>
+<p id="SubmitLoadingForm" style="display:none;padding-top:20px;"></p>
+
+</form>
+
+<script type="text/javascript">
+$(function(){		  
+	 $('#subject').focus();
+});
+</script>
+
+
+{template phpapp:footer}

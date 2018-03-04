@@ -1,0 +1,5 @@
+<form action='{echo SURL}/index.php' method="get" class="navigation_search_form">
+      <input name="submit" type="submit" value=" " class="navigation_search_submit"/>
+      <input name="search" type="text" value="{if !empty($search)}{echo $search}{else}搜索 任务,人才,服务{/if}" class="navigation_search"/>
+      <input name="app" type="hidden" value="22"/>
+</form>

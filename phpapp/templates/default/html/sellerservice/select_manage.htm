@@ -1,0 +1,50 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<div id="WindowsForm{echo $this->GET['menu']}">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall"  value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+    
+    {for $orderarr $key=>$value}
+    <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+    {/for} 
+    
+    <td class="datalist_h2">操作</td>
+  </tr>
+
+{if $list}
+
+{for $list $value}
+ <tr>
+ 
+    <td><input name="checkbox[]" type="checkbox" value="{echo $value['catid']}" /></td>
+    
+    <td>{$value['catid']}</td>
+    
+    <td>{$value['name']}</td>
+    
+    <td>{$value['code']}</td>
+    
+    <td>{if $value['status']}关闭{else}开启{/if}</td>
+    
+    <td><a href="{echo $this->MakeGetParameterURL(array('action'=>33,'id'=>$value['catid']))}">[修改]</a></td>
+  </tr>
+{/for}
+
+{else}
+<tr>
+    <td colspan="6">暂没有权限配置!</td>
+</tr>
+{/if}
+  
+</table>
+</div>
+<div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="删除" class="form_button"/></div>
+
+
+</form>

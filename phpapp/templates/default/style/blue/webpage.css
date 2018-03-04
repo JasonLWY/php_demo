@@ -1,0 +1,73 @@
+.webpage{
+	overflow: hidden;
+	display: inline-block;
+	width: 100%;
+}
+
+
+.webpage_menu{
+	float: left;
+	width: 200px;
+	overflow: hidden;
+}
+
+.webpage_menu ul{
+
+}
+
+.webpage_menu ul li{
+	line-height: 30px;
+	height: 30px;
+	background-color: #D1E4EF;
+	margin-bottom: 2px;
+	text-indent: 16px;
+	overflow: hidden;
+}
+
+.webpage_menu ul li a{
+	height: 30px;
+	display: block;
+	overflow: hidden;
+}
+.webpage_menu ul li a:hover{
+	text-decoration:none;
+	color:#FFF;
+	font-weight: bold;
+	background-color: #F90;
+}
+
+.webpage_menu ul li.focus{
+	color:#FFF;
+	font-weight: bold;
+	background-color: #F90;
+}
+.webpage_menu ul li.focus a{
+	color:#FFF;
+}
+
+.webpage_content{
+	float: right;
+	width: 76%;
+	border: 1px solid #E6E6E6;
+	overflow: hidden;
+}
+
+.webpage_content h2{
+	background-image: url(./images/h2_bg.png);
+	background-repeat: repeat-x;
+	line-height: 30px;
+	background-position: left bottom;
+	padding-left: 20px;
+}
+
+.webpage_content ul{
+	padding: 20px;
+}
+.sitelink {
+	overflow: hidden;
+}
+.sitelink li{
+	float: left;
+	width: 140px;
+	margin-bottom: 10px;
+}

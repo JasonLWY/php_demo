@@ -1,0 +1,92 @@
+
+				 {ad Default2}
+
+                     </div> <!--content End-->
+                 </div> <!--wrap End-->
+                 
+                 <div id="Footer" class="footer">   
+                      <div class="footermenu">
+                            <div class="footermenulist">
+                               <ul>
+                                     {php} $navtop=$this->GetMysqlArray('*'," ".$this->GetTable('nav_bottom')."  ORDER BY displayorder ASC");{/php}
+                                     {if $navtop}
+                                         {for $navtop $key=>$value}
+                                             <li><a href="{echo $value['navurl']}" {if $value['blank']==0}target="_blank"{/if} title="{echo $value['navname']}">{echo $value['navname']}</a></li>
+                                         {/for}
+                                     {/if}
+                               </ul>
+                            </div>
+                            
+                           {if PHPAPP::$config['sitecloselanguage']==0} 
+                                   {if $systemlanguage=$this->SystemLanguage()} 
+                                        <div id="SystemLanguage" class="systemlanguage">
+                                        {php} global $language;{/php}
+                                        
+                                            <div id="SystemLanguageList" class="languagelist">   
+                                             <h3>请选择国家地区语言</h3>  
+                                                <ul>
+                                                {for $systemlanguage $value}
+                                                         <li><a href="http://{echo $value['domain_phpapp']}" class="{echo $value['style_phpapp']}" title="{echo $value['name_phpapp']}">{echo $value['name_phpapp']}</a></li>
+                                                {/for}
+                                                </ul>
+                                            </div>
+                                            
+                                        <h3><em>LANGUAGE</em><span><a href="javascript:void(0);" title="当前语言{echo $systemlanguage[$language]['name_phpapp']}" id="ShowSystemLanguage">{echo $systemlanguage[$language]['name_phpapp']}</a></span></h3>
+            
+                                        </div>
+                                   {/if}
+                           {/if}
+                       </div>
+                       
+                       <div class="footercopyright">
+                            <div class="copyright">
+                                <p>
+                                &copy; 2006-{echo $this->Date("Y",$this->NowTime())} {if !intval(PHPAPP::$config['phpappauth'])}威客网 版权所有  {else} <a href="{echo SURL}">{echo PHPAPP::$config['sitename']}</a> {/if} {echo $this->SystemRunTime()}
+                                </p>
+                                
+                                <p>
+                                服务热线：400-000-00000 在线咨询QQ： 956560090
+                                </p>
+                                
+                                <p>
+                                {if PHPAPP::$config['siteicp']}<a href="http://www.miitbeian.gov.cn" target="_blank">{echo PHPAPP::$config['siteicp']}</a>{/if} 
+                                {if PHPAPP::$config['sitecount']}{echo PHPAPP::$config['sitecount']}{/if}
+                                </p>
+
+                            
+                            </div>
+                            
+                            <div class="footerauthenticate">
+                                <a href="http://www.alipay.com" title="支付宝" class="footeralipay"></a>
+                                <a href="" title="工商注册" class="footergongshang"></a>
+                                <a href="http://cnnic.cn" title="可信网站认证" class="footercnnic"></a>
+                            </div>
+                       </div>
+                       
+                       
+                       
+                           
+                 </div> <!--Footer End-->
+
+ 
+             </div> <!--SiteSmallWrap End-->
+         </div> <!--SiteMiddleWrap End-->
+     </div> <!--SiteBigWrap End-->
+     
+     
+     <div id="ScrollUp" class="scroll_default">
+     	<a id="TipScrollUp" href="javascript:;" onclick="scrollTo(0,0);" title="返回顶部"></a>
+     </div>
+     
+     <div id="POPLIVE" class="pop_live">
+     </div>
+     
+     
+     {block ad_double}
+     
+     <!--[if lte IE 6]> 
+    	<link href="{echo TURL}form_ie6.css" rel="stylesheet" type="text/css" />
+     <![endif]-->
+
+  </body>
+</html>

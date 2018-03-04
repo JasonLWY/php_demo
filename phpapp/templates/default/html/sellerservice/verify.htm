@@ -1,0 +1,50 @@
+{template phpapp:header}
+
+<link href="{echo TURL}task.css" rel="stylesheet" type="text/css" />
+
+<link href="{TURL}prop_icon.css" rel="stylesheet" type="text/css" />
+<link href="{TURL}use_prop.css" rel="stylesheet" type="text/css" />
+
+<form id="AddTask" action="index.php?app={echo $this->app}&action=2&tid={echo $this->tid}&op=3" method="post" class="add_task">
+ 
+ 
+ <div class="task_inventory">
+   <h2>确认雇用发布信息</h2>
+   <ul>
+       <li><strong>标题：</strong>{echo $task['subject']}</li>
+       <li><strong>悬赏：</strong><span class="color_f60">{echo $task['money']}</span> 元{if $task['money']>0} <span class="color_f60">(需要预支付)</span>{/if} </li>
+       <li><strong>周期：</strong> {if !empty($task['time'])}<strong>{echo $task['time']}</strong> 天{/if}</li>
+       {if $task['endtime']}<li><strong>完成时间：</strong>{echo $task['endtime']} 天</li>{/if}
+       <li><strong>要求内容：</strong></li>
+       <p>{echo $task['description']}</p>
+   </ul>
+   
+</div>
+
+
+
+
+<p style="height:60px;padding-bottom:30px;padding-top:50px;text-align:center;"><input name="Submit" type="button" value="上一步" id="SubmitStep1" class="form_button"/> <input name="Submit" type="submit" value="确定" id="SubmitAddTask" class="form_button"/>
+
+</p>
+       </div>   
+
+ 
+    </form>
+
+
+
+</div>
+
+<script type="text/javascript">
+
+$(function(){	
+		   
+	 $("#SubmitStep1").click( function () {
+		     window.location.href='{echo SURL}/index.php?app={echo $this->app}&action=2&tid={echo $this->tid}&op=1';
+	 });
+      
+});
+</script>
+
+{template phpapp:footer}

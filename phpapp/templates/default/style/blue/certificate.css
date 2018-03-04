@@ -1,0 +1,60 @@
+.email_icon_big{
+	background-image: url(./images/certificate/E-mail.png);
+	background-repeat: no-repeat;
+	display: block;
+	height: 100px;
+	width: 100px;
+	background-color: #F6F6F6;
+	background-position: center center;
+}
+
+
+.mobile_icon_big{
+	background-image: url(./images/certificate/phone.png);
+	background-repeat: no-repeat;
+	display: block;
+	height: 100px;
+	width: 100px;
+	background-color: #F6F6F6;
+	background-position: center center;
+}
+
+
+.realname_icon_big{
+	background-image: url(./images/certificate/personal.png);
+	background-repeat: no-repeat;
+	display: block;
+	height: 100px;
+	width: 100px;
+	background-color: #F6F6F6;
+	background-position: center center;
+}
+
+.company_icon_big{
+	background-image: url(./images/certificate/company.png);
+	background-repeat: no-repeat;
+	display: block;
+	height: 100px;
+	width: 100px;
+	background-color: #F6F6F6;
+	background-position: center center;
+}
+
+.member_vip_icon_big{
+	background-image: url(./images/certificate/vip.gif);
+	background-repeat: no-repeat;
+	display: block;
+	height: 100px;
+	width: 100px;
+	background-color: #F6F6F6;
+	background-position: center center;
+}
+
+.email_certificate{
+	padding: 20px;
+}
+
+.email_certificate p{
+	line-height: 24px;
+	margin-top: 10px;
+}

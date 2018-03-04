@@ -1,0 +1,209 @@
+{if !empty($adminmanage)}
+     {template admin:header}
+{else}
+	 {template member:menu}
+{/if}
+
+<script type="text/javascript">
+$(function(){	
+	$("#order_tabs").tabs();	
+});
+</script>
+
+<link href="{TURL}form.css" rel="stylesheet" type="text/css" />
+
+<link href="{TURL}order.css" rel="stylesheet" type="text/css" />
+
+
+{if $draftorder}
+
+<div class="order_show">
+    <div class="order_show_h2">
+        <ul>
+            <li style="width:380px">任务信息</li>
+            <li style="width:260px">悬赏</li>
+            <li>状态/操作</li>
+        </ul>
+    </div>
+    
+    <div class="order_task">
+    
+           <div class="task_avatar">
+           {echo $this->GetUserAvatar($task['uid'],0,1)}
+           </div>
+           
+           <div class="task_user_info">
+               <div class="task_user_username">
+                   <p><a href="{echo SURL}/space.php?app=8&uid={echo $task['uid']}" target="_blank" title="{echo $task['username']}">{echo $task['username']}</a></p>
+                   <p style="padding-top:10px;">
+                      {if $task['credit']}<span class="{echo $this->GetCreditLevel($task['credit'],2)}" title="雇主信用积分 {echo $task['credit']}"></span>{else}暂无信用值{/if} 
+                   </p>
+               </div>
+               <div class="task_reward">
+               		<span>￥{echo $draftorder['sum']}</span>
+               </div>
+               <div class="order_operate">
+                 	{echo $getprocess->GetSellerProcessName('task_order','task_order_credit',$draftorder['cid'],1)}
+
+                    {echo $getprocess->GetSellerProcessMenu('task_order_credit',$draftorder['cid'])}
+              
+               </div>
+             
+           </div>
+                     
+    </div>
+    
+    {if $draftorder['process']>0 && $draftorder['process']<5}
+        <div class="warning" style="margin-right: 20px;margin-left: 20px;">
+               <h3>系统提示：</h3>
+               <p>
+               {echo $getprocess->GetSellerProcessWarning($draftorder['process'],$draftorder,$draftorder['cid'])}
+               </p>
+        </div>
+    {/if}
+   
+    <div style="padding:20px;word-break:break-all;">
+    <!--
+    <h3>要求完成时间</h3>
+    <div class="task_time">
+       必须在 <span>{echo $this->Date('Y-m-d',$draftorder['worktime'])}</span> 前完成
+    </div>
+    -->
+    
+    <p style="display:inline-block;padding-top:6px;">{echo $this->GetCertificateIcon($taskuser['certificate'],array('Mobile'=>'手机','Mail'=>'邮箱','Personal'=>'个人实名','Company'=>'公司实名'))}
+    </p>
+               
+    <h3>任务要求 {if $task['appid']==82}<a href='{echo SURL}/member.php?app=82&action=5&tid={echo $task['tid']}&op=1' target="_blank" title="查看任务地址">[查看任务地址]</a>{else}<a href="{echo SURL}{echo $task['url']}" target="_blank" title="查看任务地址">[查看任务地址]</a>{/if}</h3>
+        <p style="color:#666"> 
+            {echo $task['description']}
+        
+            {php}$files=$this->FileList($tid,1);{/php}
+            
+            {template phpapp:file}
+        </p>
+
+    </div>
+    
+    
+    <div id="order_tabs" style="border: none;padding:0px;background-color:transparent;;" class="order_tabs">
+        
+        <ul class="order_ul" style="background-color:transparent;">
+            <li><a href="#OrderShow-3">文件上传</a></li>
+            <li><a href="#OrderShow-0">订单流程</a></li>
+            <li><a href="#OrderShow-1">发票</a></li>
+            <li><a href="#OrderShow-2">留言</a></li>
+            
+        </ul>
+    
+        <div id="OrderShow-0" style="padding: 20px;" class="order_show_data">
+        
+             <div class="order_show_box">
+                     <div class="order_process">
+                    
+                        <ul class="order_process_default">
+                        
+                            <div class="order_process_schedule" style="width:{if $draftorder['process']==2}130{elseif $draftorder['process']==3}280{elseif $draftorder['process']==5}{if $draftorder['seller']==1}520{else}360{/if}{else}0{/if}px;">          
+                            </div>
+                        
+                            <li>1.雇主付款</li>
+                            
+                            <li>2.威客交接</li>
+                            
+                            <li>3.雇主确认</li>
+                            
+                            <li>4.评价</li>
+                        
+                        </ul>
+                    </div>
+        
+        
+                    <h3>买家评价：</h3>
+                    
+                    <div style="padding:20px;">
+                    
+                    {if $credit}
+                    
+        
+                          <p><strong>
+                          {if $credit['level']==0}
+                          好评
+                          {elseif $credit['level']==1}
+                          中评
+                          {elseif $credit['level']==2}
+                          差评
+                          {/if}
+                          </strong></p>
+                          <p>评语： {if $credit['content']}{echo $credit['content']}{else}无{/if}</p>
+                          <p>评价时间：{echo $this->Date('Y-m-d',$credit['dateline'],1)} </p>
+                         
+                    {else}
+                    <p>未评价</p>
+                    {/if}
+                    <p style="text-align:right;padding-top:30px;padding-right:20px;padding-bottom:10px;">原收入：￥{echo $draftorder['amount']} 手续费 ￥{echo $draftorder['fee']}</p>
+                    
+                    {if $draftorder['refundmoney']>0}
+                    <p style="text-align:right;padding-top:30px;padding-right:20px;padding-bottom:10px;">雇主要求退款 {echo $draftorder['refundmoney']}</p>
+                    {/if}
+                    
+                    <p style="text-align:right;padding-right:20px;padding-bottom:20px;"><strong>实收款： </strong><span class="color_f60" style="font-size:18px">
+                    {if $draftorder['refundmoney']>=$draftorder['amount']}￥{echo $draftorder['amount']+$draftorder['fee']-$draftorder['refundmoney']}元{elseif $draftorder['refundmoney']< $draftorder['amount']}￥{echo $draftorder['amount']-$draftorder['refundmoney']}元{/if}
+                    </span></p>
+        
+                    </div>
+             </div>
+        </div>
+        
+        <div id="OrderShow-1" class="order_show_data">
+              <div class="order_show_box">
+       				<h5>发票抬头：</h5>
+                   <p>{if !empty($invoice['invoice'])}{echo $invoice['invoice']}{else}雇主暂时没要求{/if}</p>
+                   <h5 style="padding-top:20px;">发票要求内容：</h5>
+                   <p>{if !empty($invoice['content'])}{echo $this->str($invoice['content'],999999,0,1,0,1,1)}{else}雇主暂时没要求{/if}</p>
+              </div>
+        </div>
+        
+        <div id="OrderShow-2" class="order_show_data">
+              <div class="order_show_box" id="ListMessage">
+               	 {template message}
+              </div>
+        </div>
+        
+        <div id="OrderShow-3" class="order_show_data">
+             <div class="order_show_box">
+                 {if $this->IsSQL('consume',"WHERE cid='$draftorder[cid]' AND process<4")}  
+                        {template sellorder_member}
+                 {else}  
+                        <p>当前状态不能上传文件！</p>
+                 {/if}
+                 
+                  <h5>已上传附件：<span class="help_small" title="我已上传的附件"> </span></h5>
+                 {php} $files=$this->FileList($draftorder['oid'],3);{/php}
+                 {if $files}
+                 	 {template phpapp:file}
+                 {else}
+                 	 <p>暂无上传附件</p>
+                 {/if}
+             </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+{else}
+ <p style="padding:10px">您暂时没有订单数据</p>
+{/if}      
+      
+</div>      
+
+{template phpapp:message_order.js} 
+
+{if !empty($adminmanage)}         
+	 {template phpapp:seller_order.js} 
+{else}
+
+	 {template phpapp:footer}
+{/if}

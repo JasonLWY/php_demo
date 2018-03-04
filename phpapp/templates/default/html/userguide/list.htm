@@ -1,0 +1,58 @@
+<script type="text/javascript">
+function SetWeightTask(ID,Slide,time){
+	
+	  var Interval;
+	  
+	  $(ID).hover(function(){
+			clearInterval(Interval);
+	  },function(){
+			  Interval=setInterval(function(){
+				  var first=$(Slide).find('li:first');	
+				  var width=first.width();
+				  first.animate({marginLeft:-width+'px'},800,function(){
+					   first.css('marginLeft',0).appendTo($(Slide));
+				  });
+				  
+				 
+			  },time);
+	  }).trigger('mouseleave');
+	  
+	  
+}
+
+function SetWeightTaskArrow(Slide,Arrow){
+		  var first=$(Slide).find('li:first');	
+		  var width=first.width();
+		  if(Arrow==0){
+			  var alidearrow='-';
+		  }else{
+			  var alidearrow='+';
+		  }
+		  
+		  first.animate({marginLeft:alidearrow+width+'px'},800,function(){
+			   first.css('marginLeft',0).appendTo($(Slide));
+		  });
+	  
+}
+</script>
+
+{if $list}
+        <div class="website_guide" id="WebsiteGuideSlide">
+            <div class="leftarrow"><a href="javascript:;" onclick="SetWeightTaskArrow('#WebsiteGuideShow',0)"></a></div>
+            <ul>
+               <div id="WebsiteGuideShow">
+                <!-- ¹ã¸æ´úÂë 680 * 450 -->
+                
+              {for $list $value}
+                      <li><a href="{echo $value['link']}" target="_blank"><img src="{echo SURL}{echo $value['image']}"  alt="{echo $value['subject']}" /></a></li>
+              {/if}
+                
+             </div>
+            </ul>
+            <div class="rightarrow"><a href="javascript:;" onclick="SetWeightTaskArrow('#WebsiteGuideShow',1)"></a></div>
+        </div>
+        
+        <script type="text/javascript">
+             SetWeightTask('#WebsiteGuideSlide','#WebsiteGuideShow',6000);
+        </script>
+{/if}

@@ -1,0 +1,190 @@
+{if $this->uid>0}
+
+      <link href="{echo TURL}evaluate.css" rel="stylesheet" type="text/css" />
+      <!-- 获取当前登录者部分信息 --> 
+      {php} $LoginMemberArray=$this->GetLoginInfo(0,1); $usergroupid=$LoginMemberArray['usergroup'];$loginmemberusergroup=$this->GetMysqlOne('allowskillnumber',"   ".$this->GetTable('usergroup')." WHERE gid='$usergroupid'");
+      $noticenum=$this->IsSQL('member_notice'," WHERE uid='$this->uid' AND new=1");
+      $smsnum=$this->IsSQL('member_sms'," WHERE msggoid='$this->uid' AND mailbox=1 AND new=1");
+      {/php}
+      
+      <script type="text/javascript">
+	      var USERID={echo $this->uid};
+		  var USERNAME='{echo $this->username}';
+		  var UserSkillsNumber={echo $loginmemberusergroup['allowskillnumber']};
+	  </script>
+{else}
+      <script type="text/javascript">
+	      var USERID=0;
+		  var UserSkillsNumber=0;
+	  </script>
+{/if}
+
+{if !$this->uid}
+
+      <div class="member_addtask">
+              <a href="{echo SURL}/index.php?app=49&action=1" title="免费发布一个任务" id="TopAddTask">我要发布任务</a>
+      </div>
+    
+{/if}
+                               
+<div id="Header_Member_Login" class="header_member_login">
+
+    {if $this->uid>0}
+    
+        <script type="text/javascript">
+            $(function(){
+                    $("#MemberMessage").click( function () { $.PHPAPPHeaderItem('MemberMessage','MemberMessageView',-180,68,400); });
+                    $("#MemberNotice").click( function () { $.PHPAPPHeaderItem('MemberNotice','MemberNoticeView',-200,68,400); });
+                    $("#MemberTaskFeed").click( function () { $.PHPAPPHeaderItem('MemberTaskFeed','MemberTaskFeedView',-240,68,360); });
+                    $("#MemberMoney").click( function () { $.PHPAPPHeaderItem('MemberMoney','MemberMoneyView',0,68,138,0,1); });
+                    $("#MemberMenu").click( function () { $.PHPAPPHeaderItem('MemberMenu','MemberMenuView',0,68,120,0,1); });
+					$("#MemberSeller").click( function () { $.PHPAPPHeaderItem('MemberSeller','MemberSellerView',0,68,120,0,1); });
+					$("#MemberBuyer").click( function () { $.PHPAPPHeaderItem('MemberBuyer','MemberBuyerView',0,68,120,0,1); });
+            }) 
+        </script>
+        <span id="loginuseruid" style="display:none">{echo $this->uid}</span>
+        <div id="Header_Member_Item">
+    
+            <div id="Header_Member_Menu" class="header_member_menu">
+      
+                <ul>
+                    <li class="member_message"><a href="javascript:void(0)" id="MemberMessage" class="default" title="站内短信" onclick="GetMemberMessage()"><sub id="NewMemberMessage"></sub></a></li>
+                    <li class="member_notice"><a href="javascript:void(0)" id="MemberNotice" class="default" title="网站通知" onclick="GetMemberNotice()"><sub id="NewMemberNotice"></sub></a></li>
+                    <li class="member_taskfeed"><a href="javascript:void(0)" id="MemberTaskFeed" class="default" title="任务动态"><sub id="NewMemberTaskFeed"></sub></a></li>
+                    <li><a href="javascript:void(0)" id="MemberMoney" class="default" title="可用余额：￥{echo $LoginMemberArray['money']}"><span>￥{echo $LoginMemberArray['money']}</span></a></li>
+                    <li><a href="javascript:void(0)" id="MemberMenu" class="default" title="用户管理">{echo $this->username}{if $LoginMemberArray['userpost']==1}(雇主){elseif $LoginMemberArray['userpost']==2}(威客){/if}</a></li>
+                    
+                     <!--
+                    {if $LoginMemberArray['userpost']==2}
+                   		 <li><a href="javascript:void(0)" id="MemberBuyer" class="default" title="我是雇主">我是雇主</a></li>
+                    {elseif $LoginMemberArray['userpost']==1}
+                    	 <li><a href="javascript:void(0)" id="MemberSeller" class="default" title="我是威客">我是威客</a></li>
+                    {/if}
+                    -->
+
+                    {if $LoginMemberArray['userpost']==1}
+                         <li class="member_addtask_small"><a href="{echo SURL}/index.php?app=49&action=1" title="免费发布一个任务" id="TopAddTask">发布任务</a></li>
+                    {elseif $LoginMemberArray['userpost']==2}
+                    	 <li class="member_addtask_small"><a href="{echo SURL}/member.php?app=82&action=1" title="免费发布一个服务" id="TopAddTask">发布服务</a></li>
+                    {/if}
+                </ul>
+            </div>
+        
+            <div id="MemberMessageView" class="header_member_default">
+                <div id="TopMessageDataTab" style="border: none;padding:0px;">
+                    <ul>
+                        <li style="margin-left:10px;"><a href="#TopMessageDataList"><strong>最新站内短信</strong></a></li>
+                    </ul>
+                    
+                    <div id="TopMessageDataList" class="top_member_list">
+                        <ul>
+                        </ul>
+                    </div>
+                    <div class="more_info"><dfn><a href="javascript:void(0)" onclick="DeleteMemberMessage(0)">[清空所有]</a></dfn><em><a href="{echo SURL}/member.php?app=7">查看更多>></a></em></div>
+                        
+                  </div>
+            </div>
+            
+            <div id="MemberNoticeView"  class="header_member_default">
+                 <div id="TopNoticeDataTab" style="border: none;padding:0px;">
+                    <ul>
+                        <li style="margin-left:10px;"><a href="#TopNoticeDataList"><strong>最新通知</strong></a></li>
+                    </ul>
+                    
+                    <div id="TopNoticeDataList" class="top_member_list">
+                        <ul>
+                        </ul>
+                    </div>
+                    <div class="more_info"><dfn><a href="javascript:void(0)" onclick="DeleteMemberNotice(0)">[清空所有]</a></dfn><em><a href="{echo SURL}/member.php?app=45">查看更多>></a></em></div>
+                        
+                  </div>
+            </div> 
+        
+        
+            <div id="MemberTaskFeedView"  class="header_member_default">
+                 <div id="TopTaskFeedTab" style="border: none;padding:0px;">
+                    <ul>
+                        <li style="margin-left:10px;"><a href="#TopFeedViewList"><strong>最新任务动态</strong></a></li>
+                    </ul>
+                    
+                    <div id="TopFeedViewList" class="top_member_list">
+                        <ul>
+                        </ul>
+                    </div>
+                    <div class="more_info"><dfn><a href="javascript:void(0)" id="TaskFeedViewEmpty">[清空所有]</a></dfn>
+                    
+                    <!--
+                    <em><a href="{echo SURL}/member.php?app=5&action=2">查看更多>></a></em>
+                    -->
+                    </div>
+                        
+                  </div>
+            </div> 
+            
+            
+            <div id="MemberMoneyView"  class="header_member_default member_menu_list">
+                <ul>
+                     <li><a href="{echo SURL}/member.php?app=5&action=2">我要充值</a></li>
+          			 <li><a href="{echo SURL}/member.php?app=5&action=3">我要提现</a></li>
+                </ul>
+            </div> 
+            
+            <div id="MemberMenuView" class="header_member_default member_menu_list">
+                <ul>
+                     <li><a href="{echo SURL}/member.php?app=9">管理中心</a></li>
+                     {php} $navtop=$this->GetMysqlArray('*'," ".$this->GetTable('nav_top')."  ORDER BY displayorder ASC");{/php}
+                     {if $navtop}
+                          {for $navtop $value}
+                               <li><a href="{echo $value['navurl']}" {if $value['blank']==0}target="_blank"{/if}>{echo $value['navname']}</a></li>
+                          {/for}
+                       
+                     {/if}
+                    <li><a href="{echo SURL}/index.php?app=2&action=10">安全退出</a></li>
+                </ul>
+            </div> 
+            
+            <!--
+            <div id="MemberSellerView"  class="header_member_default member_menu_list">
+                <ul>
+                </ul>
+            </div> 
+            
+            <div id="MemberBuyerView"  class="header_member_default member_menu_list">
+                <ul>
+                </ul>
+            </div> 
+            -->
+        
+        </div>
+    
+          
+    {else}
+        <div id="Header_Member_Info" class="header_member_info">
+            <ul>
+                <span id="loginuseruid" style="display:none">0</span> <span class="loginrefresh" style="display:none">0</span> 
+                <li class="nobackground" title="帮助"><a href="{echo SURL}/index.php?app=57" title="帮助中心">帮助</a></li><li><a href="{echo SURL}/index.php?app=2&action=2" title="免费注册帐号">免费注册</a></li>
+                
+                <li><a href="javascript:void(0);" title="登录到本站" id="UserLogin" class="topuserlogin_default">登录</a>
+                     <div class="LoginFrame" id="NowLoginFrame" title="网站登录">
+                             {template member:login_now}
+                     </div>
+                </li>
+        
+            </ul>
+        </div>
+    {/if}
+
+
+</div>
+
+
+
+      
+{if $noticenum>0}
+ 	 <script type="text/javascript">$('#NewMemberNotice').html('{echo $noticenum}');$('#MemberNotice').addClass('new');</script>
+{/if}
+
+
+{if $smsnum>0}
+ 	 <script type="text/javascript">$('#NewMemberMessage').html('{echo $smsnum}');$('#MemberMessage').addClass('new');</script>
+{/if}

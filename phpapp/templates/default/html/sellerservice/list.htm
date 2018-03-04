@@ -1,0 +1,184 @@
+{template phpapp:header}
+
+{ad SellerService55}
+
+<script type="text/javascript">var moreselect='{echo $this->GET["more"]}';</script>
+<script type="text/javascript" src="{echo TURL}js/member.js?v={echo $this->GetFileVersion()}"></script>
+<script type="text/javascript" src="{echo TURL}js/list.js?v={echo $this->GetFileVersion()}"></script>
+
+<link href="{TURL}icon.css" rel="stylesheet" type="text/css" />
+<link href="{TURL}skills.css" rel="stylesheet" type="text/css" />
+<link href="{TURL}task.css" rel="stylesheet" type="text/css" />
+<link href="{TURL}member.css" rel="stylesheet" type="text/css" />
+<link href="{TURL}form.css" rel="stylesheet" type="text/css" />
+<link href="{TURL}job.css" rel="stylesheet" type="text/css" />
+
+
+
+{if $selectctarray[1] || $selectctarray[0]}
+       <div class="select_ctarray">
+           {if $selectctarray[0]}<h1>{echo $selectctarray[0]}分类 &nbsp; <a class="small blue awesome" onclick="MyFollow('{echo $catid}','{echo $skill}')">关注</a></h1>{/if}
+           <ul>
+                  {echo $selectctarray[1]}
+           </ul>
+       </div>
+{/if}
+
+
+<p style="padding:2px;text-align:right;">
+{if $this->GET['more']==0}
+	 <a class="small blue awesome" href="{echo $selectclass->GetSelectAllURL('more',1)}" id="NowOpenSelect">打开筛选</a>
+{else}
+	 <a class="small blue awesome" href="{echo $selectclass->GetSelectAllURL('more',0)}" id="NowOpenSelect">关闭筛选</a>
+{/if}
+</p>
+
+{if $selectitem[0]}
+    <div class="task_select_title select_now">          
+    <ul>
+        <li><h2>您已选择:</h2><p class="select_skills">{echo $selectitem[0]}</p></li>
+    </ul>
+    </div>  
+{/if}
+
+<div id="OpenSelect" style="display:none">
+
+    <div class="task_select_title">
+                 
+    <ul> 
+       {echo $selectitem[1]}         
+    </ul>
+    
+    </div>
+</div>
+
+
+<div class="task_list_nav">
+<ul>
+    {if $this->GET['tab']==1}
+    <li class="listshow_icon"><a href="{echo $selectclass->GetSelectAllURL('tab',0)}" title="切换列表" class="help_small"></a></li>
+    {else}
+    <li class="mapshow_icon"><a href="{echo $selectclass->GetSelectAllURL('tab',1)}" title="切换地图" class="help_small"></a></li>
+    {/if}
+    <li><a href="{echo SURL}/index.php?app=49">任务列表</a> </li>
+    <li><a href="{echo SURL}/index.php?app=55">找人才</a></li>
+    <li class="focus"><a href="{echo SURL}/index.php?app=82">买服务</a></li>
+</li>
+</ul>
+ <span style="padding-left:10px;float:right;">
+     <select id="TaskSelectSort" style="margin-top:8px;">
+          {for $selectarray $select}
+               {if $select['id']=='sort'}
+        
+                      {for $select['data'] $key=>$value}
+                      
+                           <option value="{echo $selectclass->GetSelectAllURL($select['id'],$key)}" {if $key==$this->GET["$select[id]"]}selected="selected"{/if} >{echo $value}</option>
+                      
+                      {/for}
+        
+               {/if}
+          {/for}
+     </select>
+ </span>
+         
+</div>
+
+
+{if $this->GET['tab']==1}
+   
+        {template map:service_maps}
+  
+  
+{else}
+
+
+        <!--
+        {if $page->ShowPages()}
+        <div class="ajax_page" style="margin-bottom:10px;">{echo $page->ShowPages()}</div>
+        {/if}
+        -->
+         
+        {if $list}
+              <div class="user_list">
+              {for $list $key=>$value}
+                  <div class="user_box">
+                      <div class="user_box_show">
+                           <div class="user_box_info{if $value['openflash']} flashbid{/if}">
+                           
+                               {if $value['topbid']>0}<div class="service_top" title="推荐"></div>{/if}
+                            
+                                <div class="user_list_avatar">
+                                     {if !empty($value['logo'])}
+                                                
+                                                {if $value['thumb']}  
+                                                     <a href="{echo SURL}{echo $value['url']}" target="_blank"><img src="{SURL}/{echo $value['thumb']}"/></a>
+                                                {else}
+                                                      <img src="{SURL}/images/seller/nopic.gif"/>
+                                                {/if}
+                                     {else}
+                                         
+                                         
+                                         <img src="{SURL}/images/seller/nopic.gif"/>
+                                        
+                                                        
+                                     {/if}
+                                </div>
+                                <p class="user_list_username">
+                                <a href="{echo SURL}{echo $value['url']}" target="_blank" title="{echo $value['subject']}">{echo $value['subject']}</a>
+                                </p>
+                                <p><span class="color_f60">{echo $value['price']}元</span>/{echo $value['unit']}</p>
+                                <p>完成时间 {echo $value['time']} 天内</p>
+                                <p>
+                                <a href="space.php?app=8&uid={echo $value['uid']}" target="_blank" title="{echo $value['username']}">{echo $value['username']}</a>
+                                </p>
+                                <p> 信用 {if $value['credit']}<span class="{echo $this->GetCreditLevel($value['credit'],1)}" title="威客信用积分 {echo $value['credit']}"></span>{else}暂无信用值{/if}</p>
+              
+                                 <div class="seller_score">
+                                 
+                                     <div class="seller_score_works_peed" title="工作速度 {if $value['speed']}{echo $value['speed']}{else}0.0{/if}"><ul style="width:{echo ($value['speed']*16)}px;"></ul></div>
+                                     
+                                     <div class="seller_score_works_attitude" title="工作态度 {if $value['attitude']}{echo $value['attitude']}{else}0.0{/if}"><ul style="width:{echo ($value['attitude']*16)}px;"></ul></div>
+                                 
+                                     <div class="seller_score_works_quality" title="完成质量 {if $value['quality']}{echo $value['quality']}{else}0.0{/if}"><ul style="width:{echo ($value['quality']*16)}px;"></ul></div>
+                                 </div>
+                                 
+                                 <p style="display:inline-block;padding-top:6px;">{if $this->GetCertificateIcon($value['certificate'],array())}{echo $this->GetCertificateIcon($value['certificate'],array('Mobile'=>'手机','Mail'=>'邮箱','Personal'=>'个人实名','Company'=>'公司实名'))}{else}无任何认证{/if}</p>
+                           </div>
+                           
+                             
+                          
+                           <div class="user_box_sell">
+                               <h2>出售服务 {echo $value['sellnum']} 次</h2>
+                               <ul>
+                                   <p>{echo $value['description']}</p>
+                               </ul>
+                           </div>
+                        </div>   
+                  </div>  
+              {/for}
+              </div>
+       {else}
+             <p>暂时没有服务出售!</p>
+       {/if}
+         
+        
+       {if $page->ShowPages()}
+       		 <div class="ajax_page">{echo $page->ShowPages()}</div>
+       {/if}
+       
+{/if}  
+ 
+       
+       
+
+
+</div>
+   
+   
+<script type="text/javascript">
+$(function(){	
+	$.PHPAPPTaskFlash('.flashbid',3000);
+});
+</script>
+
+{template phpapp:footer}

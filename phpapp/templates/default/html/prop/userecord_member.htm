@@ -1,0 +1,44 @@
+{template member:menu}
+
+
+{if $list}
+
+<div id="tasklist">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr class="manage_process">
+    <td class="datalist_h2" style="width:130px;">服务</td>
+    <td class="datalist_h2">期限</td>
+    <td class="datalist_h2">过期时间</td>
+    <td class="datalist_h2">应用对象</td>
+  </tr>
+
+{for $list $value}
+  <tr>
+    <td class="datalist_h2">{echo $value['subject']}</td>
+    <td class="datalist_h2">{if !$value['day']}不限{else}{echo $value['day']}天{/if}</td>
+    <td class="datalist_h2">{if $value['day']} {echo $this->Date("Y/m/d H:i:s",$value['endtime'])}{else}不限{/if}</td>
+    <td class="datalist_h2"><a href="{echo SURL.$value['url']}" target="_blank">[查看]</a></td>
+  </tr>
+ {/for} 
+
+</table>
+
+</div>
+
+<div class="ajax_page">{echo $page->ShowPages()}</div>
+
+{else}
+
+ <p style="padding:10px">暂时没有使用记录</p>
+ 
+{/if}    
+      
+
+
+
+</td></tr></table>
+
+
+
+{template phpapp:footer}

@@ -1,0 +1,44 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<style type="text/css">
+<!--
+.edittask tr td{
+	height: 36px;
+}
+.submitsetmap{
+	position: relative;
+	float: right;
+}
+-->
+</style>
+
+{template task.js}
+<div style="padding:20px;">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="edittask">
+  
+  {template service_form}
+    
+  <tr>
+    <td colspan="2" style="height:60px;padding-bottom:30px;text-align:center;"><input name="Submit" type="submit" value="修改"  class="form_button" onclick="SubmitContent();"/></td>
+  </tr>
+
+</table>
+</div>
+
+</form>
+
+
+<p style="padding:10px;"><strong>提示：</strong>任务金额只能由网站创始人修改！</p>
+
+{if $this->uid!=1}
+
+<script type="text/javascript">
+
+$(function(){	
+	 $("#money").attr("disabled","disabled");
+});
+</script>
+
+{/if}

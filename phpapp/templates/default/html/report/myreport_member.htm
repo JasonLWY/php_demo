@@ -1,0 +1,69 @@
+{template member:menu}
+
+
+{if $list}
+
+<div id="tasklist">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2">编号</td>
+    <td class="datalist_h2">举信息</td>
+    <td class="datalist_h2">类型</td>
+    <td class="datalist_h2">状态</td>
+    <td class="datalist_h2">举报时间</td>
+    <td class="datalist_h2">处理结果</td>
+  </tr>
+
+{for $list $value}
+  <tr>
+    <td class="datalist_h2">{echo $value['rid']}</td>
+    <td class="datalist_h2" style="width:220px">
+   
+    {if $value['tid']>0 && !$value['did']}
+    {echo $value['tid']}号任务 <a href="{SURL}/index.php?app={echo $value['appid']}&action=5&tid={echo $value['tid']}" target="_blank">[查看任务]</a>
+    {elseif $value['did']>0 && $value['tid']>0}
+    {echo $value['did']}号稿件 <a href="{SURL}/index.php?app={echo $value['appid']}&action=5&tid={echo $value['tid']}&did={echo $value['did']}" target="_blank">[查看稿件]</a>
+    {/if}
+    </td>
+    <td class="datalist_h2">{echo $value['name']}</td>
+    <td class="datalist_h2">{if $value['status']==1}<span style="color:#090">已处理</span>{else}<span class="color_f60">未处理</span>{/if}</td>
+    <td class="datalist_h2">{echo $this->Date("Y/m/d",$value['dateline'])}</td>
+    <td class="datalist_h2">
+    {if $value['award']==0}无
+    {elseif $value['award']==-1}误报减1积分
+    {elseif $value['award']==-2}误报减2积分
+    {elseif $value['award']==-3}误报减3积分
+    {elseif $value['award']==-4}误报减3积分
+    {elseif $value['award']==-5}误报减3积分
+    {elseif $value['award']==1}属实加1积分
+    {elseif $value['award']==2}属实加2积分
+    {elseif $value['award']==3}属实加3积分
+    {elseif $value['award']==4}属实加2积分
+    {elseif $value['award']==5}属实加2积分
+    {/if}
+    </td>
+  </tr>
+ {/for} 
+
+</table>
+
+</div>
+
+{if $page->ShowPages()}
+		<div class="ajax_page">{echo $page->ShowPages()}</div>
+{/if}
+
+{else}
+
+ <p style="padding:10px">您暂时没有举报数据</p>
+ 
+{/if}    
+        
+      
+
+</div>
+
+
+
+{template phpapp:footer}

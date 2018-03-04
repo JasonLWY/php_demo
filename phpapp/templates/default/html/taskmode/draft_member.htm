@@ -1,0 +1,90 @@
+{template member:menu}
+
+{template taskcount:show.js}
+
+       {php}
+            $sortarray=array('4'=>'待中标','1'=>'中标的稿件','2'=>'落选/不合格','3'=>'关闭的稿件');
+            
+       {/php}
+
+      <div class="manage_process">
+      <ul>
+      {for $sortarray $key=>$value}
+      <li{if $key==$this->GET['sort']} class="nowsort"{/if}><a href="member.php?app={echo $this->app}&action=11&page={echo $this->page}&sort={echo $key}">{echo $value}</a></li>
+      {/for}
+      </ul>
+      </div>
+      
+     
+     
+{if $list}
+
+<div id="tasklist">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2">编号</td>
+    <td class="datalist_h2">内容</td>
+    <td class="datalist_h2">状态/操作</td>
+  </tr>
+
+{for $list $value}
+  <tr>
+    <td style="border-bottom:0px;"><span class="color_f60">{echo $value['did']}</span></td>
+    <td style="width:600px;border-bottom:0px;">  
+    <div style="line-height:30px;"><a href="javascript:;" onclick="ShowMyDraft('{echo $value['did']}')">[显示内容]</a> <span style="color:#999">发布时间 {echo $this->Date("Y/m/d",$value['dateline'])}</span></div>
+  <div style="word-break:break-all;overflow:auto;width: 600px;display:none;padding-top:10px;padding-bottom:20px;" id="MyDraft_{echo $value['did']}">
+      {echo $this->str($value['content'],999999,0,1,0,1,1)}
+  </div>
+  </td>
+    <td style="border-bottom:0px;">
+    <p>{echo $getprocess->GetTaskDraftName($value['process'])}</p>
+    {if $value['process']!=1}<p><a href="javascript:;" onclick="AddDraft('{echo $value['tid']}','{echo $value['did']}','{echo $value['appid']}')" class="small blue awesome">编辑</a></p>{/if}
+    </td>
+    
+  </tr>
+
+
+ {/for} 
+
+</table>
+
+</div>
+
+{if $page->ShowPages()}
+		<div class="ajax_page">{echo $page->ShowPages()}</div>
+{/if}
+
+{else}
+
+ <p style="padding:10px">您暂时没有稿件数据</p>
+ 
+{/if}      
+     
+      
+      
+      
+
+</td></tr></table>
+
+<script type="text/javascript">
+
+		   
+ function ShowMyDraft(id) {
+										
+			var display=$("#MyDraft_"+id).css("display");						
+						
+			if(display=='none'){
+				  $("#MyDraft_"+id).show(300);	
+		    }else{
+				   $("#MyDraft_"+id).hide(300);	
+			}			
+
+		 
+ }
+
+
+</script>
+
+
+{template phpapp:footer}

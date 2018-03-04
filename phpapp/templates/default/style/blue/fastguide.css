@@ -1,0 +1,28 @@
+.fast_guide{
+	overflow: hidden;
+	margin-bottom: 20px;
+}
+.fast_setinfo{
+	float: left;
+	border: 4px solid #B4E1F8;
+	height: 300px;
+	width: 438px;
+}
+.fast_setinfo h1{
+	font-size: 16px;
+	line-height: 40px;
+	color: #09C;
+	padding-left: 20px;
+	background-color: #F0FAFF;
+}
+.set_myskills,.member_form{
+	padding: 20px;
+}
+
+.set_myskills h5,.member_form h5{
+	margin-top: 10px;
+}
+.select_skills{
+	padding-top:20px;
+	clear: both;
+}

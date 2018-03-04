@@ -1,0 +1,115 @@
+{if !empty($list)}
+
+<div id="FileListSelect">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+      
+        <tr>
+            <td style="padding-left:10px;">
+            <input name="checkboxall" type="checkbox" value="1" onclick="CheckboxAll('FileListSelect')"/>
+            </td>
+            <td class="datalist_h2" style="width:460px;">
+               文件名
+            </td>
+            <td class="datalist_h2">文件大小</td>
+            
+        </tr>
+      {php} $totalfilesize=0;{/php}
+      {for $list $value}
+        {php} $totalfilesize+=$value['fsize'];{/php}
+        <tr>
+  
+            <td style="padding-left:10px;">
+            <input name="checkbox"  type="checkbox" value="{echo $value['tmpid']}" width="{echo $value['fwidth']}"/>
+            </td>
+            <td style="padding-left:10px;">
+                {echo $value['fname']}
+            </td>
+            <td style="padding-left:10px;">{echo round($value['fsize']/1024,2)} KB</td>
+        </tr>
+ 
+       {/for} 
+       
+           <tr>
+           
+            {php}
+            $sizes=substr(round($totalfilesize/1024/1024,3),0,-1);
+            {/php}
+           
+            <td colspan="3" style="text-align:right;padding-right:50px; background-image:none">文件大小 <strong>{if $sizes>0}{echo $sizes}{else}0{/if} MB</strong></td>
+            
+          </tr>
+      
+      </table>
+
+</div>
+
+
+      {if $ajaxpage->ShowPages()}
+      <div style="height:30px;">
+           <div class="ajax_page" style="float:left;">{echo $ajaxpage->ShowPages()}</div>
+       </div>
+      {/if}
+      
+<div style="text-align:center;height:30px;margin-top:30px;">
+<input name="Submit" type="button" value="全选" onclick="CheckboxAll('FileListSelect')" class="form_button" style="width:60px"/>
+<input name="Submit" type="button" value="删除" id="DeleteFile" class="form_button" style="width:60px"/>
+</div>
+{else}
+<p>暂时没有文件!可使用批量上传文件.</p>
+{/if}
+
+<script type="text/javascript">
+
+$(function(){	
+
+  
+     $("#DeleteFile").click( function () {
+										
+			 var FileID='';
+			 $("#FileListSelect").find("input:checked[name!='checkboxall']").each(function(){
+																						   
+					 var value=$(this).val();  
+					 
+					 if($(this).attr("disabled")!='disabled'){
+						 
+						   if(FileID){
+								FileID+=','+value;
+						   }else{
+								FileID=value;
+						   }
+	 
+					 }
+		
+			 }); 	
+			 
+			 if(!FileID){
+				 
+				  alert("请选择文件操作!");
+				  return false;
+			 }								
+					
+					   
+				if(confirm("是否删除文件!")){
+						
+						 $("#FileShow").html('<div class="loading">处理数据中...</div>');
+
+						  $.ajax({
+								type: "POST",
+								url: SURL+"/index.php?app=18&action=6&op=1",
+								data: 'fid='+FileID,
+								success: function(data){
+									  $("#FileShow").html(data);
+								}
+						  });			
+				  
+			    }
+										
+										
+	 });
+});
+
+
+	
+
+
+</script>

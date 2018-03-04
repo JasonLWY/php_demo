@@ -1,0 +1,160 @@
+{template member:menu}
+
+
+<div class="my_credit"><p style="font-size:14px">目前积分: <span class="col_f60">{echo $user['credit']}</span> </p>
+
+<h3>积分兑换</h3>
+
+<div>
+{if $uclient}
+
+      {if $creditsettings}
+      
+<p><label for="password">登录密码</label>：<input type="password" name="Password" id="Password" class="form_input_text form_input_width_150"/></p>
+<p>支出积分：<input type="text" id="amount" name="amount" value="0" class="form_input_text form_input_width_150"  onkeyup="calcredit();" /> 兑换成：<input type="text" id="desamount" value="0" class="form_input_text form_input_width_150" disabled />&nbsp;&nbsp;
+             <select name="tocredits" id="tocredits" onChange="calcredit();">
+           
+			{for $creditsettings $key=>$ecredits}
+				{if $ecredits}
+                
+                    {for $ecredits['ratiosrc'] $value}
+ 
+                            {php} $ratiosrc=$value; {/php}
+                    {/for}    
+                     
+                    {for $ecredits['ratiodesc'] $value}  
+            
+                            {php} $ratiodesc=$value; {/php}
+           
+                    {/for}        
+                   
+					<option value="{echo $key}" unit="{echo $ecredits[unit]}" title="{echo $ecredits[title]}" ratio="{echo $ratiosrc}:{echo $ratiodesc}">{echo $ecredits[title]}</option>   
+                    
+				{/if}
+			{/for}
+
+			</select>
+    </p>  
+      
+      <p>兑换比率：<span id="ratio"></span> </p>
+      <p><span id="ratiosrc" style="font-weight:bold"></span>&nbsp;积分 <span style="color:#666"><=></span> 兑换 <span id="descreditamount" style="font-weight:bold"></span>&nbsp;<span id="descreditunit"></span> <span id="descredittitle"></span></p>
+      
+      
+      
+      <p style="padding-top:50px;text-align:center;"><input name="Submit" type="button" value="兑换" id="Submit" class="form_button" style="width:80px"/></p>
+      
+      
+             <script type="text/javascript">
+		 
+		function calcredit() {
+
+			$('#descreditunit').html($("#tocredits option:selected").attr("unit"));
+		    $('#descredittitle').html($("#tocredits option:selected").attr("title"));
+			
+			var ratio= $("#tocredits option:selected").attr("ratio");
+			
+			$('#ratio').html(ratio);
+			
+			var ratioarr=ratio.split(':',2);
+			
+			$('#ratiosrc').html(ratioarr[0]);
+			
+			$('#descreditamount').html(ratioarr[1]);
+			
+			var amountval=$("#amount").val();
+			$("#amount").val(amountval);
+			if( amountval != 0) {
+                var amountval=$("#amount").val();
+				var desamountval=Math.floor(ratioarr[1]/ratioarr[0] * amountval);
+				
+				
+				if (isNaN(desamountval)){
+					desamountval=0; 
+				}
+				
+				$("#desamount").val(desamountval);
+				
+			} else {
+				$("#desamount").val(amountval);
+			}
+		}
+
+		calcredit();
+		
+		
+		
+   $(function(){	
+		   
+			 $("#Submit").click( function () {
+										   
+					var Password=$("#Password");
+					
+					if (!Password.val() || Password.val()<1){
+						  alert("登录密码不能为空或为0!");
+						  Password.focus();
+						  return false; 
+					}
+					
+			        
+					var amount=$("#amount");
+					
+					if (!amount.val() || amount.val()<1){
+						  alert("积分不能为空或为0!");
+						  amount.focus();
+						  return false; 
+					}
+					
+					
+					if (isNaN(amount.val())){
+						  alert("您输入的积分格式错误，请重新输入!");
+						  amount.focus();
+						  return false; 
+					}					   
+					    
+					 var tocredits=$("#tocredits").val();  
+					   
+					$("#loading").html('<div class="loading">提交数据中...</div>');
+					$("#loading").dialog('open');
+					$("#loading").dialog({ title: '兑换积分' });
+						  
+					$.ajax({
+						  type: "POST",
+						  url: "member.php?app={echo $this->app}&action=1&op=1",
+						  data: 'Password='+Password.val()+'&amount='+amount.val()+'&tocredits='+tocredits,
+						  success: function(data){
+							  $("#loading").html(data);
+						  }
+					});   
+					   
+
+			 });
+	 
+	});
+	</script>
+      
+      {else}
+           <p>系统未开启积分兑换功能!</p>
+      {/if}
+      
+{else}
+      <p>系统未开户积分兑换功能!</p>
+{/if}
+</div>
+
+</div>
+
+
+
+
+
+
+
+</td></tr></table>
+
+
+
+
+
+
+
+{template phpapp:footer}

@@ -1,0 +1,56 @@
+{template phpapp:header}
+
+<link href="{TURL}webpage.css" rel="stylesheet" type="text/css" />
+
+<div class="webpage">
+       <div class="webpage_menu">
+
+           <ul>
+           
+           {for $this->GetAction(23) $value}
+
+                   <li{if $this->ac==$value['aid_phpapp']} class='focus'{/if}><a href='{echo SURL}/index.php?app=23&action={echo $value['aid_phpapp']}'>{echo $value['title_phpapp']}</a></li>
+              
+              
+           {/for}
+           
+           
+           </ul>
+       
+       
+       </div>
+       
+
+        <div class="webpage_content">
+        <h2>”—«È¡¥Ω”</h2>
+        <ul>
+           <div class="sitelink">
+           {if $linklogo}
+              
+              {for $linklogo $value}
+              <li> <a href="{echo $value['siteurl']}" target="_blank" title="{echo $value['description']}"><img name="{echo $value['sitename']}" src="{echo $value['logo']}" title="{echo $value['sitename']}" /></a>
+              </li>
+              {/for}
+           {/if}
+           </div>
+           
+           
+          <div class="sitelink">
+           {if $linktxt}
+              
+              {for $linktxt $value}
+              <li>
+               <a href="{echo $value['siteurl']}" target="_blank" title="{echo $value['description']}">{echo $value['sitename']}</a>
+              </li>
+              {/for}
+           {/if}
+           </div>
+         
+        </ul>
+        </div>
+
+</div>
+
+
+
+{template phpapp:footer}

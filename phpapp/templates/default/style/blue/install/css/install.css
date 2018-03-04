@@ -1,0 +1,91 @@
+#header_logo a{
+	background-image: url(../images/logo.png);
+}
+.site_install{
+	float: right;
+	font-size: 28px;
+	color: #000;
+	padding-top: 30px;
+	line-height: 28px;
+	font-weight: bold;
+}
+
+.install_now{
+	text-align: center;
+	padding: 20px;
+}
+
+.phpapp_agreement{
+	line-height: 24px;
+	height: 450px;
+	overflow: auto;
+}
+.phpapp_agreement h2{
+	font-size: 24px;
+	line-height: 50px;
+	text-align: center;
+}
+
+.phpapp_config h2{
+	font-size: 18px;
+	line-height: 50px;
+}
+.phpapp_config p{
+	padding-bottom: 20px;
+}
+.install_wrong{
+	font-size: 16px;
+	line-height: 50px;
+	font-weight: bold;
+	color: #F60;
+}
+.install_mysqldata{}
+.install_progress{
+	background-image: url(../images/progress.png);
+	padding: 2px;
+	height: 7px;
+	border: 1px solid #D8D8D8;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-position: 2px center;
+	width: 0px;
+}
+.install_percentage{
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+	color: #000;
+	padding-top: 20px;
+}
+#PercentageShow{
+	font-size: 26px;
+	font-weight: bold;
+	color: #F60;
+}
+.install_description{
+	height: 380px;
+}
+.install_complete h2{
+	font-size: 18px;
+	line-height: 50px;
+	color: #09C;	
+}
+.install_complete ul {
+	padding-top: 20px;	
+}
+
+.install_complete ul li{
+	font-size: 14px;
+	line-height: 30px;
+	color: #333;	
+}
+.install_data{
+	background-color: #FFF;
+	border: 1px solid #CCC;
+	font-size: 12px;
+	line-height: 24px;
+	padding: 20px;
+	width: 880px;
+	overflow: auto;
+	height: 500px;
+}

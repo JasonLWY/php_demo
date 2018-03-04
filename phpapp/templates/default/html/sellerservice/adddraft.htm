@@ -1,0 +1,74 @@
+<div id="AddDraft">
+<strong>作品内容</strong>
+
+{if $fieldarray=$this->GetTableFieldArray('task_draft')}
+  <!-- 自定义字段 -->
+      {for $fieldarray $field}
+        <p style="padding:8px;">{echo $field['name_phpapp']}：{echo $this->GetTableFieldForm($field)}</p>
+      {/for}
+  <!-- 自定义字段 end -->
+{/if}
+
+{template editor:editor}
+<script type="text/javascript">$(function(){$.PHPAPPEditor('Content','660','260');});</script>
+
+<textarea name="content_s" id="Content" class="form_editor">{if !empty($draft)}{echo $this->str($draft['content'],999999,0,1,0,0,1)}{/if}</textarea>
+
+<p style="text-align:center;margin-top:20px;"><input name="Submit" type="button" value="提交" id="{if !empty($did)}SubmitEditDraft{else}SubmitAddDraft{/if}" class="form_button" style="width:80px"/></p>
+
+
+</div>
+
+<script type="text/javascript">
+$(function(){	
+		   
+	  $("#share").click( function () {
+								   
+			  var share=$("#share");
+			  
+			  if (!share.val()){
+		            share.val(1);
+	          }else{
+				    share.val(0);
+			  }					
+											
+	  });
+		    
+	  $("#SubmitAddDraft").click( function () {
+										   
+		      $.SaveContent(); //保存内容
+				
+	          var content=$("#Content");
+			  if (content.val()==""){
+				    alert("请输入内容!");
+				    content.focus();
+				    return false; 
+			  }
+			
+			  
+			  var forms=GetFormAll('#AddDraft');
+	
+			  $("#loading").html('<div class="loading">提交数据中...</div>');
+			
+			  $("#loading").dialog({ title: '提交作品' });
+					
+			  $.ajax({
+					  type: "POST",
+					  url: SURL+"/member.php?app={echo $this->app}&action=11&tid={echo $this->tid}",
+					  data: forms,
+					  success: function(data){
+						   $("#loading").html(data);
+					  }
+			 });
+			  
+	  });
+	  
+	  
+	  $("#loading").dialog({
+		      close: function(event, ui) { $("#loading").html(''); }
+	  });
+
+		  		
+			
+});		
+</script>

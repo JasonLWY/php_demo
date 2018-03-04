@@ -1,0 +1,137 @@
+{if !empty($list)}
+
+<div id="PhotoListSelect">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+      
+      {php} $keys=0; {/php}
+      
+      {for $list $value}
+         
+        {php}if($keys==4){$keys=0;}{/php}
+         
+        {if $keys==0}
+        <tr>
+        {/if}
+            <td style="width:20px;">
+            <input name="checkbox"  type="checkbox" value="{echo $value['tmpid']}" tmpname="{echo $value['tmpname']}" width="{echo $value['fwidth']}"/>
+            </td>
+            <td style="width:135px;padding-top:10px;padding-bottom:10px;">
+                 <a href="javascript:;" onclick="$.PHPAPPInsertPic('{echo SURL}/{echo $value['thumb']}','{echo $value['tmpname']}','{echo $value['fwidth']}')"><img src="{echo SURL}/{echo $value['thumb']}" width="{if $value['fwidth']>130}130{else}{echo $value['fwidth']}{/if}" alt="{echo $value['fname']}" id="PhotoID_{echo $value['tmpid']}"/></a>
+            </td>
+            
+        {if $keys==3}
+        </tr>
+        {/if}
+        
+        {php} $keys++; {/php}
+       {/for} 
+      
+      </table>
+      
+      <input name="checkboxall" type="checkbox" value="1" style="display:none" /> 
+
+</div>
+
+
+      {if $ajaxpage->ShowPages()}
+      <div style="height:30px;">
+           <div class="ajax_page" style="float:left;">{echo $ajaxpage->ShowPages()}</div>
+       </div>
+      {/if}
+      
+<div style="text-align:center;height:30px;margin-top:30px;">
+<input name="Submit" type="button" value="全选" onclick="CheckboxAll('PhotoListSelect')" class="form_button" style="width:60px"/>
+<input name="Submit" type="button" value="插入" id="InsertPhoto" class="form_button" style="width:60px"/>
+<input name="Submit" type="button" value="删除" id="DeletePhoto" class="form_button" style="width:60px"/>
+</div>
+{else}
+<p>暂时没有图片!可使用批量上传图片.</p>
+{/if}
+
+<script type="text/javascript">
+
+$(function(){	
+
+     $("#InsertPhoto").click( function () {
+										
+			 var FileID='';
+			 $("#PhotoListSelect").find("input:checked[name!='checkboxall']").each(function(){
+					 var value=$(this).val();  
+					 var width=$(this).attr('width');
+					 var tmpname=$(this).attr('tmpname');
+					 
+					 var thumb=$('#PhotoID_'+value).attr('src');
+					 
+					 if($(this).attr("disabled")!='disabled'){
+						
+						   if(value>0){
+							    FileID=value;
+							    $.PHPAPPInsertPic(thumb,tmpname,width);
+						   }
+	 
+					 }
+		
+			 }); 	
+			 
+			 if(!FileID){
+				 
+				  alert("请选择图片操作!");
+				  return false;
+			 }else{
+				  $("#UploadPhoto").dialog('close');
+			 }								
+
+										 
+     });
+  
+  
+     $("#DeletePhoto").click( function () {
+										
+			 var FileID='';
+			 $("#PhotoListSelect").find("input:checked[name!='checkboxall']").each(function(){
+					 var value=$(this).val();  
+					 var width=$(this).attr('width');
+					 
+					 if($(this).attr("disabled")!='disabled'){
+						 
+						   if(FileID){
+								FileID+=','+value;
+						   }else{
+								FileID=value;
+						   }
+	 
+					 }
+		
+			 }); 	
+			 
+			 if(!FileID){
+				 
+				  alert("请选择图片操作!");
+				  return false;
+			 }								
+					
+					   
+				if(confirm("是否删除图片!")){
+						
+						 $("#PhotoShow").html('<div class="loading">处理数据中...</div>');
+
+						  $.ajax({
+								type: "POST",
+								url: SURL+"/index.php?app=18&action=5&op=1",
+								data: 'fid='+FileID,
+								success: function(data){
+									  $("#PhotoShow").html(data);
+								}
+						  });			
+				  
+			    }
+										
+										
+	 });
+});
+
+
+	
+
+
+</script>

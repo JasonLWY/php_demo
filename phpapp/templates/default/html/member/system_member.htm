@@ -1,0 +1,53 @@
+{template member:menu}
+
+<div class="warning">
+    <h3>系统提示：</h3>
+    <p>
+    邮件与手机通知必须通过认证系统才能发送！
+    </p>  
+</div>
+<form action='{echo SURL}/member.php?app={echo $this->app}&action=45' id="MemberForm" method="post">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="member_form message_type_list">
+<tr>
+        <td class="message_type_text"><strong>通知条件</strong></td>
+        <td>
+      	<strong>站内通知</strong>
+        </td>
+        <td>
+     	<strong>邮件通知</strong>
+        </td>
+        
+        <td>
+     	<strong>手机通知</strong>
+        </td>
+</tr>
+{if $messagetypearr}
+    {for $messagetypearr $messagetype}
+        <tr>
+            <td class="message_type_text">{echo $messagetype['subject']}</td>
+            <td>
+          		<input name="notice[{echo $messagetype['mid']}]" type="checkbox" value="1"{if !$messagetype['notice']}{if $setkeyarray['notice'][$messagetype['mid']]>0} checked="checked"{/if} {else} disabled="disabled"{/if}/>
+            </td>
+            
+            <td>
+         		<input name="email[{echo $messagetype['mid']}]" type="checkbox" value="1"{if !$messagetype['email']}{if $setkeyarray['email'][$messagetype['mid']]>0} checked="checked"{/if} {else} disabled="disabled"{/if}/>
+            </td>
+            
+            <td>
+         		<input name="phone[{echo $messagetype['mid']}]" type="checkbox" value="1"{if !$messagetype['phone']}{if $setkeyarray['phone'][$messagetype['mid']]>0} checked="checked"{/if}{else} disabled="disabled"{/if} />
+            </td>
+        </tr>
+    {/for}
+{/if}
+
+</table>
+
+<p style="padding-bottom:30px;margin-top:30px;text-align:center;"><input name="Submit" type="submit" value="保存设置" id="SubmitSetInfo" class="form_button"/>
+</p>
+
+</form>
+
+
+</div>
+
+{template phpapp:footer}

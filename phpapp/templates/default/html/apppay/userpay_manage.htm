@@ -1,0 +1,86 @@
+{template admin:header}
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $this->POST['Check']}
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+  <tr>
+    <td width="300">
+    <input name="uid_d" value="{echo $userinfo['uid']}" type="hidden"/> 
+    <p>{echo $this->GetUserAvatar($userinfo['uid'],1,1)}</p>
+    <p style="padding-top:10px;">UID：{echo $userinfo['uid']}</p>
+    <p>用户名：{echo $userinfo['username']}</p>
+    <p style="padding-bottom:20px;">可用余额：<span class="color_f60">{echo $userinfo['money']}</span></p>
+    
+    </td>
+    
+    <td> 
+    
+    <p style="padding-top:10px;">
+    <div id="RadioPayType">
+    <input id="RadioPayType1" class="radio" type="radio" name="PayType_d" value="1" checked="checked"><label for="RadioPayType1">充值</label> <input id="RadioPayType2" class="radio" type="radio" name="PayType_d" value="2"><label for="RadioPayType2">扣费</label> 
+    </div>
+    </p>
+    <p style="padding-top:10px;">
+    <input type="text" name="PayMoney_f" class="form_input_text" style="width:100px"  value="1" onkeypress="return regInput(this,/^\d*\.?\d{0,2}$/,String.fromCharCode(event.keyCode))" 
+            onpaste="return regInput(this,/^\d*\.?\d{0,2}$/,window.clipboardData.getData('Text'))" 
+            ondrop="return regInput(this,/^\d*\.?\d{0,2}$/,&#9;event.dataTransfer.getData('Text'))" 
+            maxLength=12 size=14/> 元  <span style="color:#999">(请输入可充值或扣费的金额)</span>
+ 
+    <p style="padding-top:10px;"><input name="subject_s" value="" type="text" class="form_input_text form_input_width_200" /> 描述(30字内)</p>
+    
+    <p style="padding-left:30px;padding-top:20px;"><input onclick="if(confirm('是否确认操作?')){ return true;}else{return false;}" name="Submit" type="submit" value="确认操作" class="form_button"/></p>
+
+
+    <script type="text/javascript">
+
+	$("#RadioPayType").buttonset();
+
+	function regInput(obj, reg, inputStr){
+		var docSel	= document.selection.createRange()
+		if (docSel.parentElement().tagName != "INPUT")	return false
+		oSel = docSel.duplicate()
+		oSel.text = ""
+		var srcRange	= obj.createTextRange()
+		oSel.setEndPoint("StartToStart", srcRange)
+		var str = oSel.text + inputStr + srcRange.text.substr(oSel.text.length)
+		return reg.test(str)
+	}
+
+    </script>
+    
+    
+    </td>
+  </tr>
+  
+</table>
+
+
+{else}
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+  <tr>
+    <td class="width_160">用户UID</td>
+    <td>
+    <input name="uid_d" value="" type="text" class="form_input_text form_input_width_200" /> <input name="Check" type="submit" value="验证UID" class="form_button"/>
+    </td>
+  </tr>
+  
+  <tr>
+    <td class=" width_160"> 提示：</td>
+    <td>
+    
+      (未清楚UID,可以 "用户->用户管理" 菜单列表中查看)
+
+  </td>
+  </tr>
+</table>
+
+{/if}
+
+
+</form>

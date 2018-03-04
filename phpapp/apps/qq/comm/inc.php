@@ -1,0 +1,1 @@
+{"appid":"","appkey":"","callback":"http%3A%2F%2Fwk.ywbuy.cn%2Findex.php%3Fapp%3D65%26action%3D2","scope":"get_user_info","errorReport":true,"storageType":"file"}

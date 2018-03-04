@@ -1,0 +1,33 @@
+{php}
+       include_once(Core.'/class/pages_ajax_class_phpapp.php');
+
+       $did=intval($this->GET['did']);
+       
+       $order='ORDER BY cid DESC';
+        
+       $ajaxpage=new AjaxPages(5,$this->GET['page'],$did,$this->GET['sqlorder'],$this->GET['iforder'],'AjaxComment',"SELECT a.*,b.username FROM  ".$this->GetTable('task_draft_comment')." AS a LEFT JOIN ".$this->GetTable('member')." AS b ON a.uid=b.uid WHERE a.did='$did' $order");
+
+       $list=$ajaxpage->ShowResult();
+       
+       $total=$ajaxpage->GetTotal();
+{/php}
+
+{if !empty($list)}
+
+    <p class="total_comment">½»Á÷ <span style="font-weight:normal">({echo $total})</span></p>
+    
+    {for $list $value}
+        <div class="draft_comment_list">
+            <div class="draft_comment_avatar">{echo $this->GetUserAvatar($value['uid'])}</div>
+            <p><a href="space.php?app=8&uid={echo $value['uid']}" target="_blank" class="DraftUserID{echo $value['uid']}">{echo $value['username']}</a> <span style="font-family:Georgia, 'Times New Roman', Times, serif;font-size:9px">{echo $this->Date("Y/m/d H:i:s",$value['dateline'])}</span></p>
+
+           
+            <div style="word-break:break-all;color:#666;">{echo $this->str($value['content'],200,0,1,1,0,1)}</div>
+            <p><a class="small blue awesome" style=" float:right"><span class="task_draft_add_message" onclick="OpenDraftMessage('{echo $did}','{echo $value['uid']}')">»Ø¸´</span></a></p>
+        </div>
+    {/for} 
+    
+    {if $ajaxpage->ShowPages()}
+            <div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+    {/if}
+{/if}

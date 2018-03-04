@@ -1,0 +1,30 @@
+<link href="{echo TURL}form.css" rel="stylesheet" type="text/css" />
+
+{template taskcount:task.js}
+
+<form id="TaskPay" class="add_task">
+
+<p id="TaskTypeRadio">
+       <input type="radio" id="TaskType1" name="tasktype_d" value="1" {if !empty($task['tasktype']) && $task['tasktype']==1}checked="checked"{else}checked="checked"{/if}/><label for="TaskType1">单人悬赏</label>
+       <input type="radio" id="TaskType2" name="tasktype_d" value="2" {if !empty($task['tasktype']) && $task['tasktype']==2}checked="checked"{/if}/><label for="TaskType2">多人悬赏</label>          
+</p>
+
+<div id="SelectTaskType" {if !empty($task['tasktype']) && $task['tasktype']==1}style="display:none"{elseif empty($task['tasktype'])}style="display:none"{/if}>
+
+    <h5>人数：<span class="help_small" title="需要几人数"> </span></h5>
+       
+    <p><input name="total_d" type="text" id="total" size="3" maxlength="10" class="form_input_text form_input_width_100"  value="{if !empty($task['total'])}{echo $task['total']}{else}1{/if}" title="请输入你想要的人数"/>
+    </p>
+
+</div>
+  
+  
+<h5>赏金：<span class="help_small" title="支付赏金"> </span></h5>  
+
+<p><input name="money_f" type="text" id="Money" size="3"  maxlength="12" class="form_input_text form_input_width_100"  value="{if !empty($task['money'])}{echo $task['money']/$task['total']}{/if}" title="请输入你悬赏的金额"/> <span style="color:#999">元/人</span>  &nbsp; <span style="font-size:14px"><span id="NowMoney">0</span> x <span id="NowTotal">0</span>(人) = <span class="color_f60" id="NowTotalMoney">0</span> 元(总赏金)</span>
+</p>
+  
+<p><a class="large orange awesome" onclick="SubmitTaskPay('{echo $this->tid}')"><span class="paymoney_ico">立即支付</span></a></p>
+
+<input type="hidden" value="1" name="Submit"/>
+</form>

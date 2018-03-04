@@ -1,0 +1,21 @@
+{if $service['longitude'] && $service['latitude']}
+<div class="service_map">
+
+<h4>·þÎñÎ»ÖÃ</h4>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>
+<div id="MyMap"></div>
+<script type="text/javascript">
+
+    var mymap = new BMap.Map("MyMap"); 
+    mypoint = new BMap.Point('{echo $service["longitude"]}','{echo $service["latitude"]}');
+    mymap.centerAndZoom(mypoint,'{echo $service["mapzoom"]}'); 	
+	mymap.enableScrollWheelZoom();
+    window.setTimeout(function(){mymap.panTo(mypoint);}, 2000);
+    var mymarker = new BMap.Marker(mypoint); 
+    mymap.addOverlay(mymarker); 
+    mymap.addControl(new BMap.NavigationControl()); 
+    $('#MyMap').css('height',180).css('width',660);
+    
+</script>
+{/if}    

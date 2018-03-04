@@ -1,0 +1,194 @@
+{template phpapp:header}
+
+<script type="text/javascript" src="{echo TURL}js/skills.js"></script>
+
+<link href="{TURL}skills.css" rel="stylesheet" type="text/css" />
+<link href="{TURL}fastguide.css" rel="stylesheet" type="text/css" />
+
+<div class="fast_guide">
+    
+    <div class="fast_setinfo">
+    <h1>1.设置您的行业与技能</h1>
+    
+    <div class="set_myskills">
+    
+    <h5>行业分类：<span class="help_small" title="请选择一个行业分类"> </span></h5>
+    <p id="catid" style="height:24px">
+    {if !empty($memberinfo['catid'])}
+         {echo $this->GetSelectCategory('category',$memberinfo['catid'],'catid',49,1)}
+    {else} 
+         {echo $this->SetSelectCategory('category',0,'catid',49,1)}
+    {/if} 
+    </p>
+    
+    
+    <h5>我的技能：<span class="help_small" title="我会使用的技能"> </span></h5>
+    
+    <div class="select_more_skills"><a href="javascript:void(0);" class="select_more_skills" id="SelectMoreSkills" title="点击获更多技能选择">点击获更多技能</a></div>
+    
+    <div id="SelectMoreSkillsView" class="header_member_default more_skills_view">
+        <h3></h3>
+        <ul id="MoreSkillsList" class="skills_data_list">
+        </ul>
+        <div class="more_skills_updown"><a href="javascript:void(0);" onclick="SetScrollBox('#MoreSkillsList',1);" title="技能往上显示">向上</a><a href="javascript:void(0);" onclick="SetScrollBox('#MoreSkillsList',2);" title="技能往下显示" style="float:right">向下</a></div>
+    </div>
+    
+
+    <div id="SelectSkills" class="select_skills">
+
+    </div>
+
+
+    <input type="hidden" id="SkillsSelected" name="skills_s" value=""/>
+    
+    {if !empty($member['skills'])}
+    <script type="text/javascript">
+        $(function(){	
+            $('#SelectSkills').html('');
+            $('#SkillsSelected').val('');
+            $.PHPAPPGetAllSkills('{echo $memberinfo["catid"]}','{echo $member["skills"]}');
+        });
+    </script>
+    {else}
+    <script type="text/javascript">
+        $(function(){	
+             $.PHPAPPGetAllSkills('{echo $memberinfo["catid"]}','{echo $member["skills"]}');
+        });
+    </script>	 
+    {/if}
+
+    
+    <script type="text/javascript">
+    $(function(){	
+           $("#SelectMoreSkills").click( function () { $.PHPAPPHeaderItem('SelectMoreSkills','SelectMoreSkillsView',0,28,232,0,0,1); });
+        
+           $('#SelectMoreSkills').poshytip({
+                     className: 'tip-green',
+                     offsetX: -7,
+                     offsetY: 16,
+                     allowTipHover: false
+           });	
+           
+           $("#SkipSetInfo").click( function () {
+				  window.location.href=SURL+'/index.php?app=49';
+		   });	
+		   
+           $("#SubmitSetSkills").click( function () {
+                  
+                  var catids='';
+                  var selects='';
+                  $("#catid").find("select").each(function(){
+                          catids=catids+1;							   
+                          var value=$(this).val();
+                           
+                          if(value){
+                               selects=selects+1;
+                          }			 				 
+                  }); 
+                  
+                  if(catids!=selects){
+                        alert("请选择行业分类!");
+                        return false;  
+                  }
+                  
+                  var catid=$("#catid select[name='catid']").val();
+                  
+                  var skills=$('#SkillsSelected').val();					 
+          
+                  $("#loading").html('<div class="loading">提交数据中...</div>');
+                      
+                  $("#loading").dialog({ title: '提交数据' });
+    
+                  $("#loading").dialog('open');
+                  
+                  $.PHPAPPOPENLOADING();
+                  $.ajax({
+                        type: "POST",
+                        url: SURL+"/member.php?app=27&action=1",
+                        data: "Submit=1&skills="+skills+"&catid="+catid,
+                        success: function(data){
+                            //$("#loading").html(data);
+							$("#loading").html('恭喜您！保存成功！');
+                        }
+                  });
+				  
+				  
+				  var forms=GetFormAll('#MemberForm');		
+				 
+				  $.ajax({
+						type: "POST",
+						url: "member.php?app=2&action=40",
+						data: forms+'&Submit=1',
+						success: function(data){
+							$.PHPAPPCLOSELOADING();
+							window.location.href=SURL+'/index.php?app=49';
+						}
+				  });
+
+				  
+                
+         });
+         
+    }); 
+    </script>
+    
+    </div>
+    </div>
+    
+    
+    
+    <div class="fast_setinfo" style="float:right">
+    <h1>2.设置您的信息</h1>
+    
+    <div id="MemberForm" class="member_form">
+        
+        <h5>用户类型：<span class="help_small" title="用户类型"> </span></h5>
+ 
+         <div id="MemberProfession" class="membertype memberprofession" title="您发任务请选择雇主,投标选择威客.">
+           
+                     <input type="radio" id="MemberPosition1" name="userpost_d" value="1"{if $member['userpost']==1} checked="checked"{elseif !$member['userpost']} checked="checked"{/if}/><label for="MemberPosition1">雇主</label>
+                     
+                     <input type="radio" id="MemberPosition2" name="userpost_d" value="2"{if $member['userpost']==2} checked="checked"{/if}/><label for="MemberPosition2">威客</label>
+                       
+         </div>
+           
+         <script>$(function() {$("#MemberProfession").buttonset();});</script>
+ 
+      
+        <h5>性别：<span class="help_small" title="性别"> </span></h5>
+        <p>
+        <select name="gender">
+            <option value="0"{if $info['gender']==0} selected="selected"{/if}>保密</option><option value="1"{if $info['gender']==1} selected="selected"{/if}>男</option><option value="2"{if $info['gender']==2} selected="selected"{/if}>女</option>
+        </select>
+        </p>
+        
+       
+       <h5>出生地：<span class="help_small" title="出生地"> </span></h5>
+
+        <p id="birthcity">
+        {if $info['birthcity']}
+             {echo $this->GetSelectCategory('category_city',$info['birthcity'],'birthcity')}
+        {else} 
+             {echo $this->SetSelectCategory('category_city',$info['birthcity'],'birthcity')}
+        {/if}
+        </p>
+
+       <h5>所在地：<span class="help_small" title="所在地"> </span></h5>
+
+        <p id="residecity">
+        {if $info['residecity']}
+             {echo $this->GetSelectCategory('category_city',$info['residecity'],'residecity')}
+        {else} 
+             {echo $this->SetSelectCategory('category_city',$info['residecity'],'residecity')}
+        {/if}
+        </p>
+        
+        </div>
+  
+    </div>
+    
+</div>    
+
+<p style="text-align:center;"><input name="Submit" type="button" value="保存资料去任务大厅" id="SubmitSetSkills" class="form_button"/> <input name="Submit" id="SkipSetInfo" type="button" value="跳过以后再填"class="form_general_button"/></p>
+
+{template phpapp:footer}

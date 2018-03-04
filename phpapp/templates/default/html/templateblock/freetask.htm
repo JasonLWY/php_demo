@@ -1,0 +1,71 @@
+<link href="{TURL}task.css" rel="stylesheet" type="text/css" />
+{php}
+    include_once(Core.'/class/skill_class_phpapp.php');		   
+    $skilldata=new SkillClass();
+{/php}          
+           
+<div class="default_main">
+     {php} $freelist=$this->GetMysqlArray('*'," ".$this->GetTable('task')." WHERE process>0 AND appid!=82 ORDER BY topbid DESC ,process ASC,dateline DESC LIMIT 0,10");{/php}
+
+     {if $freelist}
+     
+             <div class="task_parameter">
+                    <ul>
+                        <li>用户</li>
+                        <li style="width: 350px;">标题</li>
+                        <li style="width: 120px;">投稿/中标</li>
+                        <li style="width: 180px;">技能</li>
+                        <li style="width: 120px;">截止时间</li>
+                        <li>操作</li>
+                     </ul>
+              </div>
+          
+              {for $freelist $key=>$value}
+                 <div class="task_bid_show task_item{if $value['openflash']} flashbid{/if}">
+                    <div class="task_item_info">
+                        {if $value['topbid']>0}<div class="task_top" title="推荐"></div>{/if}
+                        <div class="task_list_avatar">{echo $this->GetUserAvatar($value['uid'],0,1)}</div>
+                        <div class="task_list_subject">
+                        <p><span class="color_f60">￥{if $value['price1']>0}{echo $value['price1']}-{echo $value['price2']}{else}{echo $value['money']}{/if}</span> 
+                        
+                        {if $value['credit']==1}<span class="task_list_credit">保证选标</span>{elseif $value['credit']==2}<span class="task_list_credit">不保证选标</span>{/if}
+                        {if $value['appid']==80}<span class="task_list_credit">悬赏</span>{elseif $value['appid']==83}<span class="task_list_credit">招标</span>{/if}
+                        </p>
+                        <p><a href="{echo SURL}{echo $value['url']}" target="_blank">{echo $value['subject']} {if $value['addmoney']>0} <b>+{echo $value['addmoney']}</b>{/if}</a> {if $value['topid']>0}<span class="top_icon" title="推荐置顶"></span>{/if}
+                        </p>
+                        </div>
+                        <div class="task_list_draft">{echo $value['draft_number']}/{echo $value['draft_success']}</div>
+                        <div class="task_skill">
+                            {php} $skillsarr=$skilldata->GetSkillURL($value['skills']); {/php}
+                            <ul>
+                                {if $skillsarr}
+                                    {php}$newkey=0;{/php}
+                                    {for $skillsarr $key=>$skill}
+                                         {php}$newkey++;{/php}
+                                         <li><a href="{echo $skill['url']}">{echo $skill['name']}{if $newkey!=count($skillsarr)},{/if}</a></li>
+                                    {/for}
+                                {/if}
+                            </ul>
+                        </div>
+                        <div class="task_endtime">{echo $this->Date('Y-m-d',$value['endtime'])}</div>
+                        <a href="{echo SURL}{echo $value['url']}" class="small blue awesome viewtask">查看任务</a>
+                    </div>
+                    <p class="task_description">
+                    	{if $value['hide']}{if !$this->uid}<span class="color_f60">任务内容已隐藏,请登录后查看！</span>{else}简介：{echo $value['description']}{/if}{else}简介：{echo $value['description']}{/if}
+                    </p>
+                 </div>
+              {/for}
+          
+       {else}
+             <p>暂时没有任务!</p>
+       {/if}
+
+</div>
+
+
+<script type="text/javascript">
+$(function(){	
+	$.PHPAPPMouseover('.task_item','.task_description');
+	$.PHPAPPTaskFlash('.flashbid',5000);
+});
+</script>

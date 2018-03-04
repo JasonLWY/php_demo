@@ -1,0 +1,42 @@
+<!-- Javascript -->
+
+<script type="text/javascript">
+var APPID ={echo $this->app};
+var SURL ='{echo SURL}';
+var TURL ='{echo TURL}';
+var Language='{echo $this->lang}';
+var CategoryURL ="{echo SURL}/member.php?app=10&action=1";
+var TaskSkillURL ="{echo SURL}/index.php?app=27&action=1";
+var timestamp={echo $this->NowTime()};
+</script>
+
+
+<!--  Public  -->
+<script type="text/javascript" src="{echo TURL}js/jquery.js?v={echo $this->GetFileVersion()}"></script>
+
+<script type="text/javascript" src="{echo TURL}js/dialog.js?v={echo $this->GetFileVersion()}"></script>
+<script type="text/javascript" src="{echo TURL}js/header.js?v={echo $this->GetFileVersion()}"></script>
+<script type="text/javascript" src="{echo TURL}js/phpapp.js?v={echo $this->GetFileVersion()}"></script>
+
+<script type="text/javascript" src="{echo TURL}js/member.js?v={echo $this->GetFileVersion()}"></script>
+
+<!--  datepicker  -->
+<script type="text/javascript" src="{echo TURL}js/datepicker-{echo $this->lang}.js?v={echo $this->GetFileVersion()}"></script>
+
+<!--  input  -->
+<script type="text/javascript" src="{echo TURL}js/input.js?v={echo $this->GetFileVersion()}"></script>
+
+<!-- poshytip -->
+<script type="text/javascript" src="{echo TURL}poshytip/jquery.poshytip.js?v={echo $this->GetFileVersion()}"></script>
+
+<!-- AllCategory -->
+<script type="text/javascript" src="{echo TURL}js/jquery.tmailsilder.v2.js?v={echo $this->GetFileVersion()}"></script>
+
+<!-- AJAX -->
+<script type="text/javascript" src="{echo TURL}js/ajax_auto.js?v={echo $this->GetFileVersion()}"></script>
+
+
+
+{template phpapp:buyer_order.js}
+
+{template phpapp:seller_order.js}

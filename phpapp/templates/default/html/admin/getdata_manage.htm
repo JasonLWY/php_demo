@@ -1,0 +1,197 @@
+{template header}
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $this->GET['op']==3}
+
+	
+
+
+{elseif $this->GET['op']==1 || $this->GET['op']==2}
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">关联标签模块</td>
+    <td><select name="block_phpapp">
+     <option value="">无</option>
+{for $templateblockarray $value}
+  <option value="{$value['id_phpapp']}" {if !empty($manage['block_phpapp'])}{if $manage['block_phpapp']==$value['id_phpapp']} selected="selected" {/if}{/if}>{$value['label_phpapp']}</option>
+{/for}
+</select></td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">名称</td>
+    <td> <input name="name_phpapp_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['name_phpapp'])}{echo $manage['name_phpapp']}{/if}"/> (可为中文方便记的名称)</td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">调用标签</td>
+    <td> <input name="key_phpapp_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['key_phpapp'])}{echo $manage['key_phpapp']}{/if}"/> (英文字母数字组合)</td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">调用配置</td>
+    <td> 
+    
+      <div id="code" style="padding-top:10px;" class="adstyle">
+        <p style="padding-bottom:10px;">
+        <select name="data[table]">
+        {for $list $value}
+            <option value="{echo $value['Name']}"{if !empty($data['table'])}{if $data['table']==$value['Name']} selected="selected"{/if}{/if}>{echo $value['Name']}</option>
+        {/for}
+        </select> 读取的数据表 
+        </p>
+        
+        <p style="padding-bottom:10px;"> 
+             <select name="data[type]" id="GetType">
+                 <option value="1"{if !empty($data['type'])}{if $data['type']==1} selected="selected"{/if}{/if}>数目</option>
+                 <option value="2"{if !empty($data['type'])}{if $data['type']==2} selected="selected"{/if}{/if}>指定ID</option>
+             </select> 调用数目方式
+        </p>
+        
+        <script type="text/javascript">
+
+			$(function(){	
+				   $("#GetType").change(function(){
+						 var value=$(this).val();	
+						 
+						 if(value==1){
+							 
+						       $("#numbertype").html('显示数目');
+						 
+						 }else{
+							   $("#numbertype").html('多个ID用, 逗号隔开');
+						 }
+						 
+				   });
+			});
+         </script>
+        
+        <p style="padding-bottom:10px;"> 
+             <input type="text" size="70" name="data[number]" value="{if !empty($data['number'])}{echo $data['number']}{else}10{/if}" class="form_input_text form_input_width_200"/>  <span id="numbertype">{if !empty($data['type'])}{if $data['type']==1}显示数目{else}指定ID{/if}{/if}</span>
+        </p>
+        
+        
+         <p style="padding-bottom:10px;"> 
+             <input type="text" size="70" name="data[where]" value="{if !empty($data['where'])}{echo $data['where']}{else}{/if}" class="form_input_text form_input_width_200"/> 查询条件(例如: id=2)
+        </p>
+
+
+        <p style="padding-bottom:10px;"> 
+             <select name="data[dateline]">
+                 <option value="">无排序</option>
+                 <option value="ASC"{if !empty($data['dateline'])}{if $data['dateline']=='ASC'} selected="selected"{/if}{/if}>发布时间降序</option>
+                 <option value="DESC"{if !empty($data['dateline'])}{if $data['dateline']=='DESC'} selected="selected"{/if}{/if}>发布时间升序</option>
+             </select> 排序方式
+        </p>
+        
+      </div>
+    
+    </td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">是否启用</td>
+    <td>
+    <select name="status_phpapp">
+        <option value="0" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==0} selected="selected" {/if}{/if}>启用</option>
+        <option value="1" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==1} selected="selected" {/if}{/if}>关闭</option>
+    </select> 
+   </td>
+  </tr>
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="生成SQL代码" class="form_button"/></div>
+
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" style="margin-top:20px;" >
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">生成的SQL代码</td>
+    <td>
+
+     <textarea name="code_phpapp" class="form_textarea form_input_width_300" rows="20" cols="80" style="width:80%;height:80px;">{if !empty($manage['code_phpapp'])}{echo $manage['code_phpapp']}{/if}</textarea>
+
+   </td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">手写模板代码</td>
+    <td>
+
+     <textarea name="template_phpapp" class="form_textarea form_input_width_300" rows="20" cols="80" style="width:80%;height:300px;">{if !empty($manage['template_phpapp'])}{echo $manage['template_phpapp']}{/if}</textarea>
+
+   </td>
+  </tr>
+  
+</table>
+
+<div class="phpapp_button"><input name="Update" type="submit" value="更新代码" class="form_button"/></div>
+
+
+
+{else}
+
+
+{if $list}
+
+<div id="WindowsForm{echo $this->GET['menu']}">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+    
+    {for $orderarr $key=>$value}
+    <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+    {/for} 
+
+    <td class="datalist_h2" style="width:68px;">操作</td>
+  </tr>
+
+{for $list $value}
+  <tr>
+    <td><input name="checkbox[]" type="checkbox" value="{$value['id_phpapp']}" /></td>
+    <td>{$value['id_phpapp']}</td>
+    <td>{$value['label_phpapp']}</td>
+    <td>{$value['name_phpapp']}</td>
+    <td>{sql {$value['key_phpapp']}}</td>
+    <td>{if $value['status_phpapp']}关闭{else}启用{/if}</td>
+    <td>
+    <p><a href="{echo $this->MakeGetParameterURL(array('op'=>2,'id'=>$value['id_phpapp']))}">[编辑]</a></p>
+    <p><a href="{echo $this->MakeGetParameterURL(array('op'=>3,'id'=>$value['id_phpapp']))}">[预览]</a></p>
+    </td>
+  </tr>
+ {/for} 
+
+</table>
+</div>
+<div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+
+<div class="phpapp_button"><input name="Show" type="submit" value="设置启用" class="form_button"/> <input name="Hide" type="submit" value="设置关闭" class="form_button"/> <input name="Submit" type="submit" value="删除" class="form_button"/></div>
+
+
+{else}
+
+
+没有数据!
+
+{/if}
+
+
+
+{/if}
+
+</form>

@@ -1,0 +1,82 @@
+.security_item{
+	overflow: hidden;
+}
+
+.security_item h2{
+	font-size: 16px;
+	text-align: center;
+	line-height: 50px;
+	color: #09C;
+}
+
+.security_item dl{
+	overflow: hidden;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #EEE;
+	margin-bottom: 20px;
+	padding-top: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	color: #09C;
+}
+
+.security_item dl dfn{
+	font-style: normal;
+	float: right;	
+}
+
+.security_item dl dt{
+	overflow: hidden;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 40px;
+}
+.security_item dl dd{
+	clear: both;
+	padding-left: 70px;
+}
+.security_item dl dd p{
+	line-height: 22px;
+	color: #666;
+}
+.security_show{
+	overflow: auto;
+	height: 600px;
+	border: 1px solid #DDD;
+	padding: 20px;
+	line-height: 24px;
+	font-size: 14px;
+}
+.security_confirm{
+	text-align: center;
+	padding: 20px;
+}
+
+
+/* icon */
+
+.security_icon{
+	background-image: url(./images/member_security_icon.png);
+	background-repeat: no-repeat;
+	float: left;
+	height: 70px;
+	width: 70px;
+}
+.bao_icon{
+	background-position: 0px 10px;	
+}
+.yuan_icon{
+	background-position: 0px -90px;	
+}
+.mian_iocn{
+	background-position: 0px -190px;	
+}
+.san_icon{
+	background-position: 0px -290px;	
+}
+.shang_icon{
+	background-position: 0px -390px;	
+}

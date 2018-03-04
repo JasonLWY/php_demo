@@ -1,0 +1,30 @@
+{if $this->IsSQL('prop'," WHERE appid=72 AND status=0")}
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.3"></script>
+    
+<div id="ShowMap" title="任务地图 设置方法：双击位置 然后点击 '保存位置'">
+        
+</div>
+    
+<script type="text/javascript">
+$(function(){	
+
+	   $.ajax({
+			  type: "GET",
+			  url: SURL+'/member.php?app=70&action=2&op=1',
+			  success: function(data){
+					$("#ShowMap").html(data);
+					var tasklongitude=$('#MapLongitude').val();
+					var tasklatitude=$('#MapLatitude').val();
+					window.setTimeout(function(){  map.panTo(new BMap.Point(tasklongitude,tasklatitude)); }, 500);
+			  }
+	   });
+					 
+ });
+
+</script>
+
+{/if}
+
+
+

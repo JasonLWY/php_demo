@@ -1,0 +1,65 @@
+<div class="task_box_right task_feed">
+<h2>雇主动态</h2>
+
+<ul id="ScrollTaskFeed">
+
+{php}
+   $taskfeed=$this->GetMysqlArray('*'," ".$this->GetTable('member_feed')." WHERE app='$this->app' AND action=2  ORDER BY dateline DESC LIMIT 0,10");
+{/php}
+
+{if $taskfeed}
+     {for $taskfeed $value}
+    <li>
+      <em>{echo $this->Date('m-d H:i',$value['dateline'],1)}</em>
+      <p><a href="space.php?app=8&uid={echo $value['uid']}" target="_blank" title="{echo $value['username']}">{echo $value['username']}</a> <span style="color:#999">{echo $this->FeedReplace($this->str($value['title_data'],12,1,0,1,0,1),$value['title_template'])}</span></p>
+      </li>
+     {/for}
+{else}
+
+<li>没有动态</li>
+{/if}
+
+</ul>
+
+<p class="addtask_button"><a href="member.php?app={echo $this->app}&action=1" target="_blank" style="color: #F60;">发布服务</a></p>
+
+
+</div>
+
+
+<div class="task_box_right task_feed">
+<h2>卖家动态</h2>
+
+
+
+<ul id="ScrollDraftFeed">
+
+{php}
+   $draftfeed=$this->GetMysqlArray('*'," ".$this->GetTable('member_feed')." WHERE app='$this->app' AND action=1  ORDER BY dateline DESC LIMIT 0,10");
+{/php}
+
+{if $draftfeed}
+     {for $draftfeed $value}
+      <li>
+      <em>{echo $this->Date('m-d H:i',$value['dateline'],1)}</em>
+      <p><a href="space.php?app=8&uid={echo $value['uid']}" target="_blank" title="{echo $value['username']}">{echo $value['username']}</a> <span style="color:#999">{echo $this->FeedReplace($this->str($value['title_data'],12,1,0,1,0,1),$value['title_template'])}</span></p>
+      </li>
+     {/for}
+{else}
+
+<li>没有动态</li>
+{/if}
+
+
+</ul>
+
+
+<p class="addtask_button"><a href="member.php?app={echo $this->app}&action=1" target="_blank" style="color: #F60;">发布服务</a></p>
+
+
+</div>
+
+<script type="text/javascript">
+SetScroll('#ScrollDraftFeed',3000);
+SetScroll('#ScrollTaskFeed',3000);
+</script>

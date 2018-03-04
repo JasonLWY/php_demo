@@ -1,0 +1,17 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+    
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+<tr>
+<td class="width_160"><strong>会员特权介绍</strong></td>
+<td>
+{template editor:editor}<script type="text/javascript">$(function(){$.PHPAPPEditor('Content','624','280');});</script>
+<textarea name="membervipdcription_s" id="Content" class="form_editor">{if !empty(PHPAPP::$config['membervipdcription'])}{echo $this->str(PHPAPP::$config['membervipdcription'],0,0,1,0,1,1)}{/if}</textarea>
+</td>
+</tr>
+</table>
+
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button" onclick="SubmitContent();"/></div>
+
+</form>

@@ -1,0 +1,48 @@
+{php}
+
+   $servicetop=$this->GetMysqlArray('a.sid,a.uid,a.url,a.subject,b.thumb,a.unit,a.price'," ".$this->GetTable('task_seller_service')." AS a LEFT JOIN  ".$this->GetTable('file')." AS b ON  b.fid=a.logo  WHERE a.status=0 AND a.topbid>0  ORDER BY a.topbid DESC,a.dateline DESC LIMIT 0,24");
+
+{/php}
+
+{ad SellerService75}
+
+<div class="seller_service">
+<h3><dfn><a href="{echo SURL}/index.php?app=82">更多></a></dfn>推荐服务</h3>
+
+{if $servicetop}
+<ul id="ScrollService">
+    {for $servicetop $key=>$value}
+
+    {if $key==0 || $key==4 || $key==8 || $key==12 || $key==16 || $key==20}<li>{/if}
+     <div>             
+           {if !empty($value['thumb'])}
+                      
+                      {if $value['thumb']}  
+                           <a href="{echo SURL}{echo $value['url']}" class="help_small" style="background-image:none;" title="{echo $value['subject']} </p>报价{echo $value['price']}/{echo $value['unit']}</p>"><img src="{echo $value['thumb']}"/></a>
+                      {else}
+                            <img src="{SURL}/images/seller/nopic.gif"/>
+                      {/if}
+           {else}
+               
+               
+               <img src="{SURL}/images/seller/nopic.gif"/>
+              
+                              
+           {/if}
+    
+    </div>
+    {if $key==3 || $key==7 || $key==11 || $key==15 || $key==19 || $key==23} </li>{/if}   
+    
+
+    {/for}
+</ul>  
+{else}
+<li>暂没有数据</li>
+{/if}
+
+
+</div>
+
+<script type="text/javascript">		
+	SetScroll('#ScrollService',3000);
+</script>

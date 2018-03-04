@@ -1,0 +1,151 @@
+{template member:menu}
+
+
+
+       {php}
+            $sortarray=array('1'=>'未付款发布','2'=>'已支付托管金','3'=>'待审核','4'=>'进行中','5'=>'已结束');
+            
+       {/php}
+
+      <div class="manage_process">
+      <ul>
+      {for $sortarray $key=>$value}
+      <li{if $key==$this->GET['sort']} class="nowsort"{/if}><a href="member.php?app={echo $this->app}&action=6&page={echo $this->page}&sort={echo $key}">{echo $value}</a></li>
+      {/for}
+      </ul>
+      </div>
+      
+      
+      
+      
+      
+{if $list}
+
+<div id="tasklist">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2" style="width:46px"><input name="checkboxall" id="CheckboxAll" onclick="CheckboxAll('tasklist')" type="checkbox" value="1" /> 全选 </td>
+    <td class="datalist_h2">编号</td>
+    <td class="datalist_h2">金额/标题</td>
+    <td class="datalist_h2">确认状态</td>
+    <td class="datalist_h2">服务状态</td>
+    <td class="datalist_h2">发布时间</td>
+    <td class="datalist_h2">操作</td>
+  </tr>
+
+{for $list $value}
+  <tr>
+    <td><input name="checkbox"  type="checkbox" value="{echo $value['tid']}" {if $value['process']!=1} disabled="disabled" {/if}/></td>
+    <td class="datalist_h2">{echo $value['tid']}</td>
+    <td class="datalist_h2">
+    <p><span class="color_f60">￥{echo $value['money']}</span></p>
+    <p style="width:250px;overflow:hidden;"><a href="member.php?app={echo $this->app}&action=5&tid={echo $value['tid']}&op=1" title="{echo $value['subject']}">{echo $value['subject']}</a></p>
+    </td>
+    <td class="datalist_h2">{if $value['status']==0}等待卖方确认中{elseif $value['status']==1}卖方已同意{else}卖方拒绝{/if}</td>
+    <td class="datalist_h2">{echo $getprocess->GetTaskProcesName($value['process'])}</td>
+    <td class="datalist_h2">{echo $this->Date("Y/m/d",$value['dateline'])}</td>
+    <td><p>
+     <a href="member.php?app={echo $this->app}&action=5&tid={echo $value['tid']}&op=1">[查看]</a></p>
+     </td>
+  </tr>
+ {/for} 
+
+</table>
+
+</div>
+
+<div class="ajax_page">{echo $page->ShowPages()}</div>
+
+<div style="text-align:center"><input id="SubmitDelete" name="SubmitDelete" type="button" value="关闭" class="form_button"/></div>
+
+{else}
+
+ <p style="padding:10px">您暂时没有服务数据</p>
+ 
+{/if}    
+      
+      
+      
+
+</td></tr></table>
+
+
+<script type="text/javascript">
+ 
+ $(function(){	
+		   
+	 $("#loading").dialog({
+			  title:"服务修改",	
+			  width: 800,
+			  position: ['center',50],
+			  modal: true,
+			  autoOpen: false,
+              height:'auto'
+	 });
+		   
+
+ 
+	 $("#SubmitDelete").click( function () {
+		     
+			 
+			      var OderID='';
+                   $("#tasklist").find("input:checked[name!='checkboxall']").each(function(){
+                           var value=$(this).val();  
+                           
+                           if($(this).attr("disabled")!='disabled'){
+                           
+                           if(OderID){
+                                OderID+=','+value;
+                           }else{
+                                OderID=value;
+                           }
+                           }
+              
+                   }); 	
+                   
+                   if(!OderID){
+                       
+                        alert("请选择服务操作!");
+                        return false;
+                   }
+				   
+				   
+				   
+				if(confirm("是否关闭服务!")){
+					
+						$("#loading").dialog({
+								title:"服务操作",	
+								width: 300,
+								height:'auto'
+						});
+						   
+						$("#loading").dialog('open');
+						
+						$("#loading").html('<div class="loading">提交数据中...</div>');
+				    
+            
+                         $.ajax({
+                              type: "POST",
+                              url: "member.php?app={echo $this->app}&action=5&op=2",
+                              data: 'oderid='+OderID,
+                              success: function(data){
+                                    $("#loading").html(data);
+                              }
+                         });	
+					 
+				
+				
+			    }
+             
+				   
+				   
+		 
+	 });
+	
+ });
+ 
+ 
+</script>
+
+{template phpapp:footer}

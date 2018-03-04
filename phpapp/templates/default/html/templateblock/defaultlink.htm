@@ -1,0 +1,35 @@
+{php}
+	//logo
+	$linklogo=$this->GetMysqlArray('*'," ".$this->GetTable('links')." WHERE logo!='' ORDER BY displayorder ASC LIMIT 0,20");
+			
+	$linktxt=$this->GetMysqlArray('*'," ".$this->GetTable('links')." WHERE logo='' ORDER BY displayorder ASC LIMIT 0,20");
+	   
+{/php}
+
+{ad Default77}
+
+<div class="default_main">
+     <div class="default_link">
+         <h2><dfn><a href="{echo SURL}/index.php?app=23&action=3">更多</a></dfn>友情链接</h2>
+         
+          <ul>
+            {if $linklogo}
+              
+              {for $linklogo $value}
+              <li> <a href="{echo $value['siteurl']}" target="_blank" title="{echo $value['description']}"><img name="{echo $value['sitename']}" src="{echo $value['logo']}" title="{echo $value['sitename']}" /></a>
+              </li>
+              {/for}
+           {/if}
+         </ul>
+         <ul>
+             {if $linktxt}
+              
+              {for $linktxt $value}
+              <li>
+               <a href="{echo $value['siteurl']}" target="_blank" title="{echo $value['description']}">{echo $value['sitename']}</a>
+              </li>
+              {/for}
+           {/if}
+         </ul>
+     </div>
+</div>

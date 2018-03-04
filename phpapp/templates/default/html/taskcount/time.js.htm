@@ -1,0 +1,50 @@
+<script type="text/javascript">
+var setseconds=1000;
+window.setInterval("showtime()", 1000);  	 
+function showtime(){
+	  var servernowdate='{$nowdate}';
+	  var servertime=servernowdate.split(",");
+	  var nowdate= new Date(servertime[0],servertime[1]-1,servertime[2],servertime[3],servertime[4],servertime[5]);  
+	  var nowtime=nowdate.getTime();
+	  var nowtime=setseconds+nowtime;
+	  setseconds=setseconds+1000;
+	  var taskendtime='{$taskendtime}';
+	  var taskendtime=taskendtime.split(",");
+	  var servertasktime = new Date(taskendtime[0],taskendtime[1]-1,taskendtime[2],taskendtime[3],taskendtime[4],taskendtime[5]); 
+	  var tasktime=servertasktime.getTime();
+		  
+		  if(nowtime>tasktime){
+		  $('#task_endtime').html('任务已过期');
+		  }else{
+			  var endtime=tasktime-nowtime;
+			  var days=parseInt(endtime/(1000 * 60 * 60 * 24));
+			  var Hours=parseInt(endtime/(1000 * 60 * 60))-days*24;
+			  var Minutes=parseInt(endtime/(1000 * 60))-((days *24* 60)+(Hours* 60));
+			  var Seconds=parseInt(endtime/(1000))-((days*24* 60* 60)+(Hours* 60* 60)+(Minutes* 60));
+			  var showseconds='<b style="color:#F60">'+Seconds+'</b>秒';
+			  if(days){
+				  var showdays='<b style="color:#F60">'+days+'</b>天';
+				  var showhours='<b style="color:#F60">'+Hours+'</b>小时';
+				  var showminutes='<b style="color:#F60">'+Minutes+'</b>分';
+			  }else{
+				  var showdays='';
+				  if(Hours){
+					   var showhours='<b style="color:#F60">'+Hours+'</b>小时';
+					   var showminutes='<b style="color:#F60">'+Minutes+'</b>分'
+				  }else{
+					   var showhours='';
+					   if(Minutes){
+						   var showminutes='<b style="color:#F60">'+Minutes+'</b>分</font>'
+						   var showseconds='<b style="color:#F60">'+Seconds+'</b>秒</font>';
+					   }else{
+						   var showminutes='';
+						   var showseconds='<b style="color:#F60">'+Seconds+'</b>秒</font>';
+					   }
+				  }
+			  }
+				  
+		  $('#task_endtime').html(showdays+showhours+showminutes+showseconds);
+		  
+		  }
+ }
+</script>

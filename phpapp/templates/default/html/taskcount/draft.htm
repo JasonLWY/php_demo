@@ -1,0 +1,105 @@
+{template show.js}
+
+{php}
+
+		   include_once(Core.'/class/pages_ajax_class_phpapp.php');
+		   
+		   $uid=$this->uid;
+
+		   if(!empty($this->GET['did'])){
+				$did=intval($this->GET['did']);				 
+				$order=" AND a.did='$did' ORDER BY topbid DESC ,did DESC";	 				
+		   }else{
+			   
+			    $order=' AND a.process=0 ORDER BY topbid DESC,did DESC';
+			   
+		   }
+		   
+		   
+		   if($this->GET['type']==1 || $this->GET['type']==4){
+                 
+                 if($this->GET['type']==4){
+                      $usersql=" AND a.uid='$this->uid' ";
+                 }else{
+                      $usersql=' AND a.process>0 ';
+                 }
+                 
+			     //已审核的投标
+				 $order='ORDER BY a.topbid DESC,a.process DESC';
+				 
+			     $ajaxpage=new AjaxPages(10,$this->GET['page'],$this->tid,$this->GET['sqlorder'],$this->GET['iforder'],'DraftPage',"SELECT a.*,b.username,b.dateline AS regtime,b.logintime,c.certificate,d.credit,credits,e.hao,e.zhong,e.cha,credittype,f.tasknum,f.draftnum,f.successnum,g.speed,g.attitude,g.quality FROM  (((((".$this->GetTable('task_draft')." AS a LEFT JOIN ".$this->GetTable('member')." AS b ON a.uid=b.uid)LEFT JOIN ".$this->GetTable('member_info')." AS c ON b.uid=c.uid)LEFT JOIN ".$this->GetTable('member_account')." AS d ON b.uid=d.uid) LEFT JOIN ".$this->GetTable('credit_score')." AS g ON b.uid=g.uid)  LEFT JOIN ( SELECT type AS credittype,credit AS credits,uid,hao,zhong,cha FROM ".$this->GetTable('credit')." WHERE type=1 ) AS e ON b.uid=e.uid )LEFT JOIN ".$this->GetTable('task_total')." AS f ON b.uid=f.uid WHERE a.tid='$this->tid' $usersql $order");
+				 
+		   }else{
+			      
+			     $ajaxpage=new AjaxPages(10,$this->GET['page'],$this->tid,$this->GET['sqlorder'],$this->GET['iforder'],'DraftPage',"SELECT a.*,b.username,b.dateline AS regtime,b.logintime,c.certificate,d.credit,credits,e.hao,e.zhong,e.cha,credittype,f.tasknum,f.draftnum,f.successnum,g.speed,g.attitude,g.quality FROM  (((((".$this->GetTable('task_draft')." AS a LEFT JOIN ".$this->GetTable('member')." AS b ON a.uid=b.uid)LEFT JOIN ".$this->GetTable('member_info')." AS c ON b.uid=c.uid)LEFT JOIN ".$this->GetTable('member_account')." AS d ON b.uid=d.uid) LEFT JOIN ".$this->GetTable('credit_score')." AS g ON b.uid=g.uid) LEFT JOIN ( SELECT type AS credittype,credit AS credits,uid,hao,zhong,cha FROM ".$this->GetTable('credit')." WHERE type=1 ) AS e ON b.uid=e.uid )LEFT JOIN ".$this->GetTable('task_total')." AS f ON b.uid=f.uid WHERE a.tid='$this->tid' $order");
+
+			   
+		   }
+		   
+		   
+		   $task=$this->GetMysqlOne('uid,hidedraft,serviceuid,catid'," ".$this->GetTable('task')." WHERE tid='$this->tid'");
+		   
+           $category=$this->GetMysqlOne('photolist'," ".$this->GetTable('category')." WHERE catid='$task[catid]'");
+		   
+		   $list=$ajaxpage->ShowResult();
+           
+{/php}
+
+
+{if !empty($list)}
+
+<script type="text/javascript">
+$(function(){	
+		$(".UserPhotoFilter").hover(function(e) {
+             $(this).find("div").each(function(){
+				   $(this).fadeIn('fast');
+			 }); 
+			
+		}, function(e) {
+		    
+			 $(this).find(".user_photo_url").each(function(){
+					$(this).fadeOut('fast');
+			 }); 
+		
+		});
+		
+		$.PHPAPPTaskFlash('.flashbid',500);
+});
+function AjaxComment(did,page,sqlorder,iforder){
+
+	     $.PHPAPPOPENLOADING();	
+	  	 $.ajax({
+				type: "GET",
+				url: SURL+'/index.php',
+				data: "app={echo $this->app}&action=13&did="+did+"&page="+page,
+				success: function(data){
+				 	 $.PHPAPPCLOSELOADING();
+					 $("#DraftComment_"+did).html(data);
+				}
+	    });
+}
+</script>
+
+{if !empty($this->GET['did'])}
+    {template draft_list}
+{else}
+
+    {if $category['photolist']}
+         {template draft_pic}
+    {else}
+         {template draft_list}
+    {/if}
+{/if}
+
+{if $ajaxpage->ShowPages()}
+<div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+{/if}
+
+{template phpapp:draft.js}
+
+
+{else}
+<p>目前暂时没有投标!</p>
+{/if}
+
+

@@ -1,0 +1,38 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+<tr>
+<td class="width_160">卖家支付宝帐户(商家帐号):</td>
+<td><input name="alipaymail_s" value="{echo PHPAPP::$config['alipaymail']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">支付宝商家邮箱帐号</td>
+</tr>
+
+<tr>
+<td class="width_160">合作伙伴ID(商家ID):</td>
+<td><input name="alipayid_s" value="{echo PHPAPP::$config['alipayid']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">支付宝商家ID</td>
+</tr>
+
+<tr>
+<td class="width_160">安全检验码(商家Key):</td>
+<td><input name="alipaykey_s" value="{echo PHPAPP::$config['alipaykey']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">安全检验码Key</td>
+</tr>
+
+<tr>
+<td class="width_160">签约支付宝:</td>
+<td>
+<p><a href="http://act.life.alipay.com/systembiz/edoog/" target="_blank"><img src="{TURL}images/pay/alipay_logo.gif" alt="签约支付宝"/></a></p>
+<p><a href="http://act.life.alipay.com/systembiz/edoog/" target="_blank"><strong style="color:#F60">[立即签约支付宝]</strong></a></p>
+</td>
+<td class="color_999">(如果你没有支付宝签约帐号请点击以上链接进行签约)</td>
+</tr>
+
+</table>
+
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button"/></div>
+
+</form>

@@ -1,0 +1,48 @@
+.use_prop_list{
+	border: 1px solid #CCC;
+	background-color: #F9F9F9;
+	margin-bottom: 8px;
+	height: 50px;
+	overflow: hidden;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding-top: 10px;
+	padding-left: 16px;
+}
+.use_prop_list.selected{
+	background-color: #ECF8FF;
+	cursor:pointer;
+}
+.prop_checkbox{
+	margin-top: 12px;
+	margin-right: 16px;
+}
+.prop_checkbox,.prop_icon,.prop_description{
+	float: left;
+}
+.prop_description{
+	padding-top: 4px;
+}
+.prop_buy_price{
+	float: right;
+	width: 150px;
+	margin-top: 8px;
+	padding-right: 16px;
+}
+.prop_buy_price strong{
+	font-size: 14px;
+	line-height: 36px;
+}
+.count_service_price{
+	display: none;
+	margin-top: 30px;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: right;
+	padding-right: 30px;
+}
+#TotalPrice{
+	font-size: 26px;
+	color: #F60;
+}

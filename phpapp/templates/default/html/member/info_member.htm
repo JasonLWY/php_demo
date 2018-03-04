@@ -1,0 +1,429 @@
+{template member:menu}
+
+<form id="MemberForm">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="member_form">
+
+
+ <tr>
+    <td class="form_input_width_100 addtask_text">用户名：</td>
+    <td>{echo $member['username']}</td>
+  </tr>
+  
+  <tr>
+    <td class="form_input_width_100 addtask_text">用户类型：</td>
+    <td>
+  
+     <div id="MemberProfession" class="membertype memberprofession" title="您发任务请选择雇主,投标选择威客.">
+       
+                 <input type="radio" id="MemberPosition1" name="userpost_d" value="1"{if $member['userpost']==1} checked="checked"{elseif !$member['userpost']} checked="checked"{/if}/><label for="MemberPosition1">雇主</label>
+                 
+                 <input type="radio" id="MemberPosition2" name="userpost_d" value="2"{if $member['userpost']==2} checked="checked"{/if}/><label for="MemberPosition2">威客</label>
+                   
+     </div>
+       
+     <script>$(function() {$("#MemberProfession").buttonset();});</script>
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="form_input_width_100 addtask_text">性别：</td>
+    <td>
+    <select name="gender">
+        <option value="0"{if $info['gender']==0} selected="selected"{/if}>保密</option><option value="1"{if $info['gender']==1} selected="selected"{/if}>男</option><option value="2"{if $info['gender']==2} selected="selected"{/if}>女</option>
+    </select>
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="form_input_width_100 addtask_text">生日：</td>
+    <td>
+    <select name="Year" id="SetYear">
+        {echo $GetYear}
+    </select>
+    
+    <select name="Month" id="SetMonth">
+    
+         {echo $GetMonth}
+       
+    </select>
+    
+    <select name="Day" id="SetDay">
+
+    </select>
+    </td>
+    </tr>
+    
+   <tr>
+    <td class="form_input_width_100 addtask_text">出生地：</td>
+    <td id="birthcity">
+    {if $info['birthcity']}
+         {echo $this->GetSelectCategory('category_city',$info['birthcity'],'birthcity')}
+    {else} 
+         {echo $this->SetSelectCategory('category_city',$info['birthcity'],'birthcity')}
+    {/if}
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="form_input_width_100 addtask_text">所在地：</td>
+    <td id="residecity">
+    {if $info['residecity']}
+         {echo $this->GetSelectCategory('category_city',$info['residecity'],'residecity')}
+    {else} 
+         {echo $this->SetSelectCategory('category_city',$info['residecity'],'residecity')}
+    {/if}
+    </td>
+  </tr>
+  
+  {if $this->IsSQL('usergroup'," WHERE gid='$usergroup' AND allowdomainname=0 ")}
+     <tr>
+    <td class="form_input_width_100 addtask_text">空间域名设置：</td>
+    <td>
+       <input name="domainname" type="text"  id="domainname" size="50" maxlength="255" class="form_input_text form_input_width_200"  value="{if !empty($info['domainname'])}{echo $info['domainname']}{/if}"/>{echo PHPAPP::$config['domainname']}
+      <p style="color:#999;padding-top:8px;">提示： 设置空间二级域名,只能使用数字、英文、中文字符，域名最短{echo PHPAPP::$config['domainnamesmall']}位最长{echo PHPAPP::$config['domainnamelong']}位.</p>
+    </td>
+  </tr>  
+   
+  {/if}
+  
+  <tr>
+    <td class="form_input_width_100 addtask_text">个人主页：</td>
+    <td>
+       <input name="homepage" type="text"  id="homepage" size="50" maxlength="255" class="form_input_text" style="width:456px;"  value="{if !empty($info['homepage'])}{echo $info['homepage']}{/if}"/>
+    </td>
+  </tr>  
+  
+  
+  
+  
+  <tr>
+    <td class="form_input_width_100 addtask_text" valign="top">自我简介：</td>
+    <td><textarea name="about_s" id="about" class="form_input_text" style="width:456px; height:200px">{if !empty($tablename['about'])}{echo $this->str($tablename['about'],99999,0,1,0,0,1)}{/if}</textarea></td>
+  </tr>
+  
+  
+  
+  <tr>
+    <td class="form_input_width_100 addtask_text">时区：</td>
+    <td>
+      <select name="timezone" id="timezone">
+      <option value="{echo PHPAPP::$config['timezone']}">使用系统默认</option>
+      <option{if $info['timezone']=='-12'} selected="selected"{/if} value="-12" title="Eniwetok Island">GMT -12:00 Eniwetok Island</option>
+      <option{if $info['timezone']=='-11'} selected="selected"{/if} value="-11" title="Midway Island,
+Samoa / Apia">GMT -11:00 Midway Island,Samoa / Apia</option>
+      <option{if $info['timezone']=='-10'} selected="selected"{/if} value="-10" title="U.S.A. / Aleutian *,
+U.S.A. / Hawaii">GMT -10:00 U.S.A./Aleutian,U.S.A./Hawaii </option>
+      <option{if $info['timezone']=='-9'} selected="selected"{/if} value="-9" title="U.S.A. / Alaska *">GMT -09:00 U.S.A. / Alaska *</option>
+      <option{if $info['timezone']=='-8'} selected="selected"{/if} value="-8" title="Canada / Pacific Canada *,
+Mexico / Central/West Mexico **,
+U.S.A. / Pacific U.S.A. *">GMT -08:00 Canada / Pacific Canada *,Mexico / Central/West Mexico * ...</option>
+      <option{if $info['timezone']=='-7'} selected="selected"{/if} value="-7" title="Canada / Mountain Canada *, 
+Mexico / Sinaloa **, 
+Mexico / Sonora , 
+Mexico / Baja California Sur **, 
+Mexico / Nayarit **, 
+U.S.A. / Mountain U.S.A. *, 
+U.S.A. / Arizona , ">GMT -07:00 Canada / Mountain Canada *, Mexico / Sinaloa *, Mexico / Sonora ...  </option>
+      <option{if $info['timezone']=='-6'} selected="selected"{/if} value="-6" title="Belize / Belmopan , 
+Canada / Saskatchewan , 
+Canada / Central Canada *, 
+Costa Rica / San Jos , 
+El Salvador / San Salvador , 
+Guatemala / Guatemala City , 
+Honduras / Tegucigalpa , 
+Mexico / Baja California Norte **, 
+Mexico / Mexico City **, 
+Nicaragua / Managua , 
+U.S.A. / Central U.S.A. *">GMT -06:00 Belize / Belmopan , Canada / Saskatchewan ...</option>
+      <option{if $info['timezone']=='-5'} selected="selected"{/if} value="-5" title="Bahamas / Nassau *, 
+Canada / Eastern Canada *, 
+Cayman Islands / Georgetown , 
+Colombia / Bogota , 
+Cuba / Havana **, 
+Ecuador / Quito , 
+Haiti / Port-au-Prince , 
+Jamaica / Kingston , 
+Mexico / Quintana Roo **, 
+Panama / Panama , 
+Peru / Lima , 
+U.S.A. / Indiana East *, 
+U.S.A. / Eastern U.S.A. *">GMT -05:00 Bahamas / Nassau *, Canada / Eastern Canada * ... </option>
+      <option{if $info['timezone']=='-4'} selected="selected"{/if} value="-4" title="Barbados / Bridgetown , 
+Bermuda / Hamilton *, 
+Bolivia / La Paz , 
+Brazil / Central/West Brazil *, 
+Canada / Atlantic Canada *, 
+Chile / Santiago *, 
+Dom. Republic / Santo Domingo , 
+Grenada / St. George's , 
+Guyana / Georgetown , 
+Paraguay / Asuncion *, 
+Puerto Rico / San Juan , 
+Trinidad and Tobago / Port of Spain ">GMT -04:00 Barbados / Bridgetown, Bermuda / Hamilton *, Bolivia / La Paz ... </option>
+      <option{if $info['timezone']=='-3'} selected="selected"{/if} value="-3" title="Argentina / Buenos Aires , 
+Brazil / Rio de Janeiro *, 
+Suriname / Paramaribo , 
+Uruguay / Montevideo *">GMT -03:00 Argentina / Buenos Aires, Brazil / Rio de Janeiro * ... </option>
+      <option{if $info['timezone']=='-2'} selected="selected"{/if} value="-2" title="Brazil / Fernando de Noronha Archip ">GMT -02:00 Brazil / Fernando de Noronha Archip </option>
+      <option{if $info['timezone']=='-1'} selected="selected"{/if} value="-1" title="Cape Verde / Praia , 
+Ivory Coast / Yamoussoukro">GMT -01:00 Cape Verde / Praia , Ivory Coast / Yamoussoukro</option>
+      <option{if $info['timezone']=='0'} selected="selected"{/if} value="0" title="GMT / GMT , 
+Burkina Faso / Ouagadougou , 
+England / London **, 
+Gambia / Banjul , 
+Ghana / Accra , 
+Guinea / Conakry , 
+Guinea-Bissau / Bissau , 
+Iceland / Reykjavik , 
+Ireland / Dublin **, 
+Liberia / Monrovia , 
+Mali / Bamako , 
+Mauritania / Nouakchott , 
+Morocco / Rabat **, 
+Portugal / Lisbon **, 
+Scotland / Glasgow **, 
+Senegal / Dakar , 
+Sierra Leone / Freetown , 
+Spain / Canary Islands **, 
+Togo / Lome , 
+Wales / Cardiff **">GMT &nbsp;00:00   GMT / GMT, Burkina Faso / Ouagadougou, England / London * ...</option>
+      <option{if $info['timezone']=='1'} selected="selected"{/if} value="1" title="Albania / Tiran **, 
+Algeria / Algiers , 
+Angola / Luanda , 
+Austria / Vienna **, 
+Belgium / Brussels **, 
+Benin / Cotonou , 
+Bosna i Hercegovina / Sarajevo **, 
+Cameroon / Yaound , 
+Central African Republic / Bangui **, 
+Chad / N'Djamena , 
+Congo / Brazzaville , 
+Congo, Democratic Republic of / Kinshasa , 
+Croatia / Zagreb **, 
+Czech Republic / Prague **, 
+Danmark / Copenhagen **, 
+Equatorial Guinea / Malabo , 
+France / Paris **, 
+Gabon / Libreville , 
+Germany / Berlin **, 
+Hungary / Budapest **, 
+Italy / Rome **, 
+Liechtenstein / Vaduz **, 
+Luxembourg / Luxembourg **, 
+Macedonia / Skopje **, 
+Malta / Valletta **, 
+Namibia / Windhoek *, 
+Netherland / Amsterdam **, 
+Niger / Niamey , 
+Nigeria / Lagos , 
+Norway / Oslo **, 
+Poland / Warsaw **, 
+Serbia / Belgrade **, 
+Serbia / Belgrade **, 
+Slovakia / Bratislava **, 
+Slovenia / Ljubljana **, 
+Spain / Madrid **, 
+Sweden / Stockholm **, 
+Switzerland / Geneva **, 
+Tunisia / Tunis ">GMT +01:00 Albania / Tiran *, Algeria / Algiers, Angola / Luanda ... </option>
+      <option{if $info['timezone']=='2'} selected="selected"{/if} value="2" title="Botswana / Gaborone , 
+Bulgaria / Sofia **, 
+Burundi / Bujumbura , 
+Congo, Democratic Republic of / Kasai , 
+Cyprus / Nicosia **, 
+Egypt / Cairo , 
+Estonia / Tallinn **, 
+Finland / Helsinki **, 
+Greece / Athens **, 
+Israel / Jerusalem **, 
+Jordan / Amman **, 
+Latvia / Riga **, 
+Lebanon / Beirut **, 
+Lesotho / Maseru , 
+Libya / Tripoli , 
+Lithuania / Vilnius **, 
+Malawi / Lilongwe , 
+Moldova, Republic / Kishinev **, 
+Mozambique / Maputo , 
+Palestine / Abu Dis **, 
+Romania / Bucharest **, 
+Russia / Kaliningrad *, 
+Rwanda / Kigali , 
+South Africa / Johannesburg , 
+Sudan / Khartoum , 
+Swaziland / Mbabane , 
+Syria / Damascus **, 
+Turkey / Istanbul **, 
+Ukraine / Kyiv **, 
+Zambia / Lusaka , 
+Zimbabwe / Harare ">GMT +02:00 Botswana / Gaborone, Bulgaria / Sofia *, Burundi / Bujumbura ... </option>
+      <option{if $info['timezone']=='3'} selected="selected"{/if} value="3" title="Armenia / Jerevan **, 
+Bahrain / Al Manamah , 
+Comoros / Moroni , 
+Djibouti / Djibouti city , 
+Eritrea / Asmara , 
+Ethiopia / Adis Abeba , 
+Iraq / Baghdad , 
+Kenya / Nairobi , 
+Kuwait / Al-Kuwayt , 
+Madagascar / Antananarivo , 
+Qatar / Doha , 
+Russia / Moscow *, 
+Saudi Arabia / Riyadh , 
+Somalia / Mogadishu , 
+Tanzania / Dar es Salaam , 
+Uganda / Kampala , 
+Yeman / Aden ">GMT +03:00 Armenia / Jerevan *, Bahrain / Al Manamah , Comoros / Moroni ...  </option>
+
+      <option{if $info['timezone']=='4'} selected="selected"{/if} value="4" title="Azerbaijan / Baku **, 
+Mauritius / Port Louis , 
+Oman / Muskat , 
+Reunion / Saint-Denis , 
+Russia / Samara *, 
+Seychelles / Victoria , 
+United Arab Emirates / Abu Dhabi ">GMT +04:00 Azerbaijan / Baku *, Mauritius / Port Louis, Oman / Muskat ...  </option>
+
+      <option{if $info['timezone']=='5'} selected="selected"{/if} value="5" title="Georgia / Tbilisi , 
+Kyrgyzstan / Bishkek , 
+Pakistan / Islamabad , 
+Russia / Yekaterinburg *, 
+Tajikistan / Dushanbe , 
+Turkmenistan / Ashgabat , 
+Uzbekistan / Tashkent ">GMT +05:00 Georgia / Tbilisi, Kyrgyzstan / Bishkek, Pakistan / Islamabad ... </option>
+
+      <option{if $info['timezone']=='6'} selected="selected"{/if} value="6" title="Bangladesh / Dhaka , 
+Kazakhstan / Alma-Ata , 
+Russia / Novosibirsk *, 
+Russia / Omsk *">GMT +06:00 Bangladesh / Dhaka, Kazakhstan / Alma-Ata, Russia / Novosibirsk ...</option>
+
+      <option{if $info['timezone']=='7'} selected="selected"{/if} value="7" title="Cambodia / Phnom Penh , 
+Indonesia / Sumatra , 
+Laos / Vientiane , 
+Mongolia / West Mongolia , 
+Russia / Krasnoyarsk *, 
+Thailand / Bangkok , 
+Vietnam / Saigon ">GMT +07:00 Cambodia / Phnom Penh, Indonesia / Sumatra, Laos / Vientiane ...  </option>
+      <option{if $info['timezone']=='8'} selected="selected"{/if} {if !$info['timezone']}selected="selected"{/if} value="8" title="北京 , 香港 , 台北,
+Australia / Perth , 
+Brunei Darussalam / Bandar Seri Begawan , 
+Indonesia / Cent. Indonesia , 
+Macau / Macau , 
+Malaysia / Kuala Lumpur , 
+Mongolia / Centr. Mongolia , 
+Philippines / Manila , 
+Russia / Irkutsk *, 
+Sinapore / Singapore , 
+">GMT +08:00 北京 , 香港 , 台北 , Australia / Perth ...</option>
+      <option{if $info['timezone']=='9'} selected="selected"{/if} value="9" title="Indonesia / East Indonesia , 
+Japan / Tokyo , 
+Korea, Dem. Rep. / Pyongyang , 
+Korea, Republic / Seoul , 
+Mongolia / East Mongolia , 
+Russia / Yakutsk *, 
+South Korea / Seoul">GMT +09:00 Indonesia / East Indonesia , Japan / Tokyo , Korea ... </option>
+
+      <option{if $info['timezone']=='10'} selected="selected"{/if} value="10" title="Australia / Brisbane , 
+Australia / Melbourne *, 
+Australia / Sydney *, 
+Australia / Hobart *, 
+Australia / Victoria *, 
+Papua New Guinea / Port Moresby , 
+Russia / Vladivostok *">GMT +10:00 Australia / Brisbane , Australia / Melbourne ...</option>
+      <option{if $info['timezone']=='11'} selected="selected"{/if} value="11" title="Russia / Kamchatka *, 
+Russia / Magadan *, 
+Vanuatu / Port Vila">GMT +11:00 Russia / Kamchatka *, Russia / Magadan ...</option>
+      <option{if $info['timezone']=='12'} selected="selected"{/if} value="12" title="Fiji / Suva *, 
+New Zealand / Wellington *">GMT +12:00  Fiji / Suva *, New Zealand / Wellington *</option>
+      </select>
+
+    </td>
+  </tr>  
+ 
+  
+  <tr>
+    <td colspan="2" style="height:60px;padding-bottom:30px;text-align:center;"><input name="Submit" type="button" value="保存设置" id="SubmitSetInfo" class="form_button" style="width:80px"/></td>
+  </tr>
+  
+  
+</table>
+</form>
+
+
+
+<script type="text/javascript">
+$(function(){	
+		   
+	 $("#SetMonth").change( function () {
+									
+		    GetDay();
+								  
+	 });
+		   
+	
+
+});
+
+
+function GetDay() {
+	
+	         var  Year=$("#SetYear").val();
+			 
+			 var  Month=$("#SetMonth").val();
+			 
+			 var dayarr='';
+			 
+			 var date= new Date(Year,Month,0);
+			 
+			 var Day=date.getDate();
+			 
+			 for(var i=1;i<=Day;i++){
+				 
+				 if('{echo $day}'==i){
+					  var dayselected=' selected="selected"';
+				 }else{
+					  var dayselected='';
+				 }
+				 
+				 dayarr+='<option value="'+i+'"'+dayselected+'>'+i+'</option>';
+				   
+			 }
+			
+			 
+			 $("#SetDay").html(dayarr);
+	
+}
+
+GetDay();
+
+
+$("#SubmitSetInfo").click( function () {
+									 
+			  var forms=GetFormAll('#MemberForm');					 
+	  
+			  $("#loading").html('<div class="loading">提交数据中...</div>');
+				  
+			  $("#loading").dialog({ title: '提交数据' });
+
+			  $("#loading").dialog('open');
+			  
+			  $.PHPAPPOPENLOADING();
+			  $.ajax({
+					type: "POST",
+					url: "member.php?app={echo $this->app}&action=40",
+					data: forms,
+					success: function(data){
+						$.PHPAPPCLOSELOADING();
+						$("#loading").html(data);
+					}
+			  });
+
+ });
+
+</script>
+
+
+
+</div>
+
+
+{template phpapp:footer}

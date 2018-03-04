@@ -1,0 +1,51 @@
+{template admin:header}
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+  {if $this->GET['action']==2}
+     <tr>
+    <td class="width_160">所属道具</td>
+    <td>
+     <select name="service_phpapp_d">
+        {for $proparray $value}
+             <option value="{echo $value['sid']}" {if !empty($manage['service_phpapp'])}{if $manage['service_phpapp']==$value['sid']} selected="selected" {/if}{/if}>{echo $value['groupname']}-{echo $value['subject']}</option>
+        {/for}
+    </select>
+
+    </td>
+  </tr>
+  {else}
+   <tr>
+    <td class="width_160">所属道具</td>
+    <td>{echo $prop['subject']} {echo $prop['groupname']} 出售 <span class="color_f60">{echo $prop['price']}</span></td>
+  </tr>
+  {/if}
+  
+   <tr>
+    <td class="width_160">提成</td>
+    <td> <input name="rebate_phpapp_f" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['rebate_phpapp'])}{echo $manage['rebate_phpapp']}{else}0.1{/if}"/> 小数点 (例如 0.1 为 %10)</td>
+  </tr>
+  
+  
+   <tr>
+    <td class="width_160">是否启用</td>
+    <td><select name="status_phpapp_d">
+  <option value="0" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==0} selected="selected" {/if}{/if}>启用</option>
+  <option value="1" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==1} selected="selected" {/if}{/if}>关闭</option>
+</select> </td>
+  </tr>
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+</form>
+
+

@@ -1,0 +1,87 @@
+{template phpapp:header}
+
+<script type="text/javascript" src="{TURL}js/default.js"></script>
+
+<link href="{TURL}union.css" rel="stylesheet" type="text/css" />
+
+<link href="{TURL}form.css" rel="stylesheet" type="text/css" />
+
+<link href="{TURL}icon.css" rel="stylesheet" type="text/css" />
+
+{template union.js}
+
+<div class="union_top">
+<ul>
+   <li style="margin-right:98px;">选择合适的代码呈现方式点击“复制代码”复制代码。</li>
+   
+   <li style="margin-right:98px;">将获取的代码粘贴到您的网站，展示给您的用户。</li>
+   
+   <li>用户从您的推广链接来到本站消费，您可以获得返点。</li>
+</ul>
+</div>
+
+<div class="default_main">
+   <div class="default_left" style="width:204px;">
+
+   {template menu}
+
+   </div>
+   
+    <div class="union_box link_right2">
+               <h2>图文推广</h2>
+               <h3>提示：推广链接发布在微博、博客、论坛、聊天工具、群组、网站上。</h3>
+               <ul>
+               
+                  
+                  <li><textarea class="form_input_text" style="width:400px;height:50px;" id="txturl01">做任务赚钱请上{echo PHPAPP::$config['sitename']}网站 {echo SURL}/?u={echo $this->uid}</textarea> 文字混合 <input type="button" value="复制代码" onclick="CopyURL('txturl01');return false;" class="form_button" style="width:80px"/></li>
+                   
+                   
+                   <li id="PhotoLinkRadio" style="padding-top:20px;">
+                   图片广告 规格：
+                   
+                   <p>
+                    <input name="photolink" type="radio" value="union-980px-90px" checked="checked" />980px×90px &nbsp;&nbsp;&nbsp; <input name="photolink" type="radio" value="union-980px-60px" />980px×60px
+                    
+                    &nbsp;&nbsp;&nbsp; <input name="photolink" type="radio" value="union-960px-80px" />960px×80px  &nbsp;&nbsp; <input name="photolink" type="radio" value="union-960px-60px" />960px×60px
+                    
+                    &nbsp;&nbsp;&nbsp; <input name="photolink" type="radio" value="union-950px-60px" />950px×60px 
+                    </p>
+                    
+                   <p>
+                    <input name="photolink" type="radio" value="union-780px-60px" checked="checked" />780px×60px &nbsp;&nbsp;&nbsp; <input name="photolink" type="radio" value="union-780px-80px" />780px×80px
+                    
+                    &nbsp;&nbsp;&nbsp; <input name="photolink" type="radio" value="union-468px-60px" />468px×60px  &nbsp;&nbsp; <input name="photolink" type="radio" value="union-300px-250px" />300px×250px
+                    
+                    &nbsp;&nbsp; <input name="photolink" type="radio" value="union-250px-250px" />250px×250px 
+                    </p>
+                    <p>
+                    
+                    <input name="photolink" type="radio" value="union-200px-200px" />200px×200px
+                    
+                    &nbsp;&nbsp; <input name="photolink" type="radio" value="union-200px-150px" />200px×150px  &nbsp;&nbsp; <input name="photolink" type="radio" value="union-160px-300px" />160px×300px 
+                    
+                    &nbsp; <input name="photolink" type="radio" value="union-120px-300px" />120px×300px
+                    
+                    &nbsp;&nbsp; <input name="photolink" type="radio" value="union-120px-600px" />120px×600px
+                    </p>
+      
+                   </li>
+                   
+                   <li style="overflow:auto;padding-top:20px;" id="PhotoLink"><a href="{echo SURL}/?u={echo $this->uid}" target="_blank" id="PhotoLinkURL"><img src="{echo SURL}/images/union/union-780px-60px.gif" /></a></li>
+                   
+                   <li style="padding-top:20px;"><textarea class="form_input_text" style="width:400px;height:50px;" id="txturl02"><a href="{echo SURL}/?u={echo $this->uid}" target="_blank" id="PhotoLinkURL"><img src="{echo SURL}/images/union/union-780px-60px.gif" /></a></textarea> 图片广告代码 <input type="button" value="复制代码" onclick="CopyURL('txturl02');return false;" class="form_button" style="width:80px"/></li>
+
+               
+               </ul>
+    </div>
+   
+</div>
+
+
+
+
+
+
+
+
+{template phpapp:footer}

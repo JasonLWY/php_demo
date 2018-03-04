@@ -1,0 +1,14 @@
+<link href="{TURL}help.css" rel="stylesheet" type="text/css" />
+
+{ad Help66}
+
+
+<div class="help_search">
+<ul>
+<form action='{echo SURL}/index.php' method="get">
+    <input name="search" type="text" class="help_input_search" value="{if !empty($search)}{echo $search}{else}输入您要找的问题例如：如何发任务,如何充值,如何提现{/if}"/> 
+    <input name="app" type="hidden" value="57"/>
+    <input name="submit" type="submit" value="立即查找" class="small awesome help_submit" />
+</form>    
+</ul>
+</div>

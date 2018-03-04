@@ -1,0 +1,39 @@
+{template header}
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+<tr>
+<td style="width:120px;">词语过滤内容:</td>
+<td><textarea  rows="6"  name="textfilter_s" cols="50" class="form_textarea form_input_width_400" style="height:200px;">{echo PHPAPP::$config['textfilter']}</textarea></td>
+<td class="color_999">
+<p>
+每行一组，不良词语和替换词语之间使用“=”进行分割。如果想将某个词语直接替换成 **，只输入词语即可。
+</p>
+<p>
+例如：
+</p>
+<p>
+1.把 " 东东 " 替换成  **
+</p>
+<p>
+2.把 " 东东 " 替换成 " 西西 " 
+</p>
+<p>
+<strong>例子使用代码方法如下</strong>
+</p>
+<p>
+东东
+<br />
+东东=西西
+</p>
+</td>
+</tr>
+
+</table>
+
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button"/></div>
+
+</form>

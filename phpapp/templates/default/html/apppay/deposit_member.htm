@@ -1,0 +1,290 @@
+{template member:menu}
+
+<style type="text/css">
+<!--
+.onlinepaylist{background-color:#FFF;padding:20px;}
+.onlinepay_tabs{height: 80px;}
+.onlinepay_tabs ul li{
+	border: 1px solid #D1D1D1;
+	height: 42px;
+	width: 135px;
+	padding:5px;
+	padding-left:10px;
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 42px;
+	float: left;
+	margin-right: 20px;
+	overflow: hidden;    
+}
+
+.onlinepay_tabs ul li a{
+	display: block;
+}
+.onlinepay_tabs ul li input{
+	margin-top:14px;
+	margin-right:10px;
+	float: left;
+}
+.onlinepay_tabs ul li img{
+	float: left;
+}
+
+.pay_bank_show{
+	display: none;
+}
+.bank_list{overflow: hidden;}
+
+.icon-alipay{
+	background-image: url({echo SURL}/phpapp/templates/{echo S_TEMPLATE}/style/{echo PHPAPP::$config['stylepath']}/images/pay/alipay.gif);
+	background-repeat: no-repeat; width:135px; HEIGHT: 32px; border:1px solid#ddd;vertical-align:middle;position:relative;display:inline-block;background-color: #FFF
+} 
+
+.icon-box2-CMBBTB,.icon-box3-CCBBTB,.icon-box4-ABCBTB,.icon-box5-BOCBTB,.icon-box7-SPDBB2B{background-image: url({echo SURL}/phpapp/templates/{echo S_TEMPLATE}/style/{echo PHPAPP::$config['stylepath']}/images/pay/bankB2B_list.gif);background-repeat: no-repeat; width:135px; HEIGHT: 32px; border:1px solid#ddd;vertical-align:middle;position:relative;display:inline-block;background-color: #FFF}
+
+.icon-box2-CMBBTB{
+	background-position: left -184px;
+}
+.icon-box3-CCBBTB{
+	background-position: left -94px;
+}
+.icon-box4-ABCBTB{
+	background-position: left -50px;
+}
+
+.icon-box5-BOCBTB{
+	background-position: left -278px;
+}
+
+.icon-box7-SPDBB2B{
+	background-position: left -2px;
+}
+
+-->
+</style>
+
+<script type="text/javascript">
+
+function SetBankShow(id){
+	
+      $(".pay_bank_show").hide();
+	  $("#Pay_ID"+id).show();
+	  $("#PayTool"+id).attr("checked","checked");
+	  
+	  if(id==56){
+		   $("#OnlinePay").hide();
+	  }else{
+		   $("#OnlinePay").show();
+	  }
+}
+
+</script>
+
+<div class="onlinepaylist">
+
+
+<div class="MyMoney">目前可用余额: <span class="color_f60">{echo $user['money']}</span> 元,提现冻结 <span class="color_f60">{echo $this->memberlock}</span> 元</div>
+
+<form action="{echo SURL}/index.php?app={echo $this->app}&action=5" method="post" target="_blank">
+
+{if $paytoolarr}
+<div class="onlinepay_tabs">
+    
+    <ul>
+        {for $paytoolarr $key=>$value}
+        <li> 
+            {if $value['logo_phpapp']}
+                    <input name="PayToolID" id="PayTool{echo $value['id_phpapp']}" type="radio" value="{echo $value['id_phpapp']}" {if $key==0}checked{/if} onclick="SetBankShow('{echo $value['id_phpapp']}');"/><a href="javascript:;" onclick="SetBankShow('{echo $value['id_phpapp']}');"><img src="{TURL}images/pay/{echo $value['logo_phpapp']}" alt="{echo $value['name_phpapp']}" /></a>
+            {else}
+                   <input name="PayToolID" id="PayTool{echo $value['id_phpapp']}" type="radio" value="{echo $value['id_phpapp']}" onclick="SetBankShow('{echo $value['id_phpapp']}');"/><a href="javascript:;" onclick="SetBankShow('{echo $value['id_phpapp']}');">{echo $value['name_phpapp']}</a>
+            {/if}
+        </li>
+        {/for}
+    </ul>
+    
+</div>   
+
+<link rel="stylesheet" type="text/css" href="http://union.tenpay.com/bankList/css_col4.css"/>
+
+
+
+
+    {for $paytoolarr $key=>$value}
+    
+          {if $value['type_phpapp']==0}
+                 <!-- 银行信息 -->
+                 <div id="Pay_ID{echo $value['id_phpapp']}" class="pay_bank_show"{if $key==0} style="display:block{/if}">
+                 
+                 {php} 
+                 
+                 $apps=$this->GetMysqlOne('class_phpapp'," ".$this->GetTable('apps')." WHERE id_phpapp='$value[id_phpapp]' ");
+                 
+                 {/php}
+                 
+                 {if $apps}
+                     
+                      {if $apps['class_phpapp']=='Alipay'}
+            
+                           <div class="bank_list"><div class="long-logo">
+                           <ul class="ui-list-icons ui-four-icons fn-clear cashier-bank">
+                           
+                           <li><input type="radio" value="ICBCB2C" id="bank-alipay-1" name="alipay_bank_type"><label for="bank-alipay-1" class="icon-box1"></label><!--<li--></li>
+
+                           <li><input type="radio" value="CMB-DEBIT" id="bank-alipay-2" name="alipay_bank_type"><label for="bank-alipay-2" class="icon-box2"></label><!--<li--></li>
+                           
+                           <!-- 中国招商银行B2B -->
+                           <li><input type="radio" value="CMBBTB" id="bank-alipay-CMBBTB" name="alipay_bank_type"><label for="bank-alipay-CMBBTB" class="icon-box2-CMBBTB"></label><!--<li--></li>
+                           
+                           <!-- 中国建设银行 --> 
+                           <li><input type="radio" value="CCB-DEBIT" id="bank-alipay-3" name="alipay_bank_type"><label for="bank-alipay-3" class="icon-box3"></label><!--<li--></li>
+                           <!-- 中国建设银行B2B -->
+                           <li><input type="radio" value="CCBBTB" id="bank-alipay-CCBBTB" name="alipay_bank_type"><label for="bank-alipay-CCBBTB" class="icon-box3-CCBBTB"></label><!--<li--></li>
+                           
+                           
+                           <li><input type="radio" value="ABC" id="bank-alipay-4" name="alipay_bank_type"><label for="bank-alipay-4" class="icon-box4"></label><!--<li--></li>
+                           
+                           <!-- 中国农业银行B2B -->
+                           <li><input type="radio" value="ABCBTB" id="bank-alipay-ABCBTB" name="alipay_bank_type"><label for="bank-alipay-ABCBTB" class="icon-box4-ABCBTB"></label><!--<li--></li>
+                           
+                           <!-- 中国银行 -->
+                           <li><input type="radio" value="BOCB2C" id="bank-alipay-5" name="alipay_bank_type"><label for="bank-alipay-5" class="icon-box5"></label><!--<li--></li>
+                           
+                           <!-- 中国银行B2B -->
+                           <li><input type="radio" value="BOCBTB" id="bank-alipay-BOCBTB" name="alipay_bank_type"><label for="bank-alipay-BOCBTB" class="icon-box5-BOCBTB"></label><!--<li--></li>
+                           
+                           
+                           <li><input type="radio" value="POSTGC" id="bank-alipay-6" name="alipay_bank_type"><label for="bank-alipay-6" class="icon-box6"></label><!--<li--></li>
+                           
+                           
+                           
+                           <li><input type="radio" value="SPDB" id="bank-alipay-7" name="alipay_bank_type"><label for="bank-alipay-7" class="icon-box7"></label><!--<li--></li>
+                           
+                           <!-- SPDB银行B2B -->
+                           <li><input type="radio" value="SPDBB2B" id="bank-alipay-SPDBB2B" name="alipay_bank_type"><label for="bank-alipay-SPDBB2B" class="icon-box7-SPDBB2B"></label><!--<li--></li>
+                           
+                           
+                           <li><input type="radio" value="GDB" id="bank-alipay-8" name="alipay_bank_type"><label for="bank-alipay-8" class="icon-box8"></label><!--<li--></li>
+                           
+                           <!-- 光大银行 -->
+                           <li><input type="radio" value="CEBBANK" id="bank-alipay-9" name="alipay_bank_type"><label for="bank-alipay-9" class="icon-box9"></label><!--<li--></li>
+                           
+                           
+                           <li><input type="radio" value="CMBC" id="bank-alipay-10" name="alipay_bank_type"><label for="bank-alipay-10" class="icon-box10"></label><!--<li--></li>
+                           
+                           
+                           <li><input type="radio" value="CITIC" id="bank-alipay-11" name="alipay_bank_type"><label for="bank-alipay-11" class="icon-box11"></label><!--<li--></li>
+                           
+                           
+                           <li><input type="radio" value="CIB" id="bank-alipay-12" name="alipay_bank_type"><label for="bank-alipay-12" class="icon-box12"></label><!--<li--></li>
+                           
+                           <!-- 平安银行 -->
+                           <li><input type="radio" value="SPABANK" id="bank-alipay-13" name="alipay_bank_type"><label for="bank-alipay-13" class="icon-box13"></label><!--<li--></li>
+                           
+          
+                           <li><input type="radio" value="COMM-DEBIT" id="bank-alipay-15" name="alipay_bank_type"><label for="bank-alipay-15" class="icon-box15"></label><!--<li--></li>
+                           
+                           
+                           <li><input type="radio" value="BJBANK" id="bank-alipay-16" name="alipay_bank_type"><label for="bank-alipay-16" class="icon-box16"></label><!--<li--></li>
+                           
+                           
+                           <li><input type="radio" value="NBBANK" id="bank-alipay-18" name="alipay_bank_type"><label for="bank-alipay-18" class="icon-box18"></label><!--<li--></li>
+                           
+                           <li><input type="radio" value="" id="bank-alipay-21" name="alipay_bank_type"><label for="bank-alipay-21" class="icon-alipay"></label><!--<li--></li>
+                           
+                           </ul>
+                           
+                         </div>
+                           
+                        </div>
+                           
+                           
+                      {elseif $apps['class_phpapp']=='Tenpay'}
+                     
+                          <div id="tenpayBankList" class="bank_list"></div>
+                          <script>$.getScript("http://union.tenpay.com/bankList/bank.js");</script>
+                          <input type="hidden" name="bank_type" id="bank_type_value" value="0">
+                          
+                      {/if}
+                 {/if}
+                 
+ 
+                 
+</div>
+
+          {else} 
+                 <div id="Pay_ID{echo $value['id_phpapp']}" class="pay_bank_show">
+                 {echo $this->str(PHPAPP::$config['bankinfoset'],9999999,0,1,0,0,1)}
+                 </div>
+          {/if}
+    
+    {/for}
+
+
+<div id="OnlinePay">
+          <p style="text-align:center">充值 <input type="text" name="PayMoney_f" id="PayMoney" class="form_input_text" style="width:100px"  value="{if $_GET['pay']}{echo floatval($_GET['pay'])}{else}{echo PHPAPP::$config['pay_small_money']}{/if}" onkeypress="return regInput(this,/^\d*\.?\d{0,2}$/,String.fromCharCode(event.keyCode))" 
+            onpaste="return regInput(this,/^\d*\.?\d{0,2}$/,window.clipboardData.getData('Text'))" 
+            ondrop="return regInput(this,/^\d*\.?\d{0,2}$/,&#9;event.dataTransfer.getData('Text'))" 
+            maxLength=12 size=14/> 元
+</p>
+          <p style="text-align:center;color:#999;padding-top:10px;">（输入格式如：123.12 元)</p>
+          
+          
+          <p style="text-align: center;padding-bottom: 40px;padding-top: 20px;"><input name="Submit" type="submit" value="确定充值" onclick="return CheckPay()" class="form_button" style="width:80px"/></p>
+</div> 
+  
+{else}
+     <p>没有支付工具</p>
+{/if}
+
+
+</div>
+
+
+
+
+</form>
+
+
+      <script type="text/javascript">
+	  
+	function regInput(obj, reg, inputStr)
+	{
+		var docSel	= document.selection.createRange()
+		if (docSel.parentElement().tagName != "INPUT")	return false
+		oSel = docSel.duplicate()
+		oSel.text = ""
+		var srcRange	= obj.createTextRange()
+		oSel.setEndPoint("StartToStart", srcRange)
+		var str = oSel.text + inputStr + srcRange.text.substr(oSel.text.length)
+		return reg.test(str)
+	}
+
+	function CheckPay(){
+		
+		  var paymoney=$("#PayMoney").val();
+			 
+		  if (isNaN(paymoney)){
+			  alert("您输入的金额格式错误，请重新输入!");
+			  $("#PayMoney").focus();
+			  return false;
+		  }	
+		  
+		 var paysmall='{echo PHPAPP::$config["pay_small_money"]}';
+		
+		 if(paysmall > +paymoney){
+			 alert("充值金额不能小于 "+paysmall+" 元!");
+			 $("#PayMoney").focus();
+		     return false; 
+		 }
+	}
+	
+	
+</SCRIPT>
+
+
+
+
+</div>
+
+
+{template phpapp:footer}

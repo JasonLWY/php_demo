@@ -1,0 +1,64 @@
+{template phpapp:header}
+
+<link href="{echo TURL}skills.css" rel="stylesheet" type="text/css" />
+<link href="{echo TURL}task.css" rel="stylesheet" type="text/css" />
+
+<link href="{TURL}prop_icon.css" rel="stylesheet" type="text/css" />
+<link href="{TURL}use_prop.css" rel="stylesheet" type="text/css" />
+
+{template confirm.js}
+
+<form id="AddTask" class="add_task">
+  
+<div class="task_inventory">
+   <h2>确认任务发布信息</h2>
+   <ul>
+       <li><strong>标题：</strong>{echo $task['subject']}</li>
+       <li><strong>悬金：</strong><span class="color_f60">{echo $task['money']}</span> 元{if $task['money']>0} <span class="color_f60">(需要预支付)</span>{/if} </li>
+       <li><strong>悬赏人数：</strong>{echo $task['total']} 人</li>
+       <li><strong>截止投标时间：</strong>{echo @date('Y-m-d',$task['endtime'])}</li>
+       <li><strong>分类：</strong><span id="PathCatid">{echo $this->GetSelectCategory('category',intval($task['catid']),'PathCatid','',1,1)}</span></li>
+       <li><strong>要求技能：</strong> 
+       {if $skillarr}{for $skillarr $key=>$value}{if $key}, {/if}{echo $value['name']}{/for}{/if}
+       </li>
+       <li><strong>增值服务：</strong>  
+       </li>
+       {php} $ismaps=0;{/php}
+       {if $servicelist}
+       <p>
+             {for $servicelist $key=>$value}
+                   {if $value['appid']==72}{php} $ismaps=1;{/php}{/if}
+                   <span class="{echo $value['icon']} help_small" title="{echo $value['subject']}({if !$value['amount']}未支付{else}{if $value['amount']<=0}免费{else}已支付{/if}{/if}{echo $value['price']}元)"><span class="{if !$value['amount']}buy_service_balloon{else}buy_service_right{/if}"></span></span>
+             {/for}
+       </p> 
+       {/if}
+       
+       {if $ismaps}
+            <div class="warning">
+                   <h3>系统提示：</h3>
+                   <div>
+                    您使用了任务地图服务,还需要设置地图系统才正常显示.地图的设置方法一：双击位置 然后点击 '确认位置'.
+                   </div>
+            </div>
+            
+            {template map:tasksetmap}
+        
+       {/if}
+       
+       <li><strong>要求内容：</strong></li>
+       <p>{echo $task['description']}</p>
+   </ul>
+   <div>
+      <span class="total_pay">总需要支付￥<span id="TotalPrice">{echo $totalmoney}</span> 元 </span>
+   </div>
+   
+</div>
+
+
+
+<p style="padding-top:20px;" id="SubmitTaskForm"><input type="button" value="返回上一步" id="SubmitEdit" class="form_general_button" style="height:
+40px;margin-right:10px;"/> <input name="Submit" type="button" value="确认发布" id="SubmitConfirmTask" class="form_button" style="height:
+40px;"/></p>
+</form>
+
+{template phpapp:footer}

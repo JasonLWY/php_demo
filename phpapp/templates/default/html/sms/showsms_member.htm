@@ -1,0 +1,97 @@
+{template member:menu}
+
+<div style="padding:10px;">
+<div class="sms_subject">{echo $smsarr['subject']}</div>
+
+{echo $this->str($smsarr['content'],0,0,1,0,0,1)}
+
+<div class="sms_dateline"><p><a href="member.php?app=7&action=1">[返回]</a> <a href="javascript:;" onclick="SubmitDelete('{echo $smsarr['sid']}');">[删除]</a> </p><p>发件人： {if $smsarr['msgtoid']==0}<span style="color:#999">系统</span>{else}{php}$msgto=$this->GetLoginInfo($smsarr['msgtoid']);{/php}{echo $msgto['username']}{/if}</p><p>{echo $this->Date('Y/d/m H:i:s',$smsarr['dateline'])}</p></div>
+
+
+{if $smsarr['msgtoid']>0}
+<div style="height:200px;border-top-width: 1px;border-top-style: dashed;border-top-color: #CCC;">
+<h3 style="padding-top:10px;">回复 <span style="color:#999;font-weight:normal;font-size:12px;">(内容：300字内)</span></h3>
+<ul>
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+<input name="sid" type="hidden" value="{echo $this->sid}" />
+<textarea name="content_s" id="content" class="form_input_text" style="width:500px; height:100px;font-size:13px;">
+</textarea>
+<p style="padding-top:10px;"><input id="Submit" name="Submit" type="submit" value="发送" class="form_button"/></p>
+</form>
+</ul>
+</div>
+{/if}
+
+
+
+</div>
+
+
+
+
+{if $smsarrlist}
+          
+         {for $smsarrlist $value}
+
+               <div class="sms_lasttime">
+               {echo $this->GetUserAvatar($value['uid'])}
+               <p><a href="space.php?app=8&uid={echo $value['uid']}" target="_blank" title="{echo $value['username']}">{echo $value['username']}</a> <span class="sms_new_dateline">{echo $this->Date('Y/d/m H:i:s',$value['dateline'])}</span></p>     
+               <p>{echo $this->str($value['content'],0,0,1,0,0,1)} </p>
+               </div>
+         
+         {/for}
+         
+          {if $page->ShowPages()}
+           <div class="ajax_page">{echo $page->ShowPages()}</div>
+          {/if}
+
+
+
+{/if}
+
+
+
+
+
+</td></tr></table>
+
+
+<script type="text/javascript">
+ 
+   function SubmitDelete(sid){
+		     
+				   
+				if(confirm("是否删除消息!")){
+					
+						$("#loading").dialog({
+								title:"消息操作",	
+								width: 300,
+								height:'auto'
+						});
+						   
+						$("#loading").dialog('open');
+						
+						$("#loading").html('<div class="loading">提交数据中...</div>');
+				    
+            
+                         $.ajax({
+                              type: "POST",
+                              url: "member.php?app={echo $this->app}&action=1&op=1",
+                              data: 'sid='+sid,
+                              success: function(data){
+                                    $("#loading").html(data);
+                              }
+                         });	
+					 
+				
+				
+			    }
+             
+   }
+				   
+
+ 
+ 
+</script>
+
+{template phpapp:footer}

@@ -1,0 +1,508 @@
+#phpapp_editor{
+	background-image: url(./images/editor/editor_bg.png);
+	background-repeat: repeat-x;
+	background-position: left bottom;
+	height: 31px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-color: #CCC;
+	border-right-color: #CCC;
+	border-left-color: #CCC;
+}
+#phpapp_editor ul{
+	background-image: url(./images/editor/PHPAPP_Editor.png);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	height: 22px;
+	margin-top: 4px;
+	margin-left: 8px;
+}
+
+#phpapp_editor ul li{
+	float: left;
+}
+#phpapp_editor ul li a{
+	margin-right: 2px;
+	display: block;
+	height: 20px;
+	width: 20px;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-color: #FFF;
+	border-bottom-color: #f4f4f4;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-right-color: #f9f9f9;
+	border-left-color: #f9f9f9;
+}
+
+
+#phpapp_editor ul li.phpappeditorfonts a{
+	background-image: url(./images/editor/PHPAPP_Editor.png);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	border: 1px solid #CCC;
+	height: 20px;
+	width: 97px;
+	margin-right: 3px;
+	background-color: #FFF;	
+}
+
+
+#phpapp_editor ul li.phpappeditorfontsize a{
+	background-image: url(./images/editor/PHPAPP_Editor.png);
+	background-repeat: no-repeat;
+	background-position: -102px 0px;
+    border: 1px solid #CCC;
+	height: 20px;
+	width: 46px;
+	margin-right: 10px;
+	background-color: #FFF;	
+}
+
+#UploadPhotoNote{
+	background-image: url(./images/editor/uploadnote.gif);
+	background-repeat: no-repeat;
+	height:30px;
+	overflow: hidden;
+	position: absolute;
+	width: 80px;
+	margin-top: -36px;
+	margin-left: -64px;
+	background-position: 70px bottom;
+}
+#UploadPhotoNote em{
+	background-color: #f1f1f1;
+	border: 1px solid #E6E6E6;
+	height: 24px;
+	line-height: 24px;
+	padding-right: 10px;
+	padding-left: 10px;
+	overflow: hidden;
+	text-align: center;
+	font-style: normal;
+	display: block;
+}
+
+
+#phpapp_editor ul li.phpappeditorfonts a:hover{
+	background-position: 0px 0px;
+}
+
+#phpapp_editor ul li.phpappeditorfontsize a:hover{
+	background-position: -102px 0px;
+}
+
+#phpapp_editor ul li.phpappeditortext_Bold a:hover{
+	background-position: -161px -1px;
+}
+
+
+#phpapp_editor ul li.phpappeditortext_Italic a:hover{
+	background-position: -185px -1px;
+}
+
+#phpapp_editor ul li.phpappeditortext_Underline a:hover{
+	background-position: -209px -1px;
+}
+
+#phpapp_editor ul li.phpappeditortext_ForeColor a:hover{
+	background-position: -233px -1px;
+}
+
+#phpapp_editor ul li.phpappeditortext_BackgroundColor a:hover{
+	background-position: -257px -1px;
+}
+
+#phpapp_editor ul li.phpappeditortext_JustifyLeft a:hover{
+	background-position: -289px -1px;
+}
+
+#phpapp_editor ul li.phpappeditortext_JustifyCenter a:hover{
+	background-position: -313px -1px;
+}
+
+#phpapp_editor ul li.phpappeditortext_JustifyRight a:hover{
+	background-position: -337px -1px;
+}
+
+#phpapp_editor ul li.phpappeditortext_AddLink a:hover{
+	background-position: -369px -1px;
+}
+
+#phpapp_editor ul li.phpappeditortext_Unlink a:hover{
+	background-position: -393px -1px;
+}
+
+#phpapp_editor ul li.phpappeditortext_RemoveFormat a:hover{
+	background-position: -417px -1px;
+}
+
+#phpapp_editor ul li.phpappeditortext_AddTable a:hover{
+	background-position: -441px -1px;
+}
+
+#phpapp_editor ul li.phpappeditortext_Smiley a:hover{
+	background-position: -473px -1px;
+}
+
+#phpapp_editor ul li.phpappeditortext_UpPic a,#phpapp_editor ul li.phpappeditortext_UpFile a,#phpapp_editor ul li.phpappeditortext_UpMultimedia a,#phpapp_editor ul li.phpappeditortext_UpMusic a,#phpapp_editor ul li.phpappeditortext_Paste a,#phpapp_editor ul li.phpappeditortext_Hide a{
+    display: block;
+	height: 20px;
+	width: 20px;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-color: #FFF;
+	border-bottom-color: #f4f4f4;
+	background-image: url(./images/editor/PHPAPP_Editor.png);
+	background-repeat: no-repeat;
+}
+
+#phpapp_editor ul li.phpappeditortext_UpPic a{
+	background-position: -362px -26px;
+}
+
+#phpapp_editor ul li.phpappeditortext_UpPic a:hover{
+	background-position: -362px -26px;
+}
+
+
+#phpapp_editor ul li.phpappeditortext_UpFile a{
+	background-position: -386px -26px;
+}
+
+
+#phpapp_editor ul li.phpappeditortext_UpFile a:hover{
+	background-position: -386px -26px;
+}
+
+
+#phpapp_editor ul li.phpappeditortext_UpMusic a,#phpapp_editor ul li.phpappeditortext_UpMusic a:hover{
+	background-position: -312px -26px;
+}
+
+
+#phpapp_editor ul li.phpappeditortext_UpMultimedia a,#phpapp_editor ul li.phpappeditortext_UpMultimedia a:hover{
+	background-position: -338px -26px;
+}
+
+
+#phpapp_editor ul li.phpappeditortext_Paste a{
+	background-position: -410px -26px;
+}
+
+
+#phpapp_editor ul li.phpappeditortext_Paste a:hover{
+	background-position: -410px -26px;
+}
+
+
+#phpapp_editor ul li.phpappeditortext_Hide a{
+	background-position: -461px -27px;
+}
+
+
+#phpapp_editor ul li.phpappeditortext_Hide a:hover{
+	background-position: -461px -27px;
+}
+
+
+
+#phpapp_editor ul li a:hover{
+	background-image: url(./images/editor/PHPAPP_Editor.png);
+	background-repeat: no-repeat;
+	border: 1px solid #F90;
+	background-color: #FFE;
+}
+
+														
+#PHPAPPEditorCutover{
+	line-height: 24px;
+	background-color: #EEE;
+	height: 26px;
+	margin-top: -2px;
+	border: 1px solid #CCC;
+	position: relative;
+}
+#PHPAPPEditorCutover dfn{
+	float: right;
+	margin-top: 5px;
+}
+
+#PHPAPPEditorCutover dfn a{
+	float: left;
+	margin-right: 6px;
+}
+
+#PHPAPPEditorCutover ul{
+	padding-left: 10px;
+}
+#PHPAPPEditorCutover ul li{
+	float: left;
+	width: 82px;
+	margin-right: 6px;
+	text-align: center;
+}
+#PHPAPPEditorCutover ul li a.noweditor{
+	background-color: #FFF;
+	width: 82px;
+	display: block;
+	height: 23px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFF;
+	border-right-color: #CCC;
+	border-left-color: #CCC;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #CCC;
+	margin-top: -1px;
+	font-weight: bold;
+}
+#PHPAPPEditorCutover dfn a.editordeletebtn{
+	background-image: url(./images/editor/PHPAPP_Editor.png);
+	height: 18px;
+	width: 18px;
+	display: block;
+	background-repeat: no-repeat;
+	background-position: -530px -28px;
+}
+
+#PHPAPPEditorCutover dfn a.editorcopyright{
+	background-image: url(./images/editor/PHPAPP_Editor.png);
+	height: 18px;
+	width: 18px;
+	display: block;
+	background-repeat: no-repeat;
+	background-position: -436px -28px;
+}
+
+#PHPAPPEditorCutover dfn a.editoraddbtn{
+	background-image: url(./images/editor/PHPAPP_Editor.png);
+	height: 18px;
+	width: 18px;
+	display: block;
+	background-repeat: no-repeat;
+	background-position: -554px -28px;
+}
+
+#PHPAPPEditorCutover dfn a.editorlessbtn{
+	background-image: url(./images/editor/PHPAPP_Editor.png);
+	height: 18px;
+	width: 18px;
+	display: block;
+	background-repeat: no-repeat;
+	background-position: -576px -28px;
+}
+
+#PHPAPPEditorCutover dfn a.edooghtmleditor{
+	background-image: url(./images/editor/PHPAPP_Editor.png);
+	height: 18px;
+	width: 18px;
+	display: block;
+	background-repeat: no-repeat;
+	background-position: -510px -28px;
+}
+
+
+#phpapp_editor #ShowEditorFonts a{
+	width: 110px;
+	background-image: none;
+	margin: 0px;
+	line-height: 18px;
+	border: 1px solid #FFF;
+	overflow: hidden;
+	height: 18px;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 8px;
+}
+#phpapp_editor #ShowEditorFonts a:hover,#phpapp_editor #ShowEditorFontSize a:hover{
+	border: 1px solid #CCC;
+	line-height: 18px;
+}
+
+
+#phpapp_editor #ShowEditorFontSize a{
+	width: 50px;
+	background-image: none;
+	margin: 0px;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 8px;
+	line-height: 18px;
+	border: 1px solid #FFF;
+	overflow: hidden;
+	height: 18px;
+}
+
+
+#phpapp_editor #ShowEditorForeColor,#phpapp_editor #ShowBackgroundColor{
+	height: 170px;
+	width: 175px;
+}
+	
+#phpapp_editor #ShowEditorForeColor a,#phpapp_editor #ShowBackgroundColor a{
+	float: left;
+	border: 1px solid #999;
+	height: 12px;
+	width: 20px;
+	margin-right: 3px;
+	margin-bottom: 3px;
+	overflow: hidden;
+	background-image: none;
+}
+#phpapp_editor #ShowEditorForeColor a:hover,#phpapp_editor #ShowBackgroundColor a:hover{
+	border: 1px solid #333;
+}
+
+	
+.showeditor{
+	position: absolute;
+	background-color: #FFF;
+	margin-top: -1px;
+	padding: 6px;
+	border-top-width: 1px;
+	border-right-width: 2px;
+	border-bottom-width: 2px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #CCC;
+	border-right-color: #CCC;
+	border-bottom-color: #CCC;
+	border-left-color: #CCC;
+}	
+	
+.showeditor h6{
+	font-size: 12px;
+	line-height: 30px;
+}
+#phpapp_editor .showeditor h6 dfn a{
+	background-image: url(./images/editor/PHPAPP_Editor.png);
+	height: 18px;
+	width: 18px;
+	display: block;
+	background-repeat: no-repeat;
+	background-position: -488px -28px;
+	font-style: normal;
+	float: right;
+	height: 20px;
+	width: 20px;
+	border: 0px;
+}
+	
+#phpapp_editor .showeditor h6 dfn a:hover{
+	background-image: url(./images/editor/PHPAPP_Editor.png);
+	background-repeat: no-repeat;
+	background-position: -488px -28px;
+	border: 0px;
+}
+
+#phpapp_editor .tablecss{
+	padding: 10px;
+	width: 240px;
+}
+#phpapp_editor .tablecss p{
+	height: 30px;
+}
+
+#ShowEditorAddTable{
+	margin-left: -100px;
+}
+
+#phpapp_editor #ShowEditorSmiley{
+	width: 210px;
+	margin-left: -100px;
+}
+
+#ShowEditorSmiley a{
+	float: left;
+	border: 1px solid #FFF;
+}
+
+#UploadPhoto,#UploadFile{
+	display: none;
+}
+
+
+#phpapp_editor #ShowEditorMultimedia{
+	width: 310px;
+	margin-left: -150px;
+}
+
+
+
+.uploadfile{
+	padding: 10px;
+}
+.allowfiletype{
+	line-height: 22px;
+	padding-top: 10px;
+}
+
+
+#phpapp_editor #ShowEditorSmiley a{
+	width: 20px;
+	height: 20px;
+}
+#phpapp_editor #ShowEditorSmiley a:hover{
+	background-image: none;
+}
+
+#phpapp_editor #ShowEditorSmiley h6 dfn a:hover{
+	background-image: url(./images/editor/PHPAPP_Editor.png);
+	background-repeat: no-repeat;
+	background-position: -488px -28px;
+	border: 0px;
+}
+
+#phpapp_editor #ShowEditorSmiley a img{
+	width: 20px;
+	height: 20px;
+}
+
+
+.datalist tr td{
+	padding-left: 16px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #EEE;
+}
+.datalist tr.over td {
+	background-color: #EEF5F9;
+}  
+.datalist .downorder{
+	background-image: url(./images/menu_icon_down.png);
+	background-repeat: no-repeat;
+	background-position: left 17px;
+	display: block;
+	line-height: 30px;
+}
+.datalist .uporder{
+	background-image: url(./images/menu_icon_up.png);
+	background-repeat: no-repeat;
+	background-position: left 17px;
+	display: block;
+	line-height: 30px;
+}

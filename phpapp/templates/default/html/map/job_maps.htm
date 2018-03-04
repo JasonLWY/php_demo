@@ -1,0 +1,54 @@
+ <!--
+       {if $page->ShowPages()}
+       <div class="ajax_page" style="margin-bottom:10px;">{echo $page->ShowPages()}</div>
+       {/if}
+       -->
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>
+       <style type="text/css">
+			<!--
+			.maps_user{
+				line-height: 20px;
+				padding-right: 30px;
+				
+			}
+
+			.UserPhotoFilter img{
+				height: 20px;
+				width: 20px;
+				float: left;
+			}
+			-->
+       </style>
+    
+        <div id="TaskMaps" style="height:600px;width:100%;"></div>
+        <script type="text/javascript">
+       
+            var map = new BMap.Map("TaskMaps"); 
+            var point = new BMap.Point(110.848,31.6703); 
+			map.addControl(new BMap.NavigationControl()); 
+            map.centerAndZoom(point,6); 
+			map.enableScrollWheelZoom();                            //启用滚轮放大缩小
+		    window.setTimeout(function(){map.panTo(new BMap.Point(110.848,31.6703));},3000);
+			var mymarker=label='';
+			
+			{if $list}
+      
+                {for $list $key=>$value}
+				      {if $value['residelongitude'] && $value['residelatitude']}
+				       point = new BMap.Point('{echo $value["residelongitude"]}','{echo $value["residelatitude"]}'); 
+					   mymarker = new BMap.Marker(point); 
+					   label = new BMap.Label("<div class='maps_user_info'>{echo $this->GetUserAvatar($value['uid'],0,1)}<a href='{echo SURL}/space.php?app=8&uid={echo $value['uid']}' target='_blank' class='maps_user'>{echo $value['username']}</a></div>",{offset:new BMap.Size(-40,-40),position:point});                                   
+					   label.setTitle('{echo $value["username"]}'); 
+					   label.setStyle({border:"1px solid #CCC",fontSize:"13px",padding:"2px;"});               
+					   map.addOverlay(label); 
+					   map.addOverlay(mymarker); 
+					 {/if}
+			
+			    {/for}
+			
+			{/if}
+            
+        </script>
+       {if $page->ShowPages()}
+       <div class="ajax_page">{echo $page->ShowPages()}</div>
+       {/if}

@@ -1,0 +1,61 @@
+<script type="text/javascript">
+	  function SubmitAddOrderMessage(oid){
+	
+	        var content=$("#AddTaskMessage");
+	
+
+		    if (content.val()==""){
+					alert("«Î ‰»Î¡Ù—‘ƒ⁄»›!");
+					content.focus();
+					return false; 
+			}	
+					
+	        $.PHPAPPOPENLOADING();		
+            $.ajax({
+					type: "POST",
+					url: SURL+"/member.php?app=48&action=5",
+					data: '&oid_d='+oid+'&Submit=1&content_s='+content.val(),
+					success: function(data){
+						  $.PHPAPPCLOSELOADING();
+						  ShowMessage();
+					}
+		    });			
+	
+     }
+	 
+	 function ShowMessage(){
+	
+		  $.get(SURL+"/member.php?",{app:'48',action:'6',oid:'{echo $draftorder["oid"]}'},
+				  
+					function (data){
+						  $("#ListMessage").html(data);
+						  
+		  });   
+	
+     }	
+	 
+	 
+	 function OpenTaskMessage(uid){
+	 
+		 var UserID=$('.MessageUserID'+uid).html();
+		 
+		 $('#AddTaskMessage').val('ªÿ∏¥'+UserID+'£∫');
+	
+	 }
+	 
+		 
+	function AjaxMessage(tid,page,sqlorder,iforder){
+			  
+			 $.PHPAPPOPENLOADING();		
+			 $.ajax({
+					type: "GET",
+					url: SURL+'/member.php?',
+					data: "app=48&action=6&oid="+tid+"&page="+page,
+					success: function(data){
+						 $.PHPAPPCLOSELOADING();
+						 $("#ListMessage").html(data);
+					}
+			});
+	}
+
+</script>

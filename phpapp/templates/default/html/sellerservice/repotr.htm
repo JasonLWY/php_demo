@@ -1,0 +1,30 @@
+<p>举报{if $did>0}{echo $did}号稿件{else}{echo $tid}号任务{/if}内容(200字内)</p>
+<textarea id="TaskRepotrMessage" class="form_input_text" style="width:450px;height:160px;margin-bottom:10px;">
+</textarea>
+<p style="text-align:center;margin-top:10px;"><input name="Submit" type="button" value="提交" onclick="SubmitTaskRepotr()" class="form_button" style="width:60px"/></p>
+
+<script type="text/javascript">
+function SubmitTaskRepotr(){
+	
+	    var content=$("#TaskRepotrMessage");
+	
+
+		if (content.val()==""){
+				alert("请输入内容!");
+				content.focus();
+				return false; 
+		}	
+				
+
+		$.ajax({
+				type: "POST",
+				url: "member.php?lang={echo $this->lang}&app={echo $this->app}&action=16&tid={echo $tid}&did={echo $did}",
+				data: 'Submit=1&content_s='+content.val(),
+				success: function(data){
+					  $("#loading").html(data);
+				}
+	   });			
+
+	
+}
+</script>

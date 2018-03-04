@@ -1,0 +1,147 @@
+{template header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+<tr>
+<td style="width:200px;">
+
+{if $this->GET['op']==2}
+
+      <p style="padding-top:10px;padding-bottom:10px;">选择源接口
+      <select id="SelectAppCategory">
+      <option value="0">请选择接口</option>
+      {for $appsport $value}
+           <option value="{echo $value['id_phpapp']}" {if !empty($appid)}{if $appid==$value['id_phpapp']}selected="selected"{/if}{/if}>{echo $value['name_phpapp']}</option>
+           {/for}
+      </select>  
+      </p>
+      <p style="height:300px;width:200px;">
+        <select name="port[]" multiple class="form_textarea" style="height:300px;width:200px;">
+      
+        {if $portarray}
+        
+               {for $portarray $value}
+        
+                       <option value="{echo $value['id_phpapp']}">{echo $value['appname']}-{echo $value['name_phpapp']}</option>
+               
+               {/for}
+               
+               
+        {/if}
+      
+        </select>
+      </p>
+      
+      </td>
+      <td style="width:160px;">复制到 ==============>></td>
+      <td>
+      <p style="padding-top:10px;padding-bottom:10px;">选择目标应用</p>
+      
+      <select name="apps[]" multiple class="form_textarea" style="height:300px;width:200px;">
+      
+      {for $appsarray $value}
+          <option value="{echo $value['id_phpapp']}">{echo $value['name_phpapp']}</option>
+      {/for}
+      
+      </select>
+
+
+
+{elseif $this->GET['op']==1}
+
+
+ <p style="padding-top:10px;padding-bottom:10px;">选择源应用
+      <select id="SelectAppCategory">
+      <option value="0">请选择应用</option>
+      {for $appsarray $value}
+          <option value="{echo $value['id_phpapp']}" {if $value['id_phpapp']==$appid}selected="selected"{/if}>{echo $value['name_phpapp']}</option>
+      {/for}
+      </select>  
+      </p>
+      <p style="height:300px;width:200px;">
+      {if $taskusergrouparray}
+      选择权限组
+      <select name="gid">
+
+             {for $taskusergrouparray $value}
+      
+                     <option value="{echo $value['gid']}">{echo $value['groupname']}</option>
+             
+             {/for}
+
+      </select>
+      {/if}
+      </p>
+      
+      </td>
+      <td style="width:160px;">复制到 ==============>></td>
+      <td>
+      <p style="padding-top:10px;padding-bottom:10px;">选择目标{for $appsarray $value}{if $value['id_phpapp']==$appid}{echo $value['name_phpapp']}{/if}{/for}用户组</p>
+      
+      <select name="usergroup[]" multiple class="form_textarea" style="height:300px;width:200px;">
+      
+      {for $usergrouparray $value}
+          <option value="{echo $value['gid']}">{echo $value['groupname']}</option>
+      {/for}
+      
+      </select>
+
+
+{else}
+      <p style="padding-top:10px;padding-bottom:10px;">选择源应用
+      <select id="SelectAppCategory">
+      <option value="0">请选择应用</option>
+      {for $appsarray $value}
+          <option value="{echo $value['id_phpapp']}" {if $value['id_phpapp']==$appid}selected="selected"{/if}>{echo $value['name_phpapp']}</option>
+      {/for}
+      </select>  
+      </p>
+      <select name="catid[]" multiple class="form_textarea" style="height:300px;width:200px;">
+      
+        {if $categoryarray}
+        
+               {for $categoryarray $value}
+        
+                       <option value="{echo $value['catid']}">{echo $value['name']}</option>
+               
+               {/for}
+               
+               
+        {/if}
+      
+      </select>
+      
+      </td>
+      <td style="width:160px;">复制到 ==============>></td>
+      <td>
+      <p style="padding-top:10px;padding-bottom:10px;">选择目标应用</p>
+      
+      <select name="apps[]" multiple class="form_textarea" style="height:300px;width:200px;">
+      
+      {for $appsarray $value}
+          <option value="{echo $value['id_phpapp']}">{echo $value['name_phpapp']}</option>
+      {/for}
+      
+      </select>
+{/if}
+</td>
+</tr>
+
+</table>
+<p style="padding:10px;"><strong>提示：</strong> 按 Ctrl 键再点鼠标 左键 可以多选,分类复制支持到三级分类复制。</p>
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button"/></div>
+
+</form>
+
+
+<script type="text/javascript">
+$("#SelectAppCategory").change( function() {
+	   
+	  var appid=$(this).val();							  
+
+	  window.location.href='{echo $this->MakeGetParameterURL()}&id='+appid;
+	  
+});
+</script>

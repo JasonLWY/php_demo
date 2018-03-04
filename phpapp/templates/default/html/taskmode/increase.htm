@@ -1,0 +1,42 @@
+<strong>金额</strong> <input name="increase_d" type="text"  id="Increase" size="50" maxlength="8" class="form_input_text form_input_width_100"  value="10"/> 元 <input name="Submit" type="button" value="确认" id="SubmitIncrease" class="form_button"/>  
+<p style="padding-top:20px;"><strong>我目前余额：</strong><span class="color_f60">{echo $member['money']}</span></p>
+<p style="padding-top:10px;">提示：<span style="color:#999">加价 <strong>{echo $getallow['extendmoneytask']}</strong>元可以延期<strong>{echo $getallow['extendnumbertask']}</strong>天
+最低加价 <strong class="color_f60">{echo $getallow['addmoneytask']}</strong> 元</span> </p>
+
+
+
+
+<script type="text/javascript">
+
+$(function(){	
+
+	  $("#SubmitIncrease").click( function (){
+			  
+			  $.PHPAPPOPENLOADING();
+			  
+			  var  increase=$("#Increase").val();	
+			  
+			  if(confirm("是否确认加价"+increase+"元?")){
+				  
+				   
+				    $("#loading").html('<div class="loading">提交数据中...</div>');
+						  
+					$.ajax({
+						  type: "POST",
+						  url: SURL+"/index.php?app=49&action=8&tid={echo $this->tid}",
+						  data: 'increase_d='+increase+'&Submit=1',
+						  success: function(data){
+							   $.PHPAPPCLOSELOADING();
+							   $("#loading").html(data);
+						  }
+					});
+				  
+				  
+			  }
+               
+			   
+			 $.PHPAPPCLOSELOADING();
+	  });
+	  
+});	  
+</script>

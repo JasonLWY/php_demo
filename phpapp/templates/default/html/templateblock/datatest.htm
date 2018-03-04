@@ -1,0 +1,21 @@
+{php} $memberhelparray=$this->GetMysqlArray('*'," ".$this->GetTable('help')."   ORDER BY dateline DESC LIMIT 0,8") {/php}<div class="memberhome_box">
+<h2>°ïÖú</h2>
+
+<div class="member_help">
+<ul>
+
+    {if $memberhelparray}
+          
+          {for $memberhelparray $value}
+         
+          <li><a href="index.php?app=57&action=2&hid={echo $value['hid']}">{echo $this->str($value['subject'],22,0,1,1,0,1)}</a></li>
+   
+          {/for}
+          
+    {/if}
+</ul>
+
+</div>
+
+
+</div>

@@ -1,0 +1,91 @@
+{template phpapp:header}
+
+<link href="{TURL}webpage/css/webpage.css" rel="stylesheet" type="text/css" />
+
+<div class="webpage">
+       <div class="webpage_menu">
+
+           <ul>
+           
+           
+            {php}$nav=$this->GetMysqlArray('navname,navurl,blank,site,appid'," ".$this->GetTable('nav')." ORDER BY displayorder ASC ");{/php}
+
+            {if $nav} 
+            
+                  {for $nav $key=>$value}
+                  
+                        {if $value['site']==0}
+                                <li><a href="{echo SURL}/{echo $value['navurl']}"{if !$value['blank']} target="_blank"{/if}>{echo $value['navname']}</a></li> 
+                   
+                        {else}
+                                <li><a href="{echo $value['navurl']}"{if !$value['blank']} target="_blank"{/if}>{echo $value['navname']}</a></li>
+                        {/if}
+                   
+                  {/for}
+            
+            {/if}
+           
+           
+           </ul>
+       
+       
+       </div>
+       
+
+        <div class="webpage_content">
+        <h2>网站地图</h2>
+        <ul class="sitemap">
+         
+          {if $apps} 
+            
+                {for $apps $appvalue}
+                     
+                     <h3>{echo $appvalue['name_phpapp']}</h3>
+                
+                     <div id="ShowCategory_{echo $appvalue['id_phpapp']}" class="allcategorylist">
+                      
+                         {php} $categoryarray=$this->GetMysqlArray('catid,total,name'," ".$this->GetTable('category')." WHERE type='$appvalue[id_phpapp]'AND upid='0' ORDER BY displayorder ASC ");{/php}          
+                                 
+                          {if $categoryarray}
+                               
+                               {for $categoryarray $onevalue}
+                               
+                               
+                               {php}  $taskonecategorysubclass=$this->GetMysqlArray('*'," ".$this->GetTable('category')." WHERE type='$appvalue[id_phpapp]' AND upid='$onevalue[catid]' ORDER BY displayorder ASC");{/php}        
+                               {if $taskonecategorysubclass}  
+                                <ul>
+                                      <h4><a href="index.php?app={echo $appvalue['id_phpapp']}&item=1.{echo $onevalue['catid']}">{echo $onevalue['name']}</a><span style="font-size:10px;">({echo $onevalue['total']})</span></h4>
+                                       <div>
+                                      {else}
+                                      <li style="float:left;width:130px; display:block;line-height:30px;height:30px;font-size:14px"><a href="index.php?app=50&action=10&item=1.{echo $onevalue['catid']}"><span style="color:{echo $onevalue['color']};">{echo $onevalue['name']}</span><span style="font-size:10px;color:#999;">({echo $onevalue['total']})</span></a></li>
+                                      {/if}
+                                     
+                                         
+                                       {if $taskonecategorysubclass}
+                                             {for $taskonecategorysubclass $value}
+                                                     <li><a href="index.php?app={echo $appvalue['id_phpapp']}&item=1.{echo $value['catid']}">{echo $value['name']}<span style="font-size:10px;color:#999;">({echo $value['total']})</span></a></li>
+                                             {/for}
+                                       
+                                       </div>
+                                       </ul>   
+                                       {/if}
+                               {/for}
+                          {else}
+                               <ul><li>暂时没有分类</li></ul>
+                          {/if}
+                       
+                    </div>
+                    
+                    
+               {/for}
+           {/if}
+                  
+          
+        </ul>
+        </div>
+
+</div>
+
+
+
+{template phpapp:footer}

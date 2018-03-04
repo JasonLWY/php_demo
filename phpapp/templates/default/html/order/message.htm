@@ -1,0 +1,42 @@
+<div class="task_add_message">
+      <textarea name="content_s" id="AddTaskMessage" class="form_editor" style="width:660px;height:80px;"></textarea>
+      <p style="padding-top:10px;"><a class="small yellow awesome" onclick="SubmitAddOrderMessage('{echo $oid}')"><span class="task_draft_add_message">发布</span></a></p>
+</div>
+
+{php}
+       include_once(Core.'/class/pages_ajax_class_phpapp.php');
+
+       $list=array();
+       
+       if($oid){
+           $order='ORDER BY mid DESC';
+            
+           $ajaxpage=new AjaxPages(10,$this->GET['page'],$oid,$this->GET['sqlorder'],$this->GET['iforder'],'AjaxMessage',"SELECT a.*,b.username FROM  ".$this->GetTable('task_order_message')." AS a LEFT JOIN ".$this->GetTable('member')." AS b ON a.uid=b.uid WHERE a.oid='$oid' $order");
+    
+           $list=$ajaxpage->ShowResult();
+           
+           $total=$ajaxpage->GetTotal();
+       }
+{/php}
+
+{if !empty($list)}
+
+    <p>留言 <span style="font-weight:normal">({echo $total})</span></p>
+    
+    {for $list $value}
+        <div class="draft_comment_list">
+            <div class="draft_comment_avatar">{echo $this->GetUserAvatar($value['uid'])}</div>
+            <p><a href="space.php?app=8&uid={echo $value['uid']}" target="_blank" class="MessageUserID{echo $value['uid']}">{echo $value['username']}</a> <span style="font-family:Georgia, 'Times New Roman', Times, serif;font-size:9px">{echo $this->Date("Y/m/d H:i:s",$value['dateline'])}</span></p>
+
+           
+            <div style="word-break:break-all;width:400px;color:#666;">{echo $this->str($value['content'],200,0,1,1,0,1)}</div>
+            <p><a class="small blue awesome" style=" float:right"><span class="task_draft_add_message" onclick="OpenTaskMessage('{echo $value['uid']}')">回复</span></a></p>
+        </div>
+    {/for} 
+    
+    {if $ajaxpage->ShowPages()}
+            <div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+    {/if}
+{else}    
+	<p>暂时没有留言！</p>
+{/if}

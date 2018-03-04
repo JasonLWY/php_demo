@@ -1,0 +1,51 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<div><a href="javascript:;" onclick="$.AdminAjax('{echo $this->GET['menu']}','{echo $this->GET['action']}','0','')">权限管理</a> > 权限列表 (<span style="text-align:center;line-height:32px;">提示:添加用户组请到 "<strong>用户 > 前台用户组</strong>" 进行添加</span>)</div>
+
+<div id="WindowsForm{echo $this->GET['menu']}">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall"  value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+    {for $orderarr $key=>$value}
+    <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+    {/for} 
+    
+    <td class="datalist_h2">操作</td>
+  </tr>
+
+{if $list}
+
+{for $list $value}
+ <tr>
+ 
+    <td><input name="checkbox[]" type="checkbox" value="{echo $value['gid']}" /></td>
+    
+    <td>{$value['gid']}</td>
+    
+    <td>{$value['groupname']}</td>
+    
+    <td>{php}$member=$MF->GetTypeNameMember($value['usertype']); echo $member['name_phpapp'];{/php}</td>
+    
+    <td>{if $value['groupid']}已配置{else}未配置{/if}</td>
+    
+    <td><a href="{echo $this->MakeGetParameterURL(array('action'=>28,'id'=>$value['gid']))}">[配置]</a></td>
+  </tr>
+{/for}
+
+{else}
+<tr>
+    <td colspan="6">暂没有权限配置!</td>
+</tr>
+{/if}
+  
+</table>
+</div>
+<div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="删除" class="form_button"/></div>
+
+
+</form>

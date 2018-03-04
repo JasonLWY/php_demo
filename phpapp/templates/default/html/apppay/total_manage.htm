@@ -1,0 +1,570 @@
+{template admin:header}
+
+<div style="padding:10px;"><input name="moneydata" type="radio" value="0" {if !$this->GET['datetype']}checked{/if} /> 网站利润报表年份 <input name="moneydata" type="radio" value="1" {if $this->GET['datetype']==1}checked{/if} /> 网站资金流报表 <input name="moneydata" type="radio" value="2" {if $this->GET['datetype']==2}checked{/if} /> 网站利润日报表查询 <input name="moneydata" type="radio" value="3" {if $this->GET['datetype']==3}checked{/if} /> 网站充值日报表查询</div>
+
+<div id="Data1"{if $this->GET['datetype']} style="display:none"{/if}>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+  <tr>
+    <td class="datalist_h2 width_160">网站利润报表年份</td>
+    <td class="datalist_h2">
+    <select id="SelectTotalYear">
+        <option value="0">选择年份</option>
+       {php} 
+       
+        
+        for($i=0;$i<=$num;$i++){
+        if($this->GET['value']==($i+2009)){
+              $selected='selected="selected"';
+        }else{
+              $selected='';
+        }
+        echo '<option value="'.($i+2009).'" '.$selected.'>'.($i+2009).'年</option>';
+
+        }
+        {/php}
+    </select> 
+    
+    &nbsp; <span style="color:#F00">(以下报表只统计用户消费成功的订单)</span> <a href="javascript:window.print();">[打印]</a>
+  </td>
+  </tr>
+</table>
+
+  {if $this->GET['value']}
+  
+  
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+<td class="width_160">项目</td>
+<td>1月份</td>
+<td>2月份</td>
+<td>3月份</td>
+<td>4月份</td>
+<td>5月份</td>
+<td>6月份</td>
+<td>7月份</td>
+<td>8月份</td>
+<td>9月份</td>
+<td>10月份</td>
+<td>11月份</td>
+<td>12月份</td>
+</tr>
+  
+ 
+   <tr>
+    <td class="width_100"><strong>用户消费支出</strong></td>
+    
+    {for $SiteIncomeMoney $value}
+    <td>
+     <span class="color_f60">{echo $value['amounts']}</span>
+    </td>
+    {/for}
+    
+  </tr>
+  
+
+  
+   <tr>
+    <td style="padding-left:30px;">|--任务担保金</td>
+    
+    {for $TaskMoneyIncome $value}
+    <td>
+     <strong>{echo $value['amounts']}</strong>
+    </td>
+    {/for}
+    
+  </tr>
+  
+  <tr>
+    <td style="padding-left:30px;">|--购买道具</td>
+    
+    {for $PropMoneyIncome $value}
+    <td>
+     <strong>{echo $value['amounts']}</strong>
+    </td>
+    {/for}
+    
+  </tr>
+  
+  <tr>
+    <td style="padding-left:30px;">|--升级VIP</td>
+    
+    {for $VIPMoneyIncome $value}
+    <td>
+     <strong>{echo $value['amounts']}</strong>
+    </td>
+    {/for}
+    
+  </tr>
+  
+  <tr>
+    <td style="padding-left:30px;">|--用户认证</td>
+    
+    {for $CertificateMoneyIncome $value}
+    <td>
+     <strong>{echo $value['amounts']}</strong>
+    </td>
+    {/for}
+    
+  </tr>
+  
+  <tr>
+    <td class="width_100"><strong>用户赚钱收入</strong></td>
+    
+    {for $SitePayMoney $value}
+    <td>
+     <span class="color_f60">{echo $value['amounts']}</span>
+    </td>
+    {/for}
+    
+  </tr>
+  
+
+   <tr>
+    <td style="padding-left:30px;">|--任务中标与提成</td>
+    
+    {for $TaskMoneyPay $value}
+    <td>
+     <strong>{echo $value['amounts']}</strong>
+    </td>
+    {/for}
+    
+  </tr>
+  
+  
+    <tr>
+    <td style="padding-left:30px;">|--购买道具推广提成</td>
+    
+    {for $PropMoneyPay $value}
+    <td>
+     <strong>{echo $value['amounts']}</strong>
+    </td>
+    {/for}
+    
+  </tr>
+  
+  <tr>
+    <td style="padding-left:30px;">|--实名认证推广提成</td>
+    
+    {for $CertificateMoneyPay $value}
+    <td>
+     <strong>{echo $value['amounts']}</strong>
+    </td>
+    {/for}
+    
+  </tr>
+  
+   <tr>
+    <td style="padding-left:30px;">|--UC兑换金额</td>
+    
+    {for $UCMoneyPay $value}
+    <td>
+     <strong>{echo $value['amounts']}</strong>
+    </td>
+    {/for}
+    
+  </tr>
+  
+  
+  
+   <tr>
+    <td class="width_100" style="border-bottom:0px;"><strong>网站利润</strong></td>
+    
+    {for $SiteProfitMoney $value}
+    <td style="border-bottom:0px;">
+        <span class="color_f60">{echo $value}</span>
+    </td>
+    {/for}
+    
+  </tr>
+ 
+  
+  
+</table>
+  
+   <p style="padding:10px;">用户消费支出-用户赚钱收入=网站利润(手续费)</p>
+   
+  {else}
+   
+   <p style="padding:10px;">请选择年份查看!</p>
+  
+  {/if}
+  
+ 
+
+
+</div>
+
+
+<div id="Data2"{if $this->GET['datetype']!=1} style="display:none"{/if}>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+  <tr>
+    <td class="datalist_h2 width_160">网站资金流报表</td>
+    <td class="datalist_h2">  
+    <select id="SelectTotalYear2">
+        <option value="0">选择年份</option>
+       {php} 
+       
+        
+        for($i=0;$i<=$num;$i++){
+        if($this->GET['value']==($i+2009)){
+              $selected='selected="selected"';
+        }else{
+              $selected='';
+        }
+        echo '<option value="'.($i+2009).'" '.$selected.'>'.($i+2009).'年</option>';
+
+        }
+        {/php}
+    </select> 
+    
+    &nbsp; <span style="color:#F00">(以下报表只统计用户成功的订单)</span> <a href="javascript:window.print();">[打印]</a>
+  </td>
+  </tr>
+</table>
+
+  {if $this->GET['value']}
+  
+  
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+<td class="width_160">项目</td>
+<td>1月份</td>
+<td>2月份</td>
+<td>3月份</td>
+<td>4月份</td>
+<td>5月份</td>
+<td>6月份</td>
+<td>7月份</td>
+<td>8月份</td>
+<td>9月份</td>
+<td>10月份</td>
+<td>11月份</td>
+<td>12月份</td>
+</tr>
+  
+  <tr>
+    <td class="width_160">用户已充值</td>
+    
+    {for $PayMoney $value}
+    <td>
+     <strong>{echo $value['amounts']}</strong>
+    </td>
+    {/for}
+    
+  </tr>
+  
+   <tr>
+    <td class="width_100">用户已消费</td>
+    
+    {for $SiteIncomeMoney $value}
+    <td>
+     <span class="color_f60">{echo $value['amounts']}</span>
+    </td>
+    {/for}
+    
+  </tr>
+  
+  <tr>
+    <td class="width_100">用户纯收入</td>
+    
+    {for $SitePayMoney $value}
+    <td>
+     <span class="color_f60">{echo $value['amounts']}</span>
+    </td>
+    {/for}
+    
+  </tr>
+  
+   <tr>
+    <td>用户已提现</td>
+    
+    {for $DepositMoney $value}
+    <td>
+     <strong>{echo $value['amounts']}</strong>
+    </td>
+    {/for}
+    
+  </tr>
+    
+  
+</table>
+  
+  
+  {else}
+   
+   <p style="padding:10px;">请选择年份查看!</p>
+  
+  {/if}
+  
+</div>
+
+
+{if $this->GET['datetype']==2}
+
+<div id="Data3"{if $this->GET['datetype']!=2} style="display:none"{/if}>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+  <tr>
+    <td class="datalist_h2 width_160">网站利润日报表查询</td>
+    <td class="datalist_h2">  
+    输入时间 <input name="dateline" id="dateline" type="text" class="form_input_text dateline" size="10" value="{if !empty($dateline)}{echo $this->Date('Y-m-d',$dateline)}{/if}" style="width:80px;"/> 
+    <input name="button" onclick="Inquiry(2)" type="button" value="查询" class="form_button"/> <span style="font-weight:normal;color:#999">格式 (YYYY-MM-DD)</span> &nbsp; <span style="color:#F00">(以下报表只统计用户成功的订单)</span> <a href="javascript:window.print();">[打印]</a>
+  </td>
+  </tr>
+</table>
+
+{if $dateline}
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+   <tr>
+    <td class="width_100" style="width:300px;">项目</td>
+
+    <td>产生金额</td>
+    
+  </tr>
+
+   <tr>
+    <td class="width_100"><strong>用户消费支出</strong></td>
+
+    <td>
+     <span class="color_f60">{echo $siteincome['amounts']}</span>
+    </td>
+    
+  </tr>
+  
+   <tr>
+    <td style="padding-left:30px;">|--任务担保金</td>
+    
+    <td>
+     <strong>{echo $TaskMoneyIncome['amounts']}</strong>
+    </td>
+    
+  </tr>
+  
+
+   {for $TaskMoneyIncomeApps $apps}
+  {for $apps $key=>$value}
+   <tr>
+    <td style="padding-left:30px;">| &nbsp; <span style="color:#999">|--{echo $value['name_phpapp']}</span></td>
+    
+    {for $TaskMoneyIncomeApps $apps}
+    <td>
+        <span style="color:#999">{echo $apps[$key]['amounts']}</span>
+    </td>
+   {/for}
+    
+  </tr>
+  {/for}
+  {/for}
+
+  
+  <tr>
+    <td style="padding-left:30px;">|--购买道具</td>
+
+    <td>
+     <strong>{echo $PropMoneyIncome['amounts']}</strong>
+    </td>
+    
+  </tr>
+  
+  <tr>
+    <td style="padding-left:30px;">|--升级VIP</td>
+    
+    <td>
+     <strong>{echo $VIPMoneyIncome['amounts']}</strong>
+    </td>
+    
+  </tr>
+  
+  <tr>
+    <td style="padding-left:30px;">|--用户认证</td>
+
+    <td>
+     <strong>{echo $CertificateMoneyIncome['amounts']}</strong>
+    </td>
+    
+  </tr>
+  
+  
+   <tr>
+    <td class="width_100"><strong>用户赚钱收入</strong></td>
+    
+    <td>
+     <span class="color_f60">{echo $sitepay['amounts']}</span>
+    </td>
+    
+  </tr>
+  
+
+   <tr>
+    <td style="padding-left:30px;">|--任务中标与提成</td>
+    
+    <td>
+     <strong>{echo $TaskMoneyPay['amounts']}</strong>
+    </td>
+    
+  </tr>
+  
+
+   {for $TaskMoneyPayApps $apps}
+  {for $apps $key=>$value}
+   <tr>
+    <td style="padding-left:30px;">| &nbsp; <span style="color:#999">|--{echo $value['name_phpapp']}</span></td>
+    
+    {for $TaskMoneyPayApps $apps}
+    <td>
+        <span style="color:#999">{echo $apps[$key]['amounts']}</span>
+    </td>
+   {/for}
+    
+  </tr>
+  {/for}
+  {/for}
+
+  
+    <tr>
+    <td style="padding-left:30px;">|--购买道具推广提成</td>
+    
+    <td>
+     <strong>{echo $PropMoneyPay['amounts']}</strong>
+    </td>
+    
+  </tr>
+  
+  <tr>
+    <td style="padding-left:30px;">|--实名认证推广提成</td>
+    
+    <td>
+     <strong>{echo $CertificateMoneyPay['amounts']}</strong>
+    </td>
+    
+  </tr>
+  
+   <tr>
+    <td style="padding-left:30px;">|--UC兑换金额</td>
+    
+    <td>
+     <strong>{echo $UCMoneyPay['amounts']}</strong>
+    </td>
+    
+  </tr>
+  
+  
+   <tr>
+    <td class="width_100" style="border-bottom:0px;"><strong>网站利润</strong></td>
+    
+    <td style="border-bottom:0px;">
+        <span class="color_f60">{echo $SiteProfitMoney}</span>
+    </td>
+    
+  </tr>
+  
+
+</table>
+
+<p style="padding:10px;">用户消费支出-用户赚钱收入=网站利润(手续费)</p>
+
+{else}
+   
+   <p style="padding:10px;">请选择时间并查询!</p>
+  
+{/if}
+  
+
+</div>
+
+
+
+{elseif $this->GET['datetype']==3}
+
+<div id="Data4"{if $this->GET['datetype']!=3} style="display:none"{/if}>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+  <tr>
+    <td class="datalist_h2 width_160">网站充值日报表查询</td>
+    <td class="datalist_h2">  
+    输入时间 <input name="dateline" id="dateline" type="text" class="form_input_text dateline" size="10" value="{if !empty($dateline)}{echo $this->Date('Y-m-d',$dateline)}{/if}" style="width:80px;"/> 
+    <input name="button" onclick="Inquiry(3)" type="button" value="查询" class="form_button"/> <span style="font-weight:normal;color:#999">格式 (YYYY-MM-DD)</span> &nbsp; <span style="color:#F00">(以下报表只统计用户成功的订单)</span> <a href="javascript:window.print();">[打印]</a>
+  </td>
+  </tr>
+</table>
+
+{if $dateline}
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+   <tr>
+    <td class="width_100" style="width:300px;">项目</td>
+
+    <td>产生金额</td>
+    
+  </tr>
+
+   <tr>
+    <td class="width_100"><strong>今日用户充值</strong></td>
+
+    <td>
+     <span class="color_f60">{echo $siteincome['amounts']}</span>
+    </td>
+    
+   </tr> 
+  
+
+</table>
+
+
+{else}
+   
+   <p style="padding:10px;">请选择时间并查询!</p>
+  
+{/if}
+  
+
+</div>
+
+{/if}
+  
+
+<script type="text/javascript">
+
+function Inquiry(DateType){
+		//alert("ok");		
+	  var Year=$("#dateline").val();
+	  window.location.href='{echo $this->MakeGetParameterURL()}'+'&dateline='+Year+'&datetype='+DateType;
+}
+
+$(function() {
+	 $(".dateline").datepicker();
+	 $(".dateline").datepicker('option',{dateFormat:'yy-mm-dd'});
+	 $(".dateline").datepicker('option',$.datepicker.regional['zh-CN']);
+});
+
+$("input[name='moneydata']").click( function() {
+	  var Year=$("#SelectTotalYear").val();	
+	  var DateType=$(this).val();
+	  window.location.href='{echo $this->MakeGetParameterURL()}'+'&value='+Year+'&datetype='+DateType;					   
+});
+
+$("#SelectTotalYear").change( function() {
+		GetYear('#SelectTotalYear');					  
+});
+
+$("#SelectTotalYear2").change( function() {
+		GetYear('#SelectTotalYear2');					  
+});
+
+function GetYear(id){
+	  var DateType=$("input[name='moneydata'][checked='checked']").val();
+	  var Year=$(id).val();
+	  window.location.href='{echo $this->MakeGetParameterURL()}'+'&value='+Year+'&datetype='+DateType;
+}
+
+</script>

@@ -1,0 +1,28 @@
+<h3>补充内容：<span style="color:#666; font-weight:normal">(200字内)</span></h3>
+<textarea name="content_s" id="TaskAddContent" class="form_editor" style="width:530px;height:120px;"></textarea>
+<p style="padding-top:10px;"><a class="large yellow awesome" onclick="SubmitTaskAdd('{echo $this->tid}')"><span class="pencil_ico">发布</span></a></p>
+
+<script type="text/javascript">
+function SubmitTaskAdd(tid){
+        $.PHPAPPOPENLOADING();
+		var content=$("#TaskAddContent");
+
+		if (content.val()==""){
+				alert("请输入补充内容!");
+				content.focus();
+				return false; 
+		}	
+				
+		$.ajax({
+				type: "POST",
+				url: SURL+"/index.php?app=49&action=10",
+				data: 'tid_d='+tid+'&Submit=1&content_s='+content.val(),
+				success: function(data){
+					  $.PHPAPPCLOSELOADING();
+					  $("#loading").html(data);
+				}
+	   });			
+	
+}
+</script>
+

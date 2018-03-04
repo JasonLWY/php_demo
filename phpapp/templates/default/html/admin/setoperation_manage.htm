@@ -1,0 +1,23 @@
+{template header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+<tr>
+<td class="width_160">页面显示数据量：</td>
+<td><input name="sys_operation_page_d" value="{echo PHPAPP::$config['sys_operation_page']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">列表页面每页默认显示多少条</td>
+</tr>
+
+<tr>
+<td class="width_160">是否显示官方动态:</td>
+<td><input class="radio" type="radio" name="phpappinfoscode_d" value="1"  {if PHPAPP::$config['phpappinfoscode']==1}checked{/if}>&nbsp;开启 <input class="radio" type="radio" name="phpappinfoscode_d" value="0" {if PHPAPP::$config['phpappinfoscode']==0}checked{/if}>&nbsp;关闭</td>
+<td class="color_999">是否在后中首页显示PHPAPP官方动态</td>
+</tr>
+
+</table>
+
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button"/></div>
+
+</form>

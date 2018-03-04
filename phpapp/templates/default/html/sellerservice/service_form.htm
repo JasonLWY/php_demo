@@ -1,0 +1,61 @@
+<h5>标题：<span class="help_small" title="标题"> </span></h5>
+
+<p>
+    {if !empty($service['subject'])}
+         {echo $service['subject']}
+    {/if} 
+    
+    <input name="subject_s" type="{if !empty($service['subject'])}hidden{else}text{/if}"  id="subject" size="50" maxlength="255" class="form_input_text form_input_width_300"  value="{if !empty($service['subject'])}{echo $service['subject']}{else}{if !empty($task['subject'])}{echo $task['subject']}{/if}{/if}"/>
+    
+</p>
+  
+  {if $fieldarray=$this->GetTableFieldArray('task_seller')}
+  <!-- 自定义字段 -->
+      {for $fieldarray $field}
+      <h5>{echo $field['name_phpapp']}：<span class="help_small" title="{echo $field['name_phpapp']}"> </span></h5>
+
+      <p>{echo $this->GetTableFieldForm($field,empty($service)?'':$service)}</p>
+     
+      {/for}
+  <!-- 自定义字段 end -->
+  {/if}
+
+<h5>赏金：<span class="help_small" title="赏金"> </span></h5>
+
+<p>
+    {if !empty($service['price'])}
+    
+    <span class="color_f60">{echo $service['price']}</span> 
+    
+    {/if}
+    
+ 
+    <input name="money_f" type="{if !empty($service['price'])}hidden{else}text{/if}" id="money" size="3" maxlength="12" class="form_input_text form_input_width_100"  value="{if !empty($service['price'])}{echo $service['price']}{else}{if !empty($task['money'])}{echo $task['money']}{/if}{/if}"/> <span style="color:#999">元</span>
+ 
+</p>   
+    
+
+<h5>周期：<span class="help_small" title="周期"> </span></h5>
+  
+<p>
+    {if !empty($service['time'])}
+    
+    {echo $service['time']} 
+    
+    {/if}
+    
+    <input name="time_d" type="{if !empty($service['time'])}hidden{else}text{/if}" id="time" size="3" maxlength="3" class="form_input_text form_input_width_100"  value="{if !empty($service['time'])}{echo $service['time']}{else}{if !empty($task['time'])}{echo $task['time']}{/if}{/if}"/>
+    天
+    
+</p>   
+
+<h5>要求：<span class="help_small" title="要求"> </span></h5> 
+
+<p>
+    {template editor:editor}
+    <script type="text/javascript">$(function(){$.PHPAPPEditor('Content','630','280');});</script>
+    <textarea name="content_s" id="Content" class="form_editor">{if !empty($task['content'])}{echo $this->str($task['content'],999999,0,1,0,1,1)}{/if}</textarea>
+</p>
+
+
+  

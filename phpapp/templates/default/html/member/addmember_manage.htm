@@ -1,0 +1,55 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+  
+  <tr>
+    <td class="width_160">用户类型</td>
+    <td>
+    <select name="UserType_d">
+      {for $membertypearr $value}
+        <option value="{echo $value['id_phpapp']}">{$value['name_phpapp']}</option>
+      {/for}
+    </select>
+    </td>
+  </tr> 
+  
+  <tr>
+    <td class="width_160">前台用户组</td>
+    <td>
+    <select name="UserGroupID_d">
+      {for $usergrouparr $value}
+        <option value="{echo $value['gid']}">{$value['groupname']}</option>
+      {/for}
+    </select>
+    </td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">用户名</td>
+    <td> <input name="UserName_s" id="UserName" type="text" maxlength="15"  class="form_input_text form_input_width_200" autocomplete="off" value=""/></td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">邮箱</td>
+    <td> <input name="EMail_s" id="EMail" type="text" maxlength="32"  class="form_input_text form_input_width_200" autocomplete="off" value=""/></td>
+  </tr>
+   
+  <tr>
+    <td class="width_160">密码</td>
+    <td> <input name="Password_s" id="Password" type="password" maxlength="32"  class="form_input_text form_input_width_200" autocomplete="off" value=""/></td>
+  </tr>
+
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+</form>
+
+

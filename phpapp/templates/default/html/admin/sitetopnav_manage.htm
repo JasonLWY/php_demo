@@ -1,0 +1,95 @@
+{template header}
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $this->GET['op']==1 || $this->GET['op']==2}
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">名称</td>
+    <td>
+    <input name="navname_s" value="{if !empty($manage['navname'])}{echo $manage['navname']}{/if}" type="text" class="form_input_text form_input_width_200" />
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">URL</td>
+    <td>
+    <input name="navurl_s" value="{if !empty($manage['navurl'])}{echo $manage['navurl']}{/if}" type="text" class="form_input_text form_input_width_200" />
+    </td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">是否新窗口打开</td>
+    <td><select name="blank_d">
+  <option value="0" {if !empty($manage['blank'])}{if $manage['blank']==0} selected="selected" {/if}{/if}>是</option>
+  <option value="1" {if !empty($manage['blank'])}{if $manage['blank']==1} selected="selected" {/if}{/if}>否</option>
+</select> 
+</td>
+  </tr>
+  
+  
+  <tr>
+    <td class="width_160">排序</td>
+    <td>
+    <input name="displayorder_d" value="{if !empty($manage['displayorder'])}{echo $manage['displayorder']}{/if}" type="text" class="form_input_text form_input_width_200" />(值越大越显示后)
+    </td>
+  </tr>
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+
+
+
+{else}
+
+
+    {if $list}
+    
+    
+    <div id="WindowsForm{echo $this->GET['menu']}">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+      <tr>
+        <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+        
+        {for $orderarr $key=>$value}
+        <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+        {/for} 
+        <td class="datalist_h2">操作</td>
+      </tr>
+    
+    {for $list $key=>$value}
+      <tr>
+        <td><input name="checkbox[]" type="checkbox" value="{echo $value['navid']}"/></td>
+        <td>{echo $value['navid']}</td>
+        <td>{echo $value['navname']}</td>
+        <td>{if $value['blank']==1}否{else}是{/if}</td>
+        <td>{echo $value['displayorder']}</td>
+        <td><a href="{echo $this->MakeGetParameterURL(array('op'=>2,'id'=>$value['navid']))}">[编辑]</a></td>
+      </tr>
+     {/for} 
+    
+    </table>
+    </div>
+    
+    <div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+    
+    <div class="phpapp_button"><input name="Submit" type="submit" value="删除" class="form_button"/></div>
+    
+    {else}
+    
+    <p>暂无数据</p>
+    
+    {/if}
+
+{/if}
+
+
+</form>

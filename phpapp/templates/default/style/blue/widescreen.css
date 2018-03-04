@@ -1,0 +1,66 @@
+/*使用头部宽屏框架删除以下代码-----------------------------------------*/
+.sw_categorys_nav .allcategorys .sublist {
+	/* width: 898px; */
+}
+.allcategorys .sublist li {
+	/* width: 198px; */
+}
+.navigation_box{
+	margin-right: auto;
+	margin-left: auto;
+	background-color: #FFF;
+	padding-right: 40px;
+	padding-left: 40px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-right-color: #c2d7e7;
+	border-left-color: #c2d7e7;
+}
+.navigation_wrap{
+	padding-right: 10px;
+}
+.header_widescreen{
+	margin-right: auto;
+	margin-left: auto;
+	background-color: #FFF;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-right-color: #c2d7e7;
+	border-left-color: #c2d7e7;
+}
+.header_width{}
+.wrap{
+	margin-top: 0px;
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+	border-top-style: none;
+	border-bottom-style: none;
+	-moz-box-shadow:10px 0px 0px #b0cce6;
+	-webkit-box-shadow:0px 0px 0px #b0cce6;
+	box-shadow:0px 0px 0px #b0cce6;
+}
+.footer{
+	margin-top: 0px;
+}
+
+#Header_Member_Info .topuserlogin_box{
+	border: 1px solid #FFF;
+}
+
+.header_member_widescreen ul li a{
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-right-color: #EEF7FD;
+	border-left-color: #EEF7FD;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #EEF7FD;
+}
+
+/*使用头部宽屏框架删除代码 END-----------------------------------------*/

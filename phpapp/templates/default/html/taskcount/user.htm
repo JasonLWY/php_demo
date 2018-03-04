@@ -1,0 +1,46 @@
+<div class="task_draft_info">
+        {if $value['proposal']}
+               <div class="draft_warning" style="margin-bottom:10px;">雇主审语：{echo $this->str($value['proposal'],0,0,1,1,0,1)}</div>
+        {/if}
+        
+        {php}$files=$this->FileList($value['did'],2);{/php}
+        {template phpapp:file}
+        <p> 
+
+        {echo $this->str($value['content'],0,0,1,0,0,1)}
+        
+        </p>
+        
+        <div class="draft_add_message">
+            <a class="small blue awesome"><span class="task_draft_add_message" onclick="OpenDraftMessage('{echo $value['did']}','{echo $value['uid']}')">点评</span></a>
+            <div class="draft_add_message_form" id="AddDraftMessage{echo $value['did']}">
+                  <textarea name="content_s" class="form_editor" style="width:614px;height:80px;" id="CommentContent_{echo $value['did']}"></textarea>
+                  <p class="message_add_button"><a class="small yellow awesome" onclick="SubmitAddComment('{echo $value['did']}')"><span class="task_draft_add_message">发布</span></a></p>
+            </div>
+        </div>
+        <table border="0" cellpadding="0" cellspacing="0" class="draft_message_list">
+        <tr>
+         <td id="DraftComment_{echo $value['did']}" class="show_comment">
+           <script type="text/javascript">AjaxComment("{echo $value['did']}");</script> 
+         </td>
+        </tr>
+        </table>
+
+</div>
+<div class="task_bid_price">
+     <p style="color: #999;">发布于 {echo $this->Date('Y-m-d',$value['dateline'],1)}</p>
+     <p style="display:inline-block;padding-top:6px;">{if $this->GetCertificateIcon($value['certificate'],array())}{echo $this->GetCertificateIcon($value['certificate'])}{else}无任何认证{/if}</p>
+     <p style="padding-top:8px;color: #F60;">{if $value['credit']}<span class="{echo $this->GetCreditLevel($value['credits'],1)}" title="卖家信用积分 {echo $value['credits']}">&nbsp;</span>{else}暂无信用值{/if}</p>
+     <p>好评率 {echo $this->LevelRate($value['hao'],$value['zhong'],$value['cha'])}% </p>
+     <div class="draft_hurdle">
+        {if $value['process']==1}
+        
+             <img src="{TURL}images/success.gif"/>
+             
+        {elseif $value['process']==2}
+        
+             <img src="{TURL}images/failure.gif"/>
+         
+        {/if}
+    </div>
+</div>

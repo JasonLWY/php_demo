@@ -1,0 +1,104 @@
+{template member:menu}
+
+
+<script type="text/javascript">
+
+$(function() {
+
+
+		$("#VerifyMobile").click( function () {
+										  
+				 var mobile=$("#mobile");
+				  
+				 if (mobile.val()==""){
+						alert("请输入手机号码!");
+						mobile.focus();
+						return false; 
+				 }
+				  
+				 if (mobile.val().length<"10"){
+					  alert("手机号码不能小于10个位!");
+					  mobile.focus();
+					  return false; 
+				 }	
+				 
+				 if (isNaN(mobile.val())){
+					  alert("您输入的手机号码格式错误，请重新输入!");
+					  mobile.focus();
+					  return false; 
+	             }
+				
+				 
+				 $("#loading").dialog({
+						title:"发送验证码",	
+						width: 300,
+						modal: true,
+						height:'auto'
+				 });
+				 
+				 var securityform=$("#SecurityForm").val();
+				 
+				 $("#loading").dialog('open');
+				 
+				 $("#loading").html('<div class="loading">发送中...</div>');								  
+						
+						
+				 $.ajax({
+						type: "POST",
+						url: 'member.php?app=21&action=1&op=1',
+						data: '&mobile_f='+mobile.val()+'&SecurityForm_s='+securityform,
+						success: function(data){
+							 $("#loading").html(data);
+						}
+		        });										  
+						
+			  
+				
+		 });
+});
+</script>
+
+<link href="{TURL}mobile.css" rel="stylesheet" type="text/css" />
+
+<div class="personal_certificate">
+
+      <div class="order_process" style="width:480px;">
+
+      <ul class="order_process_schedule" style="background-position: left -28px;">
+      
+          <li>1.填写手机号码</li>
+          
+          <li>2.验证手机码</li>
+          
+          <li>3.认证成功</li>
+      
+      </ul>
+      </div>
+      
+</div>
+     
+
+
+<div class="mobile_certificate">
+
+
+<p>手机号码 <input name="mobile" type="text"  id="mobile" size="50" maxlength="30" class="form_input_text form_input_width_200"  value="{if !empty($this->member['mobile'])}{echo $this->member['mobile']}{/if}"/>
+</p>
+<p style="padding-left:54px;"><input name="Submit" type="submit" value="确认" id="VerifyMobile" class="form_button" style="width:80px"/></p>
+
+<input type="hidden" id="SecurityForm" value="{echo $this->SecurityForm()}"/>
+
+<h4>手机认证后享受的服务</h4>
+<p>
+<b>手机登录</b> 可直接使用“手机”登录<br>
+<b>重要事件提醒 </b>进行（支付/提现/选稿/中标）时，自动发送提醒<br>
+<b>找回账号密码</b> 忘记密码时，可使用手机短信找回密码。
+</p>
+</div>
+
+</div>
+
+
+
+
+{template phpapp:footer}

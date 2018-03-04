@@ -1,0 +1,27 @@
+{template space:column}
+
+{template task.js}
+
+<link href="{echo TURL}task.css" rel="stylesheet" type="text/css" />
+
+
+<form id="AddTask" action='{echo SURL}/index.php?app={echo $this->app}&action=2{if $this->sid>0}&sid={echo $this->sid}{/if}&uid={echo $this->seller}&tid={echo $this->tid}&op=1' method="post" class="add_task">
+  
+          {template service_form}
+          
+          <h5>服务协议：<span class="help_small" title="服务协议"> </span></h5>
+ 
+          <p> <input type="checkbox" value="1" checked="checked" id="addtaskagree"/> <a href="javascript:;" style="text-decoration: underline;" id="openaddtaskagree">我已阅读并接受{echo PHPAPP::$config['sitename']}网服务协议</a><div id="taskagree" style="display:none;padding:20px;" title="发布协议">{echo $this->str(PHPAPP::$config['task_seller_agree'],0,0,1,0,0,1)} </div>
+          
+          </p>
+          
+          <p style="height:60px;padding-bottom:30px;text-align:center;"><input name="Submit" type="submit" value="发布" onclick="return SubmitAddTask();" class="form_button"/></p>
+
+          <input name="Submit" value="ok" type="hidden" /> 
+</form>
+
+
+</div>
+
+</div>
+{template phpapp:footer}

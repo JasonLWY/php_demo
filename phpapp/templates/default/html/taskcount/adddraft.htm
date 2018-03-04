@@ -1,0 +1,92 @@
+<div id="AddDraft">
+<strong>投稿内容</strong>
+
+{if $fieldarray=$this->GetTableFieldArray('task_draft')}
+  <!-- 自定义字段 -->
+      {for $fieldarray $field}
+        <p style="padding:8px;">{echo $field['name_phpapp']}：{echo $this->GetTableFieldForm($field)}</p>
+      {/for}
+  <!-- 自定义字段 end -->
+{/if}
+
+
+{template editor:editor}
+<script type="text/javascript">$(function(){$.PHPAPPEditor('Content','660','200');});</script>
+
+<textarea name="content_s" id="Content" class="form_editor">{if !empty($draft['content'])}{echo $draft['content']}{/if}</textarea>
+
+{if empty($admindraft)}
+<div class="buyprops">
+
+        <div id="service_tabs" style="border: none;padding:0px;">
+        
+            <ul>
+                <li><a href="#DraftServiceList"><span>购买增值服务</span></a></li>
+            </ul>
+        
+            <div id="DraftServiceList" style="padding-left:0px;padding-right:0px;">
+                  <div class="loading">读取数据中...</div>
+            </div>
+
+		</div>
+    </div>
+{/if}
+
+<input type="hidden" id="BuyPropsID" name="props" value="{if !empty($draft['props'])}{echo $draft['props']}{/if}"/>
+
+<input type="hidden" id="DraftID" name="draftid" value="{if !empty($did)}{echo $did}{else}0{/if}"/>
+
+{if !empty($admindraft)}    
+<p style="margin-top:20px;"><input name="Submit" type="button" value="修改" id="SubmitEditDraft" class="form_button"/></p>
+{else}
+<p style="text-align:center;margin-top:20px;"><input name="Submit" type="button" value="发布" id="SubmitAddDraft" class="form_button"/></p>
+{/if}
+</div>
+
+<script type="text/javascript">
+$(function(){	 
+		    
+	  $("#service_tabs").tabs();	
+	 
+      GetServiceList('#DraftServiceList',1);
+
+	  $("#SubmitAddDraft").click( function () {
+										   
+		      $.SaveContent(); //保存内容
+				
+	          var content=$("#Content");
+			  if (content.val()==""){
+				    alert("请输入内容!");
+				    content.focus();
+				    return false; 
+			  }
+			
+			  var did=$("#DraftID").val();
+			  
+			  var forms=GetFormAll('#AddDraft');
+	
+			  $("#loading").html('<div class="loading">提交数据中...</div>');
+			
+			  $("#loading").dialog({ title: '发布投稿' });
+					
+			  $.ajax({
+						type: "POST",
+						url: SURL+"/index.php?app={echo $this->app}&action=6&tid={echo $this->tid}&did="+did,
+						data: forms,
+						success: function(data){
+							 $("#loading").html(data);
+							 ShowDraft(0);
+						}
+			 });
+			  
+	  });
+	  
+	  
+	  $("#loading").dialog({
+		      close: function(event, ui) { $("#loading").html(''); }
+	  });
+
+		  		
+			
+});		
+</script>

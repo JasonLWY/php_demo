@@ -1,0 +1,42 @@
+{template admin:header}
+
+
+{template addbid}
+
+
+
+<script type="text/javascript">
+$(function(){	   
+	  $("#loading").dialog("close");	
+	  $("#SubmitEditDraft").click( function () {
+										   
+		      //$.SaveContent(); //保存内容
+				
+	          var content=$("#BidContent");
+			  if (content.val()==""){
+				    alert("请输入内容!");
+				    content.focus();
+				    return false; 
+			  }
+			
+			  
+			  var forms=GetFormAll('#AddBidForm');
+
+			  $("#loading").html('<div class="loading">提交数据中...</div>');
+			
+			  $("#loading").dialog({ title: '修改投标' });
+			  $("#loading").dialog('open');
+					
+			  $.ajax({
+						type: "POST",
+						url: "{echo $this->MakeGetParameterURL()}",
+						data: forms,
+						success: function(data){
+					
+							 $("#loading").html(data);
+						}
+			 });
+			  
+	  });
+});		
+</script>

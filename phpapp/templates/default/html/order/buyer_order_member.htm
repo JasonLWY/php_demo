@@ -1,0 +1,207 @@
+{if !empty($adminmanage)}
+     {template admin:header}
+{else}
+	 {template member:menu}
+{/if}
+
+<script type="text/javascript">
+$(function(){	
+	$("#order_tabs").tabs();	
+});
+
+function ShowOrderFile(){
+	 $("#order_tabs").tabs({selected:3});
+}
+
+</script>
+
+<link href="{TURL}form.css" rel="stylesheet" type="text/css" />
+
+<link href="{TURL}order.css" rel="stylesheet" type="text/css" />
+
+
+{if $draftorder}
+
+<div class="order_show">
+    <div class="order_show_h2">
+        <ul>
+            <li style="width:380px">中标信息</li>
+            <li style="width:260px">赏金</li>
+            <li>操作</li>
+        </ul>
+    </div>
+    
+    <div class="order_task">
+    
+           <div class="task_avatar">
+           {echo $this->GetUserAvatar($draft['uid'])}
+           </div>
+           
+           <div class="task_user_info">
+               <div class="task_user_username">
+                   <p><a href="{echo SURL}/space.php?app=8&uid={echo $draft['uid']}" target="_blank" title="{echo $draft['username']}">{echo $draft['username']}</a></p>
+                   <p>
+                      {if $draft['credit']}<span class="{echo $this->GetCreditLevel($draft['credit'],1)}" title="威客信用积分 {echo $draft['credit']}"></span>{else}暂无信用值{/if} 
+                   </p>
+               </div>
+               <div class="task_reward">
+                   <p><span>￥{echo $draftorder['sum']}</span></p>
+               </div>
+               <div class="order_operate">
+                {echo $getprocess->GetBuyerProcessName('task_order','task_order_credit',$draftorder['cid'])}
+                {echo $getprocess->GetBuyerProcessMenu('task_order_credit',$draftorder['cid'])}
+               </div>
+             
+           </div>
+                     
+    </div>
+    
+    {if $draftorder['process']>0 && $draftorder['process']<5}
+        <div class="warning" style="margin-right: 20px;margin-left: 20px;">
+               <h3>系统提示：</h3>
+               <p> 
+                {echo $getprocess->GetBuyerProcessWarning($draftorder['process'],$draftorder,$draftorder['cid'])}
+               </p>
+        </div>
+    {/if}
+
+    <div style="padding:20px;word-break:break-all;">
+    
+    <p style="display:inline-block;padding-top:6px;">{echo $this->GetCertificateIcon($draft['certificate'],array('Mobile'=>'手机','Mail'=>'邮箱','Personal'=>'个人实名','Company'=>'公司实名'))}
+    </p>
+               
+    <h3>投标内容</h3>
+        <p style="color:#666"> 
+            {echo $this->str($draft['content'],0,0,1,0,0,1)}
+        
+            {php}$files=$this->FileList($tid,1);{/php}
+            
+            {template phpapp:file}
+        </p>
+
+    </div>
+    
+    
+    <div id="order_tabs" style="border: none;padding:0px;background-color:transparent;" class="order_tabs">
+        
+        <ul class="order_ul" style="background-color:transparent;">
+            <li><a href="#OrderShow-0">订单流程</a></li>
+            <li><a href="#OrderShow-1">发票</a></li>
+            <li><a href="#OrderShow-2">留言</a></li>
+            <li><a href="#OrderShow-3">威客文件</a></li>
+        </ul>
+    
+        <div id="OrderShow-0" style="padding: 20px;" class="order_show_data">
+        
+        
+            <div class="order_process">
+            
+                <ul class="order_process_default">
+                
+                    <div class="order_process_schedule" style="width:{if $draftorder['process']==2}130{elseif $draftorder['process']==3}280{elseif $draftorder['process']==5}{if $draftorder['buyer']==1}520{else}360{/if}{else}0{/if}px;">          
+                    </div>
+                
+                    <li>1.雇主付款</li>
+                    
+                    <li>2.威客交接</li>
+                    
+                    <li>3.雇主确认</li>
+                    
+                    <li>4.评价</li>
+                
+                </ul>
+            </div>
+
+
+            <h3>威客评价：</h3>
+            
+            <div style="padding:20px;">
+            
+            {if $credit}
+
+                  <p><strong>
+                  {if $credit['level']==0}
+                  好评
+                  {elseif $credit['level']==1}
+                  中评
+                  {elseif $credit['level']==2}
+                  差评
+                  {/if}
+                  </strong></p>
+                  <p>评语： {if $credit['content']}{echo $credit['content']}{else}无{/if}</p>
+                  <p>评价时间：{echo $this->Date('Y-m-d',$credit['dateline'],1)} </p>
+                 
+            {else}
+            <p>未评价</p>
+            {/if}
+            {if $draftorder['refundmoney']>0}
+            <p style="text-align:right;padding-right:20px;padding-bottom:20px;"><strong>退款： </strong><span class="color_f60" style="font-size:18px">￥{echo $draftorder['refundmoney']}</span></p>
+            {/if}
+            <p style="text-align:right;padding-right:20px;padding-bottom:20px;"><strong>实付款： </strong><span class="color_f60" style="font-size:18px">
+            {if $draftorder['refundmoney']>0}￥{echo $draftorder['amount']+$draftorder['fee']-$draftorder['refundmoney']}{else}{echo $draftorder['sum']}{/if}
+            </span></p>
+
+            </div>
+        </div>
+        
+        <div id="OrderShow-1" style="padding: 20px;" class="order_show_data">
+       
+              <div class="order_show_box">
+                  <h5>发票抬头：<span class="help_small" title="发票抬头公司名全称"> </span></h5>
+                  <p><input type="text"  id="Invoice" size="50" maxlength="100" class="form_input_text form_input_width_500"  value="{if !empty($invoice['invoice'])}{echo $invoice['invoice']}{/if}" title=""/>
+                  </p>
+                  
+                  <h5 style="padding-top:10px;">发票要求说明：<span class="help_small" title="发票要求说明(500字内)"> </span></h5>
+				  <p><textarea id="InvoiceContent"  class="form_editor form_input_width_500" style="height:160px;">{if !empty($invoice['content'])}{echo $this->str($invoice['content'],999999,0,1,0,1,1)}{/if}</textarea></p> 
+                  <p style="padding-top:10px;"><a class="small yellow awesome" onclick="SubmitAddInvoice('{echo $draftorder['cid']}','{echo $draftorder['oid']}')">提交</a></p>
+                  
+              </div>
+    
+        </div>
+        
+        <div id="OrderShow-2" style="padding: 20px;" class="order_show_data">
+              <div class="order_show_box" id="ListMessage">
+               	 {template message}
+              </div>
+        </div>
+        
+        <div id="OrderShow-3" style="padding: 20px;" class="order_show_data">
+            <div class="order_show_box">
+                 <h5>附件：<span class="help_small" title="威客上传的附件"> </span></h5>
+                 {php} $files=$this->FileList($draftorder['oid'],3);{/php}
+                 {if $files}
+                	 {template phpapp:file}
+                 {else}
+                 	 <p>威客还没上传!</p>
+                 {/if}
+                 
+                 <h5 style="padding-top:20px;">内容：<span class="help_small" title="威客交接内容"> </span></h5>
+                 {if $draftorder['ocontent']}
+           		 	  <p>{echo $this->HideDecode($this->str($draftorder['ocontent'],999999,0,1,0,0,1))}</p>
+                 {else}
+                      <p>威客还没写!</p>
+                 {/if}
+            </div>
+    
+        </div>
+
+    </div>
+
+</div>
+
+
+
+{else}
+ <p style="padding:10px">您暂时没有订单数据</p>
+{/if}      
+      
+</div>    
+
+{template phpapp:message_order.js} 
+
+{if !empty($adminmanage)}         
+	 {template phpapp:buyer_order.js}
+{else} 
+
+	 {template phpapp:footer}
+{/if}

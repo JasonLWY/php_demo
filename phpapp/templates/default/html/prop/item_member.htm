@@ -1,0 +1,20 @@
+{template member:menu}
+
+
+{if $list}
+
+     {template item_prop}
+
+
+<div class="ajax_page">{echo $page->ShowPages()}</div>
+
+{else}
+
+ <p style="padding:10px">暂时没有道具</p>
+ 
+{/if}    
+      
+
+</div>
+
+{template phpapp:footer}

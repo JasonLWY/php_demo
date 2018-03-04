@@ -1,0 +1,119 @@
+<div id="TaskBidItem">
+    <div class="user_list">
+    {for $list $key=>$value}
+      <div class="user_box task_bid_pic{if $value['openflash']} flashbid{/if}">
+          <div class="user_box_show">
+               <div class="user_box_info">
+                    {if $value['topbid']>0}<div class="service_top" title="推荐"></div>{/if}
+                    <div class="user_list_avatar task_draft_thumb">
+                          {php}$files=$this->FileList($value['did'],2);{/php}
+
+                          {if $value['share']}
+                                 {if $value['uid']==$uid || $task['uid']==$uid || $this->IsService($task['serviceuid'])}
+                                      
+                                         {if $files[0]['thumb']}
+                                              <a href="{echo SURL}/index.php?app=80&tid={echo $this->tid}&did={echo $value['did']}" target="_blank"><img src="{SURL}/{echo $files[0]['thumb']}"/></a>
+                                         {else}
+                                              <a href="{echo SURL}/index.php?app=80&tid={echo $this->tid}&did={echo $value['did']}" target="_blank"><img src="{SURL}/images/seller/nopic.gif"/></a>
+                                         {/if}
+                                 {else}
+                               
+                                      <div class="help_small bid_hide_info bid_hide_pic" title="该稿件已隐藏,只有雇主和投标本人登录后可见!">
+                                      </div>
+                                  
+                                 {/if}
+                             
+                          {else}
+                               
+                                   {if !$task['hidedraft']}
+                                         {if $files[0]['thumb']}
+                                              <a href="{echo SURL}/index.php?app=80&tid={echo $this->tid}&did={echo $value['did']}" target="_blank"><img src="{SURL}/{echo $files[0]['thumb']}"/></a>
+                                         {else}
+                                              <a href="{echo SURL}/index.php?app=80&tid={echo $this->tid}&did={echo $value['did']}" target="_blank"><img src="{SURL}/images/seller/nopic.gif"/></a>
+                                         {/if}
+                                   {else}  
+                                   
+                                   
+                                         {if $value['uid']==$uid || $task['uid']==$uid || $this->IsService($task['serviceuid'])}
+                                         
+                                                 {if $files[0]['thumb']}
+                                                      <a href="{echo SURL}/index.php?app=80&tid={echo $this->tid}&did={echo $value['did']}" target="_blank"><img src="{SURL}/{echo $files[0]['thumb']}"/></a>
+                                                 {else}
+                                                      <a href="{echo SURL}/index.php?app=80&tid={echo $this->tid}&did={echo $value['did']}" target="_blank"><img src="{SURL}/images/seller/nopic.gif"/></a>
+                                                 {/if}
+
+                                         {else}
+                                         
+                                                <div class="help_small bid_hide_info bid_hide_pic" title="该稿件已隐藏,只有雇主和投标本人登录后可见!">
+                                                </div>
+                                            
+                                         {/if}
+                                   
+                                     
+                                   {/if}
+                          
+                          {/if}
+                          
+
+                    </div>
+                    
+                    <p class="user_list_username"><a href="{echo SURL}/space.php?app=8&uid={echo $value['uid']}" target="_blank" title="{echo $value['username']}">{echo $value['username']}</a>
+                    </p>
+                    
+                    <p><a class="small blue awesome" href="javascript:;" onclick="AddSMS('{echo $value['uid']}')"><span class="send_message">发消息</span></a>  好评{echo $this->LevelRate($value['hao'],$value['zhong'],$value['cha'])}% 
+                        {if $value['process']==1}
+                             <span class="bid_success">中标</span>
+        				{elseif $value['process']==2}
+                             <span class="bid_failure">不合格</span>
+        				{/if}
+                    </p>
+                    
+                    <p> 信用 {if $value['credits']}<span class="{echo $this->GetCreditLevel($value['credits'],1)}" title="威客信用积分 {echo $value['credits']}"></span>{else}暂无信用值{/if}</p>
+    
+                     <div class="seller_score">
+                     
+                         <div class="seller_score_works_peed" title="工作速度 {if $value['speed']}{echo $value['speed']}{else}0.0{/if}"><ul style="width:{echo ($value['speed']*16)}px;"></ul></div>
+                         
+                         <div class="seller_score_works_attitude" title="工作态度 {if $value['attitude']}{echo $value['attitude']}{else}0.0{/if}"><ul style="width:{echo ($value['attitude']*16)}px;"></ul></div>
+                     
+                         <div class="seller_score_works_quality" title="完成质量 {if $value['quality']}{echo $value['quality']}{else}0.0{/if}"><ul style="width:{echo ($value['quality']*16)}px;"></ul></div>
+                     </div>
+                     
+                     <p style="display:inline-block;padding-top:6px;">{if $this->GetCertificateIcon($value['certificate'],array())}{echo $this->GetCertificateIcon($value['certificate'])}{else}无任何认证{/if}</p>
+               </div>
+               
+               
+                  <div class="task_draft_operate">
+                        
+                          <ul>
+                          {if $task['uid']==$uid || $this->IsService($task['serviceuid']) || $this->IsAdmin()}
+                                {if $value['process']==0}
+                                <!--
+                                <li><a onclick="OpenOperate('{echo $value['did']}')"><span class="all_ico">批量</span></a></li> 
+                                -->
+                                <li><a href="javascript:;" onclick="ApplyDraft('{echo $value['did']}',1,'中标')"><span class="right_ico">中标</span></a></li>
+                                <li><a href="javascript:;" onclick="ApplyDraft('{echo $value['did']}',0,'不合格')"><span class="cross_ico">不合格</span></a></li> 
+                                {/if}
+                          {elseif $value['uid']==$uid}
+                                <li><a href="javascript:;" onclick="AddDraft('{echo $this->tid}','{echo $value['did']}')"><span class="pencil_ico">修改</span></a></li>
+                          {/if} 
+                                <li><a href="javascript:;" onclick="TaskReport('{echo $this->tid}','{echo $value['did']}')"><span class="report_pencil_ico">举报</span></a></li>
+                          </ul>
+                 </div>  
+             
+            </div>  
+            
+            
+          
+                 
+                  
+      </div>  
+    {/for}
+    </div>
+</div>     
+<script type="text/javascript">
+$(function(){	
+	$.PHPAPPMouseover('.task_item','.task_description');
+	$.PHPAPPTaskFlash('.flashbid',500);
+});
+</script>

@@ -1,0 +1,139 @@
+<link href="{TURL}prop_icon.css" rel="stylesheet" type="text/css" />
+<link href="{TURL}use_prop.css" rel="stylesheet" type="text/css" />
+
+<h5>任务类型：<span class="help_small" title="任务类型"> </span></h5>
+<p id="TaskTypeRadio">
+       <input type="radio" id="TaskType1" name="tasktype_d" value="1" {if !empty($task['tasktype']) && $task['tasktype']==1}checked="checked"{else}checked="checked"{/if}/><label for="TaskType1">单人悬赏</label>
+       <input type="radio" id="TaskType2" name="tasktype_d" value="2" {if !empty($task['tasktype']) && $task['tasktype']==2}checked="checked"{/if}/><label for="TaskType2">多人悬赏</label>          
+</p>
+
+
+<h5>任务标题：<span class="help_small" title="{echo $this->str(PHPAPP::$config['task_count_subject_help'],999999,0,1,0,0,1)}"> </span></h5>
+<p><input name="subject_s" type="text"  id="subject" size="50" maxlength="100" class="form_input_text form_input_width_500"  value="{if !empty($task['subject'])}{echo $task['subject']}{/if}" title="请输入任务标题"/>
+</p>
+
+
+{if $fieldarray=$this->GetTableFieldArray('task')}
+  <!-- 自定义字段 -->
+      {for $fieldarray $field}
+       <h5>{echo $field['name_phpapp']}：</h5>
+       <p>
+        {echo $this->GetTableFieldForm($field,empty($task)?'':$task)}
+       </p>
+      {/for}
+  <!-- 自定义字段 end -->
+{/if}
+
+<div id="SelectTaskType" {if !empty($task['tasktype']) && $task['tasktype']==1}style="display:none"{elseif empty($task['tasktype'])}style="display:none"{/if}>
+
+    <h5>人数：<span class="help_small" title="需要几人数"> </span></h5>
+       
+    <p><input name="total_d" type="text" id="total" size="3" maxlength="10" class="form_input_text form_input_width_100"  value="{if !empty($task['total'])}{echo $task['total']}{else}1{/if}" title="请输入你想要的人数"/>
+    </p>
+
+</div>
+  
+  
+<h5>赏金：<span class="help_small" title="支付赏金"> </span></h5>  
+
+<p><input name="money_f" type="text" id="Money" size="3"  maxlength="12" class="form_input_text form_input_width_100"  value="{if !empty($task['money'])}{echo $task['money']/$task['total']}{else}0{/if}" title="请输入你悬赏的金额"/> <span style="color:#999">元/人</span>  &nbsp; <span style="font-size:14px"><span id="NowMoney">0</span> x <span id="NowTotal">0</span>(人) = <span class="color_f60" id="NowTotalMoney">0</span> 元(总赏金)</span>
+</p>
+
+
+<h5>诚信选标：<span class="help_small" title="当您选择 <保证选标> 后,有3个以上<诚信威客><br />投标时,您必须选择他们否则扣1个信用积分！<br />无<诚信威客>时,您可以选标或<br />不选系统都不扣除信用积分,<br />选择<保证选标>可以增加威客的投标率哦！"> </span></h5>
+
+<p id="TaskCreditRadio">
+       <input type="radio" id="TaskCredit1" name="credit_d" value="1" {if !empty($task['credit']) && $task['credit']==1}checked="checked"{else}checked="checked"{/if}/><label for="TaskCredit1">保证选标</label>
+                 
+       <input type="radio" id="TaskCredit2" name="credit_d" value="2" {if !empty($task['credit']) && $task['credit']==2}checked="checked"{/if}/><label for="TaskCredit2">不保证选标</label>          
+</p>
+
+
+<h5>任务截止时间：<span class="help_small" title="任务截止时间"> </span></h5>
+<p>
+<input name="endtime_s" type="text" id="endtime" size="3" maxlength="3" class="form_input_text form_input_width_200 dateline"  value="{if !empty($task['endtime'])}{echo @date('Y-m-d',$task['endtime'])}{else}{echo @date('Y-m-d',time()+24*60*60*(intval(PHPAPP::$config['task_endtime'])-1))}{/if}" title="请输入您截止的投标时间"/> <span style="color:#999">输入格式： {echo @date('Y-m-d',time()+24*60*60*(intval(PHPAPP::$config['task_endtime'])-1))}</span> 任务时间 最多 <strong>{echo PHPAPP::$config['task_endtime']}</strong> 天 </span>
+</p>
+
+
+<h5>任务分类：<span class="help_small" title="请选择一个任务分类"> </span></h5>
+<p id="catid" style="height:24px">
+{if !empty($task['catid'])}
+     {echo $this->GetSelectCategory('category',$task['catid'],'catid',49,1)}
+{else} 
+     {echo $this->SetSelectCategory('category',0,'catid',49,1)}
+{/if} 
+</p>
+
+
+<h5>任务人才技能：<span class="help_small" title="任务要求卖家具备的技能"> </span></h5>
+
+<div class="get_select_skills">
+    <div id="SelectSkills" class="select_skills">
+    </div>
+    
+    <div class="select_more_skills"><a href="javascript:void(0);" class="select_more_skills" id="SelectMoreSkills" title="点击获更多技能选择">点击获更多技能</a></div>
+</div>
+
+<div id="SelectMoreSkillsView" class="header_member_default more_skills_view" style="display:none">
+    <h3></h3>
+    <ul id="MoreSkillsList" class="skills_data_list">
+    </ul>
+    <div class="more_skills_updown"><a href="javascript:void(0);" onclick="SetScrollBox('#MoreSkillsList',1);" title="技能往上显示">向上</a><a href="javascript:void(0);" onclick="SetScrollBox('#MoreSkillsList',2);" title="技能往下显示" style="float:right">向下</a></div>
+</div>
+
+<p>
+<input type="hidden" id="SkillsSelected" name="skills_s" value=""/>
+{if !empty($task['skills'])}
+<script type="text/javascript">
+	$(function(){	
+		$('#SelectSkills').html('');
+		$('#SkillsSelected').val('');
+		$.PHPAPPGetAllSkills({echo $task['catid']},'{echo $task["skills"]}');
+	});
+</script>
+{else}
+<script type="text/javascript">
+	$(function(){	
+		 $.PHPAPPGetAllSkills();
+	});
+</script>	 
+{/if}
+</p>
+
+
+<!--
+<h5>联系电话：</h5>
+<p><input name="taskphone_s" type="text"  id="taskphone" size="20" maxlength="20" class="form_input_text form_input_width_200"  value="{if !empty($task['taskphone'])}{echo $task['taskphone']}{/if}" title="请输入任务标题"/> (电话不公开,仅客服查看)
+</p>
+-->
+
+
+<h5>任务描述：<span class="help_small" title="{echo PHPAPP::$config['task_count_content_help']}"> </span></h5>
+
+{template editor:editor}
+<script type="text/javascript">$(function(){$.PHPAPPEditor('Content','{echo intval(PHPAPP::$config["siteframewidth"]-86)}','280');});</script>
+<textarea name="content_s" id="Content" class="form_editor">{if !empty($task['content'])}{echo 	$this->str($task['content'],999999,0,1,0,1,1)}{/if}</textarea>
+
+{if empty($admintask)}
+<div class="buyprops">
+
+     <div id="service_tabs" style="border: none;padding:0px;">
+        
+        <ul>
+            <li><a href="#ServiceList"><span>购买增值服务</span></a></li>
+        </ul>
+    
+        <div id="ServiceList" style="padding-left:0px;padding-right:0px;">
+              <div class="loading">读取数据中...</div>
+        </div>
+
+</div>
+{/if}
+
+<input type="hidden" id="BuyPropsID" name="props" value="{if !empty($task['props'])}{echo $task['props']}{/if}"/>
+
+<input type="hidden" name="SecurityForm_s" value="{echo $this->SecurityForm()}"/>
+
+<input type="hidden" id="Edittid" name="edittid_d" value="{if !empty($edittid)}{echo $edittid}{/if}"/>
+
+<span class="loginrefresh" style="display:none">1</span> 

@@ -1,0 +1,42 @@
+{template member:menu}
+
+
+{if $list}
+
+<div id="tasklist">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr class="manage_process">
+    <td class="datalist_h2" style="width:130px;">操作</td>
+    <td class="datalist_h2" style="width:480px;">每日内最多奖励次数</td>
+    <td class="datalist_h2">奖励积分</td>
+  </tr>
+
+{for $list $value}
+  <tr>
+    <td class="datalist_h2">{echo $value['name_phpapp']}</td>
+    <td class="datalist_h2">{echo $value['number_phpapp']}</td>
+    <td class="datalist_h2">{if $value['credit_phpapp']>0}+{/if} <strong>{echo $value['credit_phpapp']}</strong></td>
+  </tr>
+ {/for} 
+
+</table>
+
+</div>
+
+<div class="ajax_page">{echo $page->ShowPages()}</div>
+
+{else}
+
+ <p style="padding:10px">您暂时没有数据</p>
+ 
+{/if}    
+      
+
+
+
+</td></tr></table>
+
+
+
+{template phpapp:footer}

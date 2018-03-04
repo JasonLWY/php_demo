@@ -1,0 +1,90 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+<tr>
+<td style="width:200px;">是否强制手机认证</strong></td>
+<td style="width:200px;">  
+<input class="radio" type="radio" name="vipisopenmobile_d" value="0"  {if PHPAPP::$config['vipisopenmobile']==0}checked{/if}>&nbsp;启用 <input class="radio" type="radio" name="vipisopenmobile_d" value="1" {if PHPAPP::$config['vipisopenmobile']==1}checked{/if}>&nbsp;关闭
+</td>
+<td class="color_999"></td>
+</tr>  
+
+<tr>
+<td style="width:200px;">是否强制实名认证</strong></td>
+<td style="width:200px;">  
+<input class="radio" type="radio" name="vipisopenrealname_d" value="0"  {if PHPAPP::$config['vipisopenrealname']==0}checked{/if}>&nbsp;启用 <input class="radio" type="radio" name="vipisopenrealname_d" value="1" {if PHPAPP::$config['vipisopenrealname']==1}checked{/if}>&nbsp;关闭
+
+</td>
+<td class="color_999"></td>
+</tr>  
+
+<tr>
+<td style="width:200px;">推广VIP提成</strong></td>
+<td style="width:200px;">  
+<input name="membervipunionfee_f" type="text" class="form_input_text form_input_width_200" value="{echo PHPAPP::$config['membervipunionfee']}" maxlength="8"/>
+</td>
+<td class="color_999">如: 20% 填 0.2</td>
+</tr>  
+
+</table> 
+
+{for $membertypearr $membertype}
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+
+
+<tr>
+<td class="width_160"><strong>{echo $membertype['name_phpapp']}会员升级价格配置</strong></td>
+<td>
+</td>
+<td class="color_999">出售用户组的价格配置</td>
+</tr>
+</table>
+
+{php}$usergrouparr=$this->GetMysqlArray('*'," ".$this->GetTable('usergroup')." WHERE usertype='$membertype[id_phpapp]' "); {/php}
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  {for $usergrouparr $value}
+          {if $membervipset}{php} $nowusergroup=@$membervipset[$membertype[id_phpapp]][$value[gid]];{/php}{/if}
+          <tr>
+          <td style="width:160px;"><input name="usergroup[{echo $membertype['id_phpapp']}][{echo $value['gid']}][gid]" type="checkbox" value="{echo $value['gid']}" {if $nowusergroup['gid']==$value['gid']}checked{/if}/> ID {echo $value['gid']} {echo $value['groupname']}</td>
+          <td style="width:180px;"><input name="usergroup[{echo $membertype['id_phpapp']}][{echo $value['gid']}][price]" value="{if $nowusergroup}{echo $nowusergroup['price']}{else}10{/if}" type="text"  class="form_input_text form_input_width_100" /> 原价格/月</td>
+          <td style="width:180px;"><input name="usergroup[{echo $membertype['id_phpapp']}][{echo $value['gid']}][level]" value="{if $nowusergroup}{echo $nowusergroup['level']}{/if}" type="text"  class="form_input_text form_input_width_100" /> 晋级价格/月</td>
+          <td style="width:180px;"><input name="usergroup[{echo $membertype['id_phpapp']}][{echo $value['gid']}][money]" value="{if $nowusergroup}{echo $nowusergroup['money']}{/if}" type="text"  class="form_input_text form_input_width_100" /> 续费价格/月</td>
+          <td style="width:180px;"><input name="usergroup[{echo $membertype['id_phpapp']}][{echo $value['gid']}][demote]" value="{if $nowusergroup}{echo $nowusergroup['demote']}{/if}" type="text"  class="form_input_text form_input_width_100" /> 降级</td>
+          <td style="width:180px;">出售 <input name="usergroup[{echo $membertype['id_phpapp']}][{echo $value['gid']}][month]" value="{if $nowusergroup}{echo $nowusergroup['month']}{else}3,6,12{/if}" type="text"  class="form_input_text form_input_width_100" /> 个月</td>
+          </tr>
+          {php} $nowusergroup=array();{/php}
+  {/for}
+  
+   </table> 
+   
+{/for}   
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+<tr>
+<td style="width:160px;">配置说明：启用的用户组</td>
+<td style="width:180px;">第一次直接购买该组的每月价格</td>
+<td style="width:180px;">用户已购买过再晋级的每月价格</td>
+<td style="width:180px;">用户已购买过再续费的每月价格</td>
+<td style="width:180px;">过期后退回的用户组 填ID</td>
+<td style="width:180px;">出售的月份范围</td>
+<td></td>
+</tr>
+
+<tr>
+<td colspan="7">晋级格式说明：设置VIP会员晋级  3|5  时,表示用户组ID 3 晋级 到 VIP会员 5元, 多个用,豆号隔开,为空默认不能晋级。</td>
+</tr>
+<tr>
+<td colspan="7">出售月数说明：设置 3,6,12  时,表示 出售 3个月 6个月 12个月 给用户选择</td>
+</tr>
+<tr>
+<td colspan="7"><span class="color_f60">注意：在用户管理 直接修改的为 永久,不带过期功能!</span></td>
+</tr>
+
+</table>
+
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button"/></div>
+
+</form>

@@ -1,0 +1,107 @@
+{template admin:header}
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" class="datalist">
+ 
+       <tr>
+                <td class="form_input_width_150 addtask_text">UID：</td>
+                <td>{echo $certificate['uid']}</td>
+      </tr>
+      
+      <tr>
+                <td class="form_input_width_150 addtask_text">认证状态：</td>
+                <td><span class="color_f60">{if $certificate['status']==5}认证成功{elseif $certificate['status']==6}认证失败{else}认证中{/if}</span></td>
+      </tr>
+            
+                 {if $certificate['type']==1}
+
+                    <tr>
+                            <td class="form_input_width_150 addtask_text">银行名称：</td>
+                            <td> 
+                            <select name="bankid_d">
+                            {for $bankarr $value}
+                                     <option value="{echo $value['bankid']}" {if $value['bankid']==$certificate['bankid']} selected="selected"{/if}>{echo $value['bankname']}</option>
+                            {/for}
+                            </select>
+                            </td>
+                        </tr>
+                              
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">开户所在地：</td>
+                            <td id="bankaddress"> 
+                            {if $certificate['bankaddress']}
+                                 {echo $this->GetSelectCategory('category_city',$certificate['bankaddress'],'bankaddress')}
+                            {else} 
+                                 {echo $this->SetSelectCategory('category_city',$certificate['bankaddress'],'bankaddress')}
+                            {/if}
+                            </td>
+                         </tr>
+                                                
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">支行名称：</td>
+                            <td><input name="bankname_s" type="text"  id="bankname" size="50" maxlength="255" class="form_input_text form_input_width_400"  value="{if !empty($certificate['bankname'])}{echo $certificate['bankname']}{/if}"/></td>
+                        </tr>
+                          
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">银行卡号：</td>
+                            <td><input name="bankcard_s" type="text"  id="bankcard1" size="50" maxlength="255" class="form_input_text form_input_width_400"  value="{if !empty($certificate['bankcard'])}{echo $certificate['bankcard']}{/if}"/></td>
+                        </tr>
+                          
+                          
+                          
+                 {elseif $certificate['type']==2}
+                  
+                          <tr>
+                            <td class="form_input_width_150 addtask_text">在线支付：</td>
+                            <td> 
+                            <select name="bankid_s">
+                            {for $onlinebank $value}
+                                     <option value="{echo $value['id_phpapp']}"{if $value['id_phpapp']==$certificate['bankid']} selected="selected"{/if}>{echo $value['name_phpapp']}</option>
+                            {/for}
+                            </select>
+                            </td>
+                         </tr>
+                                               
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">工具帐号：</td>
+                            <td><input name="bankcard_s" type="text"  id="bankcard2" size="50" maxlength="255" class="form_input_text form_input_width_400"  value="{if !empty($certificate['bankcard'])}{echo $certificate['bankcard']}{/if}"/></td>
+                         </tr>
+                          
+                  
+                 {/if}
+                 
+                          <tr>
+                            <td class="form_input_width_150 addtask_text">公司名称：</td>
+                            <td><input name="company_s" type="text"  id="company" size="50" maxlength="255" class="form_input_text form_input_width_400"  value="{if !empty($certificate['company'])}{echo $certificate['company']}{/if}"/></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="form_input_width_150 addtask_text">工商注册号：</td>
+                            <td><input name="businessnumber_s" type="text"  id="businessnumber" size="50" maxlength="255" class="form_input_text form_input_width_400"  value="{if !empty($certificate['businessnumber'])}{echo $certificate['businessnumber']}{/if}"/></td>
+                        </tr>
+                        
+                 
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">法人姓名：</td>
+                            <td><input name="realname_s" type="text"  id="realname" size="50" maxlength="255" class="form_input_text form_input_width_400"  value="{if !empty($certificate['realname'])}{echo $certificate['realname']}{/if}"/></td>
+            </tr>
+                          
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">身份证号：</td>
+                            <td><input name="idnumber_s" type="text"  id="idnumber" size="50" maxlength="255" class="form_input_text form_input_width_400"  value="{if !empty($certificate['idnumber'])}{echo $certificate['idnumber']}{/if}"/></td>
+            </tr>
+            
+               <tr>
+                            <td class="form_input_width_150 addtask_text">验证错误次数：</td>
+                            <td><input name="errornum_d" type="text"  id="errornum" size="50" maxlength="255" class="form_input_text form_input_width_400"  value="{if !empty($certificate['errornum'])}{echo $certificate['errornum']}{/if}"/> (会员在验证金额时，输入错误太多被禁，可以在此清0解禁。)</td>
+            </tr>
+                       
+                          
+    
+ </table>
+ 
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+</form>

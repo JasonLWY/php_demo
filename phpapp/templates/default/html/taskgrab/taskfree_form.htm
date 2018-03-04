@@ -1,0 +1,170 @@
+
+<h5>任务标题：<span class="help_small" title="{echo $this->str(PHPAPP::$config['task_grab_subject_help'],999999,0,1,0,0,1)}"> </span></h5>
+<p><input name="subject_s" type="text"  id="subject" size="50" maxlength="100" class="form_input_text form_input_width_500"  value="{if !empty($task['subject'])}{echo $task['subject']}{/if}" title="请输入任务标题"/>
+</p>
+
+{if $fieldarray=$this->GetTableFieldArray('task')}
+  <!-- 自定义字段 -->
+      {for $fieldarray $field}
+       <h5>{echo $field['name_phpapp']}：</h5>
+       <p>
+        {echo $this->GetTableFieldForm($field,empty($task)?'':$task)}
+       </p>
+      {/for}
+  <!-- 自定义字段 end -->
+{/if}
+
+<h5>任务截止投标时间：<span class="help_small" title="任务截止投标时间"> </span></h5>
+<p>
+
+<input name="endtime_s" type="text" id="endtime" size="3" maxlength="3" class="form_input_text form_input_width_200 dateline"  value="{if !empty($task['endtime'])}{echo @date('Y-m-d',$task['endtime'])}{else}{echo @date('Y-m-d',time()+24*60*60*(intval(PHPAPP::$config['task_endtime'])-1))}{/if}" title="请输入您截止的投标时间"/> <span style="color:#999">输入格式： {echo @date('Y-m-d',time()+24*60*60*(intval(PHPAPP::$config['task_endtime'])-1))}</span> 任务时间 最多 <strong>{echo PHPAPP::$config['task_endtime']}</strong> 天 </span>
+</p>
+
+<h5>任务分类：<span class="help_small" title="请选择一个任务分类"> </span></h5>
+<p id="catid" style="height:24px">
+{if !empty($task['catid'])}
+     {echo $this->GetSelectCategory('category',$task['catid'],'catid',49,1)}
+{else} 
+     {echo $this->SetSelectCategory('category',0,'catid',49,1)}
+{/if} 
+</p>
+
+
+
+<h5>任务人才技能：<span class="help_small" title="任务要求卖家具备的技能"> </span></h5>
+
+<div class="get_select_skills">
+    <div id="SelectSkills" class="select_skills">
+    </div>
+    
+    <div class="select_more_skills"><a href="javascript:void(0);" class="select_more_skills" id="SelectMoreSkills" title="点击获更多技能选择">点击获更多技能</a></div>
+</div>
+
+<div id="SelectMoreSkillsView" class="header_member_default more_skills_view" style="display:none">
+    <h3></h3>
+    <ul id="MoreSkillsList" class="skills_data_list">
+    </ul>
+    <div class="more_skills_updown"><a href="javascript:void(0);" onclick="SetScrollBox('#MoreSkillsList',1);" title="技能往上显示">向上</a><a href="javascript:void(0);" onclick="SetScrollBox('#MoreSkillsList',2);" title="技能往下显示" style="float:right">向下</a></div>
+</div>
+
+<p>
+<input type="hidden" id="SkillsSelected" name="skills_s" value=""/>
+
+{if !empty($task['skills'])}
+<script type="text/javascript">
+	$(function(){	
+		$('#SelectSkills').html('');
+		$('#SkillsSelected').val('');
+		$.PHPAPPGetAllSkills({echo $task['catid']},'{echo $task["skills"]}');
+	});
+</script>
+{else}
+<script type="text/javascript">
+	$(function(){	
+		 $.PHPAPPGetAllSkills();
+	});
+</script>	 
+{/if}
+</p>
+
+
+<h5>任务类型：<span class="help_small" title="任务类型"> </span></h5>
+<p id="TaskTypeRadio">
+       <input type="radio" id="TaskType1" name="freetasktype_d" value="1" {if !empty($task['tasktype']) && $task['tasktype']==1}checked="checked"{else}checked="checked"{/if}/><label for="TaskType1">按固定价</label>
+       <input type="radio" id="TaskType2" name="freetasktype_d" value="2" {if !empty($task['tasktype']) && $task['tasktype']==2}checked="checked"{/if}/><label for="TaskType2">按时间段</label>          
+</p>
+
+
+<h5>任务诚意金：<span class="help_small" title="预支付的定金,交易时可以选择使用它,<br />支付诚意金让您的任务获得更多投标，<br />当选择诚意金时只能一个中标。"> </span></h5>
+<p>
+<select name="freemoney_f" id="Money" class="form_input_text form_input_width_100"  style="height:24px;">
+  <option value="0" {if !empty($task['money']) && $task['money']==0} selected="selected"{/if}>无诚意金</option>
+  <option value="50" {if !empty($task['money']) && $task['money']==50} selected="selected"{/if}>50元</option>
+  <option value="100" {if !empty($task['money']) && $task['money']==100} selected="selected"{/if}>100元</option>
+  <option value="200" {if !empty($task['money']) && $task['money']==200} selected="selected"{/if}>200元</option>
+  <option value="400" {if !empty($task['money']) && $task['money']==400} selected="selected"{/if}>400元</option>
+  <option value="500" {if !empty($task['money']) && $task['money']==500} selected="selected"{/if}>500元</option>
+  <option value="600" {if !empty($task['money']) && $task['money']==600} selected="selected"{/if}>600元</option>
+  <option value="800" {if !empty($task['money']) && $task['money']==800} selected="selected"{/if}>800元</option>
+  <option value="1000" {if !empty($task['money']) && $task['money']==1000} selected="selected"{/if}>1000元</option>
+  <option value="2000" {if !empty($task['money']) && $task['money']==2000} selected="selected"{/if}>2000元</option>
+  <option value="4000" {if !empty($task['money']) && $task['money']==4000} selected="selected"{/if}>4000元</option>
+  <option value="5000" {if !empty($task['money']) && $task['money']==5000} selected="selected"{/if}>5000元</option>
+  <option value="6000" {if !empty($task['money']) && $task['money']==6000} selected="selected"{/if}>6000元</option>
+  <option value="8000" {if !empty($task['money']) && $task['money']==8000} selected="selected"{/if}>8000元</option>
+  <option value="10000" {if !empty($task['money']) && $task['money']==10000} selected="selected"{/if}>10000元</option>
+</select>
+
+</p>
+
+<div id="SelectBidNumber" {if !empty($task['money']) && $task['money']>0}style="display:none"{/if}>
+    <h5>任务招标标数：<span class="help_small" title="任务招标标数"> </span></h5>
+    
+    <p class="select_price">     
+    <input name="freetotal_d" type="text" id="BidNumber" size="50" maxlength="6" class="form_input_text form_input_width_100"  value="{if !empty($task['total'])}{echo $task['total']}{else}1{/if}" title="请输入投标标数"/> 标
+    </p>
+</div>
+
+
+<h5>任务预算金额：<span class="help_small" title="任务预算金额"> </span></h5>
+
+<p class="select_price">     
+
+          <input name="price1_f" type="text" id="price1" size="3" maxlength="10" class="form_input_text form_input_width_100 selectprice"  value="{if !empty($task['price1'])}{echo $task['price1']}{else}50{/if}" title="任务预算金额"/> &nbsp; — &nbsp; <select name="price2_f" id="price2" class="form_input_text form_input_width_100" style="height:24px"></select>
+        元
+</p>
+
+
+<div id="TaskDuration" {if empty($task['tasktype']) || $task['tasktype']==1}style="display:none"{/if}>
+<h5>工作时间：<span class="help_small" title="任务工作时间"> </span></h5>
+
+<p>   
+<input name="duration_d" type="text" id="Duration" size="3" maxlength="4" class="form_input_text form_input_width_100 selectprice"  value="{if !empty($task['duration'])}{echo $task['duration']}{else}30{/if}" title="工作时间"/> &nbsp; — &nbsp; <select name="timetype_d" id="TimeType" class="form_input_text form_input_width_100"  style="height:24px;">
+  <option value="1" {if !empty($task['timetype']) && $task['timetype']==1} selected="selected"{/if}>分钟</option>
+  <option value="2" {if !empty($task['timetype']) && $task['timetype']==2} selected="selected"{/if}>小时</option>
+  <option value="3" {if !empty($task['timetype']) && $task['timetype']==3} selected="selected"{/if}>天</option>
+  <option value="4" {if !empty($task['timetype']) && $task['timetype']==4} selected="selected"{/if}>月</option>
+  <option value="5" {if !empty($task['timetype']) && $task['timetype']==5} selected="selected"{/if}>年</option>
+</select>
+
+</p>
+</div>
+
+
+<!--
+<h5>联系电话：</h5>
+<p><input name="taskphone_s" type="text"  id="taskphone" size="20" maxlength="20" class="form_input_text form_input_width_200"  value="{if !empty($task['taskphone'])}{echo $task['taskphone']}{/if}" title="请输入任务标题"/> (电话不公开,仅客服查看)
+</p>
+-->
+
+
+<h5>任务描述：<span class="help_small" title="{echo PHPAPP::$config['task_grab_content_help']}"> </span></h5>
+
+{template editor:editor}
+<script type="text/javascript">$(function(){$.PHPAPPEditor('Content','{echo intval(PHPAPP::$config["siteframewidth"]-86)}','280');});</script>
+<textarea name="content_s" id="Content" class="form_editor">{if !empty($task['content'])}{echo 	$this->str($task['content'],999999,0,1,0,1,1)}{/if}</textarea>
+
+{if empty($admintask)}
+<div class="buyprops">
+
+     <div id="service_tabs" style="border: none;padding:0px;">
+        
+        <ul>
+            <li><a href="#ServiceList"><span>购买增值服务</span></a></li>
+        </ul>
+    
+        <div id="ServiceList" style="padding-left:0px;padding-right:0px;">
+              <div class="loading">读取数据中...</div>
+        </div>
+
+</div>
+{/if}
+
+
+<input type="hidden" id="BuyPropsID" name="props" value="{if !empty($task['props'])}{echo $task['props']}{/if}"/>
+
+<input type="hidden" name="SecurityForm_s" value="{echo $this->SecurityForm()}"/>
+
+<input type="hidden" id="Edittid" name="edittid_d" value="{if !empty($edittid)}{echo $edittid}{/if}"/>
+
+<span class="loginrefresh" style="display:none">1</span> 

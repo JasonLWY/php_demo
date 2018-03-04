@@ -1,0 +1,93 @@
+{template header}
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $this->GET['op']==1 || $this->GET['op']==2}
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">站名称</td>
+    <td>
+    <input name="sitename_s" value="{if !empty($manage['sitename'])}{echo $manage['sitename']}{/if}" type="text" class="form_input_text form_input_width_200" />
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">链接地址</td>
+    <td>
+    <input name="siteurl_s" value="{if !empty($manage['siteurl'])}{echo $manage['siteurl']}{/if}" type="text" class="form_input_text form_input_width_200" />
+    </td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">LOGO</td>
+    <td>
+    <input name="logo_s" value="{if !empty($manage['logo'])}{echo $manage['logo']}{/if}" type="text" class="form_input_text form_input_width_200" /> (文字链接留空)
+    </td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">介绍</td>
+    <td>
+    <input name="description_s" value="{if !empty($manage['description'])}{echo $manage['description']}{/if}" type="text" class="form_input_text form_input_width_200" />
+    </td>
+  </tr>
+ 
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+
+
+{else}
+
+
+    {if $list}
+    
+    <div id="WindowsForm{echo $this->GET['menu']}">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+      <tr>
+        <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1" onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+        {for $orderarr $key=>$value}
+        <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+        {/for} 
+        <td class="datalist_h2">操作</td>
+      </tr>
+    
+    {for $list $key=>$value}
+      <tr>
+        <td><input name="checkbox[]" type="checkbox" value="{echo $value['lid']}"/></td>
+        <td>{echo $value['lid']}</td>
+        <td>{echo $value['sitename']}</td>
+        <td>{echo $value['siteurl']}</td>
+        <td>{if $value['logo']}<img src="{echo $value['logo']}" alt="{echo $value['sitename']}" />{else}文字链接{/if}</td>
+        <td>{echo $value['displayorder']}</td>
+        <td><a href="{echo $this->MakeGetParameterURL(array('op'=>2,'id'=>$value['lid']))}">[编辑]</a></td>
+      </tr>
+     {/for} 
+    
+    </table>
+    </div>
+    
+    <div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+    
+    <div class="phpapp_button"><input name="Submit" type="submit" value="删除" class="form_button"/></div>
+    
+    
+    {else}
+    
+    <p>暂无数据</p>
+    
+    {/if}
+
+
+{/if}
+
+</form>

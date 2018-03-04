@@ -1,0 +1,12 @@
+{template admin:header}
+
+<div style="padding:10px;">
+<div class="sms_subject">{echo $noticearr['subject']}</div>
+
+{echo $this->str($noticearr['content'],0,0,1,0,0,1)}
+
+<p>{echo $this->Date('Y/d/m H:i:s',$noticearr['dateline'])}</p></div>
+
+</div>
+
+</div>

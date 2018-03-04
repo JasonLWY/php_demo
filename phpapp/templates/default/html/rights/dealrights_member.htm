@@ -1,0 +1,76 @@
+{template member:menu}
+
+<link href="{TURL}refund.css" rel="stylesheet" type="text/css" />
+
+<form id="RefundForm" action="{echo $this->MakeGetParameterURL()}" method="post" enctype="multipart/form-data">
+
+<div class="warning">
+    <h3>维权提示：</h3>
+    <p>
+     本站客服已介入维权,如果雇主凭证属实并要求退款补偿,客服将扣除您的 消费者保障金。
+    </p>
+</div>
+
+<div class="refund_table">
+   <h2>维权编号 {echo $refund['rid']} 申请维权中</h2>
+   <ul>
+       
+       <li>雇主维权原因：{echo $refunditemarr['project']} </li>
+       
+       <li>我的维权说明：</li>
+       <li style="height:220px;"><textarea name="sellercontent_s" id="Content" class="form_editor" style="width:660px;height:200px;">{if !empty($refund['sellercontent'])}{echo $this->str($refund['sellercontent'],999999,0,0,1,0,0,1)}{else}同意雇主申请{/if}</textarea></li>
+       
+       <li>我的上传凭证： <input name="sellerphoto" type="file" id="photo"/> <span style="color:#999">文件格式：jpg,gif,png 文件最大： 800k</span></li>
+       
+       {if !empty($refund['sellerphoto'])}
+  
+        <p id="logophotoshow" style="padding-top:20px;padding-bottom:20px;">
+            {php}
+            $photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$refund[sellerphoto]'");{/php}
+            {if $photo}  
+                 <a href="{SURL}/index.php?app=18&fid={echo $refund['sellerphoto']}"><img src="{echo $photo['thumb']}"/></a>
+            {/if}
+        </p>   
+       
+       {/if}
+     
+   </ul>
+   
+   <div style="text-align:center;padding-top:20px;"><input name="submit" type="submit" value="发表维权" id="SubmitAdd" class="form_button"/></div>
+</div>
+
+
+</form>
+
+
+<script type="text/javascript">
+
+$(function() {
+		   
+	    $("#SubmitAdd").click( function () {
+
+			  var content=$("#Content");
+			  if (content.val()==""){
+				    alert("请输入维权说明!");
+				    content.focus();
+				    return false; 
+			  }
+		
+			  if (content.val().length<"4"){
+		            alert("维权说明内容不能小于4个字节!");
+		            content.focus();
+		            return false; 
+	          }
+			  
+			  
+              $("#RefundForm").submit();
+			  
+	    });
+	  
+		
+});	
+
+</script>
+
+
+{template phpapp:footer}

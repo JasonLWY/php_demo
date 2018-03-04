@@ -1,0 +1,118 @@
+{template phpapp:header}
+
+{template search_top}
+
+<div class="help_list">
+
+     <div class="list_left"> 
+          
+          {ad Help68}
+          
+          <div class="help_category">
+          <h2>帮助导航</h2>
+          
+          <ul id="HelpCategory">
+             {php}
+                 $category=$this->GetMysqlArray('*'," ".$this->GetTable('category')." WHERE type='$this->app' AND upid=0  ORDER BY displayorder ASC");
+             {/php}
+             
+             {if $category}
+                   {for $category $value}
+                      
+                        <h3><a href='{echo SURL}/index.php?app={echo $this->app}&action=1&item={echo $value['catid']}' {if $value['classname']} class="{echo $value['classname']}"{/if}>{echo $value['name']}</a></h3>
+                       
+                       {php}
+                           $categorysubarr=$this->GetMysqlArray('*'," ".$this->GetTable('category')." WHERE type='$this->app' AND upid='$value[catid]'  ORDER BY displayorder ASC");
+                       {/php}
+                       
+                       {if $categorysubarr}
+                             {for $categorysubarr $categorysub}
+                       		 		<li><a href='{echo SURL}/index.php?app={echo $this->app}&action=1&item={echo $categorysub['catid']}' {if $categorysub['classname']} class="{echo $categorysub['classname']}"{/if}>{echo $categorysub['name']}</a></li>
+                             {/for}
+                       {/if}
+                   {/for}
+             {/if}
+          
+          </ul>
+          
+          </div>
+
+          
+          {ad Help69}
+
+         
+     </div>
+     
+     <div class="list_right"> 
+           {if $categoryarr}
+
+                 {for $categoryarr $category}
+                       <div class="help_item">
+                            <h2><dfn><a href='{echo SURL}/index.php?app=57&item={echo $category['catid']}'>更多></a></dfn>{echo $category['name']}</h2>
+                            <ul>
+                            
+                            {php} 
+                                 
+                                 $categoryidarr=$this->GetMysqlArray('*'," ".$this->GetTable('category')." WHERE upid='$category[catid]'"); 
+                                 $upidid=$category[catid];
+                                 foreach($categoryidarr as $upidarr){
+                                        $upidid.=','.$upidarr['catid'];
+                                 }
+                                 
+                                 $helplist=$this->GetMysqlArray('*'," ".$this->GetTable('help')." WHERE catid IN($upidid) ORDER BY dateline DESC LIMIT 0,10"); 
+                            
+                            {/php}
+                            
+                             {if $helplist}
+                                  {for $helplist $value}
+                                        <li><a href="{echo SURL}/index.php?app=57&action=2&hid={echo $value['hid']}">{echo $this->str($value['subject'],22)}</a></li>
+                                  {/for}
+                             {else}
+                                   <li>暂时没有数据</li>
+                             {/if}
+                            
+                            </ul>
+                       </div>
+                  {/for}
+  
+           {else}
+                  
+                  
+                 {if !empty($list)}
+           
+                 <div class="help_item">
+                            <h2>{echo $categoryname}列表</h2>
+                            <ul>
+                            
+                            {if $list}
+                            
+                                   {for $list $value}
+                                        <li><a href="{echo SURL}/index.php?app=57&action=2&hid={echo $value['hid']}">{echo $value['subject']}</a></li>
+                                   {/for}
+                                   
+                            {else}
+                                   <li>暂时没有数据</li>
+                            {/if}
+
+                            </ul>
+                 </div>
+           
+                                       
+                             {if $page->ShowPages()}
+                             <div class="ajax_page">{echo $page->ShowPages()}</div>
+                             {/if}
+                   {else}
+                                <li>暂时没有数据</li>
+                   {/if}          
+           
+           {/if}
+
+     </div>
+     
+</div>
+
+{ad Help67}
+
+
+
+{template phpapp:footer}

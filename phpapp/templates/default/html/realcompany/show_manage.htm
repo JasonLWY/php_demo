@@ -1,0 +1,144 @@
+{template admin:header}
+
+
+
+
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" class="datalist">
+ 
+      <tr>
+                <td class="form_input_width_150 addtask_text">认证状态：</td>
+                  <td>{if $certificate['status']==5}<span class="color_f60">认证成功</span>{elseif $certificate['status']==6}
+                  <h3>认证失败</h3>
+           
+                   {if $certificate['errorinfo']}
+                   
+                        <p>{echo $certificate['errorinfo']}</p>
+                   
+                   {else}
+                   
+                        <p>您验证错误太多认证已禁用，请联系管理员解禁!</p>
+                   
+                   {/if}
+                
+                
+                {else}认证中{/if}</span></td>
+      </tr>
+            
+                 {if $certificate['type']==1}
+
+                          
+                       <tr>
+                            <td class="form_input_width_150 addtask_text">银行名称：</td>
+                            <td>
+                            
+                            {for $bankarr $value}
+                                    {if $value['bankid']==$certificate['bankid']}{echo $value['bankname']}{/if}
+                            {/for}
+             
+                            </td>
+            </tr>
+                              
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">开户所在地：</td>
+                            <td id="bankaddress"> 
+                            {if $certificate['bankaddress']}
+                                 {echo $this->GetSelectCategory('category_city',$certificate['bankaddress'],'bankaddress','','',1)}
+                            {/if}
+                            </td>
+                         </tr>
+                                                
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">支行名称：</td>
+                            <td>{if !empty($certificate['bankname'])}{echo $certificate['bankname']}{/if}</td>
+            </tr>
+                          
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">银行卡号：</td>
+                            <td>{if !empty($certificate['bankcard'])}{echo $certificate['bankcard']}{/if}</td>
+            </tr>       
+                          
+         
+                          
+                 {elseif $certificate['type']==2}
+                  
+                           <tr>
+                            <td class="form_input_width_150 addtask_text">在线支付：</td>
+                            <td> 
+                          
+                            {for $onlinebank $value}
+                                   {if $value['id_phpapp']==$certificate['bankid']}{echo $value['name_phpapp']}{/if}
+                            {/for}
+                    
+                            </td>
+                          </tr>
+                                               
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">工具帐号：</td>
+                            <td>{if !empty($certificate['bankcard'])}{echo $certificate['bankcard']}{/if}</td>
+            </tr>
+  
+                  
+                 {/if}
+                 
+                 
+                        <tr>
+                            <td class="form_input_width_150 addtask_text">公司名称：</td>
+                            <td>{if !empty($certificate['company'])}{echo $certificate['company']}{/if}</td>
+                        </tr>    
+                        
+                        
+                        <tr>
+                            <td class="form_input_width_150 addtask_text">工商注册号：</td>
+                            <td>{if !empty($certificate['businessnumber'])}{echo $certificate['businessnumber']}{/if}</td>
+                        </tr>    
+                        
+                        <tr>
+                            <td class="form_input_width_150 addtask_text">营业执照：</td>
+                            <td>
+                            {if !empty($certificate['businesslicense'])}
+                                    {php}$photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$certificate[businesslicense]'");{/php}
+                                    {if $photo}  
+                                         <img src="{echo $photo['thumb']}"/>
+                                    {/if}
+                             {/if}
+                            </td>
+                        </tr> 
+                          
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">法人姓名：</td>
+                            <td>{if !empty($certificate['realname'])}{echo $certificate['realname']}{/if}</td>
+            </tr>
+                          
+                            <tr>
+                            <td class="form_input_width_150 addtask_text">身份证号：</td>
+                            <td>{if !empty($certificate['idnumber'])}{echo $certificate['idnumber']}{/if}</td>
+                          </tr>
+              
+                          <tr>
+                            <td class="form_input_width_150 addtask_text">上传身份证正面：</td>
+                            <td>
+                             {if !empty($certificate['frontphoto'])}
+                                    {php}$photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$certificate[frontphoto]'");{/php}
+                                    {if $photo}  
+                                         <img src="{echo $photo['thumb']}"/>
+                                    {/if}
+    
+                             {/if}
+                            </td>
+                          </tr>
+                          
+                          <tr>
+                            <td class="form_input_width_150 addtask_text">上传身份证反面：</td>
+                            <td>
+                            {if !empty($certificate['rearphoto'])}
+                                {php}$photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$certificate[rearphoto]'");{/php}
+                                {if $photo}  
+                                     <img src="{echo $photo['thumb']}"/>
+                                {/if}
+                            {/if}
+                            </td>
+                          </tr>
+                          
+                          
+         
+ </table>

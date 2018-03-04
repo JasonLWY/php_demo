@@ -1,0 +1,123 @@
+.order_show{
+	background-color: #EEF4F7;
+	width: 750px;
+	padding-bottom: 20px;
+}
+
+.order_show_h2{
+	background-color: #008cca;
+	line-height: 30px;
+	color: #FFF;
+	padding-left: 12px;
+	overflow: hidden;
+	height: 30px;
+}
+.order_show_h2 ul li{
+	float: left;
+	font-weight: bold;
+}
+.order_tabs{
+	margin-right: 20px;
+	margin-left: 20px;
+}
+.order_tabs .order_ul{
+	background-color:transparent;
+	background-image: none;
+	position: relative;
+	margin-bottom: -1px;
+	z-index: 999;
+}
+.order_tabs .order_ul li a{
+	padding-right: 20px;
+	padding-left: 20px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #09C;
+}
+.order_task{
+	overflow: hidden;
+	padding: 20px;
+}
+.task_avatar{
+	float: left;
+}
+#order_tabs .order_show_data{
+	background-color: #FFF;
+	border: 1px solid #DFDFDF;
+ 
+}
+
+.order_show_box{
+	width: 666px;
+}
+
+.task_user_info{
+	float: right;
+	width: 645px;
+}
+.task_user_username{
+	float: left;
+	width: 300px;
+}
+.task_reward{float: left;}
+.task_reward span{
+	font-size: 18px;
+	font-weight: bold;
+	color: #F60;
+}
+.order_operate{
+	float: right;
+	width: 100px;
+	color: #09C;
+}
+.order_operate p{
+	margin-top: 10px;
+}
+.task_time{
+	font-size: 16px;
+	color: #666;
+	padding-bottom: 20px;
+}
+.task_time span{
+	font-size: 16px;
+	color: #09C;
+}
+.order_process{
+	height: 100px;
+}
+.order_process_default{background-image: url(./images/pay/pay_process.png);
+	background-repeat: no-repeat;
+	background-position: left -60px;
+}
+.order_process_default li{
+	float: left;
+	width: 152px;
+	font-size: 14px;
+	line-height: 30px;
+	font-weight: bold;
+	color: #000;
+}
+.order_process_schedule{
+	background-image: url(./images/pay/pay_process.png);
+	background-repeat: no-repeat;
+	background-position: left 0px;
+	overflow: hidden;
+	height: 50px;
+}
+.message_add_button{
+	text-align: right;
+	margin-top: 4px;
+}
+.draft_comment_avatar{
+	float: left;
+	height: 50px;
+	width: 60px;
+}
+.draft_comment_list{
+	overflow: hidden;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-image: url(./images/line.png);
+	background-repeat: repeat-x;
+	background-position: left bottom;
+}

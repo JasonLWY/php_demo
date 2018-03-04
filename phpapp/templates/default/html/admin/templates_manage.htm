@@ -1,0 +1,76 @@
+{template header}
+
+
+{if $this->GET['op']==1}
+
+<p>当前模板路径：{echo $dir}{echo $_GET['id']}</p>
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<textarea name="content" class="form_textarea" style="width:98%;height:500px;">{echo $template}</textarea>
+
+<input name="filename_s" type="hidden" value="{echo $_GET['id']}"/>
+
+<input name="appid_s" type="hidden" value="{echo $appid}"/>
+
+<div class="phpapp_button"><input name="Submit_s" type="submit" value="保存" class="form_button"/></div>
+
+</form>
+
+{else}
+
+
+<p style="padding-bottom:10px;">选择应用
+<select id="SelectAppTemplate">
+<option value="0">请选择应用</option>
+{for $apps $value}
+    <option value="{echo $value['id_phpapp']}" {if $value['id_phpapp']==$appid}selected="selected"{/if}>{echo $value['name_phpapp']}</option>
+{/for}
+</select>  
+
+{if $appid>0}
+	&nbsp; 当前模板路径：{echo $dir}
+{/if}
+</p>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2">文件名</td>
+    <td class="datalist_h2">模板描述</td>
+    <td class="datalist_h2">使用平台</td>
+    <td class="datalist_h2">修改时间</td>
+    <td class="datalist_h2">操作</td>
+  </tr>
+
+{if $list}
+{for $list $value}
+  <tr>
+    <td>{php}$filesizeall+=$value['filesize'];{/php}{echo $value['filename']}</td>
+    <td>{if !empty($value['filereadme'])}{echo $value['filereadme']}{/if}</td>
+    <td>{if !empty($value['usesystem'])}{echo $value['usesystem']}{/if}</td>
+    <td>{echo $this->Date('Y-m-d h:i:s',$value['filetime'])}</td>
+    <td><a href="{echo $this->MakeGetParameterURL(array('op'=>1,'id'=>$value['filename'],'value'=>$appid))}">[编辑]</a></td>
+  </tr>
+ {/for} 
+  <tr>
+    <td colspan="5">总计大小：<strong>{echo floor(($filesizeall/1024)*100)/100}</strong> KB</td>
+  </tr>
+{else}
+  <tr>
+    <td colspan="5">无</td>
+  </tr>
+{/if}
+</table>
+
+
+<script type="text/javascript">
+$("#SelectAppTemplate").change( function() {
+	   
+	  var appid=$(this).val();							  
+
+	  window.location.href='{echo $this->MakeGetParameterURL()}&value='+appid;
+	  
+});
+</script>
+
+{/if}

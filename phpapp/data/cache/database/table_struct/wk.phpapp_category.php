@@ -1,0 +1,17 @@
+<?php return array (
+  'catid' => 'int',
+  'upid' => 'int',
+  'name' => 'string',
+  'route' => 'string',
+  'photolist' => 'int',
+  'skills' => 'blob',
+  'nexts' => 'blob',
+  'color' => 'string',
+  'type' => 'string',
+  'displayorder' => 'int',
+  'total' => 'int',
+  'title' => 'string',
+  'keywords' => 'string',
+  'description' => 'blob',
+  'classname' => 'string',
+);?>

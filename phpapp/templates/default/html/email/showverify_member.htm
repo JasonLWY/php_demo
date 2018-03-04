@@ -1,0 +1,67 @@
+{template member:menu}
+
+<link href="{TURL}certificate.css" rel="stylesheet" type="text/css" />
+
+<div class="email_certificate">
+
+<h2>邮箱认证</h2>
+
+<p>认证邮箱： {echo $member['safeemail']}</p>
+
+<p>认证状态： {if $mycertificate['status']==1}等待激活
+              {elseif $mycertificate['status']==5}认证成功
+              {elseif $mycertificate['status']==6}认证失败
+              {else}未认证
+              {/if}
+
+              </p>
+              
+             
+<p>认证费用： {if $mycertificate['price']>0} {echo $mycertificate['price']}{else}免费{/if}</p>
+              
+              
+<p>认证时间： {echo $this->Date('Y/d/m H:i:s',$mycertificate['dateline'])}</p>
+             
+             
+{if $mycertificate['status']==6} 
+
+<p>失败原因： 认证时间过期</p>
+
+
+{/if}
+ 
+{if $mycertificate['status']!=5} 
+<p style="color:#666"><strong>系统提示：</strong> 提交后系统会发一封激活信,您要登录到认证的邮箱在24小时内激活!</p>
+
+<p><strong>未收到系统发出激活邮件请重新认证</strong></p>
+{/if}
+
+{if $mycertificate['status']==6 || $mycertificate['status']==1} 
+<p style="padding-left:100px;padding-top:30px;"><input name="Submit" type="button" value="重新认证" id="Submit" class="form_button" style="width:80px"/></p>
+{elseif $mycertificate['status']==5}
+<p style="text-align:center;padding-top:50px;"><a href="member.php?app=12">[返回认证列表]</a></p>
+{/if}
+
+</div>
+
+
+
+
+<script type="text/javascript">
+
+$(function(){	
+		   
+	 $("#Submit").click( function () {
+
+	          window.location.href='member.php?app=14&action=1';	  
+			
+	 });
+	 
+	 
+ }); 
+
+</script>
+
+</div>
+
+{template phpapp:footer}

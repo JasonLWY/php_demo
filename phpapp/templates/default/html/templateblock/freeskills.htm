@@ -1,0 +1,26 @@
+<div class="free_skills">
+     {php} $freeskills=$this->GetMysqlArray('*'," ".$this->GetTable('skills')." ORDER BY total DESC ,displayorder ASC LIMIT 0,75");if(!empty($LoginMemberArray['skills'])){ $myskills=explode(',',$LoginMemberArray['skills']);}
+     {/php}
+     <h2>热门技能</h2>
+     
+     <ul>
+    
+         {if $freeskills}
+                {for $freeskills $value}
+                      {php} $ismyskill=0;{/php}
+                      {for $myskills $myskill}
+                            {if $myskill==$value['sid']}
+                                 {php} $ismyskill=1;{/php}
+                            {/if}
+                      {/for}
+                       
+                      {php} $skillsarr=$skilldata->GetSkillURL($value['sid']); {/php}
+                      {if $skillsarr}
+                               <li><a href="{echo $skillsarr[$value['sid']]['url']}"><span{if $ismyskill} class="color_f60"{/if}>{echo $value['name']}({echo $value['total']})</span></a></li>
+                      {/if}
+                {/for}
+         {/if}
+         
+     </ul>
+
+</div>

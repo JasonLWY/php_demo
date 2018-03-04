@@ -1,0 +1,6 @@
+<?php
+			/*
+				EDOOG.COM (C) 2009-2014 EDOOG Inc.
+				This is NOT a freeware, use is subject to license terms
+				V2.5  2013.5.20
+			*/	 if(!defined('IN_PHPAPP')){exit('Data error');}$skillsarray=array('php'=>array('sid'=>'1','name'=>'PHP','route'=>'php','color'=>'','title'=>'PHPÓïÑÔ','keywords'=>'PHPÓïÑÔ,PHP³ÌÐò','description'=>'PHPÉè¼Æ,PHPÓïÑÔ,PHP³ÌÐò','classname'=>''),'web'=>array('sid'=>'2','name'=>'Web','route'=>'web','color'=>'','title'=>'','keywords'=>'','description'=>'','classname'=>''),'css'=>array('sid'=>'3','name'=>'CSS','route'=>'css','color'=>'','title'=>'','keywords'=>'','description'=>'','classname'=>''),'photoshop'=>array('sid'=>'4','name'=>'Photoshop','route'=>'photoshop','color'=>'','title'=>'','keywords'=>'','description'=>'','classname'=>''),'apache'=>array('sid'=>'5','name'=>'Apache','route'=>'apache','color'=>'','title'=>'','keywords'=>'','description'=>'','classname'=>''),'html'=>array('sid'=>'6','name'=>'HTML','route'=>'html','color'=>'','title'=>'','keywords'=>'','description'=>'','classname'=>''),'xml'=>array('sid'=>'7','name'=>'XML','route'=>'xml','color'=>'','title'=>'','keywords'=>'','description'=>'','classname'=>''));?>

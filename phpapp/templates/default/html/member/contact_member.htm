@@ -1,0 +1,83 @@
+{template member:menu}
+
+
+<form id="MemberForm">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="member_form">
+
+  <tr>
+    <td class="form_input_width_100 addtask_text">Email：</td>
+    <td><input name="email" id="email" type="text" size="50" maxlength="255" class="form_input_text form_input_width_400"  value="{if $member['email']}{echo $member['email']}{/if}" {if $this->IsSQL('member_mail_certificate',"WHERE status='5' AND uid='$this->uid'")}disabled="disabled"{/if} /></td>
+  </tr> 
+
+  <tr>
+    <td class="form_input_width_100 addtask_text">MSN：</td>
+    <td><input name="msn" id="msn" type="text" size="50" maxlength="50" class="form_input_text form_input_width_400"  value="{if $info['msn']}{echo $info['msn']}{/if}"/></td>
+  </tr> 
+  
+ <tr>
+    <td class="form_input_width_100 addtask_text">QQ：</td>
+    <td><input name="qq" id="qq" type="text" size="50" maxlength="50" class="form_input_text form_input_width_400"  value="{if $info['qq']}{echo $info['qq']}{/if}"/></td>
+ </tr>
+  
+ <tr>
+    <td class="form_input_width_100 addtask_text">ICQ：</td>
+    <td><input name="icq" id="icq" type="text" size="50" maxlength="50" class="form_input_text form_input_width_400"  value="{if $info['icq']}{echo $info['icq']}{/if}"/></td>
+  </tr>  
+ 
+  
+  <tr>
+    <td class="form_input_width_100 addtask_text">固定电话：</td>
+    <td><input name="phone" id="phone" type="text" size="50" maxlength="50" class="form_input_text form_input_width_400"  value="{if $info['phone']}{echo $info['phone']}{/if}"/></td>
+  </tr>  
+  
+  
+    <tr>
+    <td class="form_input_width_100 addtask_text">手机：</td>
+    <td><input name="mobile" id="mobile" type="text" size="50" maxlength="50" class="form_input_text form_input_width_400" value="{if $info['mobile']}{echo $info['mobile']}{/if}" {if $this->IsSQL('member_mobile_certificate',"WHERE status='5' AND uid='$this->uid'")}disabled="disabled"{/if} /></td>
+  </tr> 
+   
+    <tr>
+    <td colspan="2" style="height:60px;padding-bottom:30px;text-align:center;"><input name="Submit" type="button" value="保存设置" id="SubmitSetInfo" class="form_button" style="width:80px"/></td>
+  </tr>
+  
+  
+</table>
+</form>
+
+<script type="text/javascript">
+
+$("#SubmitSetInfo").click( function () {
+									 
+			  var forms=GetFormAll('#MemberForm');					 
+	  
+			  $("#loading").html('<div class="loading">提交数据中...</div>');
+				  
+			  $("#loading").dialog({ title: '提交数据' });
+					
+			  
+			  $("#loading").dialog('open');
+
+			  $.ajax({
+					type: "POST",
+					url: "member.php?app={echo $this->app}&action=42",
+					data: forms,
+					success: function(data){
+						$("#loading").html(data);
+					}
+			  });
+
+ });
+
+</script>
+
+
+
+
+
+
+
+</td></tr></table>
+
+
+
+{template phpapp:footer}

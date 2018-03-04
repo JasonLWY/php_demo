@@ -1,0 +1,364 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+  <tr>
+  <td>用户组</td>
+  <td>
+  <select name="gid_d">
+  {for $usergrouparray $value}
+        <option value="{echo $value['gid']}" {if !empty($nowvalue['gid'])}{if $value['gid']==$nowvalue['gid']} selected="selected" {/if}{/if}>{echo $value['groupname']}</option>
+  {/for}
+  </select>
+  </td>
+  <td></td>
+  </tr>
+  
+  <tr>
+  <td class="datalist_h2" style="width:200px">提成设置</td>
+  <td class="datalist_h2">选项</td>
+  <td class="datalist_h2"></td>
+  </tr>
+  
+  <tr>
+  <td>手续费收取方式</td>
+  <td>
+  <select name="feetype_d" id="FeeType">
+  <option value="0" {if !empty($nowvalue['feetype'])}{if $nowvalue['feetype']==0} selected="selected" {/if}{/if}>百分比</option>
+  <option value="1" {if !empty($nowvalue['feetype'])}{if $nowvalue['feetype']==1} selected="selected" {/if}{/if}>固定</option>
+  </select>
+  </td>
+  <td>(所有推广费任务结束后系统才清算)</td>
+  </tr>
+  
+  <tr>
+  <td>该组中标交易扣除手续费</td>
+  <td>
+   <input name="taskfee_f" type="text" class="form_input_text form_input_width_200" value="{echo $nowvalue['taskfee']}" maxlength="8"/>
+  </td>
+  <td><span id="numbertype">{if !empty($nowvalue['feetype'])}{if $nowvalue['feetype']==1}如: 10 元每笔填 10{else}如: 20% 填 0.2 {/if}{else}如: 20% 填 0.2{/if}</span> (设置0为不收取费用)</td>
+  </tr>
+  
+  <tr>
+  <td>该组发布任务获得推广费</td>
+  <td>
+   <input name="addunionfee_f" type="text" class="form_input_text form_input_width_200" value="{echo $nowvalue['addunionfee']}" maxlength="8"/>
+  </td>
+  <td>如: 2% 填 0.02 (设置0为不支出费用)</td>
+  </tr>
+  
+  <tr>
+  <td>该组中标交易获得推广费</td>
+  <td>
+   <input name="unionfee_f" type="text" class="form_input_text form_input_width_200" value="{echo $nowvalue['unionfee']}" maxlength="8"/>
+  </td>
+  <td>如: 2% 填 0.02 (设置0为不支出费用)</td>
+  </tr>
+
+  <script type="text/javascript">
+
+      $(function(){	
+             $("#FeeType").change(function(){
+                   var value=$(this).val();	
+                   
+                   if(value==1){
+                       
+                         $("#numbertype").html('如: 10 元每笔填 10');
+                   
+                   }else{
+                         $("#numbertype").html('如: 20% 填 0.2');
+                   }
+                   
+             });
+      });
+   </script>
+
+  <tr>
+  <td class="datalist_h2" style="width:200px">任务权限</td>
+  <td class="datalist_h2" style="width:260px">选项</td>
+  <td class="datalist_h2"></td>
+  </tr>
+  
+  <tr>
+  <td>该组是否允许前台删除投标</td>
+  <td>
+  <select name="appallow">
+  <option value="0" {if !empty($nowvalue['deletebid'])}{if $nowvalue['deletebid']==0} selected="selected" {/if}{/if}>禁止</option>
+  <option value="1" {if !empty($nowvalue['deletebid'])}{if $nowvalue['deletebid']==1} selected="selected" {/if}{/if}>允许</option>
+  </select>
+  </td>
+  <td></td>
+  </tr>
+  
+  <tr>
+  <td>该组是否允许看该应用</td>
+  <td>
+  <select name="appallow">
+  <option value="0" {if !empty($nowvalue['appallow'])}{if $nowvalue['appallow']==0} selected="selected" {/if}{/if}>允许</option>
+  <option value="1" {if !empty($nowvalue['appallow'])}{if $nowvalue['appallow']==1} selected="selected" {/if}{/if}>禁止</option>
+  </select>
+  </td>
+  <td></td>
+  </tr>
+  
+  <tr>
+  <td>该组是否允许发布任务</td>
+  <td>
+  <select name="addtask">
+  <option value="0" {if !empty($nowvalue['addtask'])}{if $nowvalue['addtask']==0} selected="selected" {/if}{/if}>允许</option>
+  <option value="1" {if !empty($nowvalue['addtask'])}{if $nowvalue['addtask']==1} selected="selected" {/if}{/if}>禁止</option>
+  </select>
+  </td>
+  <td></td>
+  </tr>
+  
+  <tr>
+  <td>任务是否要求实名发布</td>
+  <td>
+  <select name="realnameaddtask">
+  <option value="0" {if !empty($nowvalue['realnameaddtask'])}{if $nowvalue['realnameaddtask']==0} selected="selected" {/if}{/if}>不要求</option>
+  <option value="1" {if !empty($nowvalue['realnameaddtask'])}{if $nowvalue['realnameaddtask']==1} selected="selected" {/if}{/if}>要求</option>
+  </select>
+  </td>
+  <td></td>
+  </tr>
+  
+  <tr>
+  <td>任务是否要求实名投稿</td>
+  <td>
+  <select name="realnametask">
+  <option value="0" {if !empty($nowvalue['realnametask'])}{if $nowvalue['realnametask']==0} selected="selected" {/if}{/if}>不要求</option>
+  <option value="1" {if !empty($nowvalue['realnametask'])}{if $nowvalue['realnametask']==1} selected="selected" {/if}{/if}>要求</option>
+  </select>
+  </td>
+  <td></td>
+  </tr>
+  
+  <tr>
+  <td>是否能修改任务</td>
+  <td>
+  <select name="edittask">
+  <option value="0" {if !empty($nowvalue['edittask'])}{if $nowvalue['edittask']==0} selected="selected" {/if}{/if}>允许</option>
+  <option value="1" {if !empty($nowvalue['edittask'])}{if $nowvalue['edittask']==1} selected="selected" {/if}{/if}>禁止</option>
+  </select>
+  </td>
+  <td></td>
+  </tr>
+  
+  <tr>
+  <td>是否能任务留言</td>
+  <td>
+  <select name="messagetask">
+  <option value="0" {if !empty($nowvalue['messagetask'])}{if $nowvalue['messagetask']==0} selected="selected" {/if}{/if}>允许</option>
+  <option value="1" {if !empty($nowvalue['messagetask'])}{if $nowvalue['messagetask']==1} selected="selected" {/if}{/if}>禁止</option>
+  </select>
+  </td>
+  <td></td>
+  </tr>
+  
+  <tr>
+  <td>是否能设置任务置顶</td>
+  <td>
+  <select name="settoptask">
+  <option value="0" {if !empty($nowvalue['settoptask'])}{if $nowvalue['settoptask']==0} selected="selected" {/if}{/if}>允许</option>
+  <option value="1" {if !empty($nowvalue['settoptask'])}{if $nowvalue['settoptask']==1} selected="selected" {/if}{/if}>禁止</option>
+  </select>
+  </td>
+  <td></td>
+  </tr>
+  
+  <tr>
+  <td>是否能延期任务</td>
+  <td>
+  <select name="extendtask">
+  <option value="0" {if !empty($nowvalue['extendtask'])}{if $nowvalue['extendtask']==0} selected="selected" {/if}{/if}>允许</option>
+  <option value="1" {if !empty($nowvalue['extendtask'])}{if $nowvalue['extendtask']==1} selected="selected" {/if}{/if}>禁止</option>
+  </select>
+  </td>
+  <td></td>
+  </tr>
+  
+  <tr>
+  <td>是否能加价任务</td>
+  <td>
+  <select name="increasetask">
+  <option value="0" {if !empty($nowvalue['increasetask'])}{if $nowvalue['increasetask']==0} selected="selected" {/if}{/if}>允许</option>
+  <option value="1" {if !empty($nowvalue['increasetask'])}{if $nowvalue['increasetask']==1} selected="selected" {/if}{/if}>禁止</option>
+  </select>
+  </td>
+  <td style="color:#666"></td>
+  </tr>
+  
+  <tr>
+  <td>是否能申请退款</td>
+  <td>
+  <select name="refundtask">
+  <option value="0" {if !empty($nowvalue['refundtask'])}{if $nowvalue['refundtask']==0} selected="selected" {/if}{/if}>允许</option>
+  <option value="1" {if !empty($nowvalue['refundtask'])}{if $nowvalue['refundtask']==1} selected="selected" {/if}{/if}>禁止</option>
+  </select>
+  </td>
+  <td style="color:#666"></td>
+  </tr>
+  
+  
+  <tr>
+  <td>每天发任务次数</td>
+  <td>
+  <input name="addnumbertask_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($nowvalue['addnumbertask'])}{echo $nowvalue['addnumbertask']}{/if}" maxlength="8"/> 次
+  </td>
+  <td style="color:#666">(0 为不限)</td>
+  </tr>
+  
+  
+  <tr>
+  <td>小于多少投稿许可退款</td>
+  <td>
+  <input name="smallrefundtask_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($nowvalue['smallrefundtask'])}{echo $nowvalue['smallrefundtask']}{/if}" maxlength="8"/> 个
+  </td>
+  <td style="color:#666"></td>
+  </tr>
+  
+  <tr>
+  <td>延期次数</td>
+  <td>
+  <input name="extendnumbertask_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($nowvalue['extendnumbertask'])}{echo $nowvalue['extendnumbertask']}{/if}" maxlength="8"/> 次
+  </td>
+  <td style="color:#666"></td>
+  </tr>
+  
+  <tr>
+  <td>延期费用</td>
+  <td>
+  <input name="extendmoneytask_f" type="text" class="form_input_text form_input_width_200" value="{if !empty($nowvalue['extendmoneytask'])}{echo $nowvalue['extendmoneytask']}{/if}" maxlength="10"/> 元
+  </td>
+  <td style="color:#666">格式 0.00 元 (0 为不限)</td>
+  </tr>
+  
+  <tr>
+  <td>发布任务最大托管金额</td>
+  <td>
+  <input name="maxmoneytask_f" type="text" class="form_input_text form_input_width_200" value="{if !empty($nowvalue['maxmoneytask'])}{echo $nowvalue['maxmoneytask']}{/if}" maxlength="10"/> 元
+  </td>
+  <td style="color:#666">格式 0.00 元 (0 为不限)</td>
+  </tr>
+  
+  <tr>
+  <td>发布任务最低托管金额</td>
+  <td>
+  <input name="smallmoneytask_f" type="text" class="form_input_text form_input_width_200" value="{if !empty($nowvalue['smallmoneytask'])}{echo $nowvalue['smallmoneytask']}{/if}" maxlength="10"/> 元
+  </td>
+  <td style="color:#666">格式 0.00 元</td>
+  </tr>
+  
+  
+  <tr>
+  <td>加价最小金额</td>
+  <td>
+  <input name="addmoneytask_f" type="text" class="form_input_text form_input_width_200" value="{if !empty($nowvalue['addmoneytask'])}{echo $nowvalue['addmoneytask']}{/if}" maxlength="10"/> 元
+  </td>
+  <td style="color:#666">格式 0.00 元</td>
+  </tr>
+  
+  <tr>
+  <td colspan="3"></td>
+  </tr>
+  
+  <tr>
+  <td class="datalist_h2" style="width:200px">稿件权限</td>
+  <td class="datalist_h2">字段</td>
+  <td class="datalist_h2"></td>
+  </tr>
+  
+  
+  <tr>
+  <td>该组是否允许投稿</td>
+  <td>
+  <select name="adddraft">
+  <option value="0" {if !empty($nowvalue['adddraft'])}{if $nowvalue['adddraft']==0} selected="selected" {/if}{/if}>允许</option>
+  <option value="1" {if !empty($nowvalue['adddraft'])}{if $nowvalue['adddraft']==1} selected="selected" {/if}{/if}>禁止</option>
+  </select>
+  </td>
+  <td style="color:#666"></td>
+  </tr>
+  
+  
+  <tr>
+  <td>是否能修改发布过的稿件</td>
+  <td>
+  <select name="editdraft">
+  <option value="0" {if !empty($nowvalue['editdraft'])}{if $nowvalue['editdraft']==0} selected="selected" {/if}{/if}>允许</option>
+  <option value="1" {if !empty($nowvalue['editdraft'])}{if $nowvalue['editdraft']==1} selected="selected" {/if}{/if}>禁止</option>
+  </select>
+  </td>
+  <td style="color:#666"></td>
+  </tr>
+  
+  <tr>
+  <td>是否能上传稿件附件</td>
+  <td>
+  <select name="uploadfilesdraft">
+  <option value="0" {if !empty($nowvalue['uploadfilesdraft'])}{if $nowvalue['uploadfilesdraft']==0} selected="selected" {/if}{/if}>允许</option>
+  <option value="1" {if !empty($nowvalue['uploadfilesdraft'])}{if $nowvalue['uploadfilesdraft']==1} selected="selected" {/if}{/if}>禁止</option>
+  </select>
+  </td>
+  <td style="color:#666"></td>
+  </tr>
+  
+  <tr>
+  <td>是否能下载稿件附件</td>
+  <td>
+  <select name="downfilesdraft">
+  <option value="0" {if !empty($nowvalue['downfilesdraft'])}{if $nowvalue['downfilesdraft']==0} selected="selected" {/if}{/if}>允许</option>
+  <option value="1" {if !empty($nowvalue['downfilesdraft'])}{if $nowvalue['downfilesdraft']==1} selected="selected" {/if}{/if}>禁止</option>
+  </select>
+  </td>
+  <td style="color:#666"></td>
+  </tr>
+  
+  <tr>
+  <td>是否能评论稿件</td>
+  <td>
+  <select name="commentsdraft">
+  <option value="0" {if !empty($nowvalue['commentsdraft'])}{if $nowvalue['commentsdraft']==0} selected="selected" {/if}{/if}>允许</option>
+  <option value="1" {if !empty($nowvalue['commentsdraft'])}{if $nowvalue['commentsdraft']==1} selected="selected" {/if}{/if}>禁止</option>
+  </select>
+  </td>
+  <td style="color:#666"></td>
+  </tr>
+  
+  <tr>
+  <td>是否能投票稿件</td>
+  <td>
+  <select name="votedraft">
+  <option value="0" {if !empty($nowvalue['votedraft'])}{if $nowvalue['votedraft']==0} selected="selected" {/if}{/if}>允许</option>
+  <option value="1" {if !empty($nowvalue['votedraft'])}{if $nowvalue['votedraft']==1} selected="selected" {/if}{/if}>禁止</option>
+  </select>
+  </td>
+  <td style="color:#666"></td>
+  </tr>
+  
+  
+  <tr>
+  <td>投稿赏金范围</td>
+  <td>
+  <input name="joinmoneydraft_f" type="text" class="form_input_text form_input_width_200" value="{if !empty($nowvalue['joinmoneydraft'])}{echo $nowvalue['joinmoneydraft']}{/if}" maxlength="10"/> 元
+  </td>
+  <td style="color:#666">格式 0.00 元</td>
+  </tr>
+  
+  <tr>
+  <td>每天投稿次数</td>
+  <td>
+  <input name="addnumberdraft_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($nowvalue['addnumberdraft'])}{echo $nowvalue['addnumberdraft']}{/if}" maxlength="8"/> 次
+  </td>
+  <td style="color:#666"></td>
+  </tr> 
+  
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+
+</form>

@@ -1,0 +1,64 @@
+{template phpapp:header}
+
+<script type="text/javascript" src="{TURL}js/default.js"></script>
+
+<link href="{TURL}union.css" rel="stylesheet" type="text/css" />
+
+<link href="{TURL}form.css" rel="stylesheet" type="text/css" />
+
+<link href="{TURL}icon.css" rel="stylesheet" type="text/css" />
+
+{template union.js}
+
+<div class="union_top">
+<ul>
+   <li style="margin-right:98px;">选择合适的代码呈现方式点击“复制代码”复制代码。</li>
+   
+   <li style="margin-right:98px;">将获取的代码粘贴到您的网站，展示给您的用户。</li>
+   
+   <li>用户从您的推广链接来到本站消费，您可以获得返点。</li>
+</ul>
+</div>
+
+<div class="default_main">
+   <div class="default_left" style="width:204px;">
+
+   {template menu}
+
+   </div>
+   
+    <div class="link_right">
+         <div class="union_box">
+               <h2>邮件推广</h2>
+               <h3>给好友发送 Email 邀请注册</h3>
+               
+               <p style="padding-left:20px;">通过Email发送邮件的方式，邀请你的好友。多个Email使用"," 或 ";" 分割。</p>
+               <ul>
+    
+                  
+                  <textarea class="form_input_text" style="height:120px;width:600px;" id="EMail"></textarea>
+                  
+                  <li style="padding:20px;"><input type="button" value="发送" class="form_button" style="width:80px" id="SendEMail"/></li>
+               
+               </ul>
+          </div>
+          
+               <h2 style="padding-top:20px;">邮件内容预览</h2>
+               
+               {lang emailcode}
+              
+               
+    </div>
+    
+    
+   
+</div>
+
+
+
+
+
+
+
+
+{template phpapp:footer}

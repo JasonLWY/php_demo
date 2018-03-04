@@ -1,0 +1,173 @@
+{template member:menu}
+
+<style type="text/css">
+.membervip{
+	padding: 20px;
+}
+.membervip h2{
+	font-size: 14px;
+	line-height: 30px;
+}
+</style>
+
+<div class="membervip">
+
+<h2>我的用户组：{echo $myusergroup['groupname']}</h2>
+
+
+{if !$this->IsSQL('member_vip',"WHERE uid='$this->uid'")}
+     
+     <p style="padding:10px;">选择要升级的用户组</p>
+
+    {if $membervipset}
+          <form action="{echo $this->MakeGetParameterURL()}" method="post">
+         {php}$usergrouparr=$this->GetMysqlArray('*'," ".$this->GetTable('usergroup')." WHERE usertype='$userarr[usertype]' "); {/php}
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+            {for $usergrouparr $value}
+                    {if $membervipset}{php} $nowusergroup=@$membervipset[$userarr[usertype]][$value[gid]];{/php}{/if}
+                    {if $nowusergroup['gid']==$value['gid']}
+                    <tr>
+                    <td style="width:160px;">
+                    <input name="usergroup[gid]" type="radio" value="{echo $value['gid']}" checked /> {echo $value['groupname']}</td>
+                    <td style="width:160px;"><span class="color_f60">{echo $nowusergroup['price']}</span> 元/月<input name="usergroup[{echo $value['gid']}][price]" type="hidden" value="{echo floatval($nowusergroup['price'])}" /></td>
+                    <td>
+                    {php} $montharr=explode(',',$nowusergroup['month']);{/php} 
+                    购买 <select name="usergroup[{echo $value['gid']}][month]">
+                    {for $montharr $key=>$month}
+                       <option value="{echo intval($month)}"{if $key==0} selected="selected"{/if}>{echo $month}个月</option>
+                    {/for}
+                    </select>
+                    </td>
+                    </tr>
+                    {/if}
+                    {php} $nowusergroup=array();{/php}
+             {/for}
+             </table> 
+   
+         <div style="padding-top:20px;text-align:center;"><input type="submit" name="Submit_s" value="购买" class="form_button" onclick="if(confirm('是否确认购买?')){return ture;}else{return false;}"/></div>
+         </form>
+
+    {else}
+    
+       <p>没有认证内容</p>
+    
+    {/if}
+    
+    
+{else}
+
+{php} 
+    
+    $endorder=$this->GetMysqlOne('endtime,dateline'," ".$this->GetTable('member_vip')." WHERE uid='$this->uid'");
+    
+    
+    $endtime=$this->Date('Y-m-d',$endorder['endtime']);
+                          
+    $endday=($endorder['endtime']-$this->NowTime())/(24*60*60);
+                          
+    $hourarr=explode('.',$endday);
+    
+    $hour='0.'.$hourarr[1];
+ 
+                          
+{/php}                          
+
+<p style="padding:10px;">升级时间：{echo $this->Date('Y-m-d',$endorder['dateline'])}</p>
+
+<p style="padding:10px;">过期时间：
+
+{echo intval($endday)} 天 {echo intval($hour*24)} 小时 <span class="color_f60">{echo $endtime}</span></p>
+
+{if $membervipset}
+          <form action="{echo $this->MakeGetParameterURL()}" method="post">
+         {php}$usergrouparr=$this->GetMysqlArray('*'," ".$this->GetTable('usergroup')." WHERE usertype='$userarr[usertype]' "); {/php}
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+            {for $usergrouparr $value}
+                    {if $membervipset}{php} $nowusergroup=@$membervipset[$userarr[usertype]][$value[gid]];{/php}{/if}
+                    {if $nowusergroup['gid']==$value['gid']}
+                  
+                    {if $nowusergroup['gid']==$userarr['usergroup']}
+                    
+                    <tr>
+                    <td style="width:160px;">
+                    <input name="usergroup[gid]" type="radio" value="{echo $value['gid']}" checked /> {echo $value['groupname']}</td>
+                    <td style="width:160px;">
+                    
+                    <span class="color_f60">续费 {echo $nowusergroup['money']}</span> 元/月<input name="usergroup[{echo $value['gid']}][price]" type="hidden" value="{echo floatval($nowusergroup['money'])}" />
+                    </td>
+                    <td>
+                    {php} $montharr=explode(',',$nowusergroup['month']);{/php} 
+                    购买 <select name="usergroup[{echo $value['gid']}][month]">
+                    {for $montharr $key=>$month}
+                       <option value="{echo intval($month)}"{if $key==0} selected="selected"{/if}>{echo $month}个月</option>
+                    {/for}
+                    </select>
+                    </td>
+                    </tr>
+                   
+                    
+                    
+                    
+                    {else}
+                            {if $nowusergroup['level']}
+                            
+                                  {php}  $levelarr=explode(',',$nowusergroup['level']); {/php}
+                                  
+                                  {for $levelarr $level}
+                                   
+                                          {php}  $levelvalue=explode('|',$level); {/php}
+                                                
+                                          {if $levelvalue[0]==$userarr['usergroup']}
+                                                
+                                                <tr>
+                                                <td style="width:160px;">
+                                                <input name="usergroup[gid]" type="radio" value="{echo $value['gid']}" checked /> {echo $value['groupname']}</td>
+                                                <td style="width:120px;">
+                    
+                                                <span class="color_f60">晋级 {echo intval($levelvalue[1])}</span> 元/月<input name="usergroup[{echo $value['gid']}][price]" type="hidden" value="{echo floatval($nowusergroup['level'])}" />
+                                                </td>
+                                                <td style="width:120px;">
+                                                {php} $montharr=explode(',',$nowusergroup['month']);{/php} 
+                                                购买 <select name="usergroup[{echo $value['gid']}][month]">
+                                                {for $montharr $key=>$month}
+                                                   <option value="{echo intval($month)}"{if $key==0} selected="selected"{/if}>{echo $month}个月</option>
+                                                {/for}
+                                                </select>
+                                                </td>
+     
+                                                </tr>
+                                                
+                    
+                    
+                                          {/if}
+                                   
+                                  {/for}
+                            
+                            
+                            {/if}
+                            
+                            {/if}
+                    
+                    {/if}
+                    
+                   
+                    {php} $nowusergroup=array();{/php}
+             {/for}
+             </table> 
+   
+         <div style="padding-top:20px;text-align:center;"><input type="submit" name="Submit_s" value="购买" class="form_button" onclick="if(confirm('是否确认购买?')){return ture;}else{return false;}"/></div>
+         </form>
+    
+{/if}
+
+
+
+{/if}
+
+</div>
+
+
+
+
+</div>
+{template phpapp:footer}

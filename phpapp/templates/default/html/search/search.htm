@@ -1,0 +1,89 @@
+{template phpapp:header}
+<script type="text/javascript">var moreselect=0;</script>
+<script type="text/javascript" src="{echo TURL}js/list.js?v={echo $this->GetFileVersion()}"></script>
+
+<link href="{TURL}search.css" rel="stylesheet" type="text/css" />
+
+<div class="search_list">
+
+{if $categoryarr}
+	 {for $categoryarr $key=>$value}
+           {if $value['name']}
+                  <dl>
+                  <dt>
+                  <a href="{echo $categoryclass->GetCategoryURL($value['catid'],$value['route'],$this->GetApps())}" target="_blank" title="{echo $value['name']}"><span class="color_09c">[分类]</span> {echo $value['name']}</a> <a class="small blue awesome" onclick="MyFollow('{echo $value['catid']}',0)">关注</a></h1>
+                  </dt>
+                  
+                  <dd>{echo $value['description']}
+                  </dd>
+                  <dfn>&nbsp;</dfn>
+                  </dl>
+           {/if}
+      {/for}  
+{/if}
+
+
+
+
+{if $skillarray}
+	 {for $skillarray $key=>$value}
+
+                  <dl>
+                  <dt>
+                  <a href="{echo $value['url']}" target="_blank" title="{echo $value['name']}"><span class="color_09c">[技能]</span> {echo $value['name']}</a> <a class="small blue awesome" onclick="MyFollow(0,'{echo $key}')">关注</a></h1>
+                  </dt>
+                  
+                  <dd>{echo $value['description']}
+                  </dd>
+                  <dfn>&nbsp;</dfn>
+                  </dl>
+    
+      {/for}  
+{/if}
+
+{if $list}        
+
+<h5>搜到 <strong>{echo $page->GetShowNum()}</strong> 个记录</h5> 
+
+ 
+      {for $list $key=>$value}
+           {if $value['subject']}
+                  <dl>
+                  <dt>
+                  <a href="{if $value['appid']>2}{echo SURL}{echo $value['url']}{else}{echo SURL}/space.php?app=8&uid={echo $value['uid']}{/if}" target="_blank" title="{echo $value['subject']}">{if $value['appid']==80 || $value['appid']==83}<span class="color_f60">[需要]</span>{elseif $value['appid']==82}<span class="color_09c">[出售]</span>{else}<span class="color_09c">[人才]</span>{/if} {echo $this->ReplaceRed($search,$value['subject'])}</a>
+                  </dt>
+                  
+                  {if $value['appid']>2}
+                      <dd>{echo $this->ReplaceRed($search,$value['description'])}
+                      </dd>
+                      <dfn>发布于 {echo $this->Date('Y-m-d H:m:s',$value['dateline'],1)} </dfn>
+                      </dl>
+                  {else}
+                          <dd> 注册于 {echo $this->Date('Y-m-d H:m:s',$value['dateline'],1)}
+                          </dd>
+                          <dfn>&nbsp;</dfn>
+                          </dl>
+                  {/if}
+           {/if}
+      {/for}  
+      
+
+{if $page->ShowPages()}
+      <div class="ajax_page">{echo $page->ShowPages()}</div>
+{/if}
+
+      
+{else} 
+     <dl>
+          <dt>
+          找不到数据!
+          </dt>
+     </dl>
+    
+{/if}
+
+</div>
+
+
+
+{template phpapp:footer}

@@ -1,0 +1,60 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+
+  <tr>
+    <td class="width_160">配置名称</td>
+    <td> <input name="subject_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['subject'])}{echo $manage['subject']}{/if}"/></td>
+  </tr>
+
+  
+    <tr>
+    <td class="width_160">排序</td>
+    <td> <input name="displayorder_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['displayorder'])}{echo $manage['displayorder']}{/if}"/></td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">是否通知启用</td>
+    <td><select name="notice_d">
+  <option value="0" {if !empty($manage['notice'])}{if $manage['notice']==0} selected="selected" {/if}{/if}>启用</option>
+  <option value="1" {if !empty($manage['notice'])}{if $manage['notice']==1} selected="selected" {/if}{/if}>关闭</option>
+</select> </td>
+  </tr>
+  
+  
+  <tr>
+    <td class="width_160">是否邮件启用</td>
+    <td><select name="email_d">
+  <option value="0" {if !empty($manage['email'])}{if $manage['email']==0} selected="selected" {/if}{/if}>启用</option>
+  <option value="1" {if !empty($manage['email'])}{if $manage['email']==1} selected="selected" {/if}{/if}>关闭</option>
+</select> </td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">是否手机启用</td>
+    <td><select name="phone_d">
+  <option value="0" {if !empty($manage['phone'])}{if $manage['phone']==0} selected="selected" {/if}{/if}>启用</option>
+  <option value="1" {if !empty($manage['phone'])}{if $manage['phone']==1} selected="selected" {/if}{/if}>关闭</option>
+</select> </td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">是否全局启用</td>
+    <td><select name="satus_d">
+  <option value="0" {if !empty($manage['satus'])}{if $manage['satus']==0} selected="selected" {/if}{/if}>启用</option>
+  <option value="1" {if !empty($manage['satus'])}{if $manage['satus']==1} selected="selected" {/if}{/if}>关闭</option>
+</select> </td>
+  </tr>
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+</form>
+
+

@@ -1,0 +1,33 @@
+.task_mode_tabs{
+	border: none;
+	padding:0px;
+	margin-bottom: 30px;
+}
+
+#TaskModeTabs ul{
+	width: 926px;
+	background-image: none;
+}
+
+#TaskModeTabs ul li.ui-state-default{
+	font-size: 16px;
+	font-weight: bold;
+	color: #09C;
+	width: 456px;
+}
+#TaskModeTabs ul li.ui-tabs-selected{
+	background-color: #0578BF;
+	border: 1px solid #0578BF;
+	color: #FFF;
+}
+#TaskModeTabs ul li.ui-tabs-selected a{
+	color: #FFF;
+}
+#TaskModeTabs .task_mode_select{
+	border: 1px solid #AACDE1;
+}
+
+/* 2013-6-15 */
+.tip-green{
+	z-index: 100;
+}

@@ -1,0 +1,592 @@
+<script type="text/javascript" src="{echo TURL}js/skills.js"></script>
+
+<script type="text/javascript">
+function VerifyTaskBidNumber(isalert){
+	
+      var BidNumber=$("#BidNumber");
+			  
+	  if (!BidNumber.val() || BidNumber.val()<1){
+			BidNumber.focus();
+			if(isalert){
+				alert("请输入任务招标人数");
+			}
+			BidNumber.poshytip('update','请输入任务招标人数');
+			return false; 
+	  }
+	  
+	  if (isNaN(BidNumber.val())){
+			BidNumber.focus();
+			if(isalert){
+				alert("您输入的任务招标人数格式错误，请重新输入!");
+			}
+			BidNumber.poshytip('update','您输入的任务招标人数格式错误，请重新输入!');
+			return false; 
+	  }
+	  
+	  BidNumber.poshytip('update','任务招标人数合格!');
+	  return true; 
+}
+
+
+function VerifyTaskPrice1(isalert){
+	
+      var price1=$("#price1");
+			  
+	  if (!price1.val() || price1.val()<1){
+			price1.focus();
+			if(isalert){
+				alert("请输入任务预算价格");
+			}
+			price1.poshytip('update','请输入任务预算价格');
+			return false; 
+	  }
+	  
+	  if (isNaN(price1.val())){
+			price1.focus();
+			if(isalert){
+				alert("您输入的任务预算价格格式错误，请重新输入!");
+			}
+			price1.poshytip('update','您输入的任务预算价格格式错误，请重新输入!');
+			return false; 
+	  }
+	  
+	  price1.poshytip('update','任务预算价格合格!');
+	  return true; 
+}
+
+
+var TaskTaskType=1;
+function VerifyTaskDuration(isalert){
+	  
+	  if(TaskTaskType==2){
+		  var duration=$("#Duration");
+				  
+		  if (!duration.val() || duration.val()<1){
+				duration.focus();
+				if(isalert){
+					alert("请输入任务工作时间");
+				}
+				duration.poshytip('update','请输入任务工作时间');
+				return false; 
+		  }
+		  
+		  if (isNaN(duration.val())){
+				duration.focus();
+				if(isalert){
+					alert("您输入的任务工作时间格式错误，请重新输入!");
+				}
+				duration.poshytip('update','您输入的工作时间格式错误，请重新输入!');
+				return false; 
+		  }
+		  
+		  duration.poshytip('update','任务工作时间合格!');
+		  return true; 
+	  }else{
+		  return true; 
+	  }
+}
+
+function VerifyTaskSubject(isalert){
+      if(NowLogin(1)>0){
+			  var subject=$("#subject");
+			  if (subject.val()==""){
+					subject.focus();
+					if(isalert){
+						alert("请输入任务标题!");
+					}
+					subject.poshytip('update','请输入任务标题!');
+					return false; 
+			  }
+			  
+			  if (subject.val().length<"6"){
+					subject.focus();
+					if(isalert){
+						 alert("任务标题不能小于6个字节!");
+					}
+					subject.poshytip('update','任务标题不能小于6个字节!');
+					return false; 
+			  }
+			  
+			  if (subject.val().length>"99"){
+					subject.focus();
+					if(isalert){
+						 alert("任务标题不能大于100个字节!");
+					}
+					subject.poshytip('update','任务标题不能大于100个字节!');
+					return false; 
+			  }
+			  
+			  subject.poshytip('update','任务标题合格!');
+			  return true; 
+	  }else{
+		    return false; 
+	  }
+}
+
+function VerifyTaskEndtime(isalert){
+	
+      var endtime=$("#endtime");
+			  
+	  if (!endtime.val()){
+			endtime.focus();
+			if(isalert){
+				alert("任务截止投标时间不能为空");
+			}
+			endtime.poshytip('update','任务截止投标时间不能为空!');
+			return false; 
+	  }
+       
+	  if (!endtime.val().match(/^([0-9]+)-([0-9]+)-([0-9]+)$/)){
+			endtime.focus();
+			if(isalert){
+				alert("您输入的任务截止投标时间格式错误，请重新输入!");
+			}
+			endtime.poshytip('update','您输入的任务截止投标时间格式错误，请重新输入!');
+			return false; 
+	  }
+	  
+	  var utime=js_strto_time(endtime.val()+' {echo $this->Date("H:i:s",$this->NowTime())}');
+	  
+	  var taskend='{echo PHPAPP::$config["task_endtime"]}';
+
+	  var task_endtime=(taskend*24*60*60) + timestamp;
+	  
+	  var smalltime=(24*60*60) + timestamp;
+	  
+	  if(utime>task_endtime){
+		   endtime.focus();
+		   if(isalert){
+				alert("您输入的任务截止投标时间不能大于 "+taskend+" 天，请重新输入!");
+		   }
+		   endtime.poshytip('update','您输入的任务截止投标时间不能大于 '+taskend+' 天，请重新输入!');
+		   return false; 
+		   
+	  }else if(utime< smalltime){
+
+		   endtime.focus();
+		   if(isalert){
+				alert("您输入的任务截止投标时间不能小于 1 天，请重新输入!");
+		   }
+		   endtime.poshytip('update','您输入的任务截止投标时间不能小于 1 天，请重新输入!!');
+		   return false; 
+		  
+	  }
+	  
+	  
+	  endtime.poshytip('update','任务截止投标时间合格!');
+	  return true; 
+}
+
+function VerifyTaskTotal(isalert){
+	
+	   var total=$("#total");
+			  
+	  if (!total.val() || total.val()<1){
+
+			total.focus();
+			if(isalert){
+				alert("请输入任务人数!");
+			}
+			
+			total.poshytip('update','请输入任务人数!');
+			
+			return false; 
+	  }
+	  
+	  if (isNaN(total.val())){
+			total.focus();
+			if(isalert){
+				alert("您输入的任务人数格式错误，请重新输入!");
+			}
+			total.poshytip('update','您输入的任务人数格式错误，请重新输入!');
+			return false; 
+	  }
+	  
+
+	  total.poshytip('update','任务人数合格!');
+	  return true; 
+}
+
+function VerifyTaskMoney(isalert){
+	
+	  var money=$("#Money");
+			  
+	  if (!money.val()){
+			
+			money.focus();
+			if(isalert){
+				 alert("任务赏金不能为空或为0!");
+			}
+			
+			money.poshytip('update','任务赏金不能为空或为0!');
+			
+			return false; 
+	  }
+	  
+	  if (isNaN(money.val())){
+			
+			money.focus();
+			if(isalert){
+				alert("您输入的任务赏金格式错误，请重新输入!");
+			}
+			money.poshytip('update','您输入的任务赏金格式错误，请重新输入!');
+			return false; 
+	  }
+	  
+	  money.poshytip('update','任务赏金格式合格!');
+	  return true; 
+}
+
+
+$(function(){	
+		   
+	  if($.browser.msie) {
+		    document.getElementById('total').onpropertychange=SetMoney
+		    document.getElementById('Money').onpropertychange=SetMoney
+	  }else{
+		    document.getElementById('total').addEventListener("input",SetMoney,false); 
+		    document.getElementById('Money').addEventListener("input",SetMoney,false); 
+	  }
+
+	 $("#AddTask").click( function () {
+		     NowLogin();
+	 });
+	 
+     $('#UploadPhotoNote').show();
+	 
+	 $('#EditorTextHide').show();
+	 
+	 $('#SelectMoreSkills').poshytip({
+			 className: 'tip-green',
+			 offsetX: -7,
+			 offsetY: 16,
+			 allowTipHover: false
+	 });	
+	 
+	 $('#subject,#endtime,#total,#money,#price1,#Duration,#BidNumber').poshytip({
+			className: 'tip-green',
+			showOn: 'focus',
+			alignTo: 'target',
+			alignX: 'right',
+			alignY: 'center',
+			offsetX: 5
+      });
+	 
+	  $("#taskagree,#ShowMap").dialog({
+			width: 700,
+			position: ['center',160],
+			modal: true,
+			autoOpen: false
+	  });
+	  
+	 $("#TaskType1").change( function() {
+			TaskTaskType=1;	     
+			$("#total").val(1);
+			$("#SelectTaskType").hide();
+     });
+	 
+	 $("#TaskType2").change( function() {
+			TaskTaskType=2;	  
+			$("#SelectTaskType").show();
+     });
+	  
+	 $("#openaddtaskagree").click( function () {
+			$("#taskagree").dialog('open');												  
+	 });
+	 
+	
+	 $("#ZhaoMoney").change( function() {		
+			SetZhaoMoney();
+     });
+	  
+	 {if !empty($task['price2'])}SetPrice2({echo intval($task['price2'])});{else}SetPrice2(0);{/if}
+	   
+	 if($.browser.msie) {
+		    document.getElementById('price1').onpropertychange=SetPrice2
+	 }else{
+		    document.getElementById('price1').addEventListener("input",SetPrice2,false); 
+	 }
+	 
+	 
+	 $("#TaskModeType1").change( function() {
+			TaskTaskType=1;	  
+			$("#TaskDuration").hide();
+     });
+	 
+	 $("#TaskModeType2").change( function() {
+			TaskTaskType=2;
+			$("#TaskDuration").show();
+     });
+	 
+	 $("#SelectMoreSkills").click( function () { $.PHPAPPHeaderItem('SelectMoreSkills','SelectMoreSkillsView',0,28,232,0,0,1); });
+	 
+	 $("#TaskTypeRadio,#TaskCreditRadio,#TaskModeTypeRadio").buttonset();
+	 
+	 
+	 $("#service_tabs,#TaskModeTabs").tabs();	
+	 
+     GetServiceList();
+	 
+	 SetTaskModeShow();
+
+	 
+	 $("#subject").blur( function () { 
+		  
+		    return VerifyTaskSubject(0);
+     });
+	 
+	 $("#endtime").blur( function () { 
+		  
+		    return VerifyTaskEndtime(0);
+     });
+	 
+	 
+	 $("#total").blur( function () { 
+		  
+		    return VerifyTaskTotal(0);
+     });
+	 
+	 $("#money").blur( function () { 
+		  
+		    return VerifyTaskMoney(0);
+     });
+	 
+	 $("#price1").blur( function () { 
+		  
+		    return VerifyTaskPrice1(0);
+     });
+	 
+	 $("#Duration").blur( function () { 
+		  
+		    return VerifyTaskDuration(0);
+     });
+	 
+	 
+	 $("#BidNumber").blur( function () { 
+		  
+		    return VerifyTaskBidNumber(0);
+     });
+	
+	
+	 $("#TaskMoneyMode").click( function () {
+			 SetMoney();				   
+	 });		
+	 
+	 $("#TaskZhaoMode").click( function () {
+	         SetZhaoMoney();
+	 });	
+	 
+	 $("#SubmitAddTask").click( function () {
+	          
+			  if(!VerifyTaskSubject(1)){
+				   return false;  
+			  }
+			  
+			  if(!VerifyTaskTotal(1)){
+				   return false;  
+			  }
+			
+			  if(!VerifyTaskMoney(1)){
+				   return false;  
+			  }
+
+			  if(!VerifyTaskEndtime(1)){
+				   return false;  
+			  }
+
+			  $.SaveContent();
+			  
+			  var catids='';
+			  var selects='';
+			  $("#catid").find("select").each(function(){
+					  catids=catids+1;							   
+					  var value=$(this).val();
+					   
+					  if(value){
+						   selects=selects+1;
+					  }			 				 
+			  }); 
+			  
+	          if(catids!=selects){
+			        alert("请选择分类!");
+					return false;  
+			  }
+			  
+			  var appid=$("#TaskAppID").val();
+			  
+			  if(appid==83){
+				  
+				    if(!VerifyTaskPrice1(1)){
+				          return false;  
+			        }
+			  
+				    if(!VerifyTaskBidNumber(1)){
+						  return false;  				   
+					}
+			 
+			        if(!VerifyTaskDuration(1)){
+						  return false;  		
+					}
+			  }
+
+			  var content=$("#Content");
+			  if (content.val()==""){
+				    alert("请输入任务内容!");
+				    content.focus();
+				    return false; 
+			  }
+		
+			  if (content.val().length<"6"){
+		            alert("任务内容不能小于6个字节!");
+		            content.focus();
+		            return false; 
+	          }		
+			 
+	          var addtaskagree=$("#addtaskagree").attr("checked");
+	          if(!addtaskagree){
+		            alert("对不起!您未同意发布任务服务协议不能发布任务!");
+		            return false;
+	          } 
+			  	  
+			  if(NowLogin()>0){
+	                 SubmitAddTaskData();
+			  }else{
+				    return false;
+			  }
+	 });
+	 
+	  
+});
+
+
+function SubmitAddTaskData(){
+	  $.PHPAPPOPENLOADING();
+	  var forms=GetFormAll('#AddTask');
+	
+	  //POST
+	  $("#SubmitLoadingForm").html('<div class="loading_big">请不要关闭窗口,提交数据中...</div>');
+	  $('#SubmitLoadingForm').show();
+	  $("#SubmitTaskForm").hide();
+			
+	  $.ajax({
+   			type: "POST",
+   			url: SURL+"/index.php?app=49&action=1",
+  		    data: forms,
+   			success: function(data){
+
+				  $.PHPAPPCLOSELOADING();
+    			  if(isNaN(data)){
+					   //alert(data);
+					   
+					   $("#loading").dialog({
+						  title:"系统提示",	
+						  width: 500,
+						  position: ['center',50],
+						  modal: true,
+						  height:'auto'
+					  });
+					   
+					  $("#loading").html(data);
+					   
+					  $("#loading").dialog('open');
+					  
+				  }else if(!isNaN(data)){   
+    			       window.location.href=SURL+'/index.php?app=49&action=3&tid='+data;
+				  }else{
+					   alert("对不起!数据有误请对照修改!");
+				  }
+				  $('#SubmitLoadingForm').hide();
+				  $('#SubmitTaskForm').show();
+   			}
+	  });
+	
+	
+}
+
+
+function SetPrice2(nowPrice2){
+        
+        var price1=$("#price1");
+		
+		var price1val=price1.val();
+			
+		
+		if(!price1val || isNaN(price1val)){
+			price1val=50;
+			//$("#price1").val(price1val);
+		}
+		  
+		$("#price2").html('');
+	    
+		var price2=1;
+	    for(var i=1;i<10;i++){
+			   price2=parseInt(parseInt(price1val*i)/5 + parseInt(price1val));
+			   if(nowPrice2==price2){
+				   var priceselect=' selected="selected"';
+			   }else{
+				   var priceselect='';
+			   }
+			   
+			   $("#price2").append('<option value="'+price2+'" '+priceselect+'>'+price2+'</option>');
+		}
+
+		
+}
+
+
+function SetTaskModeID(id){
+	  $("#TaskAppID").val(id);
+}
+
+function SetMoney(){
+	
+	  var total=$("#total").val();
+	  
+	  var money=$("#Money").val();
+
+	  var totalmoney=0;
+
+	  if (total>0 && money>0){
+		   
+		    totalmoney=parseInt(total)*  parseFloat(money);
+			
+			$("#NowMoney").html(money);
+			
+			$("#NowTotal").html(total);
+				
+			$("#NowTotalMoney").html(Math.round(totalmoney*100)/100);
+			
+			SetTotalMoney(totalmoney);
+			
+	  }else{
+		    SetTotalMoney(money);
+	  }
+
+	
+}
+
+function SetZhaoMoney(){
+		var money=$("#ZhaoMoney").val(); 
+		if(money>0){
+			  $("#SelectBidNumber").hide();
+			  $("#BidNumber").val(1); 
+		}else{
+			  $("#SelectBidNumber").show();
+		}
+		
+		SetTotalMoney(money);
+}
+			
+function SetTaskModeShow(){
+       
+     var appid=$("#TaskAppID").val();
+	 
+	 $("#TaskModeTabs").tabs("option","selected",appid);
+}
+
+</script>
+
+
+
+
+

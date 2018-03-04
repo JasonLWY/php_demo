@@ -1,0 +1,45 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+
+{if $list}
+
+<div id="WindowsForm{echo $this->GET['menu']}">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  <tr>
+    <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+    
+    {for $orderarr $key=>$value}
+    <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+    {/for} 
+    
+  </tr>
+
+{for $list $value}
+  <tr>
+    <td><input name="checkbox[]" type="checkbox" value="{$value['uid']}" /></td>
+    <td>{$value['uid']}</td>
+    <td>{$value['username']}</td>
+    <td><span class="color_f60">{$value['price']}</span></td>
+    <td>{if $value['status']==6}认证失败{elseif $value['status']==5}认证成功{else}认证中{/if}</td>
+    <td>{echo $this->Date('Y-m-d H:i:s',$value['dateline'])}</td>
+  </tr>
+ {/for} 
+
+</table>
+</div>
+<div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="删除" class="form_button"/></div>
+
+
+
+{else}
+
+
+<p>没有数据!</p>
+
+{/if}
+
+</form>

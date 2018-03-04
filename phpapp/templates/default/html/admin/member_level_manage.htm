@@ -1,0 +1,104 @@
+{template header}
+
+<link href="{TURL}member.css" rel="stylesheet" type="text/css" />
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $this->GET['op']==1 || $this->GET['op']==2}
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+    
+    <tr>
+    <td class="width_160">名称</td>
+    <td>
+    <input name="title_s" value="{if !empty($manage['title'])}{echo $manage['title']}{/if}" type="text" class="form_input_text form_input_width_200" />
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">最小值范围</td>
+    <td>
+    <input name="small_s" value="{if !empty($manage['small'])}{echo $manage['small']}{/if}" type="text" class="form_input_text form_input_width_200" />
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">最大值范围</td>
+    <td>
+    <input name="big_s" value="{if !empty($manage['big'])}{echo $manage['big']}{/if}" type="text" class="form_input_text form_input_width_200" />
+    </td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">样式名称</td>
+    <td>
+    <input name="style_s" value="{if !empty($manage['style'])}{echo $manage['style']}{/if}" type="text" class="form_input_text form_input_width_200" />
+    </td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">颜色</td>
+    <td>
+    <input name="color_s" value="{if !empty($manage['color'])}{echo $manage['color']}{/if}" type="text" class="form_input_text form_input_width_200" /> 如： 填写 <span style="color:#F00">#F00</span> 为红色 
+    </td>
+  </tr>
+  
+</table>
+
+<p style="color:#F00;padding-top:10px;"><strong>提示：样式名称 请参考 /templates/default/style/blue/level.css 文件写法</strong></p>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+
+
+{else}
+
+
+
+    {if $list}
+    
+    <div id="WindowsForm{echo $this->GET['menu']}">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+      <tr>
+        <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+        
+        {for $orderarr $key=>$value}
+        <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+        {/for} 
+        <td class="datalist_h2" style="width:130px;">效果</td>
+        <td class="datalist_h2">操作</td>
+      </tr>
+    
+    {for $list $key=>$value}
+      <tr>
+        <td><input name="checkbox[]" type="checkbox" value="{echo $value['lid']}"/></td>
+        <td>{echo $value['lid']}</td>
+        <td>{echo $value['title']}</td>
+        <td>{echo $value['small']}</td>
+        <td>{echo $value['big']}</td>
+        <td>{echo $value['style']}</td>
+        <td>{echo $value['color']}</td>
+        <td>{if $value['style']}<div class="{echo $value['style']}" style="display:block"></div>{/if}</td>
+        <td><a href="{echo $this->MakeGetParameterURL(array('op'=>2,'id'=>$value['lid']))}">[编辑]</a></td>
+      </tr>
+     {/for} 
+    
+    </table>
+    </div>
+    
+    <div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+    
+    <div class="phpapp_button"><input name="Submit" type="submit" value="删除" class="form_button"/></div>
+     
+    
+    {/if}
+
+
+
+{/if}
+
+
+</form>

@@ -1,0 +1,129 @@
+{template admin:header}
+
+<div id="ShowAdvancedSearch" class="showadvancedsearch" {if !empty($this->GET['opensearch'])}style="display:block"{/if}>
+<form method="get" action="{echo $this->MakeGetParameterURL()}">
+<input type="hidden" name="app" value="{echo $this->app}" />
+<input type="hidden" name="menu" value="{echo $this->GET['menu']}" />
+<input type="hidden" name="action" value="{echo $this->ac}" />
+<input type="hidden" name="page" value="{echo $this->GET['page']}" />
+<input type="hidden" name="opensearch" value="{echo $this->GET['opensearch']}" />
+
+<table border="0" cellspacing="0" cellpadding="0">
+
+  <tr>
+    <td class="search_h2">ID举报</td>
+    <td><input name="rid" type="text" size="50" maxlength="255" class="form_input_text form_input_width_100"  value="{if !empty($selectarray['rid'])}{echo $selectarray['rid']}{/if}"/> </td>
+    <td class="search_h2">任务编号</td>
+    <td><input name="tid" type="text" size="50" maxlength="255" class="form_input_text form_input_width_100"  value="{if !empty($selectarray['tid'])}{echo $selectarray['tid']}{/if}"/></td>
+  </tr>
+  
+    <tr>
+    <td class="search_h2">稿件编号</td>
+    <td><input name="did" type="text" size="50" maxlength="255" class="form_input_text form_input_width_100"  value="{if !empty($selectarray['did'])}{echo $selectarray['did']}{/if}"/> </td>
+    <td class="search_h2"></td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td class="search_h2">用户ID </td>
+    <td><input name="uid" type="text" size="50" maxlength="255" class="form_input_text form_input_width_100"  value="{if !empty($selectarray['uid'])}{echo $selectarray['uid']}{/if}"/> (用户UID)</td>
+    <td class="search_h2">用户名</td>
+    <td><input name="username" type="text" size="50" maxlength="255" class="form_input_text form_input_width_200"  value="{if !empty($selectarray['username'])}{echo $selectarray['username']}{/if}"/> (组合查询时用用户ID)</td>
+  </tr>
+
+  <tr>
+    <td class="search_h2">发布时间 </td>
+    <td><input name="dateline1" type="text" class="form_input_text dateline" size="10" value="{if !empty($selectarray['dateline1'])}{echo $selectarray['dateline1']}{/if}" style="width:70px;"/> ~ <input name="dateline2" type="text" class="form_input_text dateline" size="10" value="{if !empty($selectarray['dateline2'])}{echo $selectarray['dateline2']}{/if}" style="width:70px;"/> 格式 (YYYY-MM-DD)</td>
+  </tr>
+  
+  
+   
+</table>
+
+<li style="text-align:center;padding-top:20px;">
+   <input name="SelectData" type="submit" value="搜索" class="form_button"/>
+</li>
+
+</form>
+
+</div>
+
+<div class="advancedsearch">
+{if empty($this->GET['opensearch'])}
+<a class="small green awesome" href="{echo $this->MakeGetParameterURL(array('opensearch'=>1))}">打开筛选</a>
+{else}
+<a class="small green awesome" href="{echo $this->MakeGetParameterURL(array('opensearch'=>0))}">关闭筛选</a>
+{/if}
+</div>
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $list}
+
+<div id="WindowsForm{echo $this->GET['menu']}">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall"  value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+    
+    {for $orderarr $key=>$value}
+    <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+    {/for} 
+    
+    <td class="datalist_h2" style="width:60px">查看</td>
+    
+  </tr>
+
+{for $list $value}
+                          
+  <tr>
+    <td><input name="checkbox[]" type="checkbox" value="{echo $value['rid']}" /></td>
+    <td>{echo $value['rid']}</td>
+    <td>{echo $value['uid']}</td>
+    <td>{echo $value['name_phpapp']}</td>
+    <td>{if $value['did']}稿件 #{echo $value['did']}{else}任务 #{echo $value['tid']}{/if}</td>
+    <td><a href="space.php?lang={echo $this->lang}&app=8&uid={echo $value['uid']}" target="_blank" title="{echo $value['username']}">{echo $value['username']}</a></td>
+    <td><a href="{SURL}/index.php?app={echo $value['appid']}&action=5&tid={echo $value['tid']}&did={echo $value['did']}" target="_blank">{echo $value['subject']}</a>{if $value['serviceuid']>0}<span style="color:#06C">[{echo $value['serviceuid']}号客服代选]</span>{/if}</td>
+    <td>
+     {if $value['did']}
+     {echo $getprocess->GetTaskDraftName($value['dprocess'])}
+     {else}
+     {echo $getprocess->GetTaskProcesName($value['tprocess'])}
+     {/if}
+     </td>
+    <td>
+    <p>{echo $value['name']}</p>
+    {if $value['content']}<p>{echo $value['content']}</p>{/if}
+    </td>
+    <td>{if $value['status']}<span style="color:#F30">已处理</span>{else}未处理{/if}</td>
+        <td>
+    
+    {if $value['award']}
+    
+         {echo $value['award']}
+    
+    {else}不奖惩{/if}</td>
+    <td>{echo $this->Date("Y/m/d H:i:s",$value['dateline'])}</td>
+    <td>{if $value['appid']!=82}<a href="{SURL}/index.php?app={echo $value['appid']}&action=5&tid={echo $value['tid']}&did={echo $value['did']}" target="_blank">查看</a>{/if}</td>
+  </tr>
+ {/for} 
+
+</table>
+
+<div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+
+<p>奖惩积分：<select name="award_f" style="width:120px;" class="form_select_text"><option value="10">+10</option><option value="9">+9</option><option value="8">+8</option><option value="7">+7</option><option value="6">+6</option><option value="5">+5</option><option value="4">+4</option><option value="3">+3</option><option value="2">+2</option><option value="1">+1</option><option value="0" selected>不奖惩</option><option value="-1">-1</option><option value="-2">-2</option><option value="-3">-3</option><option value="-4">-4</option><option value="-5">-5</option><option value="-6">-6</option><option value="-7">-7</option><option value="-8">-8</option><option value="-9">-9</option><option value="-10">-10</option></select> 分</p>
+
+</div>
+
+<div class="phpapp_button"><input name="SubmitAward" type="submit" value="奖惩" class="form_button"/> <input name="Delete" type="submit" value="删除" class="form_button"/></div>
+
+
+
+{else}
+
+
+<p>没有数据!</p>
+
+{/if}
+

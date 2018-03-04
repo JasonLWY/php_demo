@@ -1,0 +1,66 @@
+<div id="SetMap" style="height:420px;"></div>
+        
+        <h5>地区设置：<span style="color:#666;font-weight:normal;">(地图的设置方法二: 先设置以下地区,点击 "定位" 按钮，再点 "保存位置" 按钮完成设置)</span></h5>
+        <div id="showselectcity"> 
+        
+        {if !empty($user['residecity'])}
+             {echo $this->GetSelectCategory('category_city',$user['residecity'],'showselectcity')}
+        {else} 
+             {echo $this->SetSelectCategory('category_city',0,'showselectcity')}
+        {/if}
+        </div>
+        <p style="border-top:0px;"> 
+              <a onclick="SetMapPoint();" class="large blue awesome" title="定位地图">定位</a>  <a title="保存位置" onclick="SubmitSetMap();" class="large red awesome">保存位置</a>
+        </p>
+
+    
+    <input type="hidden" name="residelongitude_f" id="MapLongitude" value="{if $info['residelongitude']>0}{echo $info['residelongitude']}{/if}"/><input type="hidden" name="residelatitude_f" id="MapLatitude" value="{if $info['residelatitude']>0}{echo $info['residelatitude']}{/if}"/><input type="hidden" name="residemapzoom_d" id="MapZoom" value="{if $info['residemapzoom']>0}{echo $info['residemapzoom']}{/if}"/>
+
+
+    {template map:setmap}
+    
+    
+   <script type="text/javascript">
+       
+	    $(function(){	
+		   
+				 $("#OpenTaskMap").click( function () {
+						  $("#ShowMap").dialog('open');	
+				          
+						  var residelongitude=$('#MapLongitude').val();
+				          var residelatitude=$('#MapLatitude').val();
+	
+						  window.setTimeout(function(){  map.panTo(new BMap.Point(residelongitude,residelatitude)); }, 500);
+
+				 });
+	    });
+		
+		function SubmitSetMap(){	
+		
+				var residelongitude=$('#MapLongitude').val();
+				var residelatitude=$('#MapLatitude').val();
+				var residemapzoom=$('#MapZoom').val();
+				
+				var selectcity=$("#showselectcity select[name='showselectcity'] option[selected='selected']").val();
+				
+				if(!selectcity){
+					 selectcity=$("#showselectcity select[name='showselectcity'] option[selected=true]").val();
+				}
+
+
+				$.ajax({
+					  type: "POST",
+					  url: SURL+"/member.php?app=70&action=2",
+					  data: '&residelatitude_f='+residelatitude+'&residelongitude_f='+residelongitude+'&residemapzoom_d='+residemapzoom+'&showselectcity_d='+selectcity+'&Submit=ok',
+					  success: function(data){
+						    alert("设置成功!");
+					  }
+				});
+ 
+        }
+	   
+   </script>
+   
+
+  
+ 

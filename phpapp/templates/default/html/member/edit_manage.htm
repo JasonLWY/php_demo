@@ -1,0 +1,292 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">用户名</td>
+    <td>{echo $value['username']}</td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">当前头像：</td>
+    <td style="padding-top:10px;padding-bottom:10px;">{echo $this->GetUserAvatar($value['uid'],1,1)}</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160"><strong>安全信息：</strong></td>
+    <td></td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">新密码设置：</td>
+    <td><input name="password_s" type="password" class="form_input_text form_input_width_200" value=""/></td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">安全邮箱设置：</td>
+    <td><input name="safeemail_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($value['safeemail'])}{echo $value['safeemail']}{/if}"/></td>
+  </tr>
+  
+  
+  <tr>
+    <td class="width_160"><strong>信用信息：</strong></td>
+    <td></td>
+  </tr>
+
+
+  <tr>
+    <td class="width_160">工作速度评分：</td>
+    <td><input name="speed_f" type="text" class="form_input_text form_input_width_200" value="{if !empty($value['speed'])}{echo $value['speed']}{/if}"/> 5 分最高</td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">工作态度评分：</td>
+    <td><input name="attitude_f" type="text" class="form_input_text form_input_width_200" value="{if !empty($value['attitude'])}{echo $value['attitude']}{/if}"/> 5 分最高</td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">工作质量评分：</td>
+    <td><input name="quality_f" type="text" class="form_input_text form_input_width_200" value="{if !empty($value['quality'])}{echo $value['quality']}{/if}"/> 5 分最高</td>
+  </tr>
+  
+   <tr>
+    <td class="width_160"><strong>用户组信息：</strong></td>
+    <td></td>
+  </tr>
+
+  
+  <tr>
+    <td class="width_160">用户类型：</td>
+    <td><select name="usertype_d">
+        {for $membertype $type}
+          <option value="{echo $type['id_phpapp']}" {if $value['usertype']==$type['id_phpapp']} selected="selected" {/if}>{echo $type['name_phpapp']}</option>
+        {/for}
+        </select>
+    </td>
+  </tr>
+    
+    <tr>
+    <td class="width_160">后台管理组：</td>
+    <td><select name="admingroup_d">
+         <option value="0">无</option>
+        {for $adminusergroup $ausergroup}
+          <option value="{echo $ausergroup['id_phpapp']}" {if $value['admingroup']==$ausergroup['id_phpapp']} selected="selected" {/if}>{echo $ausergroup['name_phpapp']}</option>
+        {/for}
+        </select>
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">前台用户组：</td>
+    <td><select name="usergroup_d">
+        {for $usergroup $group}
+          <option value="{echo $group['gid']}" {if $value['usergroup']==$group['gid']} selected="selected" {/if}>{echo $group['groupname']}</option>
+        {/for}
+        </select>
+    </td>
+  </tr>
+  
+   <tr>
+    <td class="width_160"><strong>推广信息：</strong></td>
+    <td></td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">推广员：</td>
+    <td> <input name="unionid_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($value['unionid'])}{echo $value['unionid']}{/if}"/></td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">推广过期时间：</td>
+    <td> <input name="uniontime_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($value['uniontime'])}{echo $this->Date('Y-m-d',$value['uniontime'])}{/if}"/> 格式 2012-12-31 (过期小时分秒默认 0:00:00)</td>
+  </tr>
+
+  
+  <tr>
+    <td class="width_160"><strong>财务信息：</strong></td>
+    <td></td>
+  </tr>
+  
+  
+  <tr>
+    <td class="width_160">可用余额：</td>
+    <td> <input name="money_f" type="text" class="form_input_text form_input_width_200" value="{if !empty($value['money'])}{echo $value['money']}{/if}"/> 元</td>
+  </tr>
+
+
+  <tr>
+    <td class="width_160">冻结金额：</td>
+    <td> <input name="lock_f" type="text" class="form_input_text form_input_width_200" value="{if !empty($value['lock'])}{echo $value['lock']}{/if}"/> 元</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">推广提成：</td>
+    <td> <input name="union_f" type="text" class="form_input_text form_input_width_200" value="{if !empty($value['union'])}{echo $value['union']}{/if}"/> 元</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">财富金额：</td>
+    <td> <input name="wealth_f" type="text" class="form_input_text form_input_width_200" value="{if !empty($value['wealth'])}{echo $value['wealth']}{/if}"/> 元</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160"><strong>资料信息：</strong></td>
+    <td></td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">积分：</td>
+    <td> <input name="credit_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($value['credit'])}{echo $value['credit']}{/if}"/></td>
+  </tr>
+  
+  <tr>
+    <td class="form_input_width_100 addtask_text">性别：</td>
+    <td>
+    <select name="gender">
+        <option value="0"{if $value['gender']==0} selected="selected"{/if}>保密</option><option value="1"{if $value['gender']==1} selected="selected"{/if}>男</option><option value="2"{if $value['gender']==2} selected="selected"{/if}>女</option>
+    </select>
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="form_input_width_100 addtask_text">生日：</td>
+    <td>
+    <select name="Year" id="SetYear">
+        {echo $GetYear}
+    </select>
+    
+    <select name="Month" id="SetMonth">
+    
+         {echo $GetMonth}
+       
+    </select>
+    
+    <select name="Day" id="SetDay">
+
+    </select>
+    </td>
+    </tr>
+    
+   <tr>
+    <td class="form_input_width_100 addtask_text">出生地：</td>
+    <td id="birthcity">
+    {if $value['birthcity']}
+         {echo $this->GetSelectCategory('category_city',$value['birthcity'],'birthcity')}
+    {else} 
+         {echo $this->SetSelectCategory('category_city',$value['birthcity'],'birthcity')}
+    {/if}
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="form_input_width_100 addtask_text">所在地：</td>
+    <td id="residecity">
+    {if $value['residecity']}
+         {echo $this->GetSelectCategory('category_city',$value['residecity'],'residecity')}
+    {else} 
+         {echo $this->SetSelectCategory('category_city',$value['residecity'],'residecity')}
+    {/if}
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="form_input_width_100 addtask_text">个人主页：</td>
+    <td>
+       <input name="homepage" type="text"  id="homepage" size="50" maxlength="255" class="form_input_text form_input_width_200"  value="{if !empty($value['homepage'])}{echo $value['homepage']}{/if}"/>
+    </td>
+  </tr>  
+  
+  <tr>
+    <td class="width_160"><strong>联系方式：</strong></td>
+    <td></td>
+  </tr>
+  
+   <tr>
+    <td class="form_input_width_100 addtask_text">Email：</td>
+    <td><input name="email" id="email" type="text" size="50" maxlength="255" class="form_input_text form_input_width_200"  value="{if $value['email']}{echo $value['email']}{/if}" /></td>
+  </tr> 
+
+  <tr>
+    <td class="form_input_width_100 addtask_text">MSN：</td>
+    <td><input name="msn" id="msn" type="text" size="50" maxlength="50" class="form_input_text form_input_width_200"  value="{if $value['msn']}{echo $value['msn']}{/if}"/></td>
+  </tr> 
+  
+ <tr>
+    <td class="form_input_width_100 addtask_text">QQ：</td>
+    <td><input name="qq" id="qq" type="text" size="50" maxlength="50" class="form_input_text form_input_width_200"  value="{if $value['qq']}{echo $value['qq']}{/if}"/></td>
+ </tr>
+  
+ <tr>
+    <td class="form_input_width_100 addtask_text">ICQ：</td>
+    <td><input name="icq" id="icq" type="text" size="50" maxlength="50" class="form_input_text form_input_width_200"  value="{if $value['icq']}{echo $value['icq']}{/if}"/></td>
+  </tr>  
+ 
+  
+  <tr>
+    <td class="form_input_width_100 addtask_text">固定电话：</td>
+    <td><input name="phone" id="phone" type="text" size="50" maxlength="50" class="form_input_text form_input_width_200"  value="{if $value['phone']}{echo $value['phone']}{/if}"/></td>
+  </tr>  
+  
+  
+    <tr>
+    <td class="form_input_width_100 addtask_text">手机：</td>
+    <td><input name="mobile" id="mobile" type="text" size="50" maxlength="50" class="form_input_text form_input_width_200" value="{if $value['mobile']}{echo $value['mobile']}{/if}"/></td>
+  </tr> 
+
+</table>
+
+<div class="phpapp_button"><input name="uid" type="hidden" value="{echo $id}" /><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+</form>
+
+
+<script type="text/javascript">
+$(function(){	
+		   
+	 $("#SetMonth").change( function () {
+									
+		    GetDay();
+								  
+	 });
+
+});
+
+
+function GetDay() {
+	
+	         var  Year=$("#SetYear").val();
+			 
+			 var  Month=$("#SetMonth").val();
+			 
+			 var dayarr='';
+			 
+			 var date= new Date(Year,Month,0);
+			 
+			 var Day=date.getDate();
+			 
+			 for(var i=1;i<=Day;i++){
+				 
+				 if('{echo $day}'==i){
+					  var dayselected=' selected="selected"';
+				 }else{
+					  var dayselected='';
+				 }
+				 
+				 dayarr+='<option value="'+i+'"'+dayselected+'>'+i+'</option>';
+				   
+			 }
+			
+			 
+			 $("#SetDay").html(dayarr);
+	
+}
+
+GetDay();
+
+
+</script>

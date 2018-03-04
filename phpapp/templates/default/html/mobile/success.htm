@@ -1,0 +1,51 @@
+{template member:menu}
+
+<link href="{TURL}mobile.css" rel="stylesheet" type="text/css" />
+
+<div class="personal_certificate">
+
+      <div class="order_process" style="width:480px;">
+
+      <ul class="order_process_schedule" style="background-position: left -84px;">
+      
+          <li>1.填写手机号码</li>
+          
+          <li>2.验证手机码</li>
+          
+          <li>3.认证成功</li>
+      
+      </ul>
+      </div>
+      
+</div>
+
+
+<div class="mobile_certificate">
+
+<p>认证状态：认证成功</p>
+
+<p>认证费用： {if $this->certificate['price']>0}{echo $this->certificate['price']}元{else}免费{/if}</p>
+
+<p>认证时间： {echo $this->Date('Y/d/m H:i:s',$this->certificate['dateline'])}</p>
+
+
+<p>认证号码： {if !empty($this->member['mobile'])}{echo $this->member['mobile']}{/if}
+</p>
+
+<p><a href="member.php?app=12">[返回认证列表]</a></p>
+
+<h4>手机认证后享受的服务</h4>
+<p>
+<b>手机登录</b> 可直接使用“手机”登录<br>
+<b>重要事件提醒 </b>进行（支付/提现/选稿/中标）时，自动发送提醒<br>
+<b>找回账号密码</b> 忘记密码时，可使用手机短信找回密码。
+</p>
+</div>
+
+
+
+</div>
+
+
+
+{template phpapp:footer}

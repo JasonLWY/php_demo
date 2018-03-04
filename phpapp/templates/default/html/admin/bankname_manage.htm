@@ -1,0 +1,84 @@
+{template header}
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $this->GET['op']==3}
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+<tr>
+<td class="width_160">银行汇款信息:</td>
+<td>
+{template editor:editor}<script type="text/javascript">$(function(){$.PHPAPPEditor('Content','624','280');});</script>
+<textarea name="bankinfoset_s" id="Content" class="form_editor">{if !empty(PHPAPP::$config['bankinfoset'])}{echo $this->str(PHPAPP::$config['bankinfoset'],0,0,1,0,1,1)}{/if}</textarea>
+</td>
+<td class="color_999">(显示在支付页面汇款信息)</td>
+</tr>
+</table>
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button" onclick="SubmitContent();"/></div>
+
+
+{elseif $this->GET['op']==1 || $this->GET['op']==2}
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">名称</td>
+    <td>
+    <input name="bankname_s" value="{if !empty($manage['bankname'])}{echo $manage['bankname']}{/if}" type="text" class="form_input_text form_input_width_200" />
+    </td>
+  </tr>
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+
+
+{else}
+
+
+    {if $list}
+    
+    <div id="WindowsForm{echo $this->GET['menu']}">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+      <tr>
+        <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+        
+        {for $orderarr $key=>$value}
+        <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+        {/for} 
+        <td class="datalist_h2">操作</td>
+      </tr>
+    
+    {for $list $key=>$value}
+      <tr>
+        <td><input name="checkbox[]" type="checkbox" value="{echo $value['bankid']}"/></td>
+        <td>{echo $value['bankid']}</td>
+        <td>{echo $value['bankname']}</td>
+        <td><a href="{echo $this->MakeGetParameterURL(array('op'=>2,'id'=>$value['bankid']))}">[编辑]</a></td>
+      </tr>
+     {/for} 
+    
+    </table>
+    </div>
+    
+    <div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+    
+    <div class="phpapp_button"><input name="Submit" type="submit" value="删除" class="form_button"/></div>
+    
+    {else}
+    
+    <p>暂无数据</p>
+    
+    {/if}
+
+
+{/if}
+
+
+</form>

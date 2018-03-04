@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={echo S_CHARSET}" />
+<title>PHPAPP后台管理</title>
+<head>
+	<link rel="stylesheet" href="{TURL}dialog.css">
+    <link rel="stylesheet" href="{TURL}form.css">
+    <link rel="stylesheet" href="{TURL}admin_common.css">
+    <link rel="stylesheet" href="{TURL}admin_manage.css">
+    <link href="{echo TURL}credit.css" rel="stylesheet" type="text/css" />
+    <link href="{echo TURL}poshytip/tip-green/tip-green.css" rel="stylesheet" type="text/css" />
+    <link href="{echo TURL}poshytip/tip-darkgray/tip-darkgray.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<script type="text/javascript">
+var SURL ='{echo SURL}';
+var TURL ='{echo TURL}';
+var Language='{echo $this->lang}';
+var USERID='{echo $this->uid}';
+var CategoryURL ="{echo SURL}/member.php?app=10&action=1";
+var TaskSkillURL ="{echo SURL}/index.php?app=27&action=1";
+var UserSkillsNumber=30;
+</script>
+
+<script type="text/javascript" src="{echo TURL}js/jquery.js?v={echo $this->GetFileVersion()}"></script>
+<script type="text/javascript" src="{echo TURL}js/table.js?v={echo $this->GetFileVersion()}"></script>
+<script type="text/javascript" src="{echo TURL}js/input.js?v={echo $this->GetFileVersion()}"></script>
+<script type="text/javascript" src="{echo TURL}js/dialog.js?v={echo $this->GetFileVersion()}"></script>
+<script type="text/javascript" src="{echo TURL}js/member.js?v={echo $this->GetFileVersion()}"></script>
+<script type="text/javascript" src="{echo TURL}js/header.js?v={echo $this->GetFileVersion()}"></script>
+
+<!-- poshytip -->
+<script type="text/javascript" src="{echo TURL}poshytip/jquery.poshytip.js?v={echo $this->GetFileVersion()}"></script>
+
+<!--  datepicker  -->
+<script type="text/javascript" src="{echo TURL}js/datepicker-{echo $this->lang}.js?v={echo $this->GetFileVersion()}"></script>
+<script type="text/javascript" src="{echo TURL}js/admin.js?v={echo $this->GetFileVersion()}"></script>
+    
+<div id="loading" style="display:none" title="读取数据中..."></div>
+
+<div class="manage_menu"><ul>{echo $this->actionmenu}</ul></div>
+
+<script type="text/javascript">
+function NowLogin(){
+	 return USERID;
+}
+
+function SubmitContent(){
+	
+	$.SaveContent();	
+	
+	var content=$("#Content");
+	if (content.val()==""){
+		  alert("请输入内容!");
+		  content.focus();
+		  return false; 
+	}
+}
+</script>
+

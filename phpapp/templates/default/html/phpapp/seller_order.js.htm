@@ -1,0 +1,164 @@
+<script type="text/javascript">
+      
+      function SellerOpenDelivery(oid){
+            
+              if(oid>0){
+      
+                    var OderID=oid;
+                    
+              }else{
+                   var OderID='';
+                   $("#orderlist").find("input:checked[name!='checkboxall']").each(function(){
+                           var value=$(this).val();  
+                           
+                           if($(this).attr("disabled")!='disabled'){
+                           
+                           if(OderID){
+                                OderID+=','+value;
+                           }else{
+                                OderID=value;
+                           }
+                           }
+              
+                   }); 	
+                   
+                   if(!OderID){
+                       
+                        alert("请选择订单操作!");
+                        return false;
+                   }
+                    
+              }
+          
+
+              SellerSubmitDelivery(OderID);
+          
+      }
+      
+
+      function UploadOrderFile(OderID){
+
+			$.SaveContent();
+			
+            var content=$("#SellContent").val();
+			
+			$("#loading").dialog({
+                    title:"上传订单文件",	
+                    width: 300,
+                    position: ['center',160],
+                    height:160
+            });
+               
+            $("#loading").dialog('open');
+            
+            $("#loading").html('<div class="loading">上传数据中...</div>');
+   
+            $.ajax({
+					  type: "POST",
+					  url: SURL+"/member.php?app=48&action=1&op=4",
+					  data: '&oderid_s='+OderID+'&content_s='+content+'&Submit=1',
+					  success: function(data){
+							$("#loading").html(data);
+					  }
+             });	
+          
+      }
+	
+	  
+      function SellerSubmitDelivery(OderID){
+            
+		   if(confirm("是否确认已上传文件交接?")){
+			   
+					$("#loading").dialog({
+							  title:"确认文件交接",	
+							  width: 500,
+							  position: ['center',160],
+							  height:'auto'
+					});
+					 
+					$("#loading").dialog('open');
+								  
+					$("#loading").html('<div class="loading">处理确认交接中...</div>');
+					
+					$.ajax({
+							  type: "POST",
+							  url: SURL+"/member.php?app=48&action=1&op=2",
+							  data: 'oderid_s='+OderID,
+							  success: function(data){
+									$("#loading").html(data);
+							  }
+					});	
+		   }
+          
+      }
+
+
+      function SellerOpenCredit(oid){
+            
+              if(oid>0){
+      
+                    var OderID=oid;
+                    
+              }else{
+                   var OderID='';
+                   $("#orderlist").find("input:checked[name!='checkboxall']").each(function(){
+                           var value=$(this).val();  
+                           
+                           if($(this).attr("disabled")!='disabled'){
+                           
+                           if(OderID){
+                                OderID+=','+value;
+                           }else{
+                                OderID=value;
+                           }
+                           }
+              
+                   }); 	
+                   
+                   if(!OderID){
+                       
+                        alert("请选择订单操作!");
+                        return false;
+                   }
+                    
+              }
+          
+          
+          
+            $("#loading").dialog({
+                    title:"订单评价",	
+                    width: 600,
+                    position: ['center',160],
+                    height:'auto'
+            });
+               
+            $("#loading").dialog('open');
+            
+            $("#loading").html('<div class="loading">读取数据中...</div>');
+            
+            
+            $("#loading").html('<div class="credit_level" id="SellerCreditLevel"><ul><li class="credit_hao"></li><li class="credit_cha"></li><li class="credit_zhong"></li></ul><ul><li><input name="creditradio" type="radio" value="0" checked />好评</li> <li><input name="creditradio" type="radio" value="1"/>中评</li> <li><input name="creditradio" type="radio" value="2"/>差评</li></ul></div><p>评语：(100字内)</p><textarea id="SellerCreditContent" class="form_input_text" style="width:550px;height:100px;margin-bottom:10px;"></textarea><p style="text-align:center;margin-top:10px;"><input name="Submit" type="button" value="确认" onclick="SellerSubmitCredit(\''+OderID+'\')" class="form_button" style="width:80px"/></p>');
+            
+      
+          
+      }
+      
+	  
+      function SellerSubmitCredit(OderID){
+
+            var level=$("#SellerCreditLevel input:checked").val();
+			
+			var content=$("#SellerCreditContent").val();
+
+            $.ajax({
+					  type: "POST",
+					  url: SURL+"/member.php?app=48&action=1&op=3",
+					  data: 'oderid_s='+OderID+'&level='+level+'&content_s='+content,
+					  success: function(data){
+							$("#loading").html(data);
+					  }
+              });	
+
+      }
+          
+      </script>

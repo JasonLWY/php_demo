@@ -1,0 +1,127 @@
+{template admin:header}
+
+<div id="ShowAdvancedSearch" class="showadvancedsearch" {if !empty($this->GET['opensearch'])}style="display:block"{/if}>
+
+<form method="get" action="{echo $this->MakeGetParameterURL()}">
+
+<input type="hidden" name="app" value="{echo $this->app}" />
+<input type="hidden" name="menu" value="{echo $this->GET['menu']}" />
+<input type="hidden" name="action" value="{echo $this->ac}" />
+<input type="hidden" name="page" value="{echo $this->GET['page']}" />
+<input type="hidden" name="opensearch" value="{echo $this->GET['opensearch']}" />
+
+<table border="0" cellspacing="0" cellpadding="0">
+
+  <tr>
+    <td class="search_h2">ID</td>
+    <td><input name="sid" type="text" size="50" maxlength="255" class="form_input_text form_input_width_100"  value="{if !empty($selectarray['sid'])}{echo $selectarray['sid']}{/if}"/> </td>
+ 
+    <td class="search_h2">技能名称</td>
+    <td><input name="name" type="text" size="50" maxlength="255" class="form_input_text form_input_width_200"  value="{if !empty($selectarray['name'])}{echo $selectarray['name']}{/if}"/></td>
+  </tr>
+ 
+</table>
+
+<li style="text-align:center;padding-top:20px;">
+   <input name="SelectData" type="submit" value="搜索" class="form_button"/>
+</li>
+
+</form>
+
+</div>
+
+<div class="advancedsearch">
+{if empty($this->GET['opensearch'])}
+<a class="small green awesome" href="{echo $this->MakeGetParameterURL(array('opensearch'=>1))}">打开筛选</a>
+{else}
+<a class="small green awesome" href="{echo $this->MakeGetParameterURL(array('opensearch'=>0))}">关闭筛选</a>
+{/if}
+</div>
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $list}
+
+  
+<div id="WindowsForm{echo $this->GET['menu']}">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall"  value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+    
+    {for $orderarr $key=>$value}
+    <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+    {/for} 
+    
+    <td class="datalist_h2" style="width:68px;">操作</td>
+    
+  </tr>
+
+    {if $list}
+       
+           {for $list $value}
+            <tr>
+                <td><input name="checkbox[]" type="checkbox" value="{echo $value['sid']}" /></td>
+                <td>{echo $value['sid']}</td>
+                <td><input name="setdisplayorder[{echo $value['sid']}]" type="text" class="form_input_text form_input_width_50 add_subclass" value="{echo $value['displayorder']}"/> {echo $value['name']}</td>
+                <td>{echo $value['route']}</td>
+                <td>{echo $value['title']}</td>
+                <td>{echo $value['total']}</td>
+                <td>{echo $value['displayorder']}</td>
+                <td><a href="{echo $this->MakeGetParameterURL(array('action'=>3,'id'=>$value['sid']))}">[编辑]</a></td>
+              </tr>
+          
+           {/for}
+    
+    {/if}
+  
+</table>
+
+
+    {if $ajaxpage->ShowPages()}
+    <div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+    {/if}
+    
+</div>
+
+<div class="warning">
+    <h3>系统提示：</h3>
+    <p>
+    添加 好技能后可以到后台 分类->任务->修改-> 关联技能
+    </p>  
+</div>
+
+
+<div class="phpapp_button"><input name="Displayorder" type="submit" value="排序" class="form_button"/> <input name="Submit" type="submit" value="删除" class="form_button"/> </div>
+
+
+
+{else}
+
+
+<p>没有分类数据!</p>
+
+{/if}
+
+</form>
+
+
+
+
+<script type="text/javascript">
+$(function(){	
+	$.PHPAPPMouseover('.category_item','.show_add');
+	
+});
+
+
+function AddCategoryOne(numpx){
+	 AutoCategoryID++; 
+	 var subclasshtml ='<li><span class="subclass_icon" style="padding-left:'+numpx+'px"></span> <input name="addcategory[0]['+AutoCategoryID+'][displayorder]" type="text" class="form_input_text form_input_width_50 add_subclass" value="0"/> <input name="addcategory[0]['+AutoCategoryID+'][name]" type="text" class="form_input_text form_input_width_200" value=""/> {if $apps}<select name="addcategory[0]['+AutoCategoryID+'][type]" class="form_select_text">{for $apps $value}<option value="{echo $value["id_phpapp"]}" {if $value["id_phpapp"]==49} selected="selected"{/if}>{echo $value["name_phpapp"]}</option>{/for}</select>{/if}</li>';
+	 
+	 $('#CatidID0').after(subclasshtml);
+	 
+}
+
+</script>

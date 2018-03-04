@@ -1,0 +1,34 @@
+<link rel="stylesheet" href="{TURL}admin/css/desktop.css">
+<div class="desktop">
+
+<ul class="catalog_sortable">
+{if $desktoparr}
+
+     {for $desktoparr $value}
+     
+      <li class="{echo $value['catid_phpapp']}" ondblclick="$.OpenWindows('{echo $value['catid_phpapp']}','{echo $value['name_phpapp']}')"><div class="phpapp_icon {echo $value['icon_phpapp']}"></div><p>{echo $value['name_phpapp']}</p></li>
+     
+     {/for}
+{else}
+<p>ÔÝÎÞÊý¾Ý!</p>
+{/if}
+</ul>
+
+</div>
+
+<script type="text/javascript">
+$(function() {
+	   $(".catalog_sortable").sortable();
+	   $(".catalog_sortable").disableSelection();
+	   $(".catalog_sortable li").hover( function (){
+			   $(this).addClass("desktop_icon_mouseover"); 
+	   },function (){
+			   $(this).removeClass("desktop_icon_mouseover");
+	   });
+	   $(".catalog_sortable").sortable({out:function(event,ui){
+			   $(".catalog_sortable li").removeClass("desktop_icon_mouseover")
+			   ;UpdateDesktop();
+			   }
+	   }); 
+});
+</script>

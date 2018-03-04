@@ -1,0 +1,104 @@
+{template admin:header}
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+<tr>
+<td class="width_160">发布任务方式:</td>
+<td><input class="radio" type="radio" name="task_releasemode_d" value="0"  {if PHPAPP::$config['task_releasemode']==0}checked{/if}>&nbsp;直接发布 <input class="radio" type="radio" name="task_releasemode_d" value="1" {if PHPAPP::$config['task_releasemode']==1}checked{/if}>&nbsp;集成一起发布</td>
+<td class="color_999">任务的发布方式根据需要进行调整</td>
+</tr>
+
+<tr>
+<td class="width_160">系统删除交易通知:</td>
+<td><input class="radio" type="radio" name="auto_delete_order_notice_d" value="0"  {if PHPAPP::$config['auto_delete_order_notice']==0}checked{/if}>&nbsp;手动 <input class="radio" type="radio" name="auto_delete_order_notice_d" value="1" {if PHPAPP::$config['auto_delete_order_notice']==1}checked{/if}>&nbsp;自动</td>
+<td class="color_999">当用户操作后是否自动删除之前的通知</td>
+</tr>
+
+
+<tr>
+<td class="width_160">系统自动审核:</td>
+<td><input class="radio" type="radio" name="task_check_d" value="0"  {if PHPAPP::$config['task_check']==0}checked{/if}>&nbsp;手动 <input class="radio" type="radio" name="task_check_d" value="1" {if PHPAPP::$config['task_check']==1}checked{/if}>&nbsp;自动</td>
+<td class="color_999">用户发布任务支付后是否自动审核</td>
+</tr>
+
+<tr>
+<td class="width_160">发布任务绑定客服:</td>
+<td><input class="radio" type="radio" name="task_assign_service_d" value="1" {if PHPAPP::$config['task_assign_service']==1}checked{/if}>&nbsp;绑定 <input class="radio" type="radio" name="task_assign_service_d" value="0"  {if PHPAPP::$config['task_assign_service']==0}checked{/if}>&nbsp;不绑定</td>
+<td class="color_999">任务的发布时是否直接绑定客服</td>
+</tr>
+
+<tr>
+<td class="width_160">暂停投稿数:</td>
+<td><input name="task_count_broaden_add" value="{echo PHPAPP::$config['task_count_broaden_add']}" type="text" class="form_input_text form_input_width_200" /> 个</td>
+<td class="color_999">投多少个稿量时雇主不审核暂停投稿数</td>
+</tr>
+
+<tr>
+<td class="width_160">维权时间:</td>
+<td><input name="orders_rights_date" value="{echo PHPAPP::$config['orders_rights_date']}" type="text" class="form_input_text form_input_width_200" /> 天</td>
+<td class="color_999">订单交易成功后多少时间内可以申请维权</td>
+</tr>
+
+<tr>
+<td class="width_160">任务管理设置延期时间:</td>
+<td><input name="task_delay_time" value="{echo PHPAPP::$config['task_delay_time']}" type="text" class="form_input_text form_input_width_200" /> 天</td>
+<td class="color_999">后台任务管理设置延期默认的时间</td>
+</tr>
+
+<tr>
+<td class="width_160">未发货处理时间(悬赏):</td>
+<td><input name="task_auto_delivery_d" value="{echo PHPAPP::$config['task_auto_delivery']}" type="text" class="form_input_text form_input_width_200" /> 天</td>
+<td class="color_999"><p>卖家中标后在多少天内系统自动关闭订单关闭中标时间,</p><p>此功能为悬赏招标是以威客报的时间为准。</p></td>
+</tr>
+
+
+<tr>
+<td class="width_160">自动支付订单时间:</td>
+<td><input name="task_auto_verifypay_d" value="{echo PHPAPP::$config['task_auto_verifypay']}" type="text" class="form_input_text form_input_width_200" /> 天</td>
+<td class="color_999">中标卖家发货后系统自动确认收货时间</td>
+</tr>
+
+
+<tr>
+<td class="width_160">自动评价时间:</td>
+<td><input name="task_auto_evaluate_d" value="{echo PHPAPP::$config['task_auto_evaluate']}" type="text" class="form_input_text form_input_width_200" /> 天</td>
+<td class="color_999">交易后自动评价时间</td>
+</tr>
+
+
+<tr>
+<td class="width_160">好评分数:</td>
+<td><input name="task_haoping_f" value="{echo PHPAPP::$config['task_haoping']}" type="text" class="form_input_text form_input_width_200" /> 分</td>
+<td class="color_999">双方完成交易后评分得的分数</td>
+</tr>
+
+<tr>
+<td class="width_160">中评分数:</td>
+<td><input name="task_zhongping_f" value="{echo PHPAPP::$config['task_zhongping']}" type="text" class="form_input_text form_input_width_200" /> 分</td>
+<td class="color_999">双方完成交易后评分得的分数</td>
+</tr>
+
+<tr>
+<td class="width_160">差评分数:</td>
+<td><input name="task_chaping_f" value="{echo PHPAPP::$config['task_chaping']}" type="text" class="form_input_text form_input_width_200" /> 分</td>
+<td class="color_999">双方完成交易后评分得的分数</td>
+</tr>
+
+<tr>
+<td class="width_160">最大发布时间:</td>
+<td><input name="task_endtime_s" value="{echo PHPAPP::$config['task_endtime']}" type="text" class="form_input_text form_input_width_200" /> 天</td>
+<td class="color_999">任务最大发布时间</td>
+</tr>
+
+</table>
+
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button" onclick="SubmitContent();"/></div>
+
+</form>
+
+<script type="text/javascript">
+$('#EditorUpFile').hide();
+</script>

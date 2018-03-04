@@ -1,0 +1,180 @@
+{template column}
+            
+            
+   {if $this->GET['app']==8}
+   </div>
+   </div>
+   {/if}
+
+   <div class="space_main_right space_main_right_width">
+   
+             <div class="space_main_right_content">
+                   
+   
+                     <div class="space_box">
+                        <h2>我的简介</h2>
+                        
+                        <div class="about">
+                        
+                            {if $memberinfo['about']}
+                            
+                                 {echo $this->str($memberinfo['about'],9999,0,1,0,0,1)}
+                                 
+                            {else}
+                                 暂时没写!
+                            {/if}
+                        
+                        </div>
+                        
+                        
+                     </div>   
+                     
+                        
+                     </div>   
+                     
+                     
+                     <div class="space_box">
+                        <h2>我的技能</h2>
+                        <div class="myskill">
+                            <ul>
+                                {if $skillsarr}
+                                    {for $skillsarr $key=>$skill}
+                                          <a href="{echo $skill['url']}">{echo $skill['name']}</a> 
+                                    {/for}
+                                {/if}
+                            </ul>
+                        </div>
+                     </div>   
+                     
+            		<div class="space_box">
+                        <h2>我的动态</h2>
+                        
+                        <div class="feed">
+                        
+                          <ul id="ScrollSpaceFeed">
+
+
+                              {if $spacefeed}
+                                   {for $spacefeed $value}
+                                  <li>
+                                    <em>{echo $this->Date('m-d H:i',$value['dateline'],1)}</em>
+                                    <p><a href="{echo SURL}/space.php?app=8&uid={echo $value['uid']}" target="_blank" title="{echo $value['username']}">{echo $value['username']}</a> <span style="color:#999">{echo $this->FeedReplace($value['title_data'],$value['title_template'])}</span></p>
+                                    </li>
+                                   {/for}
+                                   
+                                   
+                                   <script type="text/javascript">
+									   SetScroll('#ScrollSpaceFeed',3000);
+								   </script>
+                              {else}
+                              
+                              <li>没有动态</li>
+                              {/if}
+                              
+                              </ul>
+                        
+                        </div>
+                        
+                        
+                    
+                    </div>
+            
+                   <div class="space_box">
+                        <h2>我出售的最新服务</h2>
+                
+                        <div class="photo_list">
+                        {if $sellerservicearr}
+                        
+                        <ul>
+                        {for $sellerservicearr $value}
+                        
+                        <li>
+                                <div class="photo">
+                                                               
+                                                 {if !empty($value['logo'])}
+                                                            
+                                                            {if $value['thumb']}  
+                                                                 <a href="{echo SURL}{echo $value['url']}" title="{echo $value['subject']}"><img src="{SURL}/{echo $value['thumb']}"/></a>
+                                                            {else}
+                                                                  <img src="{SURL}/images/seller/nopic.gif"/>
+                                                            {/if}
+                                                 {else}
+                                                     
+                                                     
+                                                     <img src="{SURL}/images/seller/nopic.gif"/>
+                                                    
+                                                                    
+                                                 {/if}
+                                 </div>
+                                                                
+                                                                
+                                
+                                <h5><a href="{echo SURL}{echo $value['url']}" title="{echo $value['subject']}">{echo $value['subject']}</a></h5>
+                        
+                                <p>报价 <span class="color_f60">{echo $value['price']}</span> 元/{echo $value['unit']}</p>
+                                
+                        </li>
+                              
+                        
+                        {/for}
+                        
+                        </ul>
+     
+                        {else}
+                        
+                        <p>暂无服务出售</p>
+                        
+                        {/if}
+                        </div>
+
+				 </div>
+                 
+                <div class="space_box">
+                        <h2>最近交易评价</h2>
+            
+            
+           				{if $sellercreditarr}
+                            <div class="seller_credit">
+                            <ul>
+                            {for $sellercreditarr $key=>$value}
+                                 <li>
+                                   <h3>{if $value['appid']!=82}<span class="color_f60">￥{if $value['price1']>0}{echo $value['price1']}-{echo $value['price2']}{else}{echo $value['money']}{/if}</span>  <a href="{echo SURL}/index.php?app={echo $value['appid']}&action=5&tid={echo $value['tid']}" target="_blank">{echo $value['tsubject']}</a>{else}<span style="color:#09C">{echo $value['tsubject']}[雇用私密]</span>{/if}</h3>
+                                    
+                                    
+                                    {echo $this->GetUserAvatar($value['uid'])}
+                                     <p class="seller_credit_username"><dfn>{if $value['level']==2}<span class="color_f60">差评</span>{elseif $value['level']==1}中评{else}<span class="seller_credit_hao">好评</span>{/if}</dfn><a href="{echo SURL}/space.php?app=8&uid={echo $value['uid']}" target="_blank" title="{echo $value['username']}">{echo $value['username']}</a>  &nbsp;&nbsp; {echo $this->Date('Y-m-d',$value['dateline'],1)}
+                                   </p>
+                                    
+                                    <p style="padding:10px;white-space:normal;width:760px;word-break:break-all;color:#999;">
+                                         {if $value['auto']}
+                                               系统自动评价
+                                         {else}
+                                         	   {if $value['content']}{echo $value['content']}{else}无评语{/if}
+                                         {/if}
+                                    </p>
+                             
+                                    </li>
+                                
+                            {/for}
+                            </ul>
+                            </div>
+                        {else}
+                           <p>
+                                 暂时没有评价!
+                           </p>
+					    {/if}
+
+
+                </div>
+          
+             
+           </div>
+   </div>
+
+
+</div>
+
+
+
+
+{template phpapp:footer}

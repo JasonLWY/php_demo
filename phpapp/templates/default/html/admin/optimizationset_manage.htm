@@ -1,0 +1,244 @@
+{template header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+{if !$this->GET['op']}
+
+<tr>
+<td colspan="3"><strong>伪静态功能设置:</strong></td>
+</tr>
+
+<tr>
+<td class="width_160">是否开启伪静态功能:</td>
+<td><input class="radio" type="radio" name="S_REWRITE_URL_d" value="1"  {if S_REWRITE_URL==1}checked{/if}>&nbsp;是 <input class="radio" type="radio" name="S_REWRITE_URL_d" value="0" {if S_REWRITE_URL==0}checked{/if}>&nbsp;否</td>
+<td class="color_999">(开启后生成伪静态才生效)</td>
+</tr>
+
+<tr>
+<td colspan="3"><strong>登录注册返回地址设置:</strong></td>
+</tr>
+
+<tr>
+<td class="width_160">登录注册后是否强制返回首页:</td>
+<td><input class="radio" type="radio" name="loginredirect_d" value="1"  {if PHPAPP::$config['loginredirect']==1}checked{/if}>&nbsp;是 <input class="radio" type="radio" name="loginredirect_d" value="0" {if PHPAPP::$config['loginredirect']==0}checked{/if}>&nbsp;否</td>
+<td class="color_999">如果不强制系统将返回到用户原来浏览的地址</td>
+</tr>
+
+{elseif $this->GET['op']==1}
+
+<tr>
+<td colspan="3"><strong>COOKIE设置:</strong></td>
+</tr>
+
+<tr>
+<td class="width_160">COOKIE 域:</td>
+<td><input name="cookie_domain_s" value="{echo PHPAPP::$config['cookie_domain']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">COOKIE 域(默认空)</td>
+</tr>
+
+<tr>
+<td class="width_160">COOKIE 路径:</td>
+<td><input name="cookie_path_s" value="{echo PHPAPP::$config['cookie_path']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">COOKIE 路径(默认空)</td>
+</tr>
+
+<tr>
+<td class="width_160">COOKIE 时间:</td>
+<td><input name="cookie_time_s" value="{echo PHPAPP::$config['cookie_time']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">COOKIE 时间(默认登录保留时间) 24 * 60 * 60 * 7(天) = 604800(7天时间) </td>
+</tr>
+
+{elseif $this->GET['op']==2}
+
+<tr>
+<td colspan="3"><strong>用户空间二级域名:</strong></td>
+</tr>
+
+<tr>
+<td class="width_160">是否开启二级域名功能:</td>
+<td><input class="radio" type="radio" name="userdomainname_d" value="0"  {if PHPAPP::$config['userdomainname']==0}checked{/if}>&nbsp;开启 <input class="radio" type="radio" name="userdomainname_d" value="1" {if PHPAPP::$config['userdomainname']==1}checked{/if}>&nbsp;关闭</td>
+<td class="color_999">是否开启用户空间二级域名(域名支持泛域名即可) <a href="http://bbs.phpapp.cn/forum-21-1.html" target="_blank">具体查看官方帮助文档</a></td>
+</tr>
+<tr>
+<td class="width_160">用户空间二级域名后缀:</td>
+<td><input name="domainname_s" value="{echo PHPAPP::$config['domainname']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">用户使用的二级域名后缀 如: .edoog.com</td>
+</tr>
+<tr>
+<td class="width_160">用户空间二级域名后缀:</td>
+<td><input name="allowdomainname_s" value="{echo PHPAPP::$config['allowdomainname']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">限制使用二级域名多个域名时用 | 隔开 </td>
+</tr>
+<tr>
+<td class="width_160">用户空间域名最短位数:</td>
+<td><input name="domainnamesmall_s" value="{echo PHPAPP::$config['domainnamesmall']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999"></td>
+</tr>
+<tr>
+<td class="width_160">用户空间域名最长位数:</td>
+<td><input name="domainnamelong_s" value="{echo PHPAPP::$config['domainnamelong']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999"></td>
+</tr>
+
+<tr>
+<td colspan="3"><strong>用户空间切换风格功能:</strong></td>
+</tr>
+
+<tr>
+<td class="width_160">是否开启用户空间切换风格功能:</td>
+<td><input class="radio" type="radio" name="userspacestyle_d" value="0"  {if PHPAPP::$config['userspacestyle']==0}checked{/if}>&nbsp;开启 <input class="radio" type="radio" name="userspacestyle_d" value="1" {if PHPAPP::$config['userspacestyle']==1}checked{/if}>&nbsp;关闭</td>
+<td class="color_999">开启后用户空间可以使用风格切换</td>
+</tr>
+
+
+{elseif $this->GET['op']==3}
+
+<tr>
+<td colspan="3"><strong>SEO设置:</strong></td>
+</tr>
+
+<tr>
+<td class="width_160">SEO 网站标语:</td>
+<td><input name="sitebanner_s" value="{echo PHPAPP::$config['sitebanner']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">网页标题通常是搜索引擎关注的重点，本附加字设置将出现在标题中论坛名称的后面，如果有多个关键字，建议用 "|"、","(不含引号) 等符号分隔</td>
+</tr>
+
+<tr>
+<td class="width_160">SEO Title:</td>
+<td><input name="sitetitle_s" value="{echo PHPAPP::$config['sitetitle']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">SEO Title 项出现在页面头部的 Title 标签中默认显示</td>
+</tr>
+
+<tr>
+<td class="width_160">SEO Keywords:</td>
+<td><input name="sitekeywords_s" value="{echo PHPAPP::$config['sitekeywords']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">SEO Keywords 项出现在页面头部的 Keywords 标签中默认显示</td>
+</tr>
+
+<tr>
+<td class="width_160">SEO Description:</td>
+<td><input name="sitedescription_s" value="{echo PHPAPP::$config['sitedescription']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">SEO Description 项出现在页面头部的 Description 标签中默认显示</td>
+</tr>
+
+
+{elseif $this->GET['op']==4}
+
+<tr>
+<td colspan="3"><strong>Memcache缓存设置:</strong>(以下为服务器使用者设置)</td>
+</tr>
+
+<tr>
+<td class="width_160">页面缓存更新时间:</td>
+<td><input name="S_CACHE_TIME_d" value="{echo S_CACHE_TIME}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">页面缓存更新时间 单位 "秒"</td>
+</tr>
+
+<tr>
+<td class="width_160">Memcache内存缓存开启:</td>
+<td><input class="radio" type="radio" name="S_CACHE_MEMORY_OPEN_d" value="1"  {if S_CACHE_MEMORY_OPEN==1}checked{/if}>&nbsp;是 <input class="radio" type="radio" name="S_CACHE_MEMORY_OPEN_d" value="0" {if S_CACHE_MEMORY_OPEN==0}checked{/if}>&nbsp;否</td>
+<td class="color_999">开启前自行检查 phpinfo 是否已经安装好 Memcache 扩展，没安装不能开启,如果开启出问题可在 config.php 关闭。</td>
+</tr>
+
+<tr>
+<td class="width_160">Memcache服务器IP配置:</td>
+<td><input name="memcacheip_s" value="{echo PHPAPP::$config['memcacheip']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">Memcache环境服务器IP</td>
+</tr>
+
+<tr>
+<td class="width_160">Memcache端口配置:</td>
+<td><input name="memcacheport_s" value="{echo PHPAPP::$config['memcacheport']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">Memcache端口配置</td>
+</tr>
+
+{elseif $this->GET['op']==5}
+
+<tr>
+<td colspan="3"><strong>分页优化设置:</strong></td>
+</tr>
+
+<tr>
+<td class="width_160">分页模式:</td>
+<td><input class="radio" type="radio" name="setpagemode_d" value="0"  {if PHPAPP::$config['setpagemode']==0}checked{/if}>&nbsp;传统分页 <input class="radio" type="radio" name="setpagemode_d" value="2" {if PHPAPP::$config['setpagemode']==2}checked{/if}>&nbsp;传统分页优化 <input class="radio" type="radio" name="setpagemode_d" value="1" {if PHPAPP::$config['setpagemode']==1}checked{/if}>&nbsp;高性能分页优化</td>
+<td class="color_999">(传统分页用于1万以下数据,高性能分页优化用于10万上以数据)</td>
+</tr>
+
+<tr>
+<td class="width_160">优化分页默认最高页数:</td>
+<td><input name="setpagenumber_d" value="{echo PHPAPP::$config['setpagenumber']}" maxlength="6" type="text" class="form_input_text form_input_width_200" /> 页</td>
+<td class="color_999">(选择优化模式时建议设置500到1000页之间)</td>
+</tr>
+
+{elseif $this->GET['op']==6}
+
+<tr>
+<td colspan="3"><strong>全文检索设置:</strong></td>
+</tr>
+
+<tr>
+<td class="width_160">检索模式:</td>
+<td><input class="radio" type="radio" name="setsearchmode_d" value="0"  {if PHPAPP::$config['setsearchmode']==0}checked{/if}>&nbsp;传统检索 <input class="radio" type="radio" name="setsearchmode_d" value="1" {if PHPAPP::$config['setsearchmode']==1}checked{/if}>&nbsp;MYSQL全文检索 <input class="radio" type="radio" name="setsearchmode_d" value="2" {if PHPAPP::$config['setsearchmode']==2}checked{/if}>&nbsp;Sphinx全文检索</td>
+<td class="color_999">(MYSQL全文检索在UTF8下稳定搜索,Sphinx全文检索需要服务器安装配置)</td>
+</tr>
+
+<!--
+<tr>
+<td class="width_160">最大搜索结果:</td>
+<td><input name="setsearchnumber_d" value="{echo PHPAPP::$config['setsearchnumber']}" maxlength="6" type="text" class="form_input_text form_input_width_200" /> 个</td>
+<td class="color_999">(最大搜索结果建议设置500到1000之间)</td>
+</tr>
+-->
+
+{elseif $this->GET['op']==7}
+
+<tr>
+<td colspan="3"><strong>MYSQL缓存设置:</strong>(以下为服务器使用者设置,无MYSQL高级权限禁止提交.)</td>
+</tr>
+
+{if $cacheset}
+
+  {for $cacheset $key=>$value}
+  
+      <tr>
+      <td class="width_160">{echo $key}:</td>
+      <td><input name="{echo $key}" value="{echo $value}" type="text" class="form_input_text form_input_width_200"{if $key=='have_query_cache'}disabled="disabled"{/if}/></td>
+      <td class="color_999">
+      {if $key=='have_query_cache'}
+           开启缓存状态
+      {elseif $key=='query_cache_limit'}
+           缓存结果集大小(KB)
+      {elseif $key=='query_cache_min_res_unit'}
+           缓存最小数据块大小(KB)
+      {elseif $key=='query_cache_size'}
+           缓存大小(KB)
+      {elseif $key=='query_cache_type'}
+           缓存类型(ON/OFF)
+      {elseif $key=='query_cache_wlock_invalidate'}
+           表写锁时禁止读取缓存(ON/OFF)
+      {/if}
+      </td>
+      </tr>
+
+  {/for}
+
+{else}
+
+<tr>
+<td class="width_160" colspan="3">
+<p>无权限设置MYSQL缓存,请自行手动开启配置.</p>
+
+</td>
+</tr>
+
+{/if}
+
+{/if}
+
+</table>
+
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button"/></div>
+
+</form>

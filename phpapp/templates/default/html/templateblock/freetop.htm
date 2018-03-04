@@ -1,0 +1,46 @@
+<div class="default_main">
+       
+    
+        <div class="free_introduction_task">
+               <p>有需求?</p>
+               <h5>专业威客帮你解决问题</h5>
+               <a href="{echo SURL}/index.php?app=49&action=1" class="big orange awesome">立刻发布任务</a>
+        </div>
+     
+
+       <div id="SlideList">
+          
+       {php} $slidearray=$this->GetMysqlArray('*'," ".$this->GetTable('slide')." WHERE appid='56' AND status=0 ORDER BY displayorder ASC");{/php}
+       {if $slidearray}
+           <ul id="Slide" style="height:360px;overflow:hidden;">
+               
+               {for $slidearray $key=>$value}
+                     <li id="Slide_IMG_{echo $key+1}"><a href="{echo $value['link']}" target="_blank" title="{echo $value['subject']}"><img src="{echo $value['image']}" title="{echo $value['subject']}" /></a></li>
+               {/for}
+           
+           </ul>
+
+       {else}
+            <p>暂无数据 650* 360 px</p>
+       {/if}
+            
+</div>
+
+{if $slidearray}
+     <div class="grid_slidetitle" id="SlideTitle">
+           <ul>
+           {for $slidearray $key=>$value}
+                 <li id="Title_Slide_IMG_{echo $key+1}"{if ($key+1)==1} class="focus"{/if}><a href="{echo $value['link']}" target="_blank" target="{echo $value['subject']}"></a></li>
+           {/for}
+           </ul>
+     </div>
+{/if}    
+    
+
+
+</div>
+
+           
+<script type="text/javascript">
+		SetSlide('#SlideList','#Slide','#SlideTitle',4000);
+</script>

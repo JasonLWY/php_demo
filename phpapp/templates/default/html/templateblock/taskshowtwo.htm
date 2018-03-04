@@ -1,0 +1,155 @@
+{php}
+
+			   
+		   //最新
+		   $taskcountnew=$this->GetMysqlArray('tid,subject,money,endtime,process,draft_number,url,draft_success,credit,total,addmoney'," ".$this->GetTable('task')." WHERE process>3 AND process!=8 AND process!=9 AND appid!=82  $citysql ORDER BY topbid DESC,dateline DESC LIMIT 0,15");
+		   
+		   //500元以上
+		   $taskcount500=$this->GetMysqlArray('tid,subject,money,endtime,process,draft_number,draft_success,credit,url,total,addmoney'," ".$this->GetTable('task')." WHERE money>=800 AND process>3 AND process!=5  AND process!=6 AND appid!=82  $citysql ORDER BY topbid DESC,dateline DESC LIMIT 0,15");
+           
+		   
+		   //24小时
+		   $nowdate=@date("Y-m-d");
+		   $today=strtotime("$nowdate 0:00:00");
+		   $time=$this->NowTime()+(24*60*60);
+		   
+		   $taskcount24=$this->GetMysqlArray('tid,subject,url,money,endtime,process,draft_number,draft_success,credit,total,addmoney'," ".$this->GetTable('task')." WHERE process>3 AND process!=8 AND process!=9 AND appid!=82 $citysql AND endtime>='$today' AND endtime<='$time' ORDER BY topbid DESC,dateline DESC LIMIT 0,10");
+
+
+{/php}
+
+
+{ad TaskCount73}
+
+<div class="default_main">
+
+      <div class="default_left">
+               
+      
+           <div id="TaskCount" class="default_task_list datalist" style="border: none;padding:0px;">
+                  
+                  <ul>
+                  <h3>热门任务</h3>
+                  
+                      <li><a href="#TaskCountNew">最新推荐任务</a></li>
+                      <li><a href="#TaskCount500">500元以上任务</a></li>
+                      <dfn><a href="{echo SURL}/index.php?app=49">更多</a></dfn>
+                  </ul>
+                  
+                  <div id="TaskCountNew" class="defaulttaskline tasklist">
+                  
+                       <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td class="task_list_money"><strong>赏金</strong></td>
+                              <td class="task_list_subject"><strong>标题</strong></td>
+                              <td class="task_list_draft"><strong>投稿/中标</strong></td>
+                              <td class="task_list_credit"><strong>诚信</strong></td>
+                            </tr>
+                            
+                       {if $taskcountnew}
+                            {for $taskcountnew $key=>$value}
+                             <tr>
+                                <td class="task_list_money"><span class="color_f60">￥{if $value['price1']>0}{echo $value['price1']}-{echo $value['price2']}{else}{echo $value['money']}{/if}</span></td>
+                                <td class="task_list_subject"><a href="{echo SURL}{echo $value['url']}" target="_blank">{echo $value['subject']} {if $value['addmoney']>0} +{echo $value['addmoney']}{/if}</a></td>
+                                <td class="task_list_draft">{echo $value['draft_number']}/{echo $value['draft_success']}</td>
+                                <td class="task_list_credit">{if $value['credit']==1}保证选标{elseif $value['credit']==2}看情况选标{/if}</td>
+                              </tr>
+                              {/for}
+                          
+                          {else}
+                           <tr>
+                            <td colspan="5">暂时没有任务!</td>
+                           </tr>
+                       {/if}
+                           
+                      </table>
+                  </div>
+                  
+                  
+                  <div id="TaskCount500" class="defaulttaskline datalist">
+                  
+                       <table width="100%" border="0" cellspacing="0" cellpadding="0" class="datalist">
+                            <tr>
+                              <td class="task_list_money"><strong>赏金</strong></td>
+                              <td class="task_list_subject"><strong>标题</strong></td>
+                              <td class="task_list_draft"><strong>投稿/中标</strong></td>
+                              <td class="task_list_credit"><strong>诚信</strong></td>
+                            </tr>
+                            
+                       {if $taskcount500}
+                            {for $taskcount500 $key=>$value}
+                             <tr>
+                                <td class="task_list_money"><span class="color_f60">￥{if $value['price1']>0}{echo $value['price1']}-{echo $value['price2']}{else}{echo $value['money']}{/if}</span></td>
+                                <td class="task_list_subject"><a href="{echo SURL}{echo $value['url']}" target="_blank">{echo $value['subject']} {if $value['addmoney']>0} +{echo $value['addmoney']}{/if}</a></td>
+                                <td class="task_list_draft">{echo $value['draft_number']}/{echo $value['draft_success']}</td>
+                                <td class="task_list_credit">{if $value['credit']==1}保证选标{elseif $value['credit']==2}看情况选标{/if}</td>
+ 
+                              {/for}
+                          
+                          {else}
+                           <tr>
+                            <td colspan="5">暂时没有任务!</td>
+                           </tr>
+                       {/if}
+                           
+                      </table>
+              
+                  </div>
+                        
+          </div>
+          
+      </div>
+
+      <div class="default_right">
+      
+          <div class="banner_260">{ad TaskCount84}</div>
+          
+           <div id="TaskCountRight" class="default_task_list" style="border: none;padding:0px;margin-bottom:10px;">
+                  
+                  <ul>
+                      <li><a href="#TaskCount24">24小时任务</span></a></li>
+                  </ul>
+                  
+                  <div id="TaskCount24" class="task_feed" style="border: none;padding:0px;">
+                  
+                       <ul id="ScrollTaskCount24">
+                       {if $taskcount24}
+                       
+                               {for $taskcount24 $key=>$value}
+                                  {php} $day=($value['endtime']-$this->NowTime())/ (60 * 60);{/php}
+                                  
+                                  {if intval($day)>0}
+                                  <li>
+                                  {if intval($day)}
+                                  <em>剩{echo intval($day)}小时</em>
+                                  {else}
+                                  <em>剩{echo intval($day*24)}分</em>
+                                  {/if}
+                                  <p><span class="color_f60">￥{echo $value['money']}</span> <a href="{echo SURL}{echo $value['url']}" target="_blank">{echo $this->str($value['subject'],32)}</a>
+                                  </p>
+                                  </li>
+                                  {/if}
+                                {/for}
+                            
+                       {else}
+                                <li>暂时没有任务!</li>
+                       {/if}
+                       
+                       </ul>
+
+                  </div>
+
+                  
+           </div>
+           
+           <div class="banner_260" style="padding:0px;">{ad TaskCount85}</div>
+          
+      </div>
+
+
+</div>
+
+<script type="text/javascript">	
+		SetScroll('#ScrollTaskCount24',3000);
+		SetScroll('#ScrollTaskCountFeed',3000);
+</script>	

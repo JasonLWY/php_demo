@@ -1,0 +1,57 @@
+{template member:menu}
+
+<link href="{TURL}certificate.css" rel="stylesheet" type="text/css" />
+
+<div class="email_certificate">
+
+<h2>邮箱认证</h2>
+
+<p>您的邮箱： <input id="EMailCertificate" type="text" class="form_input_text form_input_width_300" value="{echo $member['safeemail']}" disabled="disabled"/>  认证邮箱(安全邮箱)</p>
+
+<p style="color:#666"><strong>系统提示：</strong> 提交后系统会发一封激活信,您要登录到认证的邮箱在24小时内激活!</p>
+
+<p style="padding-left:100px;padding-top:30px;"><input name="Submit" type="button" value="提交认证" id="Submit" class="form_button" style="width:80px"/></p>
+
+
+
+</div>
+
+
+
+
+<script type="text/javascript">
+
+$(function(){	
+		   
+	 $("#Submit").click( function () {
+		    
+
+			  $("#loading").html('<div class="loading">处理数据中...</div>');
+			  $("#loading").dialog('open');
+			  $("#loading").dialog({ title: '邮件认证' });
+			  
+			  
+			  
+			 $.get("member.php",{lang:'{echo $this->lang}',app:'14',action:'1',op:'1'},
+			  
+		            function (data){ $("#loading").html(data); 
+		     });   
+		
+			
+			
+	 });
+	 
+	 
+	 $("#loading").dialog({
+            close: function(event) {window.location.href='member.php?app=14&action=2';}
+     });
+
+	 
+	 
+ }); 
+
+</script>
+
+</div>
+
+{template phpapp:footer}

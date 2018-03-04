@@ -1,0 +1,85 @@
+{template member:menu}
+
+<link href="{TURL}refund.css" rel="stylesheet" type="text/css" />
+
+<form id="RefundForm" action="{echo $this->MakeGetParameterURL()}" method="post" enctype="multipart/form-data">
+
+{if !$issellersecurity}
+<div class="warning">
+    <h3>维权提示：</h3>
+    <p>
+    <strong style="color:#F00">卖家威客 {echo $sellerarr['username']} 没有进行 消费者保障认证！您的申请不一定能有效！</strong>
+    </p>
+</div> 
+
+{/if}
+
+<div class="refund_table">
+   <h2>订单流水号 {echo $consumearr['serial']} 维权申请</h2>
+   <ul>
+
+       <li>售后类型：
+           {if $refunditemarr}
+               <select name="sid_d">
+                         {for $refunditemarr $value}
+                         		<option value="{echo $value['sid']}"{if $refund['sid']==$value['sid']} selected="selected"{/if}>{echo $value['project']}</option>
+                         {/for}
+               </select>
+           {/if}
+       </li>
+       
+       <li>售后要求：</li>
+       <li style="padding-left:74px;height:220px;"><textarea name="buyercontent_s" id="Content" class="form_editor" style="width:500px;height:200px;">{if !empty($refund['buyercontent'])}{echo $this->str($refund['buyercontent'],999999,0,0,1,0,0,1)}{else}没有售后服务{/if}</textarea></li>
+       
+       <li>上传凭证： <input name="buyerphoto" type="file" id="photo"/> <span style="color:#999">文件格式：jpg,gif,png 文件最大： 800k</span></li>
+       
+       {if !empty($refund['buyerphoto'])}
+  
+        <p id="logophotoshow" style="padding-top:20px;padding-bottom:20px;">
+            {php}
+            $photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$refund[buyerphoto]'");{/php}
+            {if $photo}  
+                 <a href="{SURL}/index.php?app=18&fid={echo $refund['buyerphoto']}"><img src="{echo $photo['thumb']}"/></a>
+            {/if}
+        </p>   
+       
+       {/if}
+     
+   </ul>
+   
+   <div style="text-align:center;padding-top:20px;"><input name="submit" type="submit" value="提交申请" id="SubmitAdd" class="form_button"/></div>
+</div>
+
+</form>
+
+
+<script type="text/javascript">
+
+$(function() {
+		   
+	    $("#SubmitAdd").click( function () {
+			  
+			  var content=$("#Content");
+			  if (content.val()==""){
+				    alert("请输入维权说明!");
+				    content.focus();
+				    return false; 
+			  }
+		
+			  if (content.val().length<"4"){
+		            alert("维权说明内容不能小于4个字节!");
+		            content.focus();
+		            return false; 
+	          }
+			  
+              $("#RefundForm").submit();
+			  
+	    });
+	  
+		
+});	
+
+</script>
+
+
+{template phpapp:footer}

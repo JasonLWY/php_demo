@@ -1,0 +1,212 @@
+{template admin:header}
+
+<link href="{TURL}refund.css" rel="stylesheet" type="text/css" />
+
+<div class="order_process" style="width:480px;">
+
+    <ul class="order_process_schedule" style="background-position: left {if $refund['process']==1}-28{elseif $refund['process']==2}-56{elseif $refund['process']==3}-84{/if}px;">
+    
+          <li>1.雇主申请退款</li>
+          
+          <li>2.威客处理退款中</li>
+          
+          <li>3.威客同意退款完成</li>
+    
+    </ul>
+</div>
+
+<div class="warning">
+    <h3>退款提示：</h3>
+     <p>
+    <strong style="color:#F00">当雇主退款金额不是全额退款时,金额又大于 {echo $consumearr['amount']} 元中标金额,多出的部分为威客收取！</strong>
+    </p>
+     <p>
+    <strong style="color:#F00">当雇主退款金额小于 {echo $consumearr['amount']} 元中标金额,本站将按正常交易收取手续费！</strong>
+    </p>
+</div> 
+{if $consumearr['process']!=6}    
+    <div class="warning">
+        <h3>系统提示：</h3>
+        <p>
+         
+         {if $refund['process']==2 || $refund['serviceuid']>0}
+         <p>
+          卖家威客{if $sellerarr['username']}({echo $sellerarr['username']}){/if} 不同意退款,客服已介入请双方联系客服处理。
+         </p> 
+         {else}
+         
+         卖家威客{if $sellerarr['username']}({echo $sellerarr['username']}){/if}还有   
+         
+         {php}$endtimearray=$getprocess->GetOrderEndTime($consumearr['cid']);{/php}
+                              
+         {if $endtimearray['runtime']}
+               <span class="color_f60">{echo intval($endtimearray['endday'])}</span> 天 <span class="color_f60">{echo intval($endtimearray['hour']*24)}</span> 小时 <b>{echo $endtimearray['endtime']}</b>
+         {/if} 
+         时间来处理本次退款申请,
+         
+        </p>  
+        <p>
+        如果卖家逾期未处理,本次退款申请将自动达成并退款给雇主。
+        </p> 
+        
+        {/if}
+       
+    </div> 
+{/if}
+
+
+
+<div class="refund_member">
+
+<ul>
+    <h3>雇主</h3>
+    {echo $this->GetUserAvatar($buyerarr['uid'],1,1)}
+    <div class="service_info">
+    <p>{echo $buyerarr['username']}</p>
+    <p><a class="small blue awesome" href="javascript:;" onclick="AddSMS('{echo $buyerarr['uid']}')"> <span class="send_message">发消息</span></a></p>
+    </div>
+</ul>
+
+
+{if $refund['serviceuid']>0}
+    <ul class="refund_service">
+          {php} $taskservice=$this->GetMysqlOne('a.uid,a.username,b.mobile'," ".$this->GetTable('member')." AS a LEFT JOIN ".$this->GetTable('member_info')." AS b ON a.uid=b.uid WHERE a.uid='$refund[serviceuid]' ");{/php}
+    
+          <h3>退款介入客服</h3>
+          
+          {echo $this->GetUserAvatar($refund['serviceuid'],1,1)}
+
+          <div class="service_info">
+          <p>{echo $taskservice['username']}</p>
+          <p>电话：{if $taskservice['mobile']}{echo $taskservice['mobile']}{else}未设置{/if}</p>
+          <p><a class="small blue awesome" href="javascript:;" onclick="AddSMS('{echo $taskservice['uid']}')"> <span class="send_message">发消息</span></a></p>
+          </div>
+    </ul>
+{/if}
+
+<ul style="border:0px;">
+<h3>卖家威客</h3>
+    <div class="service_info">
+    {echo $this->GetUserAvatar($sellerarr['uid'],1)}
+    <p>{echo $sellerarr['username']}</p>
+    <p><a class="small blue awesome" href="javascript:;" onclick="AddSMS('{echo $sellerarr['uid']}')"> <span class="send_message">发消息</span></a></p>
+    </div>
+</ul>
+
+</div>
+
+
+<h2>退款编号：<strong>{echo $refund['rid']}</h2>
+
+<div class="refund_info">
+    <h3>雇主退款信息区</h3>
+    <ul>
+    
+        <li>
+           雇主要求退款金额：<span class="color_f60" style="font-size:18px;">{echo $refund['money']}</span> 元
+        </li>
+        <li>
+           退款原因： {echo $refunditemarr['project']}
+        </li>
+        <li>
+           退款说明： {echo $this->str($refund['buyercontent'],999999,0,0,1,0,0,1)}
+        </li>
+        <li>
+           凭证上传： 
+           
+            {if !empty($refund['buyerphoto'])}
+                <p id="logophotoshow" style="padding-top:20px;padding-bottom:20px;">
+                    {php}
+                    $photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$refund[buyerphoto]'");{/php}
+                    {if $photo}  
+                         <a href="{SURL}/index.php?app=18&fid={echo $refund['buyerphoto']}"><img src="{echo $photo['thumb']}"/></a>
+                    {/if}
+                </p>   
+                <p><a href="{SURL}/index.php?app=18&fid={echo $refund['buyerphoto']}">[点击下载大图]</a></p>  
+           {else}
+            雇主未上传            
+           {/if}
+         
+        </li>
+    </ul>
+    {if $consumearr['process']!=6}
+        {if $usertype==1}
+         <a href="{SURL}/member.php?app=43&action=1&cid={echo $this->cid}&rid={echo $this->rid}" class="large blue awesome">修改退款要求</a>
+        {/if}
+    {/if}
+</div>
+
+
+            
+<div class="refund_info">
+    <h4>威客处理退款区</h4>
+    <ul>
+        <li>
+           退款说明： {echo $this->str($refund['sellercontent'],999999,0,0,1,0,0,1)}
+        </li>
+        <li>
+            凭证上传： 
+           
+            {if !empty($refund['sellerphoto'])}
+                <p id="logophotoshow" style="padding-top:20px;padding-bottom:20px;">
+                    {php}
+                    $photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$refund[sellerphoto]'");{/php}
+                    {if $photo}  
+                         <a href="{SURL}/index.php?app=18&fid={echo $refund['sellerphoto']}"><img src="{echo $photo['thumb']}"/></a>
+                    {/if}
+                </p>   
+                <p><a href="{SURL}/index.php?app=18&fid={echo $refund['sellerphoto']}">[点击下载大图]</a></p>  
+           {else}
+            威客未上传            
+           {/if}
+         
+        </li>
+    </ul>
+    {if $consumearr['process']!=6}
+        {if $usertype==2}
+             <a href="{SURL}/member.php?app=43&action=2&cid={echo $this->cid}&rid={echo $this->rid}" class="large orange awesome">处理退款要求</a>
+        {/if}
+    {/if}
+</div>
+
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+<div class="security_item">
+<h2>管理员操作区</h2>
+
+{if ($refund['process']==2 || $refund['serviceuid']) || $this->IsAdmin() && $consumearr['process']!=6}
+     
+    {if $refund['process']!=3}
+            {if $this->IsService($refund['serviceuid']) || $this->IsAdmin()}
+            <p>
+             客服管理员提交处理时,系统按退款金额进行退款。
+            </p>
+            <p>退款金额 <input name="money_f" type="text" id="Money" size="3"  maxlength="12" class="form_input_text form_input_width_100"  value="{echo $refund['money']}"/> 元</p>
+            </div>
+            <div class="phpapp_button"><input name="Submit" type="submit" onclick="return SubmitSecurity();" value="提交处理完成" class="form_button"/></div>
+            {else}
+            <p style="color:#900">您不是 {echo $taskservice['username']}客服 也不是管理员无权限操作！</p>
+            {/if}
+    {else}
+            <p>已处理</p>
+    {/if}
+    
+{elseif $refund['process']==3}
+    <p>已同意退款处理</p>
+    
+{else}
+    <p>等待威客处理中</p>
+{/if}   
+    
+</form>
+<script type="text/javascript">
+function SubmitSecurity(){
+	 if(confirm("此操作不能恢复！确认是否退款?")){
+		   return true;
+	 }else{
+		 
+		   return false;
+	 }
+}
+</script>

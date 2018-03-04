@@ -1,0 +1,20 @@
+.order_process{
+	background-image: url(./images/realname_order_process.png);
+	height: 26px;
+	background-repeat: no-repeat;
+	background-position: left top;
+	margin-bottom: 10px;
+}
+.order_process ul{height: 26px;}
+
+.order_process ul li{
+	line-height: 26px;
+	float: left;
+	width: 148px;
+	text-align: center;
+	font-weight: bold;
+}
+.order_process_schedule{
+	background-image: url(./images/realname_order_process.png);
+	background-repeat: no-repeat;
+}

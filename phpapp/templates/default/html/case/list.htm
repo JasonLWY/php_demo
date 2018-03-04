@@ -1,0 +1,80 @@
+{template phpapp:header}
+
+<link href="{TURL}task.css" rel="stylesheet" type="text/css" />
+<link href="{TURL}job.css" rel="stylesheet" type="text/css" />
+<link href="{TURL}form.css" rel="stylesheet" type="text/css" />
+<link href="{TURL}case.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">var moreselect='{echo $this->GET["more"]}';</script>
+<script type="text/javascript" src="{echo TURL}js/list.js?v={echo $this->GetFileVersion()}"></script>
+
+
+{if $selectctarray[1] || $selectctarray[0]}
+       <div class="select_ctarray">
+           {if $selectctarray[0]}<h1>{echo $selectctarray[0]}分类</h1>{/if}
+           <ul>
+                  {echo $selectctarray[1]}
+           </ul>
+       </div>
+{/if}
+
+{if $list}
+      <div class="user_list">
+      {for $list $key=>$value}
+          <div class="user_box">
+              <div class="user_box_show">
+                          <div class="user_box_info">
+                                 <div class="user_list_avatar">
+                                 {if $value['thumb']}  
+                                     {if $value['show']}
+                                          <a href="{echo $value['link']}"><img src="{echo SURL}/{echo $value['thumb']}"/></a>
+                                     {else}
+                                          <a href="{echo SURL}/index.php?app={echo $this->app}&action=2&cid={echo $value['cid']}"><img src="{echo SURL}/{echo $value['thumb']}"/></a>
+                                     {/if}
+                                 {/if}
+                                 </div>
+                           
+                                
+                                 <p class="user_list_username">
+                                 {if $value['show']}
+                                 <a href="{echo $value['link']}" title="{echo $value['subject']}">{echo $value['subject']}</a>
+                                 {else}
+                                 <a href="{echo SURL}/index.php?app={echo $this->app}&action=2&cid={echo $value['cid']}" title="{echo $value['subject']}">{echo $value['subject']}</a>
+                                 {/if}
+                                 </p>
+    
+                                
+                                  {if $fieldarray=$this->GetTableFieldArray('case')}
+                                 <!-- 自定义字段-->
+                          
+                                       {for $fieldarray $field}
+                                       <p>{echo $field['name_phpapp']}： {echo $this->str($value[$field['field_phpapp']],99999,0,1,0,0,1)}</p>
+                                       {/for}
+                           
+                                 <!-- 自定义字段 end-->
+                                 {/if}
+                                 
+                                 
+                                 <div class="user_box_sell">
+                                 <h2>简介</h2>
+                                 <li>{echo $value['description']}</li>
+                                 </div>
+                             </div>   
+                  </div>
+                  
+                  </div>  
+              {/for}
+     </div>
+{else}
+     <p>暂时没有案例!</p>
+{/if}
+ 
+
+{if $page->ShowPages()}
+     <div class="ajax_page">{echo $page->ShowPages()}</div>
+{/if}
+
+
+
+
+{template phpapp:footer}

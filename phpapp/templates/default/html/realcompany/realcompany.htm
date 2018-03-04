@@ -1,0 +1,719 @@
+{template member:menu}
+
+
+<script type="text/javascript">
+
+$(function() {
+		   
+		$("#certificate_tabs").tabs(); 
+
+		$("#BankCertificate").click( function () {
+		       $("#BankType").val(1);
+		});
+		
+		$("#OnlineBankCertificate").click( function () {
+		       $("#BankType").val(2);
+		});
+		
+		
+		
+	    $("#ToProcess-2-1,#ToProcess-2-2").click( function () {
+															
+				var type=$("#BankType").val();
+				
+				if(type==1){
+					
+						var catids='';
+						var selects='';
+						$("#bankaddress").find("select").each(function(){
+								catids=catids+1;							   
+								var value=$(this).val();
+								 
+								if(value){
+									 selects=selects+1;
+								}			 				 
+						}); 
+						
+						if(catids!=selects){
+							  alert("请选择所在地分类!");
+							  return false;  
+						}	
+						
+					   var bankname=$("#bankname");
+						
+					   if (bankname.val()==""){
+							  alert("请输入支行名称!");
+							  bankname.focus();
+							  return false; 
+					   }
+						
+					   if (bankname.val().length<"3"){
+							alert("支行名称不能小于3个字节!");
+							bankname.focus();
+							return false; 
+					  }
+					  
+					   var bankcard=$("#bankcard1");
+						
+					   if (bankcard.val()==""){
+							  alert("请输入帐号!");
+							  bankcard.focus();
+							  return false; 
+					   }
+						
+					   if (bankcard.val().length<"3"){
+							alert("帐号不能小于3个字节!");
+							bankcard.focus();
+							return false; 
+					  }
+			  
+				}else{
+				
+				
+				       var bankcard=$("#bankcard2");
+						
+					   if (bankcard.val()==""){
+							  alert("请输入帐号!");
+							  bankcard.focus();
+							  return false; 
+					   }
+						
+					   if (bankcard.val().length<"3"){
+							alert("帐号不能小于3个字节!");
+							bankcard.focus();
+							return false; 
+					  }
+				}
+				
+										  
+			   $("#RealProcess1").submit();							  
+	    });
+	  
+
+		$("#ToProcess3").click( function () {
+					
+					
+				 var company=$("#company");
+				  
+				 if (company.val()==""){
+						alert("请输入公司名称!");
+						company.focus();
+						return false; 
+				 }
+				  
+				 if (company.val().length<"2"){
+					  alert("公司名称不能小于2个字节!");
+					  company.focus();
+					  return false; 
+				}	
+					
+					
+				 var businessnumber=$("#businessnumber");
+				  
+				 if (businessnumber.val()==""){
+						alert("请输入工商注册号!");
+						businessnumber.focus();
+						return false; 
+				 }
+				  
+				 if (businessnumber.val().length<"2"){
+					  alert("工商注册号不能小于2个字节!");
+					  businessnumber.focus();
+					  return false; 
+				}
+				
+				/*
+				 var businesslicense=$("#businesslicense");
+				  
+				 if (businesslicense.val()==""){
+						alert("请上传营业执照!");
+						businesslicense.focus();
+						return false; 
+				 }
+				 */
+					
+				 var realname=$("#realname");
+				  
+				 if (realname.val()==""){
+						alert("请输入真实姓名!");
+						realname.focus();
+						return false; 
+				 }
+				  
+				 if (realname.val().length<"2"){
+					  alert("真实姓名不能小于2个字节!");
+					  realname.focus();
+					  return false; 
+				}	
+				
+				 var idnumber=$("#idnumber");
+				  
+				 if (idnumber.val()==""){
+						alert("请输入身份证号!");
+						idnumber.focus();
+						return false; 
+				 }
+				  
+				 if (idnumber.val().length<"10"){
+					  alert("身份证号不能小于10个号码!");
+					  idnumber.focus();
+					  return false; 
+				}	
+				/*
+				 var frontphoto=$("#frontphoto");
+				  
+				 if (frontphoto.val()==""){
+						alert("请上传身份证正面!");
+						frontphoto.focus();
+						return false; 
+				 }
+				 
+				 
+				 var rearphoto=$("#rearphoto");
+				  
+				 if (rearphoto.val()==""){
+						alert("请上传身份证反面!");
+						rearphoto.focus();
+						return false; 
+				 }
+				*/					  
+										  
+			   $('#RealProcess2').submit();							 							
+															
+		});
+		
+		
+		$("#ToProcess4").click( function () {
+										  
+			   ToProcess(4);
+		});
+		
+		$("#ConfirmVerifyMoney").click( function () {
+					
+				 var verifymoney=$("#isverifymoney").val();
+				 
+				 $("#loading").dialog({
+						title:"验证金额",	
+						width: 300,
+						modal: true,
+						height:'auto'
+				 });
+				 
+				 $("#loading").dialog('open');
+				 
+				 $("#loading").html('<div class="loading">验证中...</div>');								  
+						
+						
+				 $.ajax({
+						type: "POST",
+						url: 'member.php?app=16&action=1&op=5',
+						data: '&verifymoney_f='+verifymoney,
+						success: function(data){
+							 $("#loading").html(data);
+						}
+		        });										  
+												  
+		});
+		
+});	
+
+
+		
+function ToProcess(op) {
+										  	  
+       window.location.href='member.php?app=16&action=1&op='+op;	
+}
+
+</script>
+
+<link href="{TURL}realname.css" rel="stylesheet" type="text/css" />
+
+<div class="personal_certificate">
+      
+      <div class="order_process">
+      
+         <ul class="order_process_schedule" style="background-position: left {if $certificate['status']==1}-26{elseif empty($certificate['status'])}-26{elseif $certificate['status']==2}-53{elseif $certificate['status']==3}-80{elseif $certificate['status']==4}-106{elseif $certificate['status']==5}-132{/if}px;">
+      
+          <li>1.填写银行信息</li>
+          
+          <li>2.填写申请人信息</li>
+      
+          <li>3.确认信息</li>
+          
+          <li>4.填打入卡内的金额</li>
+          
+          <li>5.认证成功</li>
+      
+      </ul>
+      </div>
+      
+      
+      {if $this->GET['op']==6}
+      
+     <div class="warning">
+           <h3>认证失败：</h3>
+           
+           {if $certificate['errorinfo']}
+           
+                <p>{echo $certificate['errorinfo']}</p>
+           
+           {else}
+           
+                <p>您验证错误太多认证已禁用，请联系管理员解禁!</p>
+           
+           {/if}
+          
+      </div>
+      
+      {elseif $this->GET['op']==5}
+       <div id="Process4">
+      
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="member_form">
+ 
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">认证状态：</td>
+                            <td>认证成功</td>
+            </tr>
+                          
+                          <tr>
+                            <td class="form_input_width_150 addtask_text">认证公司：</td>
+                            <td>{if !empty($certificate['company'])}{echo $certificate['company']}{/if}</td>
+                          </tr>
+      
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">认证帐户：</td>
+                            <td>{if $certificate['type']==1}{for $bankarr $value}{if $value['bankid']==$certificate['bankid']}{echo $value['bankname']}{/if}{/for}银行卡（{echo substr($certificate['bankcard'],0,10)}******{echo substr($certificate['bankcard'],16,30)}）
+       {elseif $certificate['type']==2}
+                            
+              {for $onlinebank $value}
+                     {if $value['id_phpapp']==$certificate['bankid']}{echo $value['name_phpapp']}{/if} 
+              {/for}
+                    {echo $certificate['bankcard']} 
+              {/if}</p>
+                            </td>
+            </tr>
+                          
+                                                    
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">认证时间：</td>
+                            <td>{echo $this->Date('Y/d/m H:i:s',$certificate['dateline'])}</td>
+            </tr>
+           
+  
+                          
+         </table>
+           <p style="text-align:center;padding-top:50px;"><a href="member.php?app=12">[返回认证列表]</a></p>
+      
+      {elseif $this->GET['op']==4}
+      
+          <div id="Process4">
+      
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="member_form">
+
+    
+                         <tr>
+                            <td class="form_input_width_150 addtask_text"></td>
+                            <td style="padding-top:20px;">
+                            <p>{echo PHPAPP::$config['sitename']}网会在1-3个工作日内给</p>
+                            <p>{if $certificate['type']==1}{for $bankarr $value}{if $value['bankid']==$certificate['bankid']}{echo $value['bankname']}{/if}{/for}银行卡（{echo substr($certificate['bankcard'],0,10)}******{echo substr($certificate['bankcard'],16,30)}） {elseif $certificate['type']==2}
+                            
+                            {for $onlinebank $value}
+                                   {if $value['id_phpapp']==$certificate['bankid']}{echo $value['name_phpapp']}{/if} 
+                            {/for}
+                              {echo $certificate['bankcard']} 帐户
+                            {/if}
+                            打入一笔<span class="color_f60">1元</span>以下的确认金额 </p>
+                            <p>您需要查询银行卡或网银的收支明细单，正确输入这笔金额才能通过认证。</p>
+                           </td>
+            </tr>
+                          
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">输入您收到的金额：</td>
+                            <td><input name="isverifymoney" type="text"  id="isverifymoney" size="50" maxlength="5" class="form_input_text form_input_width_150"  value=""/> <input name="Submit" type="button" value="确认金额" id="ConfirmVerifyMoney" class="form_button" style="width:80px"/></td>
+            </tr>
+                          
+                          <tr>
+                            <td class="form_input_width_150 addtask_text"></td>
+                            <td><strong>认证提示：</strong><p style="color:#666">每个账号有3次免费银行卡认证机会，3次输入失败后系统自动禁停。</p>
+                            </td>
+                          </tr>
+           
+                          
+           </table>
+      
+         </div>
+      
+      
+      
+      
+      
+      
+      
+      {elseif $this->GET['op']==3}
+      
+        <div id="Process3">
+      
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="member_form">
+                 {if $certificate['type']==1}
+
+                          
+                       <tr>
+                            <td class="form_input_width_150 addtask_text">银行名称：</td>
+                            <td>
+                            
+                            {for $bankarr $value}
+                                    {if $value['bankid']==$certificate['bankid']}{echo $value['bankname']}{/if}
+                            {/for}
+             
+                            </td>
+            </tr>
+                              
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">开户所在地：</td>
+                            <td id="bankaddress"> 
+                            {if $certificate['bankaddress']}
+                                 {echo $this->GetSelectCategory('category_city',$certificate['bankaddress'],'bankaddress','','',1)}
+                            {/if}
+                            </td>
+                         </tr>
+                                                
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">支行名称：</td>
+                            <td>{if !empty($certificate['bankname'])}{echo $certificate['bankname']}{/if}</td>
+            </tr>
+                          
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">银行卡号：</td>
+                            <td>{if !empty($certificate['bankcard'])}{echo $certificate['bankcard']}{/if}</td>
+                        </tr>       
+                          
+                          
+                          <tr>
+                            <td class="form_input_width_150 addtask_text">公司名称：</td>
+                            <td>{if !empty($certificate['company'])}{echo $certificate['company']}{/if}</td>
+                        </tr>    
+                        
+                        
+                        <tr>
+                            <td class="form_input_width_150 addtask_text">工商注册号：</td>
+                            <td>{if !empty($certificate['businessnumber'])}{echo $certificate['businessnumber']}{/if}</td>
+                        </tr>    
+                        
+                        <tr>
+                            <td class="form_input_width_150 addtask_text">营业执照：(图片最大： {echo (PHPAPP::$config['oneimageuploadsize']/1024)}k)</td>
+                            <td>
+                            {if !empty($certificate['businesslicense'])}
+                                    {php}$photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$certificate[businesslicense]'");{/php}
+                                    {if $photo}  
+                                         <img src="{echo $photo['thumb']}"/>
+                                    {/if}
+                             {/if}
+                            </td>
+                        </tr>    
+                          
+                 {elseif $certificate['type']==2}
+                  
+                           <tr>
+                            <td class="form_input_width_150 addtask_text">在线支付：</td>
+                            <td> 
+                          
+                            {for $onlinebank $value}
+                                   {if $value['id_phpapp']==$certificate['bankid']}{echo $value['name_phpapp']}{/if}
+                            {/for}
+                    
+                            </td>
+                          </tr>
+                                               
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">工具帐号：</td>
+                            <td>{if !empty($certificate['bankcard'])}{echo $certificate['bankcard']}{/if}</td>
+            </tr>
+  
+                  
+                 {/if}
+                 
+                 
+                 
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">申请人姓名：</td>
+                            <td>{if !empty($certificate['realname'])}{echo $certificate['realname']}{/if}</td>
+            </tr>
+                          
+                            <tr>
+                            <td class="form_input_width_150 addtask_text">申请人身份证号：</td>
+                            <td>{if !empty($certificate['idnumber'])}{echo $certificate['idnumber']}{/if}</td>
+                          </tr>
+              
+                          <tr>
+                            <td class="form_input_width_150 addtask_text">上传身份证正面：(图片最大： {echo (PHPAPP::$config['oneimageuploadsize']/1024)}k)</td>
+                            <td>
+                             {if !empty($certificate['frontphoto'])}
+                                    {php}$photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$certificate[frontphoto]'");{/php}
+                                    {if $photo}  
+                                         <img src="{echo $photo['thumb']}"/>
+                                    {/if}
+                             {/if}
+                            </td>
+                          </tr>
+                          
+                          <tr>
+                            <td class="form_input_width_150 addtask_text">上传身份证反面：(图片最大： {echo (PHPAPP::$config['oneimageuploadsize']/1024)}k)</td>
+                            <td>
+                            {if !empty($certificate['rearphoto'])}
+                                {php}$photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$certificate[rearphoto]'");{/php}
+                                {if $photo}  
+                                     <img src="{echo $photo['thumb']}"/>
+                                {/if}
+                            {/if}
+                            </td>
+                          </tr>
+                          
+                          
+                          
+                         <tr>
+                            <td colspan="2" style="height:60px;text-align:center;padding-top:20px;"><input name="Submit" type="button" value="上一步" onclick="ToProcess(2)" class="form_button" style="width:80px"/> <input name="Submit" type="button" value="下一步" id="ToProcess4" class="form_button" style="width:80px"/></td>
+                         </tr>
+                          
+          </table>
+      
+         </div>
+      
+      
+      {elseif $this->GET['op']==2}
+        <form action="member.php?lang={echo $this->GET['lang']}&app=16&action=1&op=3" method="post" id="RealProcess2" enctype="multipart/form-data">
+         <div id="Process2">
+      
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="member_form">
+                       
+                       <tr>
+                            <td class="form_input_width_150 addtask_text"><strong>公司信息</strong></td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="form_input_width_150 addtask_text">公司名称：</td>
+                            <td><input name="company" type="text"  id="company" size="50" maxlength="255" class="form_input_text form_input_width_400"  value="{if !empty($certificate['company'])}{echo $certificate['company']}{/if}"/></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="form_input_width_150 addtask_text">工商注册号：</td>
+                            <td><input name="businessnumber" type="text"  id="businessnumber" size="50" maxlength="255" class="form_input_text form_input_width_400"  value="{if !empty($certificate['businessnumber'])}{echo $certificate['businessnumber']}{/if}"/></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="form_input_width_150 addtask_text">上传营业执照(副本)：</td>
+                            <td><input name="businesslicense" type="file" id="businesslicense" /> <span style="color:#999">扫描营业执照副本 分辨率最低800px 文件格式：jpg,gif,png</span></td>
+                        </tr>                     
+                        
+                        
+                        {if !empty($certificate['businesslicense'])}
+                          <tr>
+                            <td class="form_input_width_150 addtask_text">已上传身份证反面：</td>
+                            <td>                      
+  
+                              {php}$photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$certificate[businesslicense]'");{/php}
+                              {if $photo}  
+                                   <img src="{echo $photo['thumb']}"/>
+                              {/if}
+                
+                            </td>
+                          </tr>
+                          {/if}
+                        
+                        
+                         <tr>
+                            <td colspan="2" style="border-bottom: 1px solid #E0E0E0;"></td>
+                        </tr>   
+                        
+                         <tr>
+                            <td class="form_input_width_150 addtask_text"><strong>申请人信息</strong>(法人)</td>
+                            <td></td>
+                        </tr>
+                        
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">申请人姓名：</td>
+                            <td><input name="realname" type="text"  id="realname" size="50" maxlength="255" class="form_input_text form_input_width_400"  value="{if !empty($certificate['realname'])}{echo $certificate['realname']}{/if}"/></td>
+                        </tr>
+                          
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">申请人身份证号：</td>
+                            <td><input name="idnumber" type="text"  id="idnumber" size="50" maxlength="255" class="form_input_text form_input_width_400"  value="{if !empty($certificate['idnumber'])}{echo $certificate['idnumber']}{/if}"/></td>
+                        </tr>
+              
+                          <tr>
+                            <td class="form_input_width_150 addtask_text">上传身份证正面：</td>
+                            <td><input name="frontphoto" type="file" id="frontphoto" /> <span style="color:#999">扫描身份证正面 分辨率最低800px 文件格式：jpg,gif,png</span></td>
+                          </tr>
+                          
+                          {if !empty($certificate['frontphoto'])}
+                          <tr>
+                            <td class="form_input_width_150 addtask_text">已上传身份证正面：</td>
+                            <td>                      
+                            
+                              {php}$photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$certificate[frontphoto]'");{/php}
+                              {if $photo}  
+                                   <img src="{echo $photo['thumb']}"/>
+                              {/if}
+                
+                            </td>
+                          </tr>
+                          {/if}
+                          
+                          <tr>
+                            <td class="form_input_width_150 addtask_text">上传身份证反面：</td>
+                            <td><input name="rearphoto" type="file" id="rearphoto"/> <span style="color:#999">扫描身份证反面 分辨率最低800px 文件格式：jpg,gif,png</span></td>
+                          </tr>
+                          
+                          {if !empty($certificate['rearphoto'])}
+                          <tr>
+                            <td class="form_input_width_150 addtask_text">已上传身份证反面：</td>
+                            <td>                      
+  
+                              {php}$photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$certificate[rearphoto]'");{/php}
+                              {if $photo}  
+                                   <img src="{echo $photo['thumb']}"/>
+                              {/if}
+                
+                            </td>
+                          </tr>
+                          {/if}
+           
+                         <tr>
+                            <td colspan="2" style="height:60px;text-align:center;padding-top:20px;"><input name="Submit" type="button" value="上一步" onclick="ToProcess(1)" class="form_button" style="width:80px"/> <input name="Submit" type="button" value="下一步" id="ToProcess3" class="form_button" style="width:80px"/></td>
+                         </tr>
+                          
+           </table>
+      
+         </div>
+      
+       </form>
+      {else}
+      <form action="member.php?lang={echo $this->GET['lang']}&app=16&action=1&op=2" method="post" id="RealProcess1">
+      <div id="Process1">
+      
+      <div id="certificate_tabs" style="border: none;">
+      
+              <ul>
+ 
+                    <li><a href="#fragment-1" id="BankCertificate">公司帐户认证</a></li>
+                    
+                    <!--<li><a href="#fragment-2" id="OnlineBankCertificate">在线支付工具</a></li>-->
+              </ul>
+      
+               
+                <div id="fragment-1">
+                
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="member_form">
+
+
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">银行名称：</td>
+                            <td> 
+                            <select name="bankid1">
+                            {for $bankarr $value}
+                                     <option value="{echo $value['bankid']}" {if $value['bankid']==$certificate['bankid']} selected="selected"{/if}>{echo $value['bankname']}</option>
+                            {/for}
+                            </select>
+                            </td>
+                        </tr>
+                              
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">开户所在地：</td>
+                            <td id="bankaddress"> 
+                            {if $certificate['bankaddress']}
+                                 {echo $this->GetSelectCategory('category_city',$certificate['bankaddress'],'bankaddress')}
+                            {else} 
+                                 {echo $this->SetSelectCategory('category_city',$certificate['bankaddress'],'bankaddress')}
+                            {/if}
+                            </td>
+                         </tr>
+                                                
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">支行名称：</td>
+                            <td><input name="bankname" type="text"  id="bankname" size="50" maxlength="255" class="form_input_text form_input_width_400"  value="{if !empty($certificate['bankname'])}{echo $certificate['bankname']}{/if}"/></td>
+                        </tr>
+                          
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">公司帐户号：</td>
+                            <td><input name="bankcard1" type="text"  id="bankcard1" size="50" maxlength="255" class="form_input_text form_input_width_400"  value="{if !empty($certificate['bankcard'])}{echo $certificate['bankcard']}{/if}"/></td>
+                        </tr>
+                          
+                          <tr>
+                            <td class="form_input_width_150 addtask_text"></td>
+                            <td><strong>认证提示：</strong><p style="color:#999">您确认认证时官方会给您的帐户上打<strong>1元</strong>以下的金额,您收到金额后输入确认认证完成</p></td>
+                          </tr>
+                          
+                         <tr>
+                            <td colspan="2" style="height:60px;text-align:center;padding-top:20px;"><input name="Submit" type="button" value="下一步" id="ToProcess-2-1" class="form_button" style="width:80px"/></td>
+                         </tr>
+                          
+                  </table>
+
+                   
+                </div>
+                
+                <!--
+                <div id="fragment-2">
+                
+                
+                
+                       <table width="100%" border="0" cellspacing="0" cellpadding="0" class="member_form">
+
+
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">在线支付：</td>
+                            <td> 
+                            <select name="bankid2">
+                            {for $onlinebank $value}
+                                     <option value="{echo $value['id_phpapp']}"{if $value['id_phpapp']==$certificate['bankid']} selected="selected"{/if}>{echo $value['name_phpapp']}</option>
+                            {/for}
+                            </select>
+                            </td>
+                         </tr>
+                                               
+                         <tr>
+                            <td class="form_input_width_150 addtask_text">工具帐号：</td>
+                            <td><input name="bankcard2" type="text"  id="bankcard2" size="50" maxlength="255" class="form_input_text form_input_width_400"  value="{if !empty($certificate['bankcard'])}{echo $certificate['bankcard']}{/if}"/></td>
+                         </tr>
+                          
+                          <tr>
+                            <td class="form_input_width_150 addtask_text"></td>
+                            <td><strong>认证提示：</strong><p style="color:#999">您确认认证时官方会给您的帐户上打<strong>1元</strong>以下的金额,您收到金额后输入确认认证完成</p></td>
+                          </tr>
+                          
+                         <tr>
+                            <td colspan="2" style="height:60px;text-align:center;padding-top:20px;"><input name="Submit" type="button" value="下一步" id="ToProcess-2-2" class="form_button" style="width:80px"/></td>
+                         </tr>
+                          
+                       </table>
+                   
+                </div>
+                -->
+      
+      </div>
+
+      <input name="type" id="BankType" type="hidden" value="{if !empty($certificate['type'])}{echo $certificate['type']}{else}1{/if}" />
+      
+        <script type="text/javascript">
+
+        $(function() {
+		      {if !empty($certificate['type'])}
+			        var type={echo $certificate['type']}-1;
+			        $("#certificate_tabs").tabs( "option", "selected",type);
+			  
+			  {/if}
+		});		
+		
+		</script>
+      </div>
+      </form>
+      {/if}
+      
+
+    </div>
+</div>
+
+
+</div>
+
+{template phpapp:footer}

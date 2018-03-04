@@ -1,0 +1,26 @@
+{template header}
+
+<table width="100%" border="0">
+<tr>
+<td>PHP 版本 {echo $os}</td>
+</tr>
+<tr>
+<td>MySQL 版本	{echo $mysqlarray[0]['version']}</td>
+</tr>
+<tr>
+<td>服务器最大上传许可 {echo $fileupload}</td>
+</tr>
+<tr>
+<td>当前数据库尺寸	<?php echo $Data_length; ?> MB</td>
+</tr>
+<tr>
+<td>
+register_globals 状态 
+{if (ini_get('register_globals'))}
+    <span style="color:#F00; font-weight:bold">开启 (当您看到开启时为了程序运行安全请手动设置php.ini配置为关闭)</span>
+{else}
+	关闭(正常)
+{/if}
+</td>
+</tr>
+</table>

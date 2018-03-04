@@ -1,0 +1,171 @@
+#register{
+	overflow: hidden;
+}
+.user_register{
+	overflow: hidden;
+}
+
+.user_register h1{
+	font-size: 18px;
+	line-height: 30px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #E0E0E0;
+}
+
+.register_right_bgline_bottom{
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #E0E0E0;
+}
+
+.register_right_reg{
+	padding-right: 20px;
+	padding-left: 20px;
+	overflow: hidden;
+}
+.register_right_reg h2{
+	font-size: 16px;
+	padding-left: 10px;
+	line-height: 20px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #EBEBEB;
+	height: 26px;
+	overflow: hidden;
+	color: #660000;
+}
+.register_right_reg h2 dfn{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #CCC;
+	float: right;
+}
+.register_right_reg ul {
+	padding-top: 30px;
+	overflow: hidden;
+}
+.register_right_reg ul li{
+	height: 32px;
+	font-size: 14px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	overflow: hidden;
+}
+
+.register_right_reg ul li dfn{
+	font-style: normal;
+	float: right;
+}
+
+.register_right_reg ul p{
+	height: 21px;
+}
+
+.register_reg_tips{
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFF;
+	background-color: #F60;
+	margin-left: 120px;
+	padding-left: 12px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-right-color: #333333;
+	border-bottom-color: #333333;
+	line-height: 20px;
+	margin-top: -5px;
+	margin-bottom: 5px;
+	width: 194px;
+}
+
+.register_right_reg dl {
+	overflow: hidden;
+	background-image: url(./images/right_line.png);
+	background-repeat: repeat-y;
+	background-position: left top;
+	float: right;
+	width: 320px;
+	margin-top: 20px;
+	padding-left: 40px;
+	line-height: 30px;
+}
+.register_right_reg dl dt{
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 36px;
+}
+
+.register_right_reg dl dd{
+	overflow: hidden;
+
+}
+.register_right_reg dl dd li{
+	height: 30px;
+	margin-bottom: 10px;
+	width: 200px;
+}
+.register_right_reg dl dd li a{
+	display: block;
+	border: 1px solid #E0E0E0;
+	height: 30px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius:4px;
+	background-color: #F7F7F7;
+	padding-left: 40px;
+	background-position: 12px;
+}
+.register_right_reg dl dd li a:hover{
+	background-color: #D6EFFA;
+}
+#ShowSecCode{
+	float: right;
+}
+.register_mail_active{
+	height: 160px;
+	line-height: 24px;
+	font-size: 14px;
+}
+.register_mail_active h3{
+	font-family: "微软雅黑";
+	font-size: 18px;
+	line-height: 36px;
+	color: #C06;
+}
+.register_mail_button{
+	background-image: url(../images/button_mail.png);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	display: block;
+	height: 44px;
+	width: 168px;
+	margin-top: 10px;
+	margin-left: 150px;
+}
+.membertype{
+	padding-left: 120px;
+	margin-bottom: 10px;
+	overflow: hidden;
+}
+.loginusername{
+	color: #BEBEBE;
+}
+.agreement{
+	font-size: 14px;
+	line-height: 30px;
+	font-weight: bold;
+	padding-top: 10px;
+}
+.input_seccode,.memberprofession{
+	padding-top: 10px;
+}
+.input_seccode{width: 380px;}
+.submitregister{
+	padding-top: 20px;
+	padding-left: 140px;
+	padding-bottom: 20px;
+}

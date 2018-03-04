@@ -1,0 +1,55 @@
+.awesome, .awesome:visited,.form_general_button,.form_button {
+	background-image: none;
+	position: static;	
+}
+
+.small, .small:visited {
+	font-size: 12px;
+    padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+}
+	
+.large.awesome, .large.awesome:visited { font-size: 12px; padding: 8px 14px 9px; }
+
+.task_info{
+	overflow: hidden;
+	display: inline-block;
+}
+body{
+	overflow: visible;
+}
+
+.task_list_nav li a:hover{
+	float: left;
+}
+
+.task_item.over{
+	position: relative;
+	border: none;
+}
+.wrap{
+	background-color: #FFF;
+}
+
+.task_skill{
+	float: left;
+	overflow: hidden;
+	margin-top: 1px;
+	width: 230px;
+}
+.task_skill li{float: left;}
+.task_skill a{
+	font-size: 10px;
+	color: #09C;
+	float: left;
+}
+
+.photo_list{
+	display: inline-block;
+}
+.space_hire{
+	overflow: hidden;
+	height: 52px;
+}

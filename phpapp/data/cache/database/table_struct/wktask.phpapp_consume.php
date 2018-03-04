@@ -1,0 +1,15 @@
+<?php return array (
+  'cid' => 'int',
+  'serial' => 'string',
+  'appid' => 'int',
+  'paytype' => 'int',
+  'subject' => 'string',
+  'process' => 'int',
+  'number' => 'int',
+  'bankcard' => 'string',
+  'amount' => 'real',
+  'fee' => 'real',
+  'refundmoney' => 'real',
+  'operator' => 'int',
+  'dateline' => 'int',
+);?>

@@ -1,0 +1,56 @@
+{template member:menu}
+
+<div style="padding:10px;">
+<div class="sms_subject">{echo $noticearr['subject']}</div>
+
+{echo $this->str($noticearr['content'],0,0,1,0,0,1)}
+
+<div class="sms_dateline"><p><a href="{echo SURL}/member.php?app=45&action=1">[返回]</a> <a href="javascript:;" onclick="SubmitDelete('{echo $noticearr['nid']}');">[删除]</a> </p><p>{echo $this->Date('Y/d/m H:i:s',$noticearr['dateline'])}</p></div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+<script type="text/javascript">
+ 
+   function SubmitDelete(nid){
+		     
+				if(confirm("是否删除通知!")){
+					
+						$("#loading").dialog({
+								title:"通知操作",	
+								width: 300,
+								height:'auto'
+						});
+						   
+						$("#loading").dialog('open');
+						
+						$("#loading").html('<div class="loading">提交数据中...</div>');
+				    
+            
+                         $.ajax({
+                              type: "POST",
+                              url: SURL+"/member.php?app=45&action=1",
+                              data: 'Submit=1&nid='+nid,
+                              success: function(data){
+                                    $("#loading").html(data);
+                              }
+                         });	
+					 
+				
+				
+			    }
+             
+   }
+				   
+
+ 
+ 
+</script>
+
+{template phpapp:footer}

@@ -1,0 +1,29 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+<tr>
+<td class="width_160">Key:</td>
+<td><input name="sohuappkey_s" value="{echo PHPAPP::$config['sohuappkey']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">填写申请的Key代码</td>
+</tr>
+
+<tr>
+<td class="width_160">Secret:</td>
+<td><input name="sohuappsecret_s" value="{echo PHPAPP::$config['sohuappsecret']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">填写申请的Secret代码</td>
+</tr>
+
+<tr>
+<td class="width_160">返回地址:</td>
+<td>{echo SURL}/api/sohu/callback.php</td>
+<td class="color_999"></td>
+</tr>
+
+</table>
+
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button"/></div>
+
+</form>

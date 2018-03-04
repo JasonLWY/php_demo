@@ -1,0 +1,221 @@
+<link href="{TURL}prop_icon.css" rel="stylesheet" type="text/css" />
+<link href="{TURL}use_prop.css" rel="stylesheet" type="text/css" />
+
+<div id="UseProp">
+    {for $servicelist $value}
+        <div class="use_prop_list" id="PropID{echo $value['sid']}">
+               {php}$amount=0;{/php}
+               {for $myservice $myprop}
+                           {if $myprop['sid']==$value['sid']}
+                                {php}$amount=$myprop['amount'];{/php}
+                           {/if}
+               {/for} 
+               <input type="checkbox"  value="{echo $value['sid']}" id="PropCheckbox{echo $value['sid']}" class="prop_checkbox" onclick="SelectedCheckbox('{echo $value['sid']}')"/>
+               <span class="{echo $value['icon']} prop_icon" title="{echo $value['subject']}"></span>
+               <div class="prop_description">
+               <h3> {echo $value['subject']}</h3>
+               <p><span style="color:#999">{echo $value['content']}</span></p>
+               </div>
+               
+               <div class="prop_buy_price">
+                    {if $amount>0}
+                        拥有 <strong>{echo $amount}</strong> 个
+                        <span class="BuyPrice" style="display:none">0</span>
+                    {else}
+                        <div class="buyservice"><a href="javascript:;" onclick="BuyService('{echo $value['sid']}')">购买</a></div>
+                        <strong>{if $value['price']>0}￥<span class="BuyPrice">{echo $value['price']}</span>{else} &nbsp; 免费<span class="BuyPrice" style="display:none">0</span>{/if}</strong>
+                    {/if}
+               </div>
+            
+          </div>
+     {/for} 
+</div>
+
+
+
+
+<div id="CountServicePrice" class="count_service_price">
+    <span id="TotalMoney" style="display:none">0</span><span id="TotalService" style="display:none">0</span>总支付￥<span id="TotalPrice">0</span> 元
+</div>
+
+
+<div id="ShopService" title="购买道具" style="padding:20px;"></div>
+
+
+<script type="text/javascript">
+
+$(function(){	
+		   
+         $("#ShopService").dialog({
+					width: 360,
+					modal: true,
+					autoOpen: false,
+					height:280
+	     });	
+		 
+		 $(".use_prop_list").mousedown( function () {
+				SelectedService($(this));
+		 });
+		 
+		 $(".use_prop_list").mouseover( function () {
+				$(this).addClass('selected');						  
+		 });
+		 
+		 $(".use_prop_list").mouseout( function () {
+				var ischecked=$(this).find('input').attr('checked');	
+				if(ischecked!='checked' || ischecked==false){
+				     $(this).removeClass('selected');	
+				}
+		 });
+
+ });
+
+
+function BuyService(sid) {
+		  $("#ShopService").html('<div class="loading">获取服务数据中...</div>');
+		  $("#ShopService").dialog('open');
+
+		   $.ajax({
+				type: "POST",
+				url: SURL+'/member.php?app=11&action=4',
+				data: '&sid='+sid+'&refresh=1',
+				success: function(data){
+					 $("#ShopService").html(data); 
+				}
+		  });			
+}
+
+
+function SetBuyPropID(id){
+	//alert(id);
+    var PropsID=$('#BuyPropsID').val(); 
+	var NewID=PropsID;
+	if(NewID){
+		NewID+=','+id;
+	}else{
+		NewID=id;
+	}
+	
+	$('#BuyPropsID').val(NewID); 
+}
+
+function DeleteBuyPropID(id){
+	var PropsID=$('#BuyPropsID').val(); 
+	var NewID='';
+	if(PropsID){
+		 var Proparr=PropsID.split(",");
+		 for(var i=0;i<Proparr.length;i++){
+			   if(Proparr[i]!=id){
+				    if(NewID){
+				        NewID+=','+Proparr[i];
+					}else{
+						NewID=Proparr[i];
+					}
+			   }
+		 }
+		
+	}
+	
+	$('#BuyPropsID').val(NewID); 
+}
+
+
+function SelectedCheckbox(id){
+	   var ischecked=$('#PropCheckbox'+id).attr('checked');
+
+	   if(ischecked=='checked' || ischecked==true){
+		     $('#PropCheckbox'+id).attr('checked',false);
+	   }else{
+			 $('#PropCheckbox'+id).attr('checked','checked'); 
+	   }
+}
+
+function SelectedService(Obj){
+		var ischecked=Obj.find('input').attr('checked');
+		var BuyPrice=Obj.find("span[class='BuyPrice']").html();
+		if(ischecked=='checked' || ischecked==true){  
+			  DeleteBuyPropID(Obj.find('input').val());
+			  Obj.find('input').attr('checked',false);
+			  Obj.removeClass('selected');
+			  CountServicePrice(0,BuyPrice);
+		}else{
+			  SetBuyPropID(Obj.find('input').val());
+			  Obj.addClass('selected');	
+			  Obj.find('input').attr('checked','checked'); 
+			  CountServicePrice(1,BuyPrice);
+		}
+}
+
+function CountServicePrice(isadd,price){
+	  var TotalService=parseInt($('#TotalService').html());
+	  if(isadd>0){
+		    TotalService=parseInt(price)+TotalService;
+	  }else{
+		    TotalService=TotalService-parseInt(price);
+	  }
+	  $('#TotalService').html(TotalService);
+	  if(TotalService>0){
+		    $('#CountServicePrice').show();
+	  }else{
+		    $('#CountServicePrice').hide();
+	  }
+	  
+	  GetTotalPrice();
+	  SetTotalMoney();
+      //alert(TotalService);
+}
+
+function GetTotalPrice(){
+	$('#TotalPrice').html(parseInt($('#TotalMoney').html())+parseInt($('#TotalService').html()));
+}
+
+var TaskReleaseMode='{echo PHPAPP::$config["task_releasemode"]}';
+
+function SetTotalMoney(Money){
+	 if(!Money){
+		   var total=0;
+		   if(TaskReleaseMode==1){
+			   var appid=$("#TaskAppID").val();
+			   if(appid==83){
+					Money=parseFloat($('#ZhaoMoney').val());
+			   }else{
+					total=$("#total").val();
+					Money=parseFloat($('#Money').val());
+			   }
+		   }else{
+			    total=$("#total").val();
+				Money=parseFloat($('#Money').val());
+		   }
+		   
+		   if(total>0 && Money>0){
+			     Money=parseInt(total)*  parseFloat(Money);
+		   }
+	 }
+	 if(Money>0){
+		  $('#CountServicePrice').show();
+	 }else{
+		  Money=0;
+		  var TotalService=parseInt($('#TotalService').html());
+		  if(TotalService<=0){
+		       $('#CountServicePrice').hide();
+		  }
+	 }
+     $('#TotalMoney').html(Money);		 
+     GetTotalPrice();
+	 
+}
+
+</script>
+
+{if $props}
+<script type="text/javascript">
+var PropsID='{echo $props}';
+$(function(){	
+	 var Proparr=PropsID.split(","); 
+	 $('#BuyPropsID').val(''); 
+	 for(var i=0;i<Proparr.length;i++){
+		  SelectedService($('#PropID'+Proparr[i]));
+	 }
+});
+</script>
+{/if}

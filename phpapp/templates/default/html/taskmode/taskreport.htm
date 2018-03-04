@@ -1,0 +1,62 @@
+<h3>您要举报的信息：<span style="color:#666;font-weight:normal;">{if $this->tid>0 && $this->did<1}任务#{echo $this->tid}{elseif $this->did>1}投标#{echo $this->did}{/if}</span></h3>
+
+{if $reportinfo}
+    <div class="task_report_info">
+       <div class="task_report_avatar">
+             {echo $this->GetUserAvatar($reportinfo['uid'])}
+       </div>
+      <div class="task_bid_info">
+          <p class="task_bid_username"><a href="{echo SURL}/space.php?app=8&uid={echo $reportinfo['uid']}" target="_blank" title="{echo $reportinfo['username']}">{echo $reportinfo['username']}</a></p>
+          <p> 
+          他发布的信息：{echo $this->str($reportinfo['description'],300,0,1,1,0,1)}
+          </p>
+      </div>
+    </div>
+{/if}
+
+
+<h3>请选择举报类型：</h3>
+{if $reporttypearr}
+    <div class="task_report_type" id="ReportType">
+      <ul>
+         {for $reporttypearr $value}
+            {if $value['type']==2 && $this->did>0}
+         		<li><input name="reporttype" type="radio" value="{echo $value['rid']}" />{echo $value['name']}</li>
+            {elseif $value['type']==1 && !$this->did && $this->tid>0}
+            	<li><input name="reporttype" type="radio" value="{echo $value['rid']}" />{echo $value['name']}</li>
+            {elseif $value['type']==0}
+            	<li><input name="reporttype" type="radio" value="{echo $value['rid']}" />{echo $value['name']}</li>
+            {/if}
+         {/for}
+      </ul>
+    </div>
+{else}
+	<p>暂无</p>
+{/if}
+
+<p style="padding-top:10px;"><a class="large yellow awesome" onclick="SubmitTaskReport('{echo $this->tid}','{echo $this->did}')"><span class="report_pencil_ico">提交</span></a></p>
+
+<script type="text/javascript">
+function SubmitTaskReport(tid,did){
+       
+		var ReportType=$("#ReportType input[type='radio']:checked").val();
+		if(!ReportType){
+			 alert("对不起!请选择举报类型!");
+			 return false;
+		}
+		
+		$.PHPAPPOPENLOADING();
+		 
+		$.ajax({
+				type: "POST",
+				url: SURL+"/index.php?app=49&action=12&tid="+tid+"&did="+did,
+				data: '&reporttype='+ReportType+'&Submit=1',
+				success: function(data){
+					  $.PHPAPPCLOSELOADING();
+					  $("#loading").html(data);
+				}
+	   });			
+	
+}
+</script>
+

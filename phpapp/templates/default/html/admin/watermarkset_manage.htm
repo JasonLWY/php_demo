@@ -1,0 +1,46 @@
+{template header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+<tr>
+<td class="width_160">是否开黑边水印:</td>
+<td><input class="radio" type="radio" name="blackwatermark_d" value="0"  {if PHPAPP::$config['blackwatermark']==0}checked{/if}>&nbsp;开启 <input  type="radio" name="blackwatermark_d" value="1" {if PHPAPP::$config['blackwatermark']==1}checked{/if}>&nbsp;关闭</td>
+<td class="color_999">是否开黑底版权水印</td>
+</tr>
+
+<tr>
+<td class="width_160">是否开LOGO水印:</td>
+<td><input class="radio" type="radio" name="watermarklogo_d" value="0"  {if PHPAPP::$config['watermarklogo']==0}checked{/if}>&nbsp;开启 <input  type="radio" name="watermarklogo_d" value="1" {if PHPAPP::$config['watermarklogo']==1}checked{/if}>&nbsp;关闭</td>
+<td class="color_999">是否开LOGO水印,当此项关闭时以上 黑底版权水印 不可用</td>
+</tr>
+
+<tr>
+<td class="width_160">水印字体路径：</td>
+<td><input name="sitefont_s" value="{echo PHPAPP::$config['sitefont']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">水印字体文件路径</td>
+</tr>
+
+<tr>
+<td class="width_160">水印图片最小像素：</td>
+<td><input name="watermarkminimum_s" value="{echo PHPAPP::$config['watermarkminimum']}" type="text"  class="form_input_text form_input_width_200" />px</td>
+<td class="color_999">图片最小像素px，超过该 {echo PHPAPP::$config['watermarkminimum']} 系统不处理水印</td>
+</tr>
+
+<tr>
+<td class="width_160">水印LOGO图片地址：</td>
+<td><input name="watermarklogopath_s" value="{echo PHPAPP::$config['watermarklogopath']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">网站水印LOGO图片地址</td>
+</tr>
+
+<tr>
+<td class="width_160">水印名称：</td>
+<td><input name="watermarkname_s" value="{echo PHPAPP::$config['watermarkname']}" type="text"  class="form_input_text form_input_width_200" /></td>
+<td class="color_999">可用标签 {{php}echo 'username';{/php}} {{php}echo 'time';{/php}}</td>
+</tr>
+
+</table>
+
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button"/></div>
+
+</form>

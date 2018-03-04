@@ -1,0 +1,220 @@
+{template member:menu}
+
+<style type="text/css">
+.datalist_h2{
+	background-color: #F3F3F3;
+}
+.advancedsearch{
+	text-align: right;
+}
+.showadvancedsearch{
+	display: none;
+	background-color: #F6F6F6;
+	border: 1px solid #E4E4E4;
+	padding: 10px;
+	color: #999;
+}
+.showadvancedsearch table tr td{
+	line-height: 36px;
+	height: 36px;
+	padding-right: 10px;
+}
+</style>
+
+<script type="text/javascript" src="{TURL}phpapp/js/datepicker-zh-CN.js"></script>
+
+<div class="MyMoney">目前可用余额: <span class="color_f60">{echo $userinfo['money']}</span> 元,提现冻结 <span class="color_f60">{echo $this->memberlock}</span> 元</div>
+
+
+<div id="ShowAdvancedSearch" class="showadvancedsearch" {if !empty($this->GET['opensearch'])}style="display:block"{/if}>
+<form method="get" action="{echo $this->MakeGetParameterURL()}">
+
+<input type="hidden" name="app" value="{echo $this->app}" />
+<input type="hidden" name="action" value="{echo $this->ac}" />
+<input type="hidden" name="page" value="{echo $this->GET['page']}" />
+<input type="hidden" name="opensearch" value="{echo $this->GET['opensearch']}" />
+
+<table border="0" cellspacing="0" cellpadding="0">
+  
+  <tr>
+    <td class="search_h2">编号</td>
+    <td><input name="cid" type="text" size="20" maxlength="20" class="form_input_text form_input_width_200"  value="{if !empty($selectarray['cid'])}{echo $selectarray['cid']}{else}{if !empty($this->GET['cid'])}{echo $this->GET['cid']}{/if}{/if}"/> (交易编号)</td>
+  </tr>
+  
+  <tr>
+    <td class="search_h2">流水号</td>
+    <td><input name="serial" type="text" size="20" maxlength="20" class="form_input_text form_input_width_200"  value="{if !empty($selectarray['serial'])}{echo $selectarray['serial']}{/if}"/> (交易流水号)</td>
+  </tr>
+  
+   <tr>
+    <td class="search_h2">交易流程 </td>
+    <td>
+    <select name="process">
+        <option value="0">不限</option>
+        <option value="1" {if !empty($selectarray['process'])}{if $selectarray['process']==1} selected="selected"{/if}{/if}>等待买家付款</option>
+        <option value="2" {if !empty($selectarray['process'])}{if $selectarray['process']==2} selected="selected"{/if}{/if}>买家已付款，等待卖家发货</option>
+        <option value="3" {if !empty($selectarray['process'])}{if $selectarray['process']==3} selected="selected"{/if}{/if}>卖家已发货,等待买家确认</option>
+        <option value="4" {if !empty($selectarray['process'])}{if $selectarray['process']==4} selected="selected"{/if}{/if}>买家退款中</option>
+        <option value="5" {if !empty($selectarray['process'])}{if $selectarray['process']==5} selected="selected"{/if}{/if}>买家确认,成功订单</option>
+        <option value="6" {if !empty($selectarray['process'])}{if $selectarray['process']==6} selected="selected"{/if}{/if}>关闭订单</option>
+    </select> 
+    </td>
+  </tr>
+  
+   <tr>
+    <td class="search_h2">资金流向 </td>
+    <td> 
+    <select name="flow" class="form_input_width_100">
+        <option value="0">不限</option>
+        <option value="2" {if !empty($selectarray['flow'])}{if $selectarray['flow']==2} selected="selected"{/if}{/if}>支出</option>
+        <option value="1" {if !empty($selectarray['flow'])}{if $selectarray['flow']==1} selected="selected"{/if}{/if}>收入</option>
+    </select> 
+    </td>
+    </tr>
+    
+    <tr>
+    <td class="search_h2">交易类型 </td>
+    <td> 
+    <select name="paytype">
+        <option value="0">所有交易</option>
+        <option value="1" {if !empty($selectarray['paytype'])}{if $selectarray['paytype']==1} selected="selected"{/if}{/if}>担保交易</option>
+        <option value="2" {if !empty($selectarray['paytype'])}{if $selectarray['paytype']==2} selected="selected"{/if}{/if}>即时交易</option>
+        <option value="3" {if !empty($selectarray['paytype'])}{if $selectarray['paytype']==3} selected="selected"{/if}{/if}>充值交易</option>
+        <option value="4" {if !empty($selectarray['paytype'])}{if $selectarray['paytype']==4} selected="selected"{/if}{/if}>提现交易</option>
+    </select> 
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="search_h2">交易金额 </td>
+    <td><input name="amount1" type="text" class="form_input_text" size="10" value="{if !empty($selectarray['amount1'])}{echo $selectarray['amount1']}{/if}" style="width:70px;"/> ~ <input name="amount2" type="text" class="form_input_text" size="10" value="{if !empty($selectarray['amount2'])}{echo $selectarray['amount2']}{/if}" style="width:70px;"/> 格式 10~20</td>
+  </tr>
+
+  <tr>
+    <td class="search_h2">创建时间 </td>
+    <td><input name="dateline1" type="text" class="form_input_text dateline" size="10" value="{if !empty($selectarray['dateline1'])}{echo $selectarray['dateline1']}{/if}" style="width:70px;"/> ~ <input name="dateline2" type="text" class="form_input_text dateline" size="10" value="{if !empty($selectarray['dateline2'])}{echo $selectarray['dateline2']}{/if}" style="width:70px;"/> 格式 (YYYY-MM-DD)</td>
+  </tr>
+  
+  
+   
+</table>
+
+<li style="text-align:center;padding-top:20px;">
+   <input name="SelectData" type="submit" value="筛选" class="form_button"/>
+</li>
+
+</form>
+
+</div>
+
+<div class="advancedsearch">
+{if empty($this->GET['opensearch'])}
+<a href="{echo $this->MakeGetParameterURL(array('opensearch'=>1))}" class="small blue awesome">打开筛选</a>
+{else}
+<a href="{echo $this->MakeGetParameterURL(array('opensearch'=>0))}" class="small blue awesome">关闭筛选</a>
+{/if}
+</div>
+
+<script type="text/javascript">
+	$(function() {
+		 $(".dateline").datepicker();
+		 $(".dateline").datepicker('option',{dateFormat:'yy-mm-dd'});
+		 $(".dateline").datepicker('option',$.datepicker.regional['zh-CN']);
+
+	});
+</script>
+
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+  <tr>
+    <td class="datalist_h2" style="width:110px;">流水号</td>
+    <td class="datalist_h2" style="width:80px;">创建时间</td>
+    <td class="datalist_h2" style="width:100px;">摘要</td>
+    <td class="datalist_h2" style="width:50px;">数量</td>
+    <td class="datalist_h2" style="width:200px;">交易金额(元)</td>
+    <td class="datalist_h2" style="width:80px;">余额(元)</td>
+    <td class="datalist_h2" style="width:80px;">状态</td>
+    <!--
+    <td class="datalist_h2" style="width:40px;">详情</td>
+    -->
+  </tr>
+
+{if $list}
+
+{for $list $key=>$value}
+  
+  <tr>
+    <td{if @ceil($key%2) == 1} style="background-color:#F7F7F7"{/if}><span style="color:#333; font-family: Arial, Helvetica, sans-serif">{echo $value['serial']}</span></td>
+    <td{if @ceil($key%2) == 1} style="background-color:#F7F7F7"{/if}><span style="color:#666; font-family:Georgia, 'Times New Roman', Times, serif">{echo $this->Date('Y/m/d <p>H:i:s</p>',$value['dateline'])}</span></td>
+    <td{if @ceil($key%2) == 1} style="background-color:#F7F7F7"{/if}><span class="consume_subject">{echo $this->str($value['subject'],30,0,1,0,0,1)}</span>
+    {if $value['bankcard']}{if filter_var($value['bankcard'],FILTER_VALIDATE_EMAIL)}{echo $value['bankcard']}{else}{echo substr($value['bankcard'],0,10)}******{echo substr($value['bankcard'],16,30)}{/if}{/if}
+    </td>
+    <td{if @ceil($key%2) == 1} style="background-color:#F7F7F7"{/if}>{echo $value['number']}</td>
+    <td{if @ceil($key%2) == 1} style="background-color:#F7F7F7"{/if}>{if $value['flow']==1}
+    {if $value['process']==5}
+    <span style="color:#090;font-weight:bold; font-family:Verdana, Geneva, sans-serif;">+{echo $value['amount']}</span>
+    {else}
+    
+        {if $value['refundmoney']>0}
+            <span style="color:#090;font-weight:bold; font-family:Verdana, Geneva, sans-serif;">{if $value['refundmoney']>=$value['amount']}+{echo $value['amount']+$value['fee']-$value['refundmoney']}{elseif $value['refundmoney']< $value['amount']}+{echo $value['amount']-$value['refundmoney']}{/if}
+            </span>
+        {else}
+       		 {echo $value['amount']}
+        {/if}
+    
+    {/if}
+    {elseif $value['flow']==2}
+    {if $value['process']==5}
+    <span style="color:#F60;font-weight:bold;font-family: Verdana, Geneva, sans-serif;">
+    
+    -{echo $value['amount']}
+    {else}
+     {echo $value['amount']}
+    {/if}
+    </span>
+    {/if}
+    </td>
+    
+
+    <td{if @ceil($key%2) == 1} style="background-color:#F7F7F7"{/if}>{echo $value['money']}</td>
+    <td{if @ceil($key%2) == 1} style="background-color:#F7F7F7"{/if}>{if $value['flow']==1}{echo $getprocess->GetSellerProcessName('','',$value['cid'],0,$value['appid'])}{elseif $value['flow']==2}{echo $getprocess->GetBuyerProcessName('','',$value['cid'],0,$value['appid'],$value['paytype'])}{/if}</td>
+    
+    <!--
+    <td{if @ceil($key%2) == 1} style="background-color:#F7F7F7"{/if}>{if $value['paytype']==1}{if $value['url']}<a href="{echo $value['url']}" target="_blank">查看</a>{/if}{/if}</td>
+    -->
+  </tr>
+  
+ {/for} 
+ 
+ 
+{else}
+    
+   <tr>
+    <td colspan="8">您暂时没有交易数据</td>
+  </tr>
+
+{/if}
+ 
+</table>
+
+{if $page->ShowPages()}
+<div class="ajax_page">{echo $page->ShowPages()}</div>
+{/if}
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+{template phpapp:footer}

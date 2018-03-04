@@ -1,0 +1,65 @@
+{template space:column}
+
+                <div class="tasklist">
+
+                            
+                     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="datalist">
+                            <tr>
+                              <td class="table_list"><strong>赏金/标题</strong></td>
+                              <td class="table_list"><strong>投标数</strong></td>
+                              <td class="table_list"><strong>诚信</strong></td>
+                              <td class="table_list"><strong>状态</strong></td>
+                            </tr>
+                            
+                       {if $taskcount}
+                            {for $taskcount $key=>$value}
+                             <tr>
+                                <td {if @ceil($key%2) != 0} class="table_list"{/if}>
+                                <p><span class="color_f60">￥{if $value['price1']>0}{echo $value['price1']}-{echo $value['price2']}{else}{echo $value['money']}{/if}</span></p>
+                                <a href="index.php?app={echo $value['appid']}&action=5&tid={echo $value['tid']}" target="_blank">{echo $value['subject']}</a>
+                                
+                                </td>
+                                <td {if @ceil($key%2) != 0} class="table_list"{/if}>{echo $value['draft_number']}</td>
+                                <td {if @ceil($key%2) != 0} class="table_list"{/if}>{if $value['credit']==1}保证选标{elseif $value['credit']==2}看情况选标{/if}</td>
+                                <td {if @ceil($key%2) != 0} class="table_list"{/if}>{if $value['process']==1}未担保{elseif $value['process']==2}已担保未审核{elseif $value['process']==3}审核中{elseif $value['process']==4}<span style="color:#060">进行中</span>{elseif $value['process']==5}已结束{/if}</td>
+                              </tr>
+                              {/for}
+                          
+                          {else}
+                           <tr>
+                            <td colspan="5">暂时没有任务!</td>
+                           </tr>
+                       {/if}
+                           
+                      </table>
+                      
+                   {if $page->ShowPages()}
+                   <div class="ajax_page">{echo $page->ShowPages()}</div>
+                   {/if}
+                                    
+               </div>
+
+
+
+
+
+
+      </div>
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+{template phpapp:footer}

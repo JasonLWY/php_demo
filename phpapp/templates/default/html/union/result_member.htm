@@ -1,0 +1,47 @@
+{template member:menu}
+
+
+<div id="tasklist">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr class="manage_process">
+    <td class="datalist_h2" style="width:200px;">推广项目</td>
+    <td class="datalist_h2" style="width:200px;">成功数量</td>
+    <td class="datalist_h2">获得提成</td>
+  </tr>
+{php}
+$total=0;
+$money=0;
+{/php}
+
+{if $list}
+{for $list $value}
+ {php} $total+=$value['total']; $money+=$value['money'];{/php}
+    <tr>
+      <td class="datalist_h2">{echo $value['subject']}</td>
+      <td class="datalist_h2">{echo $value['total']}</td>
+      <td class="datalist_h2"><span class="color_f60">{echo $value['money']}</span> 元</td>
+    </tr>
+{/for} 
+
+{/if} 
+
+</table>
+<p style="padding:10px">总推广成功数量 <span class="color_f60">{echo $total}</span> 个, 总推广提成 <span class="color_f60">{echo $money}</span> 元  <a href="member.php?app=5&action=1&page=1&sort=1">查看交易记录</a></p>
+</div>
+
+ 
+   
+
+
+</td></tr></table>
+
+<script type="text/javascript">
+
+$(function(){	
+       $("#ManageMenu ul").append('<li><a href="index.php?app=20">推广联盟</a></li>');
+});
+
+</script>
+
+{template phpapp:footer}

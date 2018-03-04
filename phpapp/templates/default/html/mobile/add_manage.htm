@@ -1,0 +1,70 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">关联应用</td>
+    <td>
+    <select name="apps_phpapp" id="SetAppsPhpappID">
+    <option value="0">无</option>
+    {for $appsarr $value}
+    {if $appid}
+    <option value="{echo $value['id_phpapp']}"{if !empty($appid)}{if $appid==$value['id_phpapp']} selected="selected"{/if}{/if}>{echo $value['name_phpapp']}</option>
+    {else}
+    <option value="{echo $value['id_phpapp']}"{if !empty($manage['apps_phpapp'])}{if $manage['apps_phpapp']==$value['id_phpapp']} selected="selected"{/if}{/if}>{echo $value['name_phpapp']}</option>
+    {/if}
+    {/for}
+    </select>
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">应用动作配置</td>
+    <td>
+    <select name="action_phpapp" id="ShowActionPhpappID">
+    {if !empty($manage['apps_phpapp'])}
+         {echo $this->GetPhpappActionID($manage['apps_phpapp'],$manage['action_phpapp'])}
+    {else}
+    <option value="0">无</option>
+    {/if}
+    </select>
+    </td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">配置名称</td>
+    <td> <input name="name_phpapp_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['name_phpapp'])}{echo $manage['name_phpapp']}{/if}"/></td>
+  </tr>
+  
+  
+    <tr>
+    <td class="width_160">前台用户组</td>
+    <td><select name="usergroup_phpapp">
+{for $usergrouparr $value}
+  <option value="{$value['gid']}" {if !empty($gid)}{if $gid==$value['gid']} selected="selected" {/if}{/if}>{$value['groupname']}</option>
+{/for}
+</select></td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">是否启用</td>
+    <td>
+    <select name="status_phpapp">
+     <option value="0" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==0} selected="selected" {/if}{/if}>启用</option>
+     <option value="1" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==1} selected="selected" {/if}{/if}>关闭</option>
+    </select> 
+   </td>
+  </tr>
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+</form>
+
+

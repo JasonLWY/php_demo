@@ -1,0 +1,158 @@
+<form id="AddSMS">
+<table width="100%" border="0" cellpadding="0" cellspacing="10">
+
+<tr{if !empty($nowaddsms)} style="display:none"{/if}>
+    <td class="form_input_width_150" style="padding-left:20px;">收件人：</td>
+    <td><input name="username_s" type="text"  id="username" size="50" maxlength="30" class="form_input_text form_input_width_300"  value="{if !empty($smsarr['msggoid'])}{php}$msgto=$this->GetLoginInfo($smsarr['msggoid']);{/php}{echo $msgto['username']}{/if}"/> <span style="color:#999">收件人用户名</span></td>
+</tr>
+
+{if !empty($nowaddsms)}
+
+<tr>
+    <td class="form_input_width_100" style="padding-left:20px;">收件人：</td>
+    <td>{echo $msgto['username']}</td>
+</tr>
+
+{/if}
+
+<tr>
+    <td style="padding-left:20px;">标题：</td>
+    <td><input name="subject_s" type="text"  id="subject" size="50" maxlength="30" class="form_input_text form_input_width_300"  value="{if !empty($smsarr['subject'])}{echo $smsarr['subject']}{/if}"/> </td>
+</tr>
+
+  <tr>
+    <td style="padding-left:20px;" valign="top">内容：{if !empty($nowaddsms)}<br />{/if}(300字内)</td>
+    <td><textarea name="content_s" id="content" class="form_input_text" style="width:300px; height:100px">{if !empty($smsarr['content'])}{echo $smsarr['content']}{/if}</textarea></td>
+  </tr>
+  
+  {if PHPAPP::$config['smsscode']==1}
+  <tr>
+    <td style="padding-left:20px;">验证码：</td>
+    <td><input name="SecCode" id="SecCode" type="text" maxlength="4"  class="form_input_text" style="width:120px;float:left;margin-right:20px;" value="点击这里显示验证码"/><div id="ShowSecCode" style="float:left"></div> </td>
+</tr>
+{/if}
+
+<tr{if !empty($nowaddsms)} style="display:none"{/if}>
+    <td style="padding-left:20px;" valign="top"></td>
+    <td><input  id="mailbox" type="checkbox" value="0" /> 发送时保存一份到发件箱 </td>
+  </tr>
+  
+   <tr>
+    <td style="padding-left:20px;" valign="top"></td>
+    <td><input id="Submit" name="Submite" type="button" value="发送" class="form_button"/></td>
+  </tr> 
+
+  
+</table>
+
+</form>
+
+</td></tr></table>
+
+<script type="text/javascript">
+
+$(function(){	
+	 $("#SecCode").one("click", function(){
+			seccode();
+	 });
+
+	 
+	 $("#Submit").click( function () {
+					
+					
+					
+			  var mailbox=$("#mailbox").attr("checked");
+			  
+	          if(!mailbox){
+		           mailbox=1;
+	          }else{
+				   mailbox=2;
+			  } 	
+
+	          var username=$("#username");
+			  if (username.val()==""){
+				    alert("请输入用户名!");
+				    username.focus();
+				    return false; 
+			  }
+			  
+			  if (username.val().length<"2"){
+		            alert("标题不能小于2个字节!");
+		            username.focus();
+		            return false; 
+	          }
+			  
+	          var subject=$("#subject");
+			  if (subject.val()==""){
+				    alert("请输入标题!");
+				    subject.focus();
+				    return false; 
+			  }
+			  
+			  if (subject.val().length<"3"){
+		            alert("标题不能小于3个字节!");
+		            subject.focus();
+		            return false; 
+	          }
+		  
+			  var content=$("#content");
+			  if (content.val()==""){
+				    alert("请输入内容!");
+				    content.focus();
+				    return false; 
+			  }
+			  				
+			  if (content.val().length<"3"){
+		            alert("内容不能小于3个字节!");
+		            content.focus();
+		            return false; 
+	          }		
+					
+			  /*
+			  var SecCode=$("#SecCode");
+			  if (SecCode.val()==""){
+				    alert("请输入验证码!");
+				    SecCode.focus();
+				    return false; 
+			  }
+			  */
+								   
+		     var forms=GetFormAll('#AddSMS');
+			
+			  $("#loading").html('<div class="loading">提交数据中...</div>');
+			  $("#loading").dialog('open');
+			  $("#loading").dialog({ title: '发布消息' });
+			
+			  $.ajax({
+					type: "POST",
+					url: SURL+"/member.php?app={echo $this->app}&action=3&op=1",
+					data: forms+'&mailbox='+mailbox,
+					success: function(data){
+						refreshcode();
+						$("#loading").html(data);
+					}
+			  });								   
+										   				   
+								   
+	 });
+	 
+	 
+	 
+	 
+	 
+});		 
+		 
+function seccode(){
+	var img=SURL+'/index.php?app=2&action=9&rand='+Math.random();
+	 $('#ShowSecCode').html('<a href="javascript:;" onclick="refreshcode()" style="cursor:hand;" title="点击换一张验证码"><img id="img_seccode" src="'+img+'" align="absmiddle"></a>');
+	 $("#SecCode").val("");
+}
+
+function refreshcode() {
+	
+	var img = SURL+'/index.php?app=2&action=9&rand='+Math.random();
+	if(document.getElementById('img_seccode')) {
+		$('#img_seccode').attr("src",img);
+	}
+}
+</script>

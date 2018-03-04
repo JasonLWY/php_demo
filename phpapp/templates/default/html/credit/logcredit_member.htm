@@ -1,0 +1,47 @@
+{template member:menu}
+
+
+{if $list}
+
+<div id="tasklist">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr class="manage_process">
+    <td class="datalist_h2" style="width:120px;">操作</td>
+    <td class="datalist_h2" style="width:120px;">积分变更</td>
+    <td class="datalist_h2" style="width:350px;"></td>
+    <td class="datalist_h2">变更时间</td>
+  </tr>
+
+{for $list $value}
+  <tr>
+    <td class="datalist_h2">
+    {php}$actionname=$this->GetMysqlOne('name_phpapp'," ".$this->GetTable('apps_action')." WHERE type_phpapp!=1 AND aid_phpapp='$value[actionid]' AND apps_phpapp='$value[appid]' ");{/php}
+    {echo $actionname['name_phpapp']}
+    </td>
+    <td class="datalist_h2">{if $value['credit']>0}+{/if}<strong>{echo $value['credit']}</strong></td>
+    <td class="datalist_h2"></td>
+    <td class="datalist_h2">{echo $this->Date("Y/m/d H:i:s",$value['dateline'])}</td>
+  </tr>
+ {/for} 
+
+</table>
+
+</div>
+
+<div class="ajax_page">{echo $page->ShowPages()}</div>
+
+{else}
+
+ <p style="padding:10px">您暂时没有数据</p>
+ 
+{/if}    
+      
+
+
+
+</td></tr></table>
+
+
+
+{template phpapp:footer}

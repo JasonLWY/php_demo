@@ -1,0 +1,58 @@
+<script type="text/javascript">
+
+$(function() {
+
+	 
+		$("#loading").dialog({
+			 title:"确认支付",
+			 width: 800,
+			 position: ['center',160],
+			 height:'auto'
+		});
+		$("#loading").dialog('open');
+			
+		$("#SubmitAddProjectTask").click( function () {
+			  
+			
+		        $("#loading").html('<div class="loading">读取数据中...</div>');
+
+			  
+			    $.ajax({
+						  type: "POST",
+						  url: "member.php?app={echo $this->app}&action=10&tid={echo $this->tid}",
+						  success: function(data){
+								$("#loading").html(data);
+						  }
+                });	
+	    });
+		
+
+	
+});		
+
+
+
+
+	
+</script>
+
+{if $task}
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" style="line-height:32px;margin-bottom:30px;">
+  <tr>
+    <td class="addtask_bottom_line" style="width:20px;"></td>
+    <td class="addtask_bottom_line" style="width:130px;"><strong>任务模式</strong></td>
+    <td class="addtask_bottom_line"><strong>任务描述</strong></td>
+    <td class="addtask_bottom_line" style="width:140px;"><strong>支付费用</strong></td>
+  </tr>
+   <tr>
+    <td><input type="checkbox" checked  disabled="disabled"/></td>
+    <td>雇用悬赏</td>
+    <td><span style="color:#999;">{echo $task['subject']}</span></td>
+    <td><span class="color_f60">{echo $task['money']}</span> 元<input id="TaskMoeny" type="hidden" value="{echo $task['money']}" /></td>
+  </tr> 
+</table>
+
+<p style="text-align: center;padding-bottom: 40px;padding-top: 20px;"><input name="Submit" type="button" value="确定支付" id="SubmitAddProjectTask" class="form_button" style="width:80px"/></p>
+
+{/if}

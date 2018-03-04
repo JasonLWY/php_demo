@@ -1,0 +1,68 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+<tr>
+<td class="width_160">提现手续费:</td>
+<td><input name="withdrawfee_f" value="{echo PHPAPP::$config['withdrawfee']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">例如：收 2% 就填 0.02 (设置0为不收手续费)</td>
+</tr>
+
+<tr>
+<td class="width_160">是否强制实名提现:</td>
+<td>
+<div id="RadioRealNamePayWithdraw">
+<input id="RadioRealNamePayWithdraw1" class="radio" type="radio" name="realnamepaywithdraw_d" value="0"  {if PHPAPP::$config['realnamepaywithdraw']==0}checked{/if}><label for="RadioRealNamePayWithdraw1">否</label> <input id="RadioRealNamePayWithdraw2" type="radio" name="realnamepaywithdraw_d" value="1" {if PHPAPP::$config['realnamepaywithdraw']==1}checked{/if}><label for="RadioRealNamePayWithdraw2">是</label>
+</div>
+</td>
+<td class="color_999"></td>
+</tr>
+
+<tr>
+<td class="width_160">每日提现次数:</td>
+<td><input name="withdrawnum_d" value="{echo PHPAPP::$config['withdrawnum']}" type="text" class="form_input_text form_input_width_200" /> 次</td>
+<td class="color_999"></td>
+</tr>
+
+<tr>
+<td class="width_160">最小提现金额:</td>
+<td><input name="withdrawsmall_f" value="{echo PHPAPP::$config['withdrawsmall']}" type="text" class="form_input_text form_input_width_200" /> 元</td>
+<td class="color_999"></td>
+</tr>
+
+<tr>
+<td class="width_160">最大提现金额:</td>
+<td><input name="withdrawbig_f" value="{echo PHPAPP::$config['withdrawbig']}" type="text" class="form_input_text form_input_width_200" /> 元</td>
+<td class="color_999"></td>
+</tr>
+
+
+<tr>
+<td class="width_160">支付名称:</td>
+<td><input name="sitepayname_s" value="{echo PHPAPP::$config['sitepayname']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999"></td>
+</tr>
+<tr>
+<td class="width_160">充值最小金额:</td>
+<td><input name="pay_small_money_f" value="{echo PHPAPP::$config['pay_small_money']}" type="text" class="form_input_text form_input_width_200" /> 元</td>
+<td class="color_999">(充值显示)</td>
+</tr>
+<tr>
+<td class="width_160">充值名称:</td>
+<td><input name="paygoodsname_s" value="{echo PHPAPP::$config['paygoodsname']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">(充值显示)</td>
+</tr>
+<tr>
+<td class="width_160">充值描述:</td>
+<td><input name="paydescription_s" value="{echo PHPAPP::$config['paydescription']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">(充值显示)</td>
+</tr>
+</table>
+
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button"/></div>
+</form>
+
+<script type="text/javascript">
+$("#RadioRealNamePayWithdraw").buttonset();
+</script>

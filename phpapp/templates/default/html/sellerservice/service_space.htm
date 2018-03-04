@@ -1,0 +1,75 @@
+{template space:column}
+
+<div class="photo_list">
+{if $list}
+
+<ul>
+{for $list $value}
+
+<li>
+        <div class="photo">
+                                       
+                         {if !empty($value['logo'])}
+                                    
+                                    {if $value['thumb']}  
+                                         <a href="{echo SURL}{echo $value['url']}" title="{echo $value['subject']}"><img src="{echo $value['thumb']}"/></a>
+                                    {else}
+                                          <img src="{SURL}/images/seller/nopic.gif"/>
+                                    {/if}
+                         {else}
+                             
+                             
+                             <img src="{SURL}/images/seller/nopic.gif"/>
+                            
+                                            
+                         {/if}
+         </div>
+                                        
+                                        
+        
+        <h5><a href="{echo SURL}{echo $value['url']}" title="{echo $value['subject']}">{echo $value['subject']}</a></h5>
+
+        <p>报价 <span class="color_f60">{echo $value['price']}</span> 元/{echo $value['unit']}</p>
+        
+</li>
+      
+
+{/for}
+
+</ul>
+
+{if $page->ShowPages()}
+<div class="ajax_page">{echo $page->ShowPages()}</div>
+{/if}
+
+{else}
+
+<p>暂无数据</p>
+
+{/if}
+</div>
+
+
+
+
+
+
+
+      </div>
+</div>
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+{template phpapp:footer}

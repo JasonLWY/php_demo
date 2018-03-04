@@ -1,0 +1,107 @@
+{template header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $this->GET['op']==1 || $this->GET['op']==2}
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+    
+    <tr>
+    <td class="width_160">用户类型</td>
+    <td> 
+    <select name="usertype_s">
+        {for $memberarr $value}
+             <option value="{echo $value['id_phpapp']}"{if !empty($manage['usertype'])}{if $value['id_phpapp']==$manage['usertype']} selected="selected"{/if}{/if}>{echo $value['name_phpapp']}</option>
+        {/for}
+    </select>
+  </tr>
+  
+  
+    <tr>
+    <td class="width_160">用户组名称</td>
+    <td> <input name="groupname_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['groupname'])}{echo $manage['groupname']}{/if}"/></td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">图标(CSS样式名)</td>
+    <td> <input name="icon_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['icon'])}{echo $manage['icon']}{/if}"/></td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">颜色(样式值)</td>
+    <td> <input name="color_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['color'])}{echo $manage['color']}{/if}"/> 如： 填写 <span style="color:#F00">#F00</span> 为红色</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">使用技能数</td>
+    <td> <input name="allowskillnumber_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['allowskillnumber'])}{echo $manage['allowskillnumber']}{/if}"/> <span style="color:#999">(该用户组的用户使用技能的数量)</span></td>
+  </tr>
+  
+  <tr>
+  <td class="width_160">用户登录</td>
+  <td><input class="radio" type="radio" name="allowlogin_d" value="0"  {if $manage['allowlogin']==0}checked{/if}>&nbsp;许可 <input class="radio" type="radio" name="allowlogin_d" value="1" {if $manage['allowlogin']==1}checked{/if}>&nbsp;禁止  <span style="color:#999">(是否许可该用户组的用户登录本站)</span></td>
+  </tr>
+  
+  <tr>
+  <td class="width_160">用户二级域名</td>
+  <td><input class="radio" type="radio" name="allowdomainname_d" value="0"  {if $manage['allowdomainname']==0}checked{/if}>&nbsp;许可 <input class="radio" type="radio" name="allowdomainname_d" value="1" {if $manage['allowdomainname']==1}checked{/if}>&nbsp;禁止  <span style="color:#999">(是否许可该用户组的用户使用空间二级域名功能)</span></td>
+  </tr>
+   	
+   	
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+
+
+{else}
+
+
+        {if $list}
+        
+            <div id="WindowsForm{echo $this->GET['menu']}">
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+              <tr>
+                <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1" onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+                
+                {for $orderarr $key=>$value}
+                <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+                {/for} 
+                
+                <td class="datalist_h2">操作</td>
+              </tr>
+            
+            {for $list $key=>$value}
+              <tr>
+                <td><input name="checkbox[]" type="checkbox" value="{echo $value['gid']}" /></td>
+                <td>{echo $value['gid']}</td>
+                <td>{echo $value['groupname']}</td>
+                <td>{echo $value['name_phpapp']}</td>
+                <td><a href="{echo $this->MakeGetParameterURL(array('op'=>2,'id'=>$value['gid']))}">[编辑]</a></td>
+              </tr>
+             {/for} 
+            
+            </table>
+            </div>
+            
+            <div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+            
+            <div class="phpapp_button"><input name="Submit" type="submit" value="删除" class="form_button"/></div>
+            
+        
+        {else}
+        
+        
+        没有创建用户组数据!
+        
+        {/if}
+
+
+
+{/if}
+
+</form>

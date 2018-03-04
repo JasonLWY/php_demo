@@ -1,0 +1,77 @@
+{template member:menu}
+
+<link href="{TURL}refund.css" rel="stylesheet" type="text/css" />
+
+<form id="RefundForm" action="{echo $this->MakeGetParameterURL()}" method="post" enctype="multipart/form-data">
+
+<div class="warning">
+    <h3>系统提示：</h3>
+    <p>
+    当您操作不同意退款时,本站客服会介入退款流程,如果雇主凭证属实客服将退款给雇主。
+    </p>
+</div>
+
+<div class="refund_table">
+   <h2>退款编号 {echo $refund['rid']} 处理申请</h2>
+   <ul>
+       <li>雇主要求退款：<span class="color_f60" style="font-size:16px">{echo $refund['money']}</span> 元  &nbsp;&nbsp; (订单原金额 {echo $consumearr['amount']+$consumearr['fee']} 元,中标 {echo $consumearr['amount']} 元,手续费 {echo $consumearr['fee']} 元)</li>
+       
+       <li>雇主退款原因：{echo $refunditemarr['project']} </li>
+       
+       <li>我的退款说明：</li>
+       <li style="height:220px;"><textarea name="sellercontent_s" id="Content" class="form_editor" style="width:660px;height:200px;">{if !empty($refund['sellercontent'])}{echo $this->str($refund['sellercontent'],999999,0,0,1,0,0,1)}{else}协商一致{/if}</textarea></li>
+       
+       <li>我的上传凭证： <input name="sellerphoto" type="file" id="photo"/> <span style="color:#999">文件格式：jpg,gif,png 文件最大： 800k</span></li>
+       
+       {if !empty($refund['sellerphoto'])}
+  
+        <p id="logophotoshow" style="padding-top:20px;padding-bottom:20px;">
+            {php}
+            $photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$refund[sellerphoto]'");{/php}
+            {if $photo}  
+                 <a href="{SURL}/index.php?app=18&fid={echo $refund['sellerphoto']}"><img src="{echo $photo['thumb']}"/></a>
+            {/if}
+        </p>   
+       
+       {/if}
+     
+   </ul>
+   
+   <div style="text-align:center;padding-top:20px;"><input name="submit" type="submit" value="同意退款" id="SubmitAdd" class="form_button"/> <input name="disagree" type="submit" value="不同意退款" id="SubmitDisagree" class="form_general_button"/></div>
+</div>
+
+
+</form>
+
+
+<script type="text/javascript">
+
+$(function() {
+		   
+	    $("#SubmitAdd,#SubmitDisagree").click( function () {
+
+			  var content=$("#Content");
+			  if (content.val()==""){
+				    alert("请输入退款说明!");
+				    content.focus();
+				    return false; 
+			  }
+		
+			  if (content.val().length<"4"){
+		            alert("退款说明内容不能小于4个字节!");
+		            content.focus();
+		            return false; 
+	          }
+			  
+			  
+              $("#RefundForm").submit();
+			  
+	    });
+	  
+		
+});	
+
+</script>
+
+
+{template phpapp:footer}

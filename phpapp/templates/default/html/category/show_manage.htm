@@ -1,0 +1,88 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $list}
+
+<div id="WindowsForm{echo $this->GET['menu']}">
+
+    <div class="datalist category_list">
+     
+        <ul>
+            <li>
+                <span class="checkbox_category"><input type="checkbox" name="checkboxall" value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</span>
+                <span>排序/分类名称</span>
+                <span class="category_edit">操作</span>
+                <span class="category_order">路径</span>
+            </li>
+            <li class="category_item" id="CatidID0">
+                <span class="checkbox_category"></span>
+                <span class="add_category_one"><a class="small green awesome" onclick="AddCategoryOne(30)">添加一级分类</a></span>
+            </li>
+
+            {echo $showlist}
+
+        
+        </ul>
+    </div>
+</div>
+
+
+{else}
+
+<div class="datalist category_list">
+     
+        <ul>
+            <li>
+                <span class="checkbox_category"><input type="checkbox" name="checkboxall" value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</span>
+                <span>排序/分类名称</span>
+                <span class="category_edit">操作</span>
+                <span class="category_order">路径</span>
+            </li>
+            <li class="category_item" id="CatidID0">
+                <span class="checkbox_category"></span>
+                <span class="add_category_one"><a class="small green awesome" onclick="AddCategoryOne(30)">添加一级分类</a></span>
+            </li>
+
+        </ul>
+    </div>
+
+<p>没有分类数据!</p>
+
+{/if}
+
+
+
+<div class="warning">
+    <h3>系统提示：</h3>
+    <p>
+    添加 任务,人才,服务 的分类请选择 "任务" 这个应用
+    </p>  
+</div>
+
+
+<div class="phpapp_button"><input name="Add" type="submit" value="添加" class="form_button"/> <input name="Displayorder" type="submit" value="排序" class="form_button"/> <input name="Submit" type="submit" value="删除" class="form_button"/></div>
+
+
+
+</form>
+
+
+
+
+<script type="text/javascript">
+$(function(){	
+	$.PHPAPPMouseover('.category_item','.show_add');
+	
+});
+
+
+function AddCategoryOne(numpx){
+	 AutoCategoryID++; 
+	 var subclasshtml ='<li><span class="checkbox_category"><input type="checkbox" disabled="disabled"/></span><span class="subclass_icon" style="padding-left:'+numpx+'px"></span> <input name="addcategory[0]['+AutoCategoryID+'][displayorder]" type="text" class="form_input_text form_input_width_50 add_subclass" value="0"/> <input name="addcategory[0]['+AutoCategoryID+'][name]" type="text" class="form_input_text form_input_width_200" value=""/> {if $apps}<select name="addcategory[0]['+AutoCategoryID+'][type]" class="form_select_text">{for $apps $value}<option value="{echo $value["id_phpapp"]}" {if $value["id_phpapp"]==49} selected="selected"{/if}>{echo $value["name_phpapp"]}</option>{/for}</select>{/if}</li>';
+	 
+	 $('#CatidID0').after(subclasshtml);
+	 
+}
+
+</script>

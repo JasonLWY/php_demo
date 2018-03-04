@@ -1,0 +1,92 @@
+{template member:menu}
+<div class="myavatar">
+<strong>当前我的头像</strong>
+<p>如果您还没有设置自己的头像，系统会显示为默认头像，您需要自己上传一张新照片来作为自己的个人头像 </p>
+
+
+<div style="padding-top:20px;padding-bottom:20px;">{echo $this->GetUserAvatar($this->uid,2,1)}</div>
+
+<script type="text/javascript">
+function updateavatar() {
+	window.location.reload();
+}
+
+function AvatarURL(){
+	 return '{echo SURL}/index.php?app=18&action=7&uid={echo $this->uid}&cookiecode={echo $member["cookiecode"]}';
+}
+	
+$(function(){	
+		$("#mycamera").attr("height","253");
+});
+</script>
+
+<strong>设置我的新头像</strong>
+<p>请选择一个新照片进行上传编辑。</p>
+<p>提示：头像保存后，您可能需要刷新一下本页面(按F5键)，才能查看最新的头像效果。</p>
+</div>
+
+
+{if $phpappavatar}
+
+<script type="text/javascript" src="{TURL}editor/js/swfobject.js"></script>
+<script type="text/javascript">
+	var swfVersionStr = "10.2.0";
+	var flashvars = {};
+	var params = {};
+	params.quality = "high";
+	params.bgcolor = "#ffffff";
+	params.allowscriptaccess = "sameDomain";
+	params.allowfullscreen = "true";
+	var attributes = {};
+	attributes.id = "PhotoFlashID";
+	attributes.name = "UploadFile";
+	attributes.align = "middle";
+	swfobject.embedSWF(
+		"{TURL}swf/avatar.swf", "flashContent", 
+		"100%", "100%", 
+		swfVersionStr, 
+		flashvars, params, attributes);
+	swfobject.createCSS("#flashContent", "display:block;text-align:left;");
+</script>
+
+ <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="310" id="PhotoFlashID">
+		<param name="movie" value="{TURL}swf/avatar.swf" />
+		<param name="quality" value="high" />
+		<param name="bgcolor" value="#ffffff" />
+		<param name="allowScriptAccess" value="sameDomain" />
+		<param name="allowFullScreen" value="true" />
+		<!--[if !IE]>-->
+		<object type="application/x-shockwave-flash" data="{TURL}swf/avatar.swf" width="100%" height="310">
+			<param name="quality" value="high" />
+			<param name="bgcolor" value="#ffffff" />
+			<param name="allowScriptAccess" value="sameDomain" />
+			<param name="allowFullScreen" value="true" />
+		<!--<![endif]-->
+		<!--[if gte IE 6]>-->
+			<p> 
+			   您的 Flash Player 版本太低了不能使用该功能,请<a href="http://www.adobe.com/go/getflashplayer" target="_blank">点击这里获取最版本 Flash Player.</a>
+			</p>
+			<p> 
+				Either scripts and active content are not permitted to run or Adobe Flash Player version
+				10.2.0 or greater is not installed.
+			</p>
+		<!--<![endif]-->
+			<a href="http://www.adobe.com/go/getflashplayer">
+				<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
+			</a>
+		<!--[if !IE]>-->
+		</object>
+		<!--<![endif]-->
+	</object>
+    
+{else}
+
+     {echo $myavatar->avatar($this->uid)}
+
+{/if}
+
+</div>
+
+
+
+{template phpapp:footer}

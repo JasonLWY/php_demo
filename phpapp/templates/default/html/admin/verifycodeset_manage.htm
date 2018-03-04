@@ -1,0 +1,52 @@
+{template header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+<tr>
+<td class="width_160">验证码添加干扰值:</td>
+<td><input name="sitecodeaddtext1_s" value="{echo PHPAPP::$config['sitecodeaddtext1']}" type="text" class="form_input_text form_input_width_100" /> ~ <input name="sitecodeaddtext2_s" value="{echo PHPAPP::$config['sitecodeaddtext2']}" type="text" class="form_input_text form_input_width_100" /></td>
+<td class="color_999">值越小验证码文字越清楚</td>
+</tr>
+
+<tr>
+<td class="width_160">字体模糊:</td>
+<td><input class="radio" type="radio" name="sitecodefuzzy_d" value="1"  {if PHPAPP::$config['sitecodefuzzy']==1}checked{/if}>&nbsp;开启 <input class="radio" type="radio" name="sitecodefuzzy_d" value="0" {if PHPAPP::$config['sitecodefuzzy']==0}checked{/if}>&nbsp;关闭</td>
+<td class="color_999">验证码字体模糊</td>
+</tr>
+
+<tr>
+<td class="width_160">验证码图片生成方式:</td>
+<td><input class="radio" type="radio" name="sitecodetype_d" value="1"  {if PHPAPP::$config['sitecodetype']==1}checked{/if}>&nbsp;PNG <input class="radio" type="radio" name="sitecodetype_d" value="0" {if PHPAPP::$config['sitecodetype']==0}checked{/if}>&nbsp;GIF</td>
+<td class="color_999">验证码生成图片类型</td>
+</tr>
+
+<tr>
+<td class="width_160">前台注册验证码:</td>
+<td><input class="radio" type="radio" name="registeriscode_d" value="1"  {if PHPAPP::$config['registeriscode']==1}checked{/if}>&nbsp;开启 <input class="radio" type="radio" name="registeriscode_d" value="0" {if PHPAPP::$config['registeriscode']==0}checked{/if}>&nbsp;关闭</td>
+<td class="color_999">前台注册是否开启验证码</td>
+</tr>
+
+<tr>
+<td class="width_160">前台登录验证码:</td>
+<td><input class="radio" type="radio" name="loginiscode_d" value="1"  {if PHPAPP::$config['loginiscode']==1}checked{/if}>&nbsp;开启 <input class="radio" type="radio" name="loginiscode_d" value="0" {if PHPAPP::$config['loginiscode']==0}checked{/if}>&nbsp;关闭</td>
+<td class="color_999">前台登录是否开启验证码</td>
+</tr>
+
+<tr>
+<td class="width_160">后台登录验证码:</td>
+<td><input class="radio" type="radio" name="adminloginiscode_d" value="1"  {if PHPAPP::$config['adminloginiscode']==1}checked{/if}>&nbsp;开启 <input class="radio" type="radio" name="adminloginiscode_d" value="0" {if PHPAPP::$config['adminloginiscode']==0}checked{/if}>&nbsp;关闭</td>
+<td class="color_999">后台登录是否开启验证码</td>
+</tr>
+
+<tr>
+<td class="width_160">发送站内短信验证码:</td>
+<td><input class="radio" type="radio" name="smsscode_d" value="1"  {if PHPAPP::$config['smsscode']==1}checked{/if}>&nbsp;开启 <input class="radio" type="radio" name="smsscode_d" value="0" {if PHPAPP::$config['smsscode']==0}checked{/if}>&nbsp;关闭</td>
+<td class="color_999">发送站内短信是否开启验证码</td>
+</tr>
+
+</table>
+
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button"/></div>
+
+</form>

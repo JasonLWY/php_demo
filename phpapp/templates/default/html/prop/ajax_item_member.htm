@@ -1,0 +1,30 @@
+{if $list}
+
+     {template item_prop}
+
+
+<div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+
+
+<script type="text/javascript">
+function AjaxItem(id,page,sqlorder,iforder){
+
+	     $("#ServiceShop").html('<div class="loading">读取数据中...</div>');
+
+	  	 $.ajax({
+				type: "GET",
+				url: 'member.php',
+				data: "app=11&action=1&op="+id+"&page="+page,
+				success: function(data){
+					 $("#ServiceShop").html(data);
+					 
+				}
+	    });
+}
+</script>
+
+{else}
+
+ <p style="padding:10px">暂时没有道具</p>
+ 
+{/if}    

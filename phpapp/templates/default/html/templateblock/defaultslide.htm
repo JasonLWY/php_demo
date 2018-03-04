@@ -1,0 +1,26 @@
+ <div class="default_slide" id="SlideList">
+          
+               {php} $slidearray=$this->GetMysqlArray('*'," ".$this->GetTable('slide')." WHERE appid='56' AND status=0 ORDER BY displayorder ASC");{/php}
+               {if $slidearray}
+                   <ul id="Slide" style="height:236px;overflow:hidden;">
+                       
+                       {for $slidearray $key=>$value}
+                             <li id="Slide_IMG_{echo $key+1}"><a href="{echo $value['link']}" target="_blank" title="{echo $value['subject']}"><img src="{echo $value['image']}" title="{echo $value['subject']}" /></a></li>
+                       {/for}
+                   
+                   </ul>
+                   
+                   <div class="slidetitle" id="SlideTitle">
+                       {for $slidearray $key=>$value}
+                             <li id="Title_Slide_IMG_{echo $key+1}"{if ($key+1)==1} class="focus"{/if}><a href="{echo $value['link']}" target="_blank" target="{echo $value['subject']}">{echo $value['subject']}</a></li>
+                       {/for}
+                   </div>
+               {else}
+                    <p>ÔÝÎÞÊý¾Ý</p>
+               {/if}
+            
+          </div>
+
+<script type="text/javascript">
+           SetSlide('#SlideList','#Slide','#SlideTitle',4000);
+ </script>

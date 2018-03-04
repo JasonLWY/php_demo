@@ -1,0 +1,42 @@
+<link href="{echo TURL}sns.css" rel="stylesheet" type="text/css" />
+
+{template member:login.js}
+
+
+<div id="Login_Now" style="padding-top:10px;">
+
+<ul>
+    <form id="LoginNowForm">
+    <p style="height:36px;"><label class="form_input_label" style="width:80px;">用户名：</label> <input id="LoginUserName" type="text" maxlength="80" class="form_input_text form_input_width_100 LoginUserName" value="" title="请输入登录用户名或邮箱或手机"/><span id="AjaxLoginUserNameError"></span></p>
+    
+    <p style="height:36px;padding-top:10px;"><label class="form_input_label" style="width:80px;">密码：</label> <input id="LoginPassword" type="password"  class="form_input_text form_input_width_100" title="请输入登录密码"/><span id="AjaxLoginPasswordError"></span></p>
+    
+    <input type="hidden" id="SecurityForm" value="{echo $this->SecurityForm()}"/>
+    
+    <p style="margin-top:10px;padding-left:80px;" id="SubmitLoginNow"></p>
+    
+    </form>
+    
+    <div class="login_sns">
+              <h3><em style="float:right;font-style: normal;"><a href="{echo SURL}/index.php?app=2&action=13">忘记密码?</a></em><a href="javascript:;" id="ShowSNS" class="sns_down">通过合作网站登录</a></h3>
+              <ul id="SNSList" style="display:none;padding-bottom:10px;">
+               {php} $snsarray=$this->GetMysqlArray('*'," ".$this->GetTable('sns')."  WHERE status_phpapp=0 "); {/php}
+               {if $snsarray}
+                     {for $snsarray $value}
+                     
+                           <li><a href="{echo SURL}/index.php?app={echo $value['app_phpapp']}" class="{echo $value['icon_small_phpapp']}">{echo $value['name_phpapp']}登录</a></li>
+                           
+                     {/for}
+               {/if}
+              </ul>
+      
+    </div>
+    
+</ul>
+
+
+</div>
+
+
+
+<iframe src="javascript:false;" id="NowLoginIframe" style="display:none;height:0px;width:0px;"></iframe>

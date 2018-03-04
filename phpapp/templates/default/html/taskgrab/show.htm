@@ -1,0 +1,252 @@
+{template phpapp:header}
+
+{if empty($LoginMemberArray['skills'])}
+<script type="text/javascript" src="{echo TURL}js/skills.js"></script>
+{/if}
+<script type="text/javascript" src="{echo TURL}js/task.js?v={echo $this->GetFileVersion()}"></script>
+
+{template show.js}
+{template time.js}
+
+<link href="{TURL}member.css" rel="stylesheet" type="text/css" />
+<link href="{TURL}task.css" rel="stylesheet" type="text/css" />
+
+<div class="task_show">
+	<div class="task_subject">
+       <div class="task_operate">
+       {if $task['uid']==$this->uid}<a class="small blue awesome" onclick="TaskAdd('{echo $this->tid}')"><span class="pencil_ico">补充</span></a>{/if}
+       <a class="small green awesome" onclick="TaskFavorites('{echo $this->tid}')"><span class="bullet_add_ico">收藏</span></a> 
+       {if $task['uid']!=$this->uid}<a class="small blue awesome" onclick="TaskReport('{echo $this->tid}',0)"><span class="report_pencil_ico">举报</span></a>{/if}
+       </div>
+    <h1><a href="{echo SURL}{echo $task['url']}">{echo $task['subject']}</a></h1></div>
+    <div class="task_status">
+         <div class="task_status_show">
+             <ul>
+             <strong>{if $task['process']!=9}<strong>剩余时间：</strong>{if $task['process']==8}任务已结束{else}<span id="task_endtime"> </span>{/if}{/if}</strong>
+             <p> 
+                   {if $task['process']==1}
+                   等待雇主支付担保金 
+                   {elseif $task['process']==2}
+                   买家已支付担保金未审核 
+                   {elseif $task['process']==3}
+                   审核中 
+                   {elseif $task['process']==4}
+                   任务进行中
+                   {elseif $task['process']==5}
+                   任务暂停投稿
+                   {elseif $task['process']==6}
+                   任务待选稿中
+                   {elseif $task['process']==7}
+                   任务申请退款中
+                   {elseif $task['process']==8}
+                   任务已结束
+                   {elseif $task['process']==9}
+                   任务已关闭
+                   {/if}
+           </p>
+         
+             </ul>
+         </div>
+         <ul>
+             <li style="border:0px">
+             投标量
+             <p>{echo $task['draft_number']}</p>
+             </li>
+             <li>
+             招标量
+             <p>{echo $task['total']}</p>
+             </li>
+             <li>
+             {if $task['tasktype']==1}固定预算{elseif $task['tasktype']==2}按时间段{/if}
+             <p>
+             ￥{echo $task['price1']}-￥{echo $task['price2']}
+             
+             {if $task['tasktype']==2}
+                     
+                    /{echo $task['duration']}{if $task['timetype']==1}分钟{elseif $task['timetype']==2}小时{elseif $task['timetype']==3}天{elseif $task['timetype']==4}月{elseif $task['timetype']==5}年{/if}
+			 {/if}
+             
+             </p>
+             </li>
+             <li>
+             诚意金
+             <p>{echo $task['money']}</p>
+             </li>
+             {if $task['uid']==$this->uid}
+             <li>
+             <p style="padding-top:5px;padding-bottom:5px;"><a class="large green awesome" onclick="OpenSiteService('{echo $this->tid}')"><span class="services_ico">增值服务</span></a></p>
+             </li>
+             {/if}
+         </ul>
+         
+    </div>
+    {if $task['uid']==$this->uid}
+        <div id="BuyTaskService" class="task_service" style="display:none">
+             <div id="ServiceList"></div>
+             <p><a class="large blue awesome" onclick="BuySiteService('{echo $this->tid}')">结账并使用</a></p>
+             <input type="hidden" id="BuyPropsID" name="props" value="{if !empty($task['props'])}{echo $task['props']}{/if}"/>
+        </div>
+    {/if}
+    
+    <div class="task_info">
+         <div class="task_info_right">
+               <div class="task_employer">
+
+                   <h5>任务发布者</h5>
+                   <div class="task_avatar">
+                   {echo $this->GetUserAvatar($task['uid'],1,1)}
+ 
+                   </div>
+                   <div class="task_user_info">
+                   <p class="usergroup_personal_ico" title="个人用户"><a href='{echo SURL}/space.php?app=8&uid={echo $task['uid']}' target="_blank" title="{echo $task['username']}">{echo $task['username']}</a></p>
+                   <p>
+                      {if $taskuser['credits']}<span class="{echo $this->GetCreditLevel($taskuser['credits'],2)}" title="买家信用积分 {echo $taskuser['credits']}"></span>{else}暂无信用值{/if} 
+                   </p>
+                   <p style="display:inline-block;padding-top:6px;">{echo $this->GetCertificateIcon($taskuser['certificate'],array('Mobile'=>'手机','Mail'=>'邮箱','Personal'=>'个人实名','Company'=>'公司实名'))}
+                   </p>
+                   
+                   <p> <span class="send_message"><a href="javascript:;" onclick="AddSMS('{echo $task['uid']}')">发消息</a></span></p>
+                   </div>
+               </div>
+               
+               <div class="task_number"><strong>任务编号：</strong>#{echo $task['tid']}</div>
+
+               <!-- 地图 -->
+               {template map:task_show_maps}
+             
+               {ad TaskMode3}
+               
+         </div>
+         <div class="task_content" style="white-space:normal; word-break:break-all;">
+            <h2>任务需求：</h2>
+            {if $hide}
+                        
+                      {if  $this->uid}
+                            
+                            {echo $this->HideDecode($this->str($task['content'],999999,0,1,0,0,1))}
+
+                            {template phpapp:file}
+                            
+                      {else}
+                          
+                           <div class="bid_hide_info">
+                              <p>任务内容已隐藏,请登录后查看！</p>
+                           </div>
+                          
+                      {/if}
+			{else}
+								      
+                      {if  $this->uid}
+                          
+                            {echo $this->HideDecode($this->str($task['content'],999999,0,1,0,0,1),0)}
+                            {template phpapp:file}
+                       
+                      {else}
+                            
+                            {if PHPAPP::$config['task_count_tourist_content']==1}
+                            
+                                    {if $this->uid>0}
+                            	          {echo $this->HideDecode($this->str($task['content'],999999,0,1,0,0,1),1)}
+                                          {template phpapp:file}
+                                   
+                                    {else}
+                            
+                                           <p><strong>买家设置：需求需要登录后可见</strong></p>
+                            			   <p><a class="small orange awesome" href="{echo SURL}/index.php?app=2&action=2">注册</a>  <a class="small orange awesome" href="{echo SURL}/index.php?app=2&action=1">登录</a></p>
+                                    
+                                    {/if}
+                            {else}
+                            
+                                   {echo $this->HideDecode($this->str($task['content'],999999,0,1,0,0,1),0)}
+                                   {template phpapp:file}
+                            
+                            {/if}
+                        
+                      {/if}
+
+
+            {/if}
+           
+             
+             {if $taskaddarr}
+                  <h2>任务补充：</h2>
+                  
+                  {for $taskaddarr $taskadd}
+                       <div class="task_add_list">
+                       <p>
+                          <span style="font-family:Georgia, 'Times New Roman', Times, serif;font-size:12px;color:#999;">{echo $this->Date("Y/m/d H:i:s",$taskadd['dateline'])}</span>
+                       </p>
+                       <p>
+                           {echo $taskadd['content']}
+                       </p>
+                      
+                       </div>
+                  {/for}
+                   
+             {/if}
+             
+            <h2>任务要求技能：</h2>
+            <div class="task_skills">
+                <ul>
+                    {if $skillsarr}
+                        {php}$newkey=0;{/php}
+                        {for $skillsarr $key=>$value}
+                             {php}$newkey++;{/php}
+                             <li><a href="{echo $value['url']}">{echo $value['name']}{if $newkey!=count($skillsarr)},{/if}</a></li>
+                        {/for}
+                    {/if}
+                </ul>
+            </div>
+            
+            
+     
+         </div>
+    </div>
+    <div class="task_line"></div>
+    <div class="task_bid">
+    {echo $this->GetTaskOperateMenu($task)}
+    <h2>任务投标区</h2></div>
+    
+    <div id="task_tabs" style="border: none;padding:0px;">
+           
+            <ul>
+                <li><a href="#DraftShow-0" onclick="ShowDraft(0)"><span>未审核投标({echo $notcheck})</span></a></li>
+                <li><a href="#DraftShow-1" onclick="ShowDraft(1)"><span>已审核投标({echo $yescheck})</span></a></li>
+                {if $task['uid']!=$this->uid}
+                <li><a href="#DraftShow-4" onclick="ShowDraft(4)"><span>我的投稿({echo $mycheck})</span></a></li>
+                {/if}
+                <li><a href="#DraftShow-2" onclick="ShowMessage()"><span>任务留言({echo $task['task_message']})</span></a></li>
+            </ul>
+    
+
+            <div id="DraftShow-0" class="task_bid_list" style="padding-left:0px;padding-right:0px;">
+                  {template draft}
+            </div>
+            
+            <div id="DraftShow-1" class="task_bid_list" style="padding-left:0px;padding-right:0px;">
+            </div>
+            
+            {if $task['uid']!=$this->uid}
+            <div id="DraftShow-4" class="task_bid_list" style="padding-left:0px;padding-right:0px;">
+            </div>
+            {/if}
+            
+             <div id="DraftShow-2" class="task_bid_list" style="padding-left:0px;padding-right:0px;">
+            </div>
+
+   </div> 
+   
+   {php} $uptask=$this->GetMysqlOne('subject,endtime,addmoney,tid,money,url'," ".$this->GetTable('task')."  WHERE tid<'$this->tid' AND appid=83 ORDER BY tid DESC LIMIT 0,1"); {/php}
+{php} $nexttask=$this->GetMysqlOne('subject,endtime,addmoney,tid,money,url'," ".$this->GetTable('task')."  WHERE tid>'$this->tid' AND appid=83 LIMIT 0,1"); {/php}
+<div class="task_next">
+<ul>
+  <li><strong>上一条任务</strong>{if $uptask}<span class="color_f60">￥{echo $uptask['money']}</span> <a href="{echo SURL}{echo $uptask['url']}" title="{echo $uptask['subject']}">{echo $this->str($uptask['subject'],50)} {if $uptask['addmoney']>0} <b>+{echo $uptask['addmoney']}</b>{/if}</a>  <span class="related_end">{echo $this->Date("Y/m/d",$uptask['endtime'])}.END</span>{else}当前为最后一条任务了{/if}</li>
+  <li><strong>下一条任务</strong>{if $nexttask}<span class="color_f60">￥{echo $nexttask['money']}</span> <a href="{echo SURL}{echo $nexttask['url']}" title="{echo $nexttask['subject']}">{echo $this->str($nexttask['subject'],50)} {if $nexttask['addmoney']>0} <b>+{echo $nexttask['addmoney']}</b>{/if}</a>  <span class="related_end">{echo $this->Date("Y/m/d",$nexttask['endtime'])}.END</span>{else}当前为最后一条任务了{/if}</li>
+</ul>
+</div>
+
+</div>
+
+<span class="loginrefresh" style="display:none">1</span> 
+
+{template phpapp:footer}

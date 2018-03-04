@@ -1,0 +1,26 @@
+{template header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+<tr>
+<td class="width_160">是否开启分享:</td>
+<td>
+<select name="opensharecode_d">
+  <option value="0" {if !empty(PHPAPP::$config['opensharecode'])}{if PHPAPP::$config['opensharecode']==0} selected="selected" {/if}{/if}>启用</option>
+  <option value="1" {if !empty(PHPAPP::$config['opensharecode'])}{if PHPAPP::$config['opensharecode']==1} selected="selected" {/if}{/if}>关闭</option>
+</select> 
+</td>
+<td class="color_999"><span style="color:#F00">(提示：开启后对方网慢时,影响本站网站访问速度)</span></td>
+</tr>
+<tr>
+<td class="width_160">分享代码:</td>
+<td><textarea  rows="6"  name="sharecode" cols="50" class="form_textarea form_input_width_400" style="height:300px;">{echo PHPAPP::$config['sharecode']}</textarea></td>
+<td class="color_999">可以手动改写</td>
+</tr>
+
+</table>
+
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button"/></div>
+
+</form>

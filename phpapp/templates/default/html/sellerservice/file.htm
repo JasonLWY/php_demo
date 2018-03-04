@@ -1,0 +1,15 @@
+
+{if $files}
+
+    <div class="task_file_list">
+    <ul>
+    {for $files $file}
+           <li>
+           <p><a href="index.php?app=18&fid={echo $file['fid']}" target="_blank"><img src="{echo $this->ShowFileIcon($file['filename'])}"/></a></p>
+           <p><a href="index.php?app=18&fid={echo $file['fid']}" target="_blank">{echo $file['filename']}</a></p>
+           </li>
+    {/for}
+    </ul>
+    </div>
+
+{/if}

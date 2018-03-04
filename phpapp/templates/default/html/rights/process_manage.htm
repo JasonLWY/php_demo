@@ -1,0 +1,173 @@
+{template admin:header}
+
+<link href="{TURL}refund.css" rel="stylesheet" type="text/css" />
+
+<div class="order_process" style="width:480px;">
+
+    <ul class="order_process_schedule" style="background-position: left {if $refund['process']==1}-28{elseif $refund['process']==2}-56{elseif $refund['process']==3}-84{/if}px;">
+    
+          <li>1.雇主申请维权</li>
+          
+          <li>2.威客发表维权</li>
+          
+          <li>3.客服处理完成</li>
+    
+    </ul>
+</div>
+
+<div class="refund_member">
+
+<ul>
+    <h3>雇主</h3>
+    {echo $this->GetUserAvatar($buyerarr['uid'],1,1)}
+    <div class="service_info">
+    <p>{echo $buyerarr['username']}</p>
+    <p><a class="small blue awesome" href="javascript:;" onclick="AddSMS('{echo $buyerarr['uid']}')"> <span class="send_message">发消息</span></a></p>
+    </div>
+</ul>
+
+
+{if $refund['serviceuid']>0}
+    <ul class="refund_service">
+          {php} $taskservice=$this->GetMysqlOne('a.uid,a.username,b.mobile'," ".$this->GetTable('member')." AS a LEFT JOIN ".$this->GetTable('member_info')." AS b ON a.uid=b.uid WHERE a.uid='$refund[serviceuid]' ");{/php}
+    
+          <h3>维权介入客服</h3>
+          
+          {echo $this->GetUserAvatar($refund['serviceuid'],1,1)}
+
+          <div class="service_info">
+          <p>{echo $taskservice['username']}</p>
+          <p>电话：{if $taskservice['mobile']}{echo $taskservice['mobile']}{else}未设置{/if}</p>
+          <p><a class="small blue awesome" href="javascript:;" onclick="AddSMS('{echo $taskservice['uid']}')"> <span class="send_message">发消息</span></a></p>
+          </div>
+    </ul>
+{/if}
+
+<ul style="border:0px;">
+<h3>卖家威客</h3>
+    <div class="service_info">
+    {echo $this->GetUserAvatar($sellerarr['uid'],1)}
+    <p>{echo $sellerarr['username']}</p>
+    <p><a class="small blue awesome" href="javascript:;" onclick="AddSMS('{echo $sellerarr['uid']}')"> <span class="send_message">发消息</span></a></p>
+    </div>
+</ul>
+
+</div>
+
+<h2>维权编号：<strong>{echo $refund['rid']}</h2>
+
+<div class="refund_info">
+    <h3>雇主维权信息区</h3>
+    <ul>
+    
+        <li>
+           售后类型： {echo $refunditemarr['project']}
+        </li>
+        <li>
+           售后要求： {echo $this->str($refund['buyercontent'],999999,0,0,1,0,0,1)}
+        </li>
+        <li>
+           凭证上传： 
+           
+            {if !empty($refund['buyerphoto'])}
+                <p id="logophotoshow" style="padding-top:20px;padding-bottom:20px;">
+                    {php}
+                    $photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$refund[buyerphoto]'");{/php}
+                    {if $photo}  
+                         <a href="{SURL}/index.php?app=18&fid={echo $refund['buyerphoto']}"><img src="{echo $photo['thumb']}"/></a>
+                    {/if}
+                </p>   
+                <p><a href="{SURL}/index.php?app=18&fid={echo $refund['buyerphoto']}">[点击下载大图]</a></p>  
+           {else}
+            雇主未上传            
+           {/if}
+         
+        </li>
+    </ul>
+    {if $consumearr['process']!=6}
+        {if $usertype==1}
+         <a href="{SURL}/member.php?app=42&action=1&cid={echo $this->cid}&rid={echo $this->rid}" class="large blue awesome">修改维权要求</a>
+        {/if}
+    {/if}
+</div>
+
+
+            
+<div class="refund_info">
+    <h4>威客处理维权区</h4>
+    <ul>
+        <li>
+           维权说明： {echo $this->str($refund['sellercontent'],999999,0,0,1,0,0,1)}
+        </li>
+        <li>
+            凭证上传： 
+           
+            {if !empty($refund['sellerphoto'])}
+                <p id="logophotoshow" style="padding-top:20px;padding-bottom:20px;">
+                    {php}
+                    $photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$refund[sellerphoto]'");{/php}
+                    {if $photo}  
+                         <a href="{SURL}/index.php?app=18&fid={echo $refund['sellerphoto']}"><img src="{echo $photo['thumb']}"/></a>
+                    {/if}
+                </p>   
+                <p><a href="{SURL}/index.php?app=18&fid={echo $refund['sellerphoto']}">[点击下载大图]</a></p>  
+           {else}
+            威客未上传            
+           {/if}
+         
+        </li>
+    </ul>
+    {if $consumearr['process']!=6}
+        {if $usertype==2}
+             <a href="{SURL}/member.php?app=42&action=2&cid={echo $this->cid}&rid={echo $this->rid}" class="large orange awesome">发表维权</a>
+        {/if}
+    {/if}
+</div>
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+<div class="security_item">
+<h2>管理员操作区</h2>
+
+{if $refund['process']==2 || $refund['serviceuid']>0 || $this->IsAdmin()}
+    
+    {if $refund['process']!=3}
+            {if $this->IsService($refund['serviceuid']) || $this->IsAdmin()}
+            <p>
+            扣除保障金： <input name="money_f" type="text" id="Money" size="3"  maxlength="12" class="form_input_text form_input_width_100"  value="0" title="请输入扣除的卖家威客 {echo $refunditemarr['project']} 保障金额"/> 元  <span style="color:#999">提示：输入金额扣除卖家 {echo $sellerarr['username']} {echo $refunditemarr['project']}保障金额给 雇主</span>
+            </p>
+            
+            <p>
+            扣信用积分： <input name="credit_d" type="text" id="Credit" size="3"  maxlength="12" class="form_input_text form_input_width_100"  value="0" title="请输入扣除的卖家威客的信用积分"/> 分  
+            </p>
+            </div>
+            <div class="phpapp_button"><input name="Submit" type="submit" onclick="return SubmitSecurity();" value="提交处理完成" class="form_button"/></div>
+            {else}
+            <p style="color:#900">您不是 {echo $taskservice['username']}客服 也不是管理员无权限操作！</p>
+            {/if}
+    
+    {else}
+            <p>已处理</p>
+    {/if}
+    
+{elseif $refund['process']==3}
+    <p>已处理</p>
+    {if $deductarr=$this->GetMysqlOne('*'," ".$this->GetTable('member_security_deduct')." WHERE rid='$this->rid' AND uid='$sellerarr[uid]'")}
+    	 <p>扣除卖家 {echo $sellerarr['username']} <span class="color_f60" style="font-size:16px">{echo $deductarr['money']}</span> 元</p>
+    {/if}
+    
+{else} 
+    <p>等待威客维权中</p> 
+{/if}   
+    
+</form>
+<script type="text/javascript">
+function SubmitSecurity(){
+	 if(confirm("此操作不能恢复！确认是否扣除?")){
+		   return true;
+	 }else{
+		 
+		   return false;
+	 }
+}
+</script>

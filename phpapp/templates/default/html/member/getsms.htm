@@ -1,0 +1,22 @@
+{php}
+	$smsarr=$this->GetMysqlArray('*'," ".$this->GetTable('member_sms')." WHERE msggoid='$this->uid' AND mailbox=1 AND new=1 ORDER BY sid DESC LIMIT 0,8");  
+{/php}
+
+{if $smsarr}
+
+    {for $smsarr $value}
+          <li>
+          <dl>
+          <dt>
+          {echo $value['subject']}
+          </dt>
+          <dd>
+          {echo $this->str($value['content'],0,0,1,0,0,1)}
+          <p style="text-align:right">{if !$value['msgtoid']}ÏµÍ³ {/if}{echo $this->Date('Y-m-d',$value['dateline'])}</p>
+          <p style="text-align:right">{if $value['msgtoid']>0}<a class="small blue awesome" href="javascript:;" onclick="AddSMS('{echo $value['msgtoid']}')">»Ø¸´</a> {/if}<a class="small blue awesome" onclick="DeleteMemberMessageAjax('{echo $value['sid']}')">É¾³ý</a></p>
+          </dd>
+          </dl>
+          </li>
+    {/for}
+
+{/if}

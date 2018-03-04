@@ -1,0 +1,239 @@
+{template header}
+
+{if !$this->GET['op']}
+
+<div id="ShowAdvancedSearch" class="showadvancedsearch" {if !empty($this->GET['opensearch'])}style="display:block"{/if}>
+<form method="get" action="{echo $this->MakeGetParameterURL()}">
+
+<input type="hidden" name="lang" value="{echo $this->lang}" />
+<input type="hidden" name="app" value="{echo $this->app}" />
+<input type="hidden" name="menu" value="{echo $this->GET['menu']}" />
+<input type="hidden" name="action" value="{echo $this->ac}" />
+<input type="hidden" name="page" value="{echo $this->GET['page']}" />
+<input type="hidden" name="opensearch" value="{echo $this->GET['opensearch']}" />
+
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="search_h2">动作名称</td>
+    <td><input name="name_phpapp" type="text"  size="50" maxlength="255" class="form_input_text form_input_width_200"  value="{if !empty($selectarray['name_phpapp'])}{echo $selectarray['name_phpapp']}{/if}"/></td>
+  </tr>
+  
+  <tr>
+    <td class="search_h2">动作类型 </td>
+    <td> 
+    <select name="type_phpapp" class="form_input_width_100">
+        <option value="0">不限</option>
+        <option value="3" {if !empty($selectarray['type_phpapp'])}{if $selectarray['type_phpapp']==3} selected="selected"{/if}{/if}>空间</option>
+        <option value="2" {if !empty($selectarray['type_phpapp'])}{if $selectarray['type_phpapp']==2} selected="selected"{/if}{/if}>会员中心</option>
+        <option value="1" {if !empty($selectarray['type_phpapp'])}{if $selectarray['type_phpapp']==1} selected="selected"{/if}{/if}>后台</option>
+    </select> 
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="search_h2">所属应用</td>
+    <td>
+    {php} $appsarr=$this->GetMysqlArray('id_phpapp,name_phpapp'," ".$this->GetTable('apps')." ORDER BY displayorder_phpapp ASC");{/php}
+    <select name="apps_phpapp">
+        <option value="0">不限</option>
+        {for $appsarr $value}
+        <option value="{echo $value['id_phpapp']}" {if !empty($selectarray['apps_phpapp'])}{if $selectarray['apps_phpapp']==$value['id_phpapp']} selected="selected"{/if}{/if}>{echo $value['name_phpapp']}</option>
+        {/for}
+    </select> 
+    </td>
+  </tr>
+    
+ </table>
+
+<li style="text-align:center;padding-top:20px;">
+   <input name="SelectData" type="submit" value="搜索" class="form_button"/>
+</li>
+
+</form>
+
+</div>
+
+<div class="advancedsearch">
+{if empty($this->GET['opensearch'])}
+<a class="small green awesome" href="{echo $this->MakeGetParameterURL(array('opensearch'=>1))}">打开筛选</a>
+{else}
+<a class="small green awesome" href="{echo $this->MakeGetParameterURL(array('opensearch'=>0))}">关闭筛选</a>
+{/if}
+</div>
+
+{/if}  
+  
+  
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $this->GET['op']==1 || $this->GET['op']==2}
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">动作编号</td>
+    <td>
+    <input name="aid_phpapp_d" value="{if !empty($manage['aid_phpapp'])}{echo $manage['aid_phpapp']}{/if}" type="text" class="form_input_text form_input_width_200" /> (所属应用下动作编号不能相同)
+    </td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">动作名称</td>
+    <td>
+    <input name="name_phpapp_s" value="{if !empty($manage['name_phpapp'])}{echo $manage['name_phpapp']}{/if}" type="text" class="form_input_text form_input_width_200" />
+    </td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">所属应用</td>
+    <td>
+     <select name="apps_phpapp_d">
+        {for $apparray $value}
+          <option value="{echo $value['id_phpapp']}" {if !empty($manage['apps_phpapp'])}{if $manage['apps_phpapp']==$value['id_phpapp']} selected="selected" {/if}{/if}>{echo $value['name_phpapp']} {echo $value['id_phpapp']}</option>
+        {/for}
+     </select> 
+   </td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">伪静态路径名</td>
+    <td>
+    <input name="route_phpapp_s" value="{echo $manage['route_phpapp']}" type="text" class="form_input_text form_input_width_200" />  (开启伪静态时URL使用,英文字母组合)
+    </td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">函数名</td>
+    <td>
+    <input name="class_phpapp_s" value="{if !empty($manage['class_phpapp'])}{echo $manage['class_phpapp']}{/if}" type="text" class="form_input_text form_input_width_200" /> (系统自动调用该函数,所属应用下不能重名)
+    </td>
+  </tr>
+  
+  
+  <tr>
+    <td class="width_160">类型</td>
+    <td><select name="type_phpapp_d">
+    <option value="0" {if !empty($manage['type_phpapp'])}{if $manage['type_phpapp']==0} selected="selected" {/if}{/if}>前台</option>
+    <option value="3" {if !empty($manage['type_phpapp'])}{if $manage['type_phpapp']==3} selected="selected" {/if}{/if}>空间</option>
+  <option value="2" {if !empty($manage['type_phpapp'])}{if $manage['type_phpapp']==2} selected="selected" {/if}{/if}>会员中心</option>
+  <option value="1" {if !empty($manage['type_phpapp'])}{if $manage['type_phpapp']==1} selected="selected" {/if}{/if}>后台</option>
+</select> </td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">显示方式</td>
+    <td>
+    <select name="show_phpapp_d">
+    <option value="0" {if !empty($manage['show_phpapp'])}{if $manage['show_phpapp']==0} selected="selected" {/if}{/if}>显示</option>
+    <option value="1" {if !empty($manage['show_phpapp'])}{if $manage['show_phpapp']==1} selected="selected" {/if}{/if}>隐藏</option>
+    </select> 
+    (设置隐藏后,当访问它时自动显示)
+      </td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">后台菜单</td>
+    <td><select name="menu_phpapp_d">
+    <option value="0" {if !empty($manage['menu_phpapp'])}{if $manage['menu_phpapp']==0} selected="selected" {/if}{/if}>显示</option>
+   <option value="1" {if !empty($manage['menu_phpapp'])}{if $manage['menu_phpapp']==1} selected="selected" {/if}{/if}>关闭</option>
+</select> 
+(通过网址是否能网址访问它)
+</td>
+  </tr>
+  
+ <tr>
+    <td class="width_160">排序</td>
+    <td>
+     <input name="displayorder_phpapp_s" value="{if !empty($manage['displayorder_phpapp'])}{echo $manage['displayorder_phpapp']}{/if}" type="text" class="form_input_text form_input_width_200" />
+   </td>
+  </tr>
+  	
+      
+  <tr>
+    <td class="width_160">状态</td>
+    <td><select name="status_phpapp_d">
+  <option value="0" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==0} selected="selected" {/if}{/if}>正常</option>
+  <option value="1" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==1} selected="selected" {/if}{/if}>关闭</option>
+</select> </td>
+  </tr>
+    
+      
+   <tr>
+    <td class="width_160">SEO Title</td>
+    <td>
+    <input name="title_phpapp_s" value="{if !empty($manage['title_phpapp'])}{echo $manage['title_phpapp']}{/if}" type="text" class="form_input_text form_input_width_200" /> 
+    </td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">SEO Keywords</td>
+    <td>
+    <input name="keywords_phpapp_s" value="{if !empty($manage['keywords_phpapp'])}{echo $manage['keywords_phpapp']}{/if}" type="text" class="form_input_text form_input_width_200" /> 
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">SEO Description</td>
+    <td>
+    <input name="description_phpapp_s" value="{if !empty($manage['description_phpapp'])}{echo $manage['description_phpapp']}{/if}" type="text" class="form_input_text form_input_width_200" /> 
+    </td>
+  </tr>
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+
+
+
+{else}
+
+
+
+    {if $list}
+    
+    <div id="WindowsForm{echo $this->GET['menu']}">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+      <tr>
+        <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+        
+        {for $orderarr $key=>$value}
+        <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+        {/for} 
+        <td class="datalist_h2">操作</td>
+      </tr>
+
+							
+
+    {for $list $key=>$value}
+      <tr>
+        <td><input name="checkbox[]" type="checkbox" value="{echo $value['id_phpapp']}"/></td>
+        <td>{echo $value['aid_phpapp']}</td>
+        <td>{echo $value['name_phpapp']}</td>
+        <td>{echo $value['appname']}</td>
+        <td>{echo $value['class_phpapp']}</td>
+        <td>{echo $value['route_phpapp']}</td>
+        <td>{if $value['type_phpapp']==1}后台{elseif $value['type_phpapp']==2}会员{elseif $value['type_phpapp']==3}空间{else}前台{/if}</td>
+        <td>{echo $value['title_phpapp']}</td>
+        <td>{echo $value['displayorder_phpapp']}</td>
+        <td><a href="{echo $this->MakeGetParameterURL(array('op'=>2,'id'=>$value['id_phpapp']))}">[编辑]</a></td>
+      </tr>
+     {/for} 
+    
+    </table>
+    </div>
+    
+    <div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+    
+    <div class="phpapp_button"><input name="Submit" type="submit" value="删除" class="form_button"/></div>
+    
+    
+    {/if}
+
+
+{/if}
+
+</form>

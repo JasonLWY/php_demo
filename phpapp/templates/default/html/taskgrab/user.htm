@@ -1,0 +1,55 @@
+<div class="task_bid_info">
+        <p class="task_bid_username"><a href="{echo SURL}/space.php?app=8&uid={echo $value['uid']}" target="_blank" title="{echo $task['username']}" class="DraftUserID{echo $value['uid']}">{echo $value['username']}</a>  发布于 {echo $this->Date('Y-m-d',$value['dateline'],1)}</p>
+        {php}$files=$this->FileList($value['did'],2);{/php}
+        {template phpapp:file}
+        <p> 
+        {echo $value['content']}
+        </p>
+        
+        
+        <div class="draft_add_message">
+        <a class="small blue awesome"><span class="task_draft_add_message" onclick="OpenDraftMessage('{echo $value['did']}','{echo $value['uid']}')">交流</span></a>
+        <div class="draft_add_message_form" id="AddDraftMessage{echo $value['did']}">
+              <textarea name="content_s" class="form_editor" style="width:460px;height:80px;" id="CommentContent_{echo $value['did']}"></textarea>
+              <p class="message_add_button"><a class="small yellow awesome" onclick="SubmitAddComment('{echo $value['did']}')"><span class="task_draft_add_message">发布</span></a></p>
+          </div>
+        </div>
+        <table border="0" cellpadding="0" cellspacing="0" class="draft_message_list">
+        <tr>
+         <td id="DraftComment_{echo $value['did']}" class="show_comment">
+           <script type="text/javascript">AjaxComment("{echo $value['did']}");</script> 
+         </td>
+        </tr>
+        </table>
+
+</div>
+<div class="task_bid_price">
+     <strong>￥{echo $value['price']}</strong>
+     <p style="color:#F60">{echo $value['time']}天内</p>
+     <div class="draft_hurdle">
+        {if $value['process']==1}
+        
+             <img src="{TURL}images/success.gif"/>
+             
+        {elseif $value['process']==2}
+        
+             <img src="{TURL}images/failure.gif"/>
+         
+        {/if}
+    </div>
+</div>
+<div class="task_bid_credit">
+
+        <div class="seller_score">
+
+             <div class="seller_score_works_peed" title="工作速度 {if $value['speed']}{echo $value['speed']}{else}0.0{/if}"><ul style="width:{echo ($value['speed']*16)}px;"></ul></div>
+             
+             <div class="seller_score_works_attitude" title="工作态度 {if $value['attitude']}{echo $value['attitude']}{else}0.0{/if}"><ul style="width:{echo ($value['attitude']*16)}px;"></ul></div>
+         
+             <div class="seller_score_works_quality" title="完成质量 {if $value['quality']}{echo $value['quality']}{else}0.0{/if}"><ul style="width:{echo ($value['quality']*16)}px;"></ul></div>
+        </div>
+
+         <p style="padding-top:8px;">{if $value['credit']}<span class="{echo $this->GetCreditLevel($value['credits'],1)}" title="卖家信用积分 {echo $value['credits']}">&nbsp;</span>{else}暂无信用值{/if}</p>
+         
+         <p style="display:inline-block;padding-top:6px;">{if $this->GetCertificateIcon($value['certificate'],array())}{echo $this->GetCertificateIcon($value['certificate'],array('Mobile'=>'手机','Mail'=>'邮箱','Personal'=>'个人实名','Company'=>'公司实名'))}{else}无任何认证{/if}</p>
+</div>

@@ -1,0 +1,137 @@
+{template header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $this->GET['op']==1 || $this->GET['op']==2}
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值 (打勾某项为某项许可操作,都不打勾为全部许可,设置应用的动作权限提交后再点编辑修改.)</td>
+  </tr>
+    
+    <tr>
+    <td class="width_160">应用权限控制</td>
+    <td> 
+        <div class="checkboxlist">
+        <ul>
+        {for $appsarr $value}
+             <li><input name="Allow_{echo $value['class_phpapp']}" type="checkbox" value="{echo $value['id_phpapp']}"{if $app_phpapp}{for $app_phpapp $app}{if $value['id_phpapp']==$app} checked{/if}{/for}{/if}/> {echo $value['name_phpapp']}</li>
+        {/for}
+        </ul>
+        </div>
+   </tr>
+   
+   
+   {if $app_phpapp}
+       
+       {for $appsallowarray $value}
+       {php} 				 
+			 $appsactionarray=$this->GetMysqlArray('*'," ".$this->GetTable('apps_action')." WHERE apps_phpapp='$value[id_phpapp]' AND type_phpapp=1");
+	   {/php}
+        <tr>
+            <td class="width_160">{echo $value['name_phpapp']}动作权限</td>
+            <td>   
+               {if $appsactionarray}
+                    <div class="checkboxlist">
+                    <ul>
+                    {for $appsactionarray $action}
+                         <li><input name="Action_Allow_{echo $value['class_phpapp']}_{echo $action['class_phpapp']}" type="checkbox" value="{echo $value['id_phpapp']}:{echo $action['aid_phpapp']}"{if $action_phpapp}{for $action_phpapp $actionid}{if $value['id_phpapp'].':'.$action['aid_phpapp']==$actionid} checked{/if}{/for}{/if}/> {echo $action['name_phpapp']}</li>
+                    {/for}
+                    </ul>
+                    </div>
+                    
+                    {else}
+                    无
+                    {/if}
+                   
+            </td>
+        </tr>
+       {/for}
+  
+   {/if}
+  
+    <tr>
+    <td class="width_160">用户组名称</td>
+    <td> <input name="name_phpapp_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['name_phpapp'])}{echo $manage['name_phpapp']}{/if}"/></td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">状态</td>
+     <td>
+     <select name="status_phpapp">
+  <option value="0" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==0} selected="selected" {/if}{/if}>启用</option>
+  <option value="1" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==1} selected="selected" {/if}{/if}>关闭</option>
+</select> 
+  </td>
+  </tr>
+  
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+
+
+{else}
+
+
+
+
+      {if $list}
+      
+          <div id="WindowsForm{echo $this->GET['menu']}">
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+            <tr>
+              <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1" onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+              
+              {for $orderarr $key=>$value}
+              <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+              {/for} 
+              
+              <td class="datalist_h2">操作</td>
+            </tr>
+          
+          {for $list $key=>$value}
+            <tr>
+              <td><input name="checkbox[]" type="checkbox" value="{echo $value['id_phpapp']}" /></td>
+              <td>{echo $value['id_phpapp']}</td>
+              <td>{echo $value['name_phpapp']}</td>
+              <td>
+              {if !$value['app_phpapp']}
+                全部权限
+              {else}
+              <div class="checkboxlist">
+              <ul>
+              {php}$appsarr=$this->GetMysqlArray('name_phpapp'," ".$this->GetTable('apps')." WHERE id_phpapp IN(".$value['app_phpapp'].")");{/php}
+                  {for $appsarr $app}
+                       <li>{echo $app['name_phpapp']}</li>
+                  {/for}
+              {/if}
+              </ul>
+              </div>
+              </td>
+              <td>{if $value['status_phpapp']}关闭{else}启用{/if}</td>
+              <td><a href="{echo $this->MakeGetParameterURL(array('op'=>2,'id'=>$value['id_phpapp']))}">[编辑]</a></td>
+            </tr>
+           {/for} 
+          
+          </table>
+          </div>
+          
+          <div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+          
+          <div class="phpapp_button"><input  name="Submit" type="submit"  value="删除" class="form_button"/></div>
+          
+      
+      {else}
+      
+      
+      没有创建用户组数据!
+      
+      {/if}
+
+
+
+{/if}
+
+</form>

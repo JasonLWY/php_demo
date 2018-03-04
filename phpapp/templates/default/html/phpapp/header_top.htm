@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={echo S_CHARSET}" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=8" />
+
+<title>{if PHPAPP::$SEO['title']}{echo PHPAPP::$SEO['title']} - {/if}{if $this->GetActionTitle()}{echo $this->GetActionTitle()} - {/if}{echo $this->GetAppTitle()} - {echo PHPAPP::$config['sitename']}{if PHPAPP::$config['sitebanner']} - {echo PHPAPP::$config['sitebanner']}{/if}</title>
+
+<meta name="keywords" content="{if PHPAPP::$SEO['keywords']}{echo PHPAPP::$SEO['keywords']}{else}{if $this->GetActionKeywords()}{echo $this->GetActionKeywords()}{else}{echo $this->GetAppKeywords()}{/if}{/if}" />
+
+<meta name="description" content="{if PHPAPP::$SEO['description']}{echo PHPAPP::$SEO['description']}{else}{if $this->GetActionDescription()}{echo $this->GetActionDescription()}{else}{echo $this->GetAppDescription()}{/if}{/if}" />
+
+{if !empty($META['robots'])}
+<META NAME="ROBOTS" CONTENT="NOINDEX,NOFOLLOW">
+{/if}
+
+{if PHPAPP::$config['sitecolor']}<style type="text/css">html {filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1); }</style>{/if}
+
+{php}$siteframewidth=intval(PHPAPP::$config['siteframewidth']);{/php}
+
+<!-- CSS -->
+{template phpapp:css}
+
+
+<style type="text/css">
+.wrap,.header_widescreen{
+	width:{echo $siteframewidth}px;
+}
+.header_width,.navigation_box,.footer{
+	width:{echo $siteframewidth-80}px;
+}
+.navigation_wrap{
+	width:{echo $siteframewidth-90}px;
+}
+.sw_categorys_nav .allcategorys .sublist {
+	width:{echo $siteframewidth-102}px;
+}
+.allcategorys .sublist li {
+	width:{echo $siteframewidth/5}px;
+}
+.user_list{
+	width:{echo $siteframewidth-70}px;
+}
+.user_box,.user_box_show{
+	width:{echo $siteframewidth/4-30}px;
+}
+</style>
+
+
+</head>
+
+<link rel="shortcut icon" href="{echo SURL}/favicon.ico" />
+
+<body>
+
+<!-- JS -->
+{template phpapp:js}
+
+<div id="UserPhotoShow"></div>
+
+<!-- Loading -->
+<div id="TopLoading" style="display:none" title="loading..."></div>
+<div id="loading" style="display:none" title="读取数据中..."></div>
+
+{if PHPAPP::$config['sitenotice']==0}
+    <div id="SiteNotice" class="sitenotice">
+    	{echo $this->str(PHPAPP::$config['noticecontent'],300,0,1,0,1)}
+    </div>
+{/if}
+
+
+
+<div id="SiteBigWrap">  
+   <div id="SiteMiddleWrap">
+        <div id="SiteSmallWrap">
+
+            <div id="Header">
+                <div id="HeaderTop" class="header_default header_widescreen">  
+                      <div class="header_width">  
+                          <div class="header_before">
+                              <div id="header_logo">
+                                  <a href="{echo SURL}" title="{echo PHPAPP::$config['sitename']}"></a>
+                              </div>
+                              
+                              <div id="HeaderCity" class="header_city">
+                                 <!--
+                                 <strong id="NowCity">南宁市</strong> <a href="{echo SURL}" id="ChangeCityTitle" title="切换一个新的城市任务">[切换城市]</a>
+                                 -->
+                              </div>
+                          </div>
+ 
+                          <div id="Header_Member">
+
+                               {template member:status}
+
+                          </div>
+
+                      </div>
+
+                </div> <!--HeaderTop End-->
+
+
+<div class="navigation_box">
+         <div id="Navigation">  
+              <div class="navigation_wrap">
+              
+                 <div id="SearchTask" class="search_task">
+                      {block search}
+                 </div>
+                 
+                  <div id="SiteCategory" class="sw_categorys_nav">
+                    <div class="allcategorys">
+                    <h3 class="title-item-hd">
+                    <a href="javascript:void(0);">
+                    所有任务分类
+                    <s class="icon"></s>
+                    </a>
+                    </h3>
+                    <ul class="sublist">
+                           {template phpapp:category}
+                    </ul>
+                    </div>
+                 </div>
+            
+             
+                  <script type="text/javascript">
+                      $('#SiteCategory').Z_TMAIL_SIDER_V2();
+                  </script>
+            
+                <div class="navigation">
+                      <ul>   
+                            {php}$nav=$this->GetMysqlArray('navname,navurl,blank,site,appid'," ".$this->GetTable('nav')." ORDER BY displayorder ASC ");{/php}
+
+                            {if $nav} 
+                            
+                                  {for $nav $key=>$value}
+                                  
+                                        {if $value['site']==0}
+                                                <li id="Nav_ID_{echo $value['appid']}"><a href="{echo SURL}/{echo $value['navurl']}"{if !$value['blank']} target="_blank"{/if}>{echo $value['navname']}</a></li> 
+                                   
+                                        {else}
+                                            	<li><a href="{echo $value['navurl']}"{if !$value['blank']} target="_blank"{/if}>{echo $value['navname']}</a></li>
+                                        {/if}
+                                   
+                                  {/for}
+                            
+                            {/if}
+                            
+                            <!--
+                            {if $this->uid}
+                            
+                                 <li><a href="{echo SURL}/member.php?app=9">管理中心</a></li>
+                            
+                            {/if}
+                            -->
+                            
+                      </ul>
+                     
+                </div> <!--navigation End-->
+                
+    
+            </div>   <!--navigation_wrap End-->
+    
+     </div> <!--Navigation End-->
+
+</div>
+
+<script type="text/javascript">
+$(function(){	
+	   var nowappid='{echo $this->app}';
+	   if(nowappid==10 || nowappid==27){
+		    nowappid=49;
+	   }
+	   $("#Nav_ID_"+nowappid).addClass("focus");
+	   
+});
+</script>
+
+
+</div>
+
+
+<div class="wrap">
+<div class="content">
+
+{ad Default1}

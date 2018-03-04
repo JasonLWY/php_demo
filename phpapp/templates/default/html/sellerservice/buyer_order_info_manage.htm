@@ -1,0 +1,137 @@
+{template admin:header}
+
+
+<link href="{TURL}taskone/css/taskone.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+
+.datalist tr td{
+	background-image: none;
+}
+
+</style>
+
+
+
+
+{if $draftorder}
+
+<div class="order_process">
+
+<ul class="order_process_schedule" style=" background-position: left {if $draftorder['process']==1}-28{elseif $draftorder['process']==2}-56{elseif $draftorder['process']==3}-84{elseif $draftorder['process']==5}{if $draftorder['buyer']==1}-140{else}-112{/if}{/if}px;">
+
+    <li>1.选标</li>
+
+    <li>2.买家付款</li>
+    
+    <li>3.卖家发货</li>
+    
+    <li>4.确认收货</li>
+    
+    <li>5.评价</li>
+
+</ul>
+</div>
+
+
+
+
+<div class="task_warning">
+           <h3>订单状态：</h3>
+           <p>{echo $getprocess->GetBuyerProcessName('task_order_credit','task_seller_order_credit',$draftorder['serial'],1,0,0,1)} </p>
+</div>
+
+
+<div class="order_info">
+<h2>订单信息</h2>
+
+<h3>任务要求</h3>
+<div style="padding:20px;word-break:break-all;overflow:auto;width: 740px;">
+
+{echo $this->str($task['content'],999999,0,1,0,1,1)}
+
+{php}$files=$this->FileList($tid,1);{/php}
+
+{template taskone:file}
+
+</div>
+
+
+<h3>稿件信息</h3>
+
+
+<div style="padding:20px;word-break:break-all;overflow:auto;width: 740px;">
+{echo $this->str($draft['content'],999999,0,1,0,1,1)}
+{php}$files=$this->FileList($did,2);{/php}
+
+{template taskone:file}
+</div>
+
+
+
+<h3>卖家发货留言</h3>
+
+<div style="padding:20px;word-break:break-all;overflow:auto;width: 740px;">
+
+{if $draftorder['content']}{echo $this->str($draftorder['content'],999999,0,1,0,1,1)}{else}无{/if}
+
+{php}$files=$this->FileList($oid,3);{/php}
+
+{template taskone:file}
+</div>
+
+
+
+<h3>卖家信息</h3>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="line-height:28px;padding-left:20px;">
+  <tr>
+    <td width="30%">昵称：{echo $draft['username']}</td>
+    <td width="30%">电话：{echo $draft['phone']}</td>
+    <td width="30%">手机：{echo $draft['mobile']}</td>
+  </tr>
+  <tr>
+    <td>邮件：{echo $draft['email']}</td>
+    <td>QQ：{echo $draft['qq']}</td>
+     <td>ICQ：{echo $draft['icq']}</td>
+  </tr>
+</table>
+
+
+
+<h3>卖家评价：</h3>
+
+<div style="padding:20px;">
+
+{if $credit}
+
+     
+      
+      <p><strong>
+      {if $credit['level']==0}
+      好评
+      {elseif $credit['level']==1}
+      中评
+      {elseif $credit['level']==2}
+      差评
+      {/if}
+      </strong></p>
+      <p>评语： {echo $credit['content']}</p>
+      <p>评价时间：{echo $this->Date('Y-m-d',$credit['dateline'],1)} </p>
+     
+{else}
+<p>未评价</p>
+{/if}
+
+</div>
+
+
+</div>
+
+
+
+
+<p style="text-align:right;padding-top:30px;padding-right:20px;padding-bottom:20px;"><strong>实付款： </strong><span class="color_f60" style="font-size:18px">￥{echo $draftorder['money']}</span></p>
+{else}
+ <p style="padding:10px">您暂时没有订单数据</p>
+{/if}

@@ -1,0 +1,404 @@
+{template header}
+
+{if !$this->GET['op']}
+
+<div id="ShowAdvancedSearch" class="showadvancedsearch" {if !empty($this->GET['opensearch'])}style="display:block"{/if}>
+<form method="get" action="{echo $this->MakeGetParameterURL()}">
+
+<input type="hidden" name="app" value="{echo $this->app}" />
+<input type="hidden" name="menu" value="{echo $this->GET['menu']}" />
+<input type="hidden" name="action" value="{echo $this->ac}" />
+<input type="hidden" name="page" value="{echo $this->GET['page']}" />
+<input type="hidden" name="opensearch" value="{echo $this->GET['opensearch']}" />
+
+<table border="0" cellspacing="0" cellpadding="0">
+
+  <tr>
+    
+    <td class="search_h2">应用ID</td>
+    <td><input name="id_phpapp" type="text" size="50" maxlength="255" class="form_input_text form_input_width_100"  value="{if !empty($selectarray['id_phpapp'])}{echo $selectarray['id_phpapp']}{/if}"/> </td>
+    <td class="search_h2">应用名称</td>
+    <td><input name="name_phpapp" type="text" size="50" maxlength="255" class="form_input_text form_input_width_200"  value="{if !empty($selectarray['name_phpapp'])}{echo $selectarray['name_phpapp']}{/if}"/> </td>
+  </tr>
+  
+  <tr>
+    <td class="search_h2">类名</td>
+    <td><input name="class_phpapp" type="text" size="50" maxlength="255" class="form_input_text form_input_width_100"  value="{if !empty($selectarray['class_phpapp'])}{echo $selectarray['class_phpapp']}{/if}"/> </td>
+    <td class="search_h2">目录名</td>
+    <td><input name="dir_phpapp" type="text" size="50" maxlength="255" class="form_input_text form_input_width_200"  value="{if !empty($selectarray['dir_phpapp'])}{echo $selectarray['dir_phpapp']}{/if}"/></td>
+  </tr>
+
+  <tr>
+    <td class="search_h2">开发者</td>
+    <td><input name="developer_phpapp" type="text" size="50" maxlength="255" class="form_input_text form_input_width_200"  value="{if !empty($selectarray['developer_phpapp'])}{echo $selectarray['developer_phpapp']}{/if}"/></td>
+    <td class="search_h2"></td>
+    <td></td>
+  </tr>
+   
+</table>
+
+<li style="text-align:center;padding-top:20px;">
+   <input name="SelectData" type="submit" value="搜索" class="form_button"/>
+</li>
+
+</form>
+
+</div>
+
+<div class="advancedsearch">
+{if empty($this->GET['opensearch'])}
+<a class="small green awesome" href="{echo $this->MakeGetParameterURL(array('opensearch'=>1))}">打开筛选</a>
+{else}
+<a class="small green awesome" href="{echo $this->MakeGetParameterURL(array('opensearch'=>0))}">关闭筛选</a>
+{/if}
+</div>
+
+{/if}
+
+
+{if $this->GET['op']==8}
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  <tr>
+    <td class="datalist_h2 width_160">应用名称</td>
+    <td class="datalist_h2">安装目录</td>
+    <td class="datalist_h2">安装类型</td>
+    <td class="datalist_h2">版本号</td>
+    <td class="datalist_h2">开发者</td>
+    <td class="datalist_h2">操作</td>
+  </tr>
+  
+{if $appinstallarray}
+   {for $appinstallarray $value}
+    <form action="{echo $this->MakeGetParameterURL()}" method="post">
+        <tr>
+        <td>{echo $value['installname']}</td>
+        <td>{echo $value['installdir']}<input name="appname" type="hidden" value="{echo $value['installdir']}" /></td>
+        <td>{if $value['installtype']==1}全新安装{elseif $value['installtype']==2}更新应用{/if}</td>
+        <td>v{echo $value['version']}</td>
+        <td>{echo $value['developer']}</td>
+        <td><input name="Submit" type="submit" value="安装" class="form_button"/></td>
+        </tr>
+    </form>  
+    {/for}
+{else} 
+   <tr>
+   <td colspan="6">没有安装包</td>
+   </tr>
+{/if}
+    
+  
+</table>
+<p style="padding-top:20px;">提示：应用包请解压到空间上 /phpapp/data/make/ 目录下 </p>  
+
+{/if}
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $this->GET['op']==7}
+
+ {if $list}
+
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+      <tr>
+        {for $orderarr $key=>$value}
+        <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+        {/for} 
+      </tr>
+    
+    {for $list $key=>$value}
+      <tr>
+        <td>{echo $value['id_phpapp']}</td>
+        <td>{echo $value['name_phpapp']}</td>
+        <td>{echo floor(($value['filesize_phpapp']/1024)*100)/100}</td>
+        <td>{echo $this->Date('Y-m-d H:i:s',$value['date_phpapp'])}</td>
+        <td>{if $value['required_phpapp']==1}重要{else}一般{/if}</td>
+      </tr>
+     {/for} 
+    
+    </table>
+
+    <div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+    
+    {else}
+    <p>没有更新数据!</p>
+    {/if}
+
+{elseif ($this->GET['op']==6 || $this->GET['op']==4)}
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">开发者</td>
+    <td>
+    <input name="developer_phpapp_s" value="{if !empty($manage['developer_phpapp'])}{echo $manage['developer_phpapp']}" disabled="disabled" {else}"{/if} type="text" class="form_input_text form_input_width_200" /> (添加后不能修改)
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">应用名称</td>
+    <td>
+    <input name="name_phpapp_s" value="{if !empty($manage['name_phpapp'])}{echo $manage['name_phpapp']}{/if}" type="text" class="form_input_text form_input_width_200" /> 
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">类名</td>
+    <td>
+    <input name="class_phpapp_s" value="{if !empty($manage['class_phpapp'])}{echo $manage['class_phpapp']}" disabled="disabled" {else}"{/if} type="text" class="form_input_text form_input_width_200" />  程序所使用的类名(添加后不能修改)
+    </td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">伪静态路径名</td>
+    <td>
+    <input name="route_phpapp_s" value="{echo $manage['route_phpapp']}" type="text" class="form_input_text form_input_width_200" />  (开启伪静态时URL使用,英文字母组合)
+    </td>
+  </tr>
+   	
+   <tr>
+    <td class="width_160">目录名</td>
+    <td>
+    <input name="dir_phpapp_s" value="{if !empty($manage['dir_phpapp'])}{echo $manage['dir_phpapp']}" disabled="disabled" {else}"{/if} type="text" class="form_input_text form_input_width_200" /> 程序所使用的目录名(添加后不能修改)
+    </td>
+  </tr>
+  
+  
+   <tr>
+    <td class="width_160">应用内部ID</td>
+    <td>
+    <input name="internal_phpapp_d" value="{if !empty($manage['internal_phpapp'])}{echo $manage['internal_phpapp']}" disabled="disabled" {else}"{/if} type="text" class="form_input_text form_input_width_200" /> (PHPAPP官方分配,自行开发不共享设置为 0,如果共享请向PHPAPP申请ID)
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">应用版本号</td>
+    <td>
+    <input name="version_phpapp_d" value="{if !empty($manage['version_phpapp'])}{echo $manage['version_phpapp']}" disabled="disabled" {else}"{/if} type="text" class="form_input_text form_input_width_200" /> 格式如 1.0
+    </td>
+  </tr>
+  
+  
+   <tr>
+    <td class="width_160">小图标样式名称</td>
+    <td>
+    <input name="ico_small_phpapp_s" value="{if !empty($manage['ico_small_phpapp'])}{echo $manage['ico_small_phpapp']}{/if}" type="text" class="form_input_text form_input_width_200" /> 
+     (CSS样式名)
+    </td>
+  </tr>
+     	
+   <tr>
+    <td class="width_160">SEO title</td>
+    <td>
+    <input name="title_phpapp_s" value="{if !empty($manage['title_phpapp'])}{echo $manage['title_phpapp']}{/if}" type="text" class="form_input_text form_input_width_200" /> 
+    当没有SEO设置时，它默认显示。
+    </td>
+  </tr>
+  
+     <tr>
+    <td class="width_160">SEO keywords</td>
+    <td>
+    <input name="keywords_phpapp_s" value="{if !empty($manage['keywords_phpapp'])}{echo $manage['keywords_phpapp']}{/if}" type="text" class="form_input_text form_input_width_200" /> 
+    当没有SEO设置时，它默认显示。
+    </td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">SEO description</td>
+    <td>
+    <input name="description_phpapp_s" value="{if !empty($manage['description_phpapp'])}{echo $manage['description_phpapp']}{/if}" type="text" class="form_input_text form_input_width_200" /> 
+    当没有SEO设置时，它默认显示。
+    </td>
+  </tr>
+     	
+   <tr>
+    <td class="width_160">排序</td>
+    <td>
+    <input name="displayorder_phpapp_d" value="{if !empty($manage['displayorder_phpapp'])}{echo $manage['displayorder_phpapp']}{/if}" type="text" class="form_input_text form_input_width_200" /> 
+    </td>
+  </tr>
+  
+  
+    <tr>
+    <td class="width_160">后台菜单时是否隐藏</td>
+    <td><select name="menu_phpapp_d">
+  <option value="0" {if !empty($manage['menu_phpapp'])}{if $manage['menu_phpapp']==0} selected="selected" {/if}{/if}>显示</option>
+  <option value="1" {if !empty($manage['menu_phpapp'])}{if $manage['menu_phpapp']==1} selected="selected" {/if}{/if}>隐藏</option>
+</select> (后台菜单时是否隐藏，作用用于"编辑" 时该菜单显示出现)
+</td>
+  </tr>
+
+  
+  <tr>
+    <td class="width_160">内部使用</td>
+    <td><select name="show_phpapp_d">
+  <option value="0" {if !empty($manage['show_phpapp'])}{if $manage['show_phpapp']==0} selected="selected" {/if}{/if}>启用</option>
+  <option value="1" {if !empty($manage['show_phpapp'])}{if $manage['show_phpapp']==1} selected="selected" {/if}{/if}>关闭</option>
+</select> (是否能网址直接访问它)
+</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">状态</td>
+    <td><select name="status_phpapp_d">
+  <option value="0" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==0} selected="selected" {/if}{/if}>正常</option>
+  <option value="1" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==1} selected="selected" {/if}{/if}>关闭</option>
+  <option value="-1" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==-1} selected="selected" {/if}{/if}>锁定</option>
+</select> </td>
+  </tr>
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+
+
+
+{elseif $this->GET['op']==5}
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">选择应用</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">选择应用</td>
+    <td>
+   <select name="app_d"> 
+      {if $apparr}
+            {for $apparr $value}
+                    <option value="{echo $value['id_phpapp']}">{echo $value['name_phpapp']}</option>
+            {/for}
+      {/if}
+   </select>
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">导出文件名</td>
+    <td>
+    <input name="filename_s" type="text" class="form_input_text form_input_width_200" />.zip  &nbsp;(只能填英文字母)
+    </td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">数据库表名</td>
+    <td>
+    <textarea  rows="6"  name="table_s" cols="50" class="form_textarea form_input_width_300"></textarea> 填写完整SQL表名,多个表回车换行
+    </td>
+  </tr>
+
+
+   <tr>
+    <td class="width_160">表数据</td>
+    <td>
+    <textarea  rows="6"  name="tabledata" cols="50" class="form_textarea form_input_width_300"></textarea> 
+     SQL数据代码
+    <p>程序自动获取 {echo $this->GetTable('admin_menu')},{echo $this->GetTable('apps')},{echo $this->GetTable('apps_action')},{echo $this->GetTable('config')}</p>
+    <p>4个表数据其它表数据自行加入</p>
+    <p>自行加入SQL代码中的ID想与当前安装的应用ID关联，将数据ID替换成 [APPID]</p>
+    </td>
+  </tr>
+  
+</table>
+
+<p style="color:#F00;padding-top:10px;"><strong>提示：导出和安装应用服务器环境必须支持zip,只能导出自己开发的应用。</strong></p>
+<p>应用导出默认路径 {echo SYS}/data/make/</p>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+
+{elseif $this->GET['op']==1 || $this->GET['op']==2}
+
+
+    {if $phpapplist}
+    
+    <div id="WindowsForm{echo $this->GET['menu']}">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+    
+       <tr>
+        <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+        <td class="datalist_h2">应用名</td>
+        <td class="datalist_h2">开发者</td>
+        <td class="datalist_h2">应用大小(kb)</td>
+        <td class="datalist_h2">发布时间</td>
+        <td class="datalist_h2">版本号</td>
+      </tr>
+    
+    {for $phpapplist $key=>$value}
+      <tr title="{echo $value['content']}">
+        <td><input name="checkbox" type="checkbox" value="{echo $value['app']}"/></td>
+        <td><span title="{echo $value['content']}">{echo $value['appname']}</span></td>
+        <td>{echo $value['username']}</td>
+        <td>{echo floor(($value['filesize']/1024)*100)/100}</td>
+        <td>{echo $this->Date('Y-m-d H:i:s',$value['dateline'])}</td>
+        <td>{echo $value['version']}</td>
+      </tr>
+     {/for} 
+    
+    </table>
+    </div>
+
+    <div class="phpapp_button"><input type="button" value="安装" class="form_button"/></div>
+    
+    {else}
+     <p>暂无数据</p>
+    {/if}
+    
+{else}
+
+
+
+    {if $list}
+    
+    <div id="WindowsForm{echo $this->GET['menu']}">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+      <tr>
+        <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+        {for $orderarr $key=>$value}
+        <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+        {/for} 
+        <td class="datalist_h2" style="width:70px;">操作</td>
+      </tr>
+    
+    {for $list $key=>$value}
+      <tr>
+        <td><input name="checkbox[]" type="checkbox" value="{echo $value['id_phpapp']}" {if $value['id_phpapp']<50}disabled="disabled"{/if}/></td>
+        <td>{echo $value['id_phpapp']}</td>
+        <td>{echo $value['name_phpapp']}</td>
+        <td>{echo $value['developer_phpapp']}</td>
+        <td>{echo $value['dir_phpapp']}</td>
+        <td>{echo $value['route_phpapp']}</td>
+        <td>{echo floor(($value['filesize_phpapp']/1024)*100)/100}</td>
+        <td>{echo $value['version_phpapp']}</td>
+        <td>{echo $this->Date('Y-m-d H:i:s',$value['update_phpapp'])}</td>
+        <td>{if $value['status_phpapp']==1}关闭{else}显示{/if}</td>
+        <td>{echo $value['displayorder_phpapp']}</td>
+        <td>
+        <p><a href="{echo $this->MakeGetParameterURL(array('op'=>6,'id'=>$value['id_phpapp']))}">[编辑]</a></p>
+        <p><a href="{echo $this->MakeGetParameterURL(array('op'=>7,'id'=>$value['id_phpapp']))}">[更新记录]</a></p>
+        </td>
+      </tr>
+     {/for} 
+    
+    </table>
+    </div>
+    
+    <div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+    
+    <div class="phpapp_button"><input onclick="if(confirm('将删除该应用的所有文件与数据！是否卸载?')){return true;}else{return false;}" name="Submit" type="submit" value="卸载" class="form_button"/></div>
+    
+    
+    {/if}
+
+
+{/if}
+
+</form>

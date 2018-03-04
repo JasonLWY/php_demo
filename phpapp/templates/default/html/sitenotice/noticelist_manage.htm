@@ -1,0 +1,190 @@
+{template admin:header}
+
+<div id="ShowAdvancedSearch" class="showadvancedsearch" {if !empty($this->GET['opensearch'])}style="display:block"{/if}>
+<form method="get" action="{echo $this->MakeGetParameterURL()}">
+<input type="hidden" name="app" value="{echo $this->app}" />
+<input type="hidden" name="menu" value="{echo $this->GET['menu']}" />
+<input type="hidden" name="action" value="{echo $this->ac}" />
+<input type="hidden" name="page" value="{echo $this->GET['page']}" />
+<input type="hidden" name="opensearch" value="{echo $this->GET['opensearch']}" />
+
+<table border="0" cellspacing="0" cellpadding="0">
+
+  <tr>
+    <td class="search_h2">标题</td>
+    <td><input name="subject" type="text" size="50" maxlength="255" class="form_input_text form_input_width_200"  value="{if !empty($selectarray['subject'])}{echo $selectarray['subject']}{/if}"/> </td>
+    <td class="search_h2">编号</td>
+    <td><input name="nid" type="text" size="50" maxlength="255" class="form_input_text form_input_width_100"  value="{if !empty($selectarray['nid'])}{echo $selectarray['nid']}{/if}"/> </td>
+  </tr>
+  
+  <tr>
+    <td class="search_h2">发布时间 </td>
+    <td><input name="dateline1" type="text" class="form_input_text dateline" size="10" value="{if !empty($selectarray['dateline1'])}{echo $selectarray['dateline1']}{/if}" style="width:70px;"/> ~ <input name="dateline2" type="text" class="form_input_text dateline" size="10" value="{if !empty($selectarray['dateline2'])}{echo $selectarray['dateline2']}{/if}" style="width:70px;"/> 格式 (YYYY-MM-DD)</td>
+  </tr>
+  
+  
+   
+</table>
+
+<li style="text-align:center;padding-top:20px;">
+   <input name="SelectData" type="submit" value="搜索" class="form_button"/>
+</li>
+
+</form>
+
+</div>
+
+<div class="advancedsearch">
+{if empty($this->GET['opensearch'])}
+<a class="small green awesome" href="{echo $this->MakeGetParameterURL(array('opensearch'=>1))}">打开筛选</a>
+{else}
+<a class="small green awesome" href="{echo $this->MakeGetParameterURL(array('opensearch'=>0))}">关闭筛选</a>
+{/if}
+</div>
+     
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+     
+{if $list}
+
+<div id="WindowsForm{echo $this->GET['menu']}">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+    
+    {for $orderarr $key=>$value}
+    <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+    {/for} 
+    
+    <td class="datalist_h2" style="width:68px;">操作</td>
+  </tr>
+
+
+{for $list $value}
+  <tr>
+    <td><input name="checkbox[]" type="checkbox" value="{echo $value['nid']}" /></td>
+    <td>{echo $value['nid']}</td>
+    <td>{echo $value['uid']}</td>
+    <td><a href="{echo $this->MakeGetParameterURL(array('action'=>2,'id'=>$value['nid']))}">{if $value['uid']==0}<strong>{echo $value['subject']}</strong>{else}{echo $value['subject']}{/if}</a></td>
+    <td>{echo $this->Date('Y/m/d H:i:s',$value['dateline'])}</td>
+    <td><a href="{echo $this->MakeGetParameterURL(array('action'=>2,'id'=>$value['nid']))}">[查看]</a></td>
+  </tr>
+{/for} 
+
+</table>
+
+</div>
+
+<div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="删除" class="form_button"/> <input name="SubmitDeleteOld" type="submit" value="清空近月后的数据" class="form_button"/>
+</div>
+
+
+{else}
+
+ <p style="padding:10px">暂时没有通知数据</p>
+ 
+{/if}    
+      
+</form>    
+      
+
+
+
+
+<script type="text/javascript">
+ 
+ $(function(){	
+			
+	
+	 $("#SubmitDeleteAll").click( function () {
+											
+			if(confirm("是否删除所有通知!")){
+					
+						$("#loading").dialog({
+								title:"通知操作",	
+								width: 300,
+								height:'auto'
+						});
+						   
+						$("#loading").dialog('open');
+						
+						$("#loading").html('<div class="loading">提交数据中...</div>');
+				    
+            
+                         $.ajax({
+                              type: "POST",
+                              url: "member.php?app=45&action=1",
+                              data: 'Submit=1&nid=0',
+                              success: function(data){
+                                    $("#loading").html(data);
+                              }
+                         });	
+					 
+				
+				
+			    }			 				 
+	 });
+		   
+	 $("#SubmitDelete").click( function () {
+		     
+			 
+			      var OderID='';
+                   $("#mailboxlist").find("input:checked[name!='checkboxall']").each(function(){
+                           var value=$(this).val();  
+                           
+                           if($(this).attr("disabled")!='disabled'){
+                           
+								 if(OderID){
+									  OderID+=','+value;
+								 }else{
+									  OderID=value;
+								 }
+                           }
+              
+                   }); 	
+                   
+                   if(!OderID){
+                       
+                        alert("请选择通知操作!");
+                        return false;
+                   }
+				   
+				   
+				   
+				if(confirm("是否删除通知!")){
+					
+						$("#loading").dialog({
+								title:"通知操作",	
+								width: 300,
+								height:'auto'
+						});
+						   
+						$("#loading").dialog('open');
+						
+						$("#loading").html('<div class="loading">提交数据中...</div>');
+				    
+            
+                         $.ajax({
+                              type: "POST",
+                              url: "member.php?app=45&action=1",
+                              data: 'Submit=1&nid='+OderID,
+                              success: function(data){
+                                    $("#loading").html(data);
+                              }
+                         });	
+					 
+				
+				
+			    }
+             
+				   
+				   
+		 
+	 });
+	
+ });
+ 
+ 
+</script>
+

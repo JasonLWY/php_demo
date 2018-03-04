@@ -1,0 +1,29 @@
+<div id="NoticeTab" style="border: none;padding:0px;">
+                  <ul>
+                      <li><a href="#DefaultNotice">公告</span></a></li>
+                      <li><a href="#DefaultPay">提现</a></li>
+                      <li><a href="#DefaultHelp">保障</a></li>
+                      <li><a href="#DefaultRule">规则</a></li>
+                  </ul>
+                  
+                  <div id="DefaultNotice" class="defaultnotice">
+                         {sql noticelist}
+                   </div>
+                  
+                  <div id="DefaultPay" class="defaultnotice">
+    
+                          {sql paylist}              
+                  </div>
+                  
+                  
+                  <div id="DefaultHelp" class="defaultnotice">
+    
+                          {sql guaranteelist}              
+                  </div>
+                  
+                  <div id="DefaultRule" class="defaultnotice">
+    
+                          {sql rulelist}              
+                  </div>
+                        
+          </div>

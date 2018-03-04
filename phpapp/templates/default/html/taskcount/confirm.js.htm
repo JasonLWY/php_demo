@@ -1,0 +1,39 @@
+<script type="text/javascript">
+$(function(){	
+		   
+
+	 $("#AddTask").click( function () {
+		     NowLogin();
+	 });
+	 
+	 $("#SubmitEdit").click( function () {
+	         window.location.href="{echo SURL}/index.php?app=80&action=2&tid={echo $this->tid}"
+	 });
+	 
+	 $("#SubmitConfirmTask").click( function () {
+			    $("#loading").dialog('close');
+				$("#loading").dialog({
+					 title:"发布任务确认",
+					 width: 680,
+					 position: ['center',160],
+					 height:'auto'
+				});
+	
+				$("#loading").dialog('open');
+		        $("#loading").html('<div class="loading">读取数据中...</div>');
+
+			    $.ajax({
+						  type: "POST",
+						  url: SURL+"/index.php?app=80&action=4&tid={echo $this->tid}",
+						  success: function(data){
+								$("#loading").html(data);
+						  }
+                });	
+	 });
+});
+</script>
+
+
+
+
+

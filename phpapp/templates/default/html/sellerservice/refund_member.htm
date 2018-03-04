@@ -1,0 +1,36 @@
+<strong>申请内容：<span style="font-weight:normal">(200字内)</span></strong>
+<textarea name="content_s" id="Content" class="form_input_text" style="height:100px;width:240px;"></textarea>
+
+<p style="text-align:center;padding-top:20px;"><input name="Submit" type="button" value="提交申请" id="SubmitRefund" class="form_button"/> </p>
+
+
+<script type="text/javascript">
+
+$(function(){	
+
+
+	  $("#SubmitRefund").click( function (){
+											
+			  var content=$("#Content").val();	
+			  
+			  if(confirm("是否申请?")){
+				  
+				   
+				    $("#loading").html('<div class="loading">提交数据中...</div>');
+						  
+					$.ajax({
+						  type: "POST",
+						  url: "member.php?lang={echo $this->lang}&app={echo $this->app}&action=42&op=7&tid={echo $this->tid}",
+						  data: 'content_s='+content,
+						  success: function(data){
+							  $("#loading").html(data);
+						  }
+					});
+				  
+				  
+			  }
+
+	  });
+	  
+});	  
+</script>

@@ -1,0 +1,68 @@
+<div id="SetMap" style="height:420px;"></div>
+        
+        <h5>地区设置：<span style="color:#666;font-weight:normal;">(地图的设置方法二: 先设置以下地区,点击 "定位" 按钮，再点 "保存位置" 按钮完成设置)</span></h5>
+        <div id="showselectcity"> 
+        
+        {if !empty($info['taskcity'])}
+             {echo $this->GetSelectCategory('category_city',$info['taskcity'],'showselectcity')}
+        {else} 
+             {echo $this->SetSelectCategory('category_city',0,'showselectcity')}
+        {/if}
+        </div>
+        <p style="border-top:0px;"> 
+              <a onclick="SetMapPoint();" class="large blue awesome" title="定位地图">定位</a>  <a title="保存位置" onclick="SubmitSetMap()" class="large red awesome">保存位置</a>
+        </p>
+
+
+        
+
+    
+    <input type="hidden" name="tasklongitude_f" id="MapLongitude" value="{if $info['tasklongitude']>0}{echo $info['tasklongitude']}{/if}"/><input type="hidden" name="tasklatitude_f" id="MapLatitude" value="{if $info['tasklatitude']>0}{echo $info['tasklatitude']}{/if}"/><input type="hidden" name="taskmapzoom_d" id="MapZoom" value="{if $info['taskmapzoom']>0}{echo $info['taskmapzoom']}{/if}"/>
+
+
+    {template map:setmap}
+    
+    
+   <script type="text/javascript">
+       
+	    $(function(){	
+		   
+				 $("#OpenTaskMap").click( function () {
+						  $("#ShowMap").dialog('open');	
+				          
+						  var tasklongitude=$('#MapLongitude').val();
+				          var tasklatitude=$('#MapLatitude').val();
+	
+						  window.setTimeout(function(){  map.panTo(new BMap.Point(tasklongitude,tasklatitude)); }, 500);
+
+				 });
+	    });
+		
+		function SubmitSetMap(){	
+		
+				var tasklongitude=$('#MapLongitude').val();
+				var tasklatitude=$('#MapLatitude').val();
+				var taskmapzoom=$('#MapZoom').val();
+				
+				var selectcity=$("#showselectcity select[name='showselectcity'] option[selected='selected']").val();
+                
+				if(!selectcity){
+					 selectcity=$("#showselectcity select[name='showselectcity'] option[selected=true]").val();
+				}
+
+				$.ajax({
+					  type: "POST",
+					  url: SURL+"/member.php?app=70&action=1",
+					  data: '&tasklatitude_f='+tasklatitude+'&tasklongitude_f='+tasklongitude+'&taskmapzoom_d='+taskmapzoom+'&showselectcity_d='+selectcity+'&Submit=ok',
+					  success: function(data){
+						    alert("设置成功!");
+					  }
+				});
+ 
+        }
+	   
+   </script>
+   
+
+  
+ 

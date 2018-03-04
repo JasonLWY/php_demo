@@ -1,0 +1,52 @@
+{template admin:header}
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+
+{if $list}
+
+<div id="WindowsForm{echo $this->GET['menu']}">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+    
+    {for $orderarr $key=>$value}
+    <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+    {/for} 
+    
+    <td class="datalist_h2" style="width:70px">操作</td>
+    
+  </tr>
+
+{for $list $value}
+  <tr>
+    <td><input name="checkbox[]" type="checkbox" value="{$value['id_phpapp']}" /></td>
+    <td>{echo $value['id_phpapp']}</td>
+    <td>{echo $value['app_phpapp']}</td>
+    <td>{echo $value['table_phpapp']}</td>
+    <td>{echo $value['name_phpapp']}</td>
+    <td>{if $value['type_phpapp']}{echo $value['typename']}{else}不限{/if}</td>
+    <td>{echo $value['icon_small_phpapp']}</td>
+    <td>{echo $value['icon_middle_phpapp']}</td>
+    <td><span class="color_f60">{echo $value['price_phpapp']}</span></td>
+    <td>{echo $value['time_phpapp']}</td>
+    <td>{if $value['status_phpapp']}关闭{else}启用{/if}</td>
+    <td><a href="{echo $this->MakeGetParameterURL(array('action'=>2,'id'=>$value['id_phpapp']))}">[编辑]</a></td>
+  </tr>
+ {/for} 
+
+</table>
+</div>
+<div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="删除" class="form_button"/></div>
+
+
+{else}
+
+
+<p>没有数据!</p>
+
+{/if}
+

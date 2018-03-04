@@ -1,0 +1,80 @@
+{template member:menu}
+
+<p style="padding-bottom:20px;">提示：服务商地图中显示你的位置,<span style="color:#F60">任务地图设置方法：双击位置 然后点击 "确认位置"</span></p>
+
+<form id="ResideSetMap">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+ 
+ <tr>
+    <td colspan="3">
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.3"></script>
+
+    <div id="SetMap" style="height:400px"> 
+    </div>
+
+
+    <div id="MyMap"></div>
+    
+    <input type="hidden" name="residelongitude_f" id="MapLongitude" value="{if $info['residelongitude']>0}{echo $info['residelongitude']}{/if}"/>
+    
+    <input type="hidden" name="residelatitude_f" id="MapLatitude" value="{if $info['residelatitude']>0}{echo $info['residelatitude']}{/if}"/>
+    
+    <input type="hidden" name="residemapzoom_d" id="MapZoom" value="{if $info['residemapzoom']>0}{echo $info['residemapzoom']}{else}12{/if}"/>
+    
+	</td>
+  </tr>
+  
+
+  
+  <tr>
+    <td style="padding-top:20px;width:100px;">所在地设置：</td>
+    <td id="showselectcity" style="padding-top:20px;"> 
+    {if !empty($user['residecity'])}
+         {echo $this->GetSelectCategory('category_city',$user['residecity'],'showselectcity')}
+    {else} 
+         {echo $this->SetSelectCategory('category_city',0,'showselectcity')}
+    {/if}
+    </td>
+    <td>
+    <input name="Submit" type="button" value="定位" onclick="SetMapPoint()" class="form_button submitsetmap"/>
+    </td>
+  </tr>
+  
+  
+</table>
+
+    <div id="SubmitMap" style="padding:20px;"><p style="text-align:center;"><input name="Submit" type="button" value="确认位置" onclick="SubmitSetMap()" class="form_button submitsetmap"/></p>    </div>
+    
+</form>
+
+{template setmap}
+
+</td></tr></table>
+
+
+
+<script type="text/javascript">
+
+function SubmitSetMap(){	
+
+	    var forms=GetFormAll('#ResideSetMap');
+		//POST
+		$("#loading").html('<div class="loading">提交数据中...</div>');
+		$("#loading").dialog('open');
+		$("#loading").dialog({ title: '设置居住地图' });
+			  
+		$.ajax({
+			  type: "POST",
+			  url: "member.php?app={echo $this->app}&action=2",
+			  data: forms,
+			  success: function(data){
+				  $("#loading").html(data);
+			  }
+		});
+ 
+}
+</script>
+
+{template phpapp:footer}

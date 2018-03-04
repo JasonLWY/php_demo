@@ -1,0 +1,67 @@
+<link href="{TURL}prop_icon.css" rel="stylesheet" type="text/css" />
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  <tr class="manage_process">
+    <td class="datalist_h2" style="width:80px;">项目</td>
+    <td class="datalist_h2" style="width:80px;">名称</td>
+    <td class="datalist_h2" style="width:290px;">作用描述</td>
+    <!--
+    <td class="datalist_h2">期限</td>
+    -->
+    <td class="datalist_h2">类型</td>
+    <td class="datalist_h2">收费标准(元)</td>
+    <td class="datalist_h2">操作</td>
+  </tr>
+
+{for $list $value}
+  <tr>
+   <td><div class="{echo $value['icon']}" title="{echo $value['subject']}"></div></td>
+    <td>{echo $value['subject']}</td>
+    <td><span style="color:#999">{echo $value['content']}</span></td>
+    <!--
+    <td>{if $value['count']}不限{else}{echo $value['day']}天{/if}</td>
+    -->
+    <td>{if $value['type']==2}服务{elseif $value['type']==1}稿件{else}任务{/if}</td>
+    <td><strong>{echo $value['price']}</strong></td>
+    <td class="buyservice" style="text-align:center"><a href="javascript:;" class="small orange awesome" onclick="BuyService('{echo $value['sid']}')">购买</a></td>
+  </tr>
+ {/for} 
+
+</table>
+
+<div id="ShopService" title="购买道具" style="padding:20px;"></div>
+
+<script type="text/javascript">
+
+$(function(){	
+		   
+         $("#ShopService").dialog({
+					width: 360,
+					modal: true,
+					autoOpen: false,
+					height:'auto'
+	     });	
+		 
+ });
+
+
+function BuyService(sid) {
+		  
+		  
+		  $("#ShopService").html('<div class="loading">获取服务数据中...</div>');
+		  $("#ShopService").dialog('open');
+
+		   $.ajax({
+				type: "POST",
+				url: SURL+'/member.php?app=11&action=4',
+				data: '&sid='+sid,
+				success: function(data){
+					
+					 $("#ShopService").html(data);
+					 
+				}
+		  });
+					
+}
+
+</script>

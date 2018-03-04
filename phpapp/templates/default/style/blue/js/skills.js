@@ -1,0 +1,10 @@
+//var UserSkillsNumber=4;
+var UserSkillsRetain=2;
+var SkillsLanguage1='对不起！至少要保留'+UserSkillsRetain+'个技能！';
+var SkillsLanguage2='<span>您的技能已使用完了！</span>';
+var SkillsLanguage3='您还可以选择 <span>0</span> 个技能';
+var SkillsLanguage4='<li>请先选择分类！</li>';
+
+(function($,undefined) {	  	 
+     eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('X.J({H:r(j,B){j=y(j);5(j>0){$.P(Q+\'/O/L/M/F/N\'+j+\'.F\',r(){3 t=\'\';m(3 f R l){t+=\'<7 2="h\'+f+\'"><a G="K:I(0)" Y="$.p(\\\'\'+f+\'\\\')"  C="\'+l[f]+\'">\'+l[f]+\'</a></7>\'}$(\'#6\').4(t);$(\'#6\').z(\'7:Z\').o();$(\'#6\').z(\'7:10\').o();$(\'#b 8\').4(E);$(\'#b 8 u\').4(k);3 x=B.A(",");m(3 i=0;i<x.n;i++){$.p(y(x[i]))}})}e{$(\'#6\').4(12)}},p:r(2){3 c=$(\'#v\').w();3 9=c.A(",");3 q=0;m(3 i=0;i<9.n;i++){5(9[i]==2){q=1}}3 d=$("#s a").n;5(!q){5(k-d>0){5(c){c+=\',\'+2}e{c=2}$(\'#v\').w(c);$("#6 7[2=\'h"+2+"\']").o();$("#s").11($("#6 7[2=\'h"+2+"\'] a"));$(\'#b 8 u\').4((k-1)-d);5((k-1)-d==0){$(\'#b 8\').4(D)}}e{$(\'#b 8\').4(D)}}e{5(d<=T){S(U)}e{3 g=\'\';m(3 i=0;i<9.n;i++){5(9[i]!=2){5(g){g+=\',\'+9[i]}e{g=9[i]}}}$(\'#v\').w(g);$("#6 7[2=\'h"+2+"\']").W();$("#s a[C=\'"+l[2]+"\']").V($("#6 7[2=\'h"+2+"\']"));$(\'#b 8\').4(E);$(\'#b 8 u\').4(k-d+1)}}}});',62,65,'||id|var|html|if|MoreSkillsList|li|h3|selectedarr||SelectMoreSkillsView|newselected|NowNumber|else|SkillKey|RemoveSelecteID|skills_||catid|UserSkillsNumber|Sarr|for|length|hide|ShowSkills|isselected|function|SelectSkills|skillslist|span|SkillsSelected|val|skillsarr|parseInt|find|split|nowskills|title|SkillsLanguage2|SkillsLanguage3|js|href|PHPAPPGetAllSkills|void|extend|javascript|data|cache|skillsdata|phpapp|getScript|SURL|in|alert|UserSkillsRetain|SkillsLanguage1|prependTo|show|jQuery|onclick|first|last|append|SkillsLanguage4'.split('|'),0,{}))
+}(jQuery));

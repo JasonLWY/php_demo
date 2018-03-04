@@ -1,0 +1,56 @@
+<link href="{TURL}buy.css" rel="stylesheet" type="text/css" />
+
+<form id="FormService">
+
+      <div class="{echo $service['icon']} service_icon" title="{echo $service['subject']}">
+
+      </div>
+
+      <div class="service_info">
+ 
+      <h3>{echo $service['subject']}</h3>
+      <p><span style="color:#999">{echo $service['content']}</span></p>
+      
+      <p style="padding-top:10px;">使用期限：{if !$service['day']}不限{else}{echo $service['day']}天{/if}</p>
+      
+      <p>服务价格：<span class="color_f60">{echo $service['price']} 元</span></p>
+      
+      
+      <p style="padding-top:10px;">购买数量：<input name="amount_s" type="text"  id="amount" size="10" maxlength="10" class="form_input_text form_input_width_100"  style="width:60px;" value="1"/> 个</p>
+      
+      <input name="refresh_d" type="hidden" value="{echo intval($this->POST['refresh'])}"/>
+
+      <p style="padding-top:10px;padding-right:20px;text-align:right;"><input name="Submit" type="button" value="购买" id="Submit" class="form_button"/> <input name="sid" type="hidden" value="{echo $this->sid}"/></p>
+      
+      </div>
+
+</form>
+
+<script type="text/javascript">
+
+$(function(){	
+		   
+	  $("#Submit").click( function () {
+			  
+			  if(confirm("是否确认购买?")){
+					  var forms=GetFormAll('#FormService');
+			  
+					  //POST
+					  $("#ShopService").html('<div class="loading">购买处理中...</div>');
+							
+					  $.ajax({
+							type: "POST",
+							url: SURL+"/member.php?app=11&action=4",
+							data: forms,
+							success: function(data){
+								 $("#ShopService").html(data);
+							}
+					  });
+			  }
+	   });
+	 	 
+ });
+
+
+
+</script>

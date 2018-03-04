@@ -1,0 +1,60 @@
+{template phpapp:header}
+
+<script type="text/javascript" src="{TURL}js/default.js"></script>
+
+<link href="{TURL}union.css" rel="stylesheet" type="text/css" />
+
+<link href="{TURL}form.css" rel="stylesheet" type="text/css" />
+
+<link href="{TURL}icon.css" rel="stylesheet" type="text/css" />
+
+{template union.js}
+
+<div class="union_top">
+<ul>
+   <li style="margin-right:98px;">选择合适的代码呈现方式点击“复制代码”复制代码。</li>
+   
+   <li style="margin-right:98px;">将获取的代码粘贴到您的网站，展示给您的用户。</li>
+   
+   <li>用户从您的推广链接来到本站消费，您可以获得返点。</li>
+</ul>
+</div>
+
+<div class="default_main">
+   <div class="default_left" style="width:204px;">
+
+   {template menu}
+
+   </div>
+   
+    <div class="union_box link_right">
+               <h2>链接推广</h2>
+               <h3>提示：推广链接发布在微博、博客、论坛、聊天工具、群组、网站上。</h3>
+               <ul>
+               
+                  <li><strong>自定义代码推广，请记住您的推广代号</strong>  ?u={echo $this->uid}
+                  <br /> 可在本站网址后面加上您的代号 例如首页代码方式  {echo SURL}/?u={echo $this->uid}
+                  </li>
+                  
+                  <li>推广首页代码 <input type="text" class="form_input_text form_input_width_400" value="{echo SURL}/?u={echo $this->uid}" id="txturl01"/> <input type="button" value="复制代码" onclick="CopyURL('txturl01');return false;" class="form_button" style="width:80px"/></li>
+                  
+                  <li>推广注册会员 <input type="text" id="txturl02" class="form_input_text form_input_width_400" value="{echo SURL}/index.php?app=2&action=2&u={echo $this->uid}"/> <input type="button" value="复制代码" onclick="CopyURL('txturl02');return false;" class="form_button" style="width:80px"/></li>
+                 
+                 
+                 <li>推广任务列表 <input  type="text" class="form_input_text form_input_width_400" value="{echo SURL}/index.php?app=49&u={echo $this->uid}" id="txturl03"/> <input type="button" value="复制代码" onclick="CopyURL('txturl03');return false;" class="form_button" style="width:80px"/></li>
+                 
+                 <li>推广发布任务 <input name="" type="text" class="form_input_text form_input_width_400"  value="{echo SURL}/index.php?app=49&action=1&u={echo $this->uid}" id="txturl04"/> <input  type="button" value="复制代码" onclick="CopyURL('txturl04');return false;" class="form_button" style="width:80px"/></li>
+               
+               </ul>
+    </div>
+   
+</div>
+
+
+
+
+
+
+
+
+{template phpapp:footer}

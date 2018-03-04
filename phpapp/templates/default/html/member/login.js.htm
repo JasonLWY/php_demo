@@ -1,0 +1,355 @@
+<script type="text/javascript">
+
+var loading='<img src="{TURL}images/loading.gif" alt="正在读取数据中..." />';
+var right='<img src="{TURL}images/right.png" alt="正确" class="checkright" />';
+var error='<img src="{TURL}images/error.png" alt="错误" />';
+var SubmitLoginInput='<input type="submit" value="登 录" onclick="return SubmitLoginNow();" class="form_button"/>';
+var LoginInputPrompt='用户名/邮箱/手机';
+
+
+function VerifyLoginPassword(){
+	          $('#AjaxLoginPasswordError').html(loading);
+		  
+              var password=$("#LoginPassword").val();
+
+			  if(!password.length){
+				   $('#AjaxLoginPasswordError').html(error);
+
+				   var data='亲,请输入密码!';
+			  }else if(password.length<6){
+				   
+				   $('#AjaxLoginPasswordError').html(error);
+				   var data='密码不能小于6位!';
+				   
+			  }else{
+				    $('#AjaxLoginPasswordError').html('');
+					var data='密码位数正常!';
+			  }
+
+			  $('#LoginPassword').poshytip('update',data);
+}
+
+$(function(){
+	  
+	  $("#PasswordTab").tabs();	
+	   
+	  $("#SubmitLoginNow").html(SubmitLoginInput);  
+	  
+	  $("#LoginUserName").val(LoginInputPrompt);
+	  
+	  $("#SiteLoginUserName").val(LoginInputPrompt);
+   
+	  $('#LoginUserName,#LoginPassword,#SiteLoginUserName,#SiteLoginPassword').poshytip({
+			className: 'tip-green',
+			showOn: 'focus',
+			alignTo: 'target',
+			alignX: 'right',
+			alignY: 'center',
+			offsetX: 5
+      });
+	  
+	  $("#SiteSecCode").one("click", function(){
+			seccode();
+	  });
+	   
+	  $(".LoginUserName,#SiteLoginUserName").one("click", function(){ $(this).val('');$(this).css("color","#333"); });
+	 
+	  $("#ShowSNS").toggle(
+			function () {
+			     $("#SNSList").show(500);this.blur();
+			},
+			function () {
+			     $("#SNSList").hide(500);this.blur();
+			}
+	  );
+	  
+	  $("#LoginPassword").click( function () {
+			  VerifyLoginPassword();
+	  });
+	  
+	  $("#LoginPassword").blur( function () { 
+		     VerifyLoginPassword();
+      });
+
+});
+
+
+function SubmitLogin() {
+
+			var username=$("#SiteLoginUserName").val();
+			 if(LoginInputPrompt==username){
+				  $('#SiteLoginUserName').val('');
+				  $('#SiteLoginUserName').focus();
+				  $('#SiteAjaxLoginUserNameError').html(error);
+				  $('#SiteLoginUserName').poshytip('update','请输入用户名！');
+				  return false; 
+			 }else{
+					 if(!username.length){
+						 $('#SiteLoginUserName').focus();
+						 $('#SiteAjaxLoginUserNameError').html(error);
+						 $('#SiteLoginUserName').poshytip('update','对不起!昵称不能为空!');
+		
+						 return false; 
+					 }else{
+						 if(username.length>1){
+							 $('#SiteAjaxLoginUserNameError').html('');
+						 }else{
+							  $('#SiteLoginUserName').focus();
+							  $('#SiteAjaxLoginUserNameError').html(error);
+							  $('#SiteLoginUserName').poshytip('update','对不起!用户名太短了!');
+							 
+							  return false; 
+						 }
+						 
+					 }
+			 }
+		
+			 var password=$("#SiteLoginPassword").val();
+			 if(!password.length){
+				 	
+			     $('#SiteLoginPassword').focus();
+				 $('#SiteAjaxLoginPasswordError').html(error);
+				 $('#SiteLoginPassword').poshytip('update','对不起!密码不能为空!');
+				 
+		         return false; 
+			 }else{
+			
+				 if(password.length>=6){
+				     $('#SiteAjaxLoginPasswordError').html('');
+				 }else{
+					 $('#SiteLoginPassword').focus();
+				     $('#SiteAjaxLoginPasswordError').html(error);
+					 $('#SiteLoginPassword').poshytip('update','对不起!密码不能小于6位!');
+		
+					 return false; 
+				 }
+			 }
+			 
+			 
+			 
+			 {if PHPAPP::$config['loginiscode']}
+			 var seccode=$("#SiteSecCode").val();
+			 if(!seccode.length){
+			     $('#SiteSecCode').focus();
+				 $('#SiteAjaxSecCodeError').html(error);
+			     $('#SiteAjaxSecCode').html('<div class="register_reg_tips">对不起!请输入验证码!</div>');
+		         return false; 
+			 }else{
+				 if(seccode.length!=4){
+					 $('#SiteSecCode').focus();
+				     $('#SiteAjaxSecCodeError').html(error);
+			         $('#SiteAjaxSecCode').html('<div class="register_reg_tips">对不起!请输入4位验证码!</div>');
+		             return false; 
+				 }
+			
+			 }	
+			 
+			 {/if}
+			 
+			
+			$("#loading").html('<div class="loading">登录中...</div>');
+			$("#loading").dialog('open');
+			$("#loading").dialog({ title: '登录框' });
+			 
+			var forms=GetFormAll('#LoginForm');
+			$.ajax({
+   			type: "POST",
+   			url: SURL+'/index.php?app=2&action=1&rand='+Math.random(),
+  		    data: forms,
+   			success: function(data){
+    			  $("#loading").html(data);
+				  return false; 
+				  //alert(data);
+   			}
+			});
+			return false; 
+									   
+ }
+ 
+ 
+function SubmitLoginNow() {
+
+			 var username=$("#LoginUserName").val();
+			 if(LoginInputPrompt==username){
+				  $('#LoginUserName').val('');
+				  $('#LoginUserName').focus();
+				  $('#AjaxLoginUserNameError').html(error);
+				  $('#LoginUserName').poshytip('update','请输入用户名！');
+				  return false; 
+			 }else{
+					 if(!username.length){
+						 $('#LoginUserName').focus();
+						 $('#AjaxLoginUserNameError').html(error);
+						 $('#LoginUserName').poshytip('update','对不起!昵称不能为空!');
+		
+						 return false; 
+					 }else{
+						 if(username.length>1){
+							 $('#AjaxLoginUserNameError').html('');
+						 }else{
+							  $('#LoginUserName').focus();
+							  $('#AjaxLoginUserNameError').html(error);
+							  $('#LoginUserName').poshytip('update','对不起!用户名太短了!');
+							 
+							  return false; 
+						 }
+						 
+					 }
+			 }
+		
+			 var password=$("#LoginPassword").val();
+			 if(!password.length){
+				 	
+			     $('#LoginPassword').focus();
+				 $('#AjaxLoginPasswordError').html(error);
+				 $('#LoginPassword').poshytip('update','对不起!密码不能为空!');
+				 
+		         return false; 
+			 }else{
+			
+				 if(password.length>=6){
+				     $('#AjaxLoginPasswordError').html('');
+				 }else{
+					 $('#LoginPassword').focus();
+				     $('#AjaxLoginPasswordError').html(error);
+					 $('#LoginPassword').poshytip('update','对不起!密码不能小于6位!');
+		
+					 return false; 
+				 }
+			 }
+            
+			 $("#SubmitLogin").html('<div class="loading">登录中...</div>');
+			 
+	
+            var SecurityForm=$("#SecurityForm").val();
+
+			  $.post(SURL+"/index.php?app=2&action=12&rand="+Math.random(),{UserName_s:username,Password_s:password,SecurityForm_s:SecurityForm,SubmitLoginNow:'SubmitLoginNow'},
+					
+				   function (data){
+					  
+					   if(data.indexOf('ok')>0 || data=='ok'){
+						   
+						     if(data=='ok'){
+								   LoginNowForm(data);
+							 }else{
+								 
+								   var LoginIframe=document.getElementById("NowLoginIframe");
+					               var Iframedoc=LoginIframe.contentWindow.document;
+								   Iframedoc.open();
+								   Iframedoc.write(data+parent.LoginNowForm(data));
+								   Iframedoc.close();
+							
+							 }
+							 
+							 
+					   }else{
+						     $('#LoginUserName').focus();
+						     $('#LoginUserName').poshytip('update',data);
+							 $("#SubmitLogin").html(SubmitLoginInput);  
+					   }
+
+					   //alert(data);
+					   return false; 
+				   }
+			  ); 
+	
+			return false; 
+ }
+
+function LoginNowForm(data) {
+     $('#Login_Now').html('<div class="loading"><strong>登录成功！</strong>正在加载数据中...</div>');
+	 $.get("{echo SURL}/index.php?app=2&action=8",function (data){$('#Header_Member').html(data);}); 
+	 $('#UserLogin').removeClass('topuserlogin_focus');
+	 $(".LoginFrame").hide();
+	 var loginrefresh=parseInt($("span[class='loginrefresh']").last().html());
+	 
+	 if(loginrefresh==1){
+		   window.location.reload(); 
+	 }else if(loginrefresh==2){
+		   window.location.href=SURL;
+	 }
+}
+
+function SubmitPasswordForm() {
+													  
+             var type=$("#ToolType").val();
+			 
+			 var username=$("#UserName");	
+			 var email=$("#EMail");	
+			 var mobile=$("#Mobile");	
+			 
+			 if(username.val()==""){
+					   
+						  alert("请输入用户名!");
+						  username.focus();
+						  return false; 
+			 }
+			 
+			 if(type==0){
+				 
+				   if(email.val()==""){
+					   
+						  alert("请输入邮箱!");
+						  email.focus();
+						  return false; 
+				   }
+				   
+			 }else{
+				 
+				   if(mobile.val()==""){
+					   
+						  alert("请输入手机号码!");
+						  mobile.focus();
+						  return false; 
+				   }
+				   
+			 }
+			 
+
+					
+             var SecCode=$("#SiteSecCode").val();
+			 if (SecCode==""){
+				    alert("请输入验证码!");
+				    $("#SecCode").focus();
+				    return false; 
+			 }
+			  
+
+			$("#loading").html('<div class="loading">提交数据中...</div>');
+			$("#loading").dialog('open');
+			$("#loading").dialog({ title: '找回密码' });
+				
+			$.ajax({
+				  type: "POST",
+				  url: SURL+"/index.php?app=2&action=13&rand="+Math.random(),
+				  data: '&SecCode='+SecCode+'&type_d='+type+'&EMail_s='+email.val()+'&Mobile_s='+mobile.val()+'&UserName_s='+username.val(),
+				  success: function(data){
+					   $("#loading").html(data);
+					   return false; 
+				  }
+			});  
+			  
+			return false; 
+													  
+}
+	 
+	 
+function seccode(){
+	var img=SURL+'/index.php?app=2&action=9&rand='+Math.random();
+	 $('#ShowSecCode').html('<a href="javascript:;" onclick="refreshcode()" style="cursor:hand;" title="点击换一张验证码"><img id="img_seccode" src="'+img+'" align="absmiddle"></a>');
+	 $("#SiteSecCode").val("");
+}
+
+function refreshcode() {
+	
+	var img = SURL+'/index.php?app=2&action=9&rand='+Math.random();
+	if(document.getElementById('img_seccode')) {
+		$('#img_seccode').attr("src",img);
+	}
+} 
+
+function SetToolType(id) {
+	 $('#ToolType').val(id);
+}
+
+</script>

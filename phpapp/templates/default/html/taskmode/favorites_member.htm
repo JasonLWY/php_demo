@@ -1,0 +1,114 @@
+{template member:menu}
+
+{if $list}
+<div id="tasklist">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2" style="width:46px"><input name="checkboxall" id="CheckboxAll" onclick="CheckboxAll('tasklist')" type="checkbox" value="1" /> 全选 </td>
+    <td class="datalist_h2">编号</td>
+    <td class="datalist_h2">金额/标题</td>
+    <td class="datalist_h2">投标</td>
+    <td class="datalist_h2">任务状态</td>
+    <td class="datalist_h2">发布时间</td>
+  </tr>
+
+{for $list $value}
+  <tr>
+    <td><input name="checkbox"  type="checkbox" value="{echo $value['tid']}"/></td>
+    <td class="datalist_h2">{echo $value['tid']}</td>
+    <td class="datalist_h2" style="width:320px">
+    <span class="color_f60">￥{if $value['price1']>0}{echo $value['price1']}-{echo $value['price2']}{else}{echo $value['money']}{/if}</span>
+    <p><a href="{echo SURL}{echo $value['url']}" target="_blank">{echo $value['subject']}</a></p>
+    </td>
+    <td class="datalist_h2">{echo $value['draft_number']}</td>
+    <td class="datalist_h2">{echo $getprocess->GetTaskProcesName($value['process'])}</td>
+    <td class="datalist_h2">{echo $this->Date("Y/m/d",$value['dateline'])}</td>
+  </tr>
+ {/for} 
+
+</table>
+
+</div>
+
+{if $page->ShowPages()}
+		<div class="ajax_page">{echo $page->ShowPages()}</div>
+{/if}
+
+<div style="text-align:center;margin-top:10px;"><input id="SubmitDelete" name="SubmitDelete" type="button" value="删除" class="form_button"/></div>
+
+{else}
+
+<p>您暂时还没有收藏任务!</p>
+
+{/if}
+
+
+
+<script type="text/javascript">
+ 
+ $(function(){	   
+ 
+	 $("#SubmitDelete").click( function () {
+		     
+			 
+			      var OderID='';
+                   $("#tasklist").find("input:checked[name!='checkboxall']").each(function(){
+                           var value=$(this).val();  
+                           
+                           if($(this).attr("disabled")!='disabled'){
+                           
+                           if(OderID){
+                                OderID+=','+value;
+                           }else{
+                                OderID=value;
+                           }
+                           }
+              
+                   }); 	
+                   
+                   if(!OderID){
+                       
+                        alert("请选择任务操作!");
+                        return false;
+                   }
+				   
+				   
+				   
+				if(confirm("是否删除收藏的任务!")){
+					
+						$("#loading").dialog({
+								title:"收藏操作",	
+								width: 300,
+								height:'auto'
+						});
+						   
+						$("#loading").dialog('open');
+						
+						$("#loading").html('<div class="loading">提交数据中...</div>');
+				    
+            
+                         $.ajax({
+                              type: "POST",
+                              url: SURL+"/member.php?app=49&action=13&op=1",
+                              data: 'oderid='+OderID,
+                              success: function(data){
+                                    $("#loading").html(data);
+                              }
+                         });	
+					 
+				
+				
+			    }
+	   
+		 
+	 });
+	
+ });
+ 
+ 
+ 
+</script>
+
+
+{template phpapp:footer}

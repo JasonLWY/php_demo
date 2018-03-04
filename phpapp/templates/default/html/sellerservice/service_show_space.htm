@@ -1,0 +1,109 @@
+{template space:column}
+
+<div class="service_show">
+
+
+    <div class="service_info">
+    
+        <div class="photo">
+                                       
+                         {if !empty($service['logo'])}
+                                    
+                                    {if $service['filepath']}  
+                                          <a href="{echo SURL}/{echo $service['filepath']}" target="_blank"><img src="{echo SURL}/{echo $service['filepath']}"/></a>
+                                    {else}
+                                          <img src="{SURL}/images/seller/nopic.gif"/>
+                                    {/if}
+                         {else}
+                             
+                             
+                             <img src="{SURL}/images/seller/nopic.gif"/>
+                            
+                                            
+                         {/if}
+         </div>
+
+         <div class="service_parameter">
+         
+                <h5>{echo $service['subject']}</h5>
+                
+                <p>所属分类 <span id="PathCatid">{echo $this->GetSelectCategory('category',intval($service['catid']),'PathCatid','','',1)}</span></p>
+                
+                <p>总出售 <span class="sellnum">{echo $service['sellnum']}</span> 次</p>
+                 
+                <p style="margin-top:10px;">报价 <span class="color_f60">{echo $service['price']}</span> 元/{echo $service['unit']}</p>
+                
+                
+                <p>完成周期 <strong>{echo $service['time']}</strong> 天</p>
+                
+                <p>发布时间 {echo $this->Date('m-d H:i',$service['dateline'],1)}</p>
+                
+                {if $fieldarray=$this->GetTableFieldArray('task_seller_service')}
+                 <!-- 自定义字段-->
+                     {for $fieldarray $field}
+                     <p>{echo $field['name_phpapp']} {echo $this->str($service[$field['field_phpapp']],99999,0,1,0,0,1)}</p>
+                     {/for}
+                 <!-- 自定义字段 end-->
+                {/if}
+               
+                <p></p>
+                {if $service['realnametask']==1}<p>服务要求实名购买</p>{/if}
+                
+                <div class="buy_service"><a href='{echo SURL}/index.php?app={echo $this->app}&action=2&sid={echo $service['sid']}&uid={echo $service['uid']}'>购买此服务</a></div>
+         </div>
+                
+   </div>                           
+                                    
+   <!-- 地图 -->
+   {template map:service_show_maps}
+   
+   </div>                       
+                                    
+  <div class="service_content">
+  
+   <h4>服务内容</h4>
+   
+   
+   {echo $this->str($service['content'],999999,0,1,0,0,1)}
+  
+  </div>                    
+                                    
+
+   {php}$files=$this->FileList($service['sid'],1);{/php}
+   
+   
+   {if $files}
+     
+        {template phpapp:file}
+   
+   {/if}
+
+</div>
+
+
+
+
+
+
+
+
+
+
+     </div>
+</div>
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+{template phpapp:footer}

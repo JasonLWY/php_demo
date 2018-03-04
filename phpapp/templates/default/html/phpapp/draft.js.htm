@@ -1,0 +1,387 @@
+<script type="text/javascript">
+
+{if empty($this->GET['did'])}
+
+function DraftPage(tid,page,sqlorder,iforder){
+	 var action='{echo $this->GET["action"]}';
+	 var nowtid='{echo $this->tid}';
+	 var type='{echo $this->GET["type"]}';
+	 if(action<1){
+		 action=7;
+	 }
+	 if(tid<1){
+		 tid=nowtid;
+	 }
+	 
+	 if(!page){
+		 page=0;
+	 }
+	 
+	 if(!type){
+		 type=0;
+	 }
+	 
+     $.PHPAPPOPENLOADING();
+	 $.ajax({
+   			type: "GET",
+   			url: SURL+'/index.php',
+  			data: "app={echo $this->app}&action="+action+"&type="+type+"&tid="+tid+"&page="+page+"&sqlorder="+sqlorder+"&iforder="+iforder,
+   			success: function(data){
+    			 $("#DraftShow-"+type).html(data);
+				 $.PHPAPPCLOSELOADING();
+				 SetCheckBox();
+   			}
+	 });
+}
+
+{/if}
+
+function DraftMessageAll(){
+	  
+	  var display=$("#AddMessageForm").css('display');
+	  
+	  if(display=='none'){
+	       $("#AddMessageForm").show(500);
+	  }else{
+           $("#AddMessageForm").hide(500);
+	  }
+	   
+}
+
+function DraftNotSelect(){
+	
+	   $(".check_box_id").each(function(){
+			$(this).attr('checked',false);	
+	   }); 
+	
+	   var NowID=$("#DraftIdAll").val();
+	
+	   var NowIDArray=NowID.split(',');
+	   for(var i=0;i<=NowIDArray.length-1;i++){ 
+
+            DeleteCheckBoxID(NowIDArray[i]);
+				 
+	   }
+	
+	  SetNULLCheckBox('');
+}
+
+function DraftSelectAll(){
+	  
+	  var NowID=$("#DraftIdAll").val();
+	  
+	  var ids=NowID;
+	  $(".check_box_id").each(function(){
+									   				   
+				$(this).attr('checked','checked');	
+				var id=$(this).val();	
+				
+				
+				if(NowID){
+					     var idtrue=1;
+						 var NowIDArray=NowID.split(',');
+						 for(var i=0;i<=NowIDArray.length-1;i++){ 
+							  if(NowIDArray[i]==id){
+                                    idtrue=0;
+							  }
+						 }
+						 
+						 if(idtrue){
+						 
+						 			  if(ids){
+										  ids+=','+id;
+									  }else{
+										  ids+=id;
+									  }
+									  
+									  CheckBoxTable(id);
+						 }
+									  
+	            }else{
+				
+                                      if(ids){
+										  ids+=','+id;
+									  }else{
+										  ids+=id;
+									  }
+									  
+									  CheckBoxTable(id);						
+				}
+				
+			
+      }); 	
+
+	  $("#DraftIdAll").val(ids);
+	  
+	  SetNULLCheckBox(ids);
+
+	
+}
+
+function SetNULLCheckBox(ids){
+	
+			  if(ids){
+				   $("#NULLCheckBox").css("display","none");
+			  }else{
+				   $("#NULLCheckBox").css("display","block");
+			  }
+}
+
+function DeleteCheckBoxID(id){
+	
+	 if( $("#loading").dialog("isOpen")){
+
+			var ids='';
+			
+			var NowID=$("#DraftIdAll").val();
+			   var NowIDArray=NowID.split(',');
+			   
+			   for(var i=0;i<=NowIDArray.length-1;i++){ 
+					if(NowIDArray[i]!=id){
+						
+						  if(ids){
+							  ids+=','+NowIDArray[i];
+						  }else{
+							  ids+=NowIDArray[i];
+						  }
+						  
+					}else{
+						 $("#CheckBoxTR_"+id).remove();
+						 $("#CheckBoxID_"+id).attr("checked",false);
+					}
+			   }
+			   
+	  
+			   
+			$("#DraftIdAll").val(ids);
+			
+			SetNULLCheckBox(ids);
+	 }
+	  
+}
+
+function SetCheckBox(){
+	
+	  var NowID=$("#DraftIdAll").val();
+	  if(NowID){
+	        var NowIDArray=NowID.split(',');
+			for(var i=0;i<=NowIDArray.length-1;i++){ 
+			       $("#CheckBoxID_"+NowIDArray[i]).attr("checked","checked");
+			}
+	  }
+}
+
+function AddCheckBox(id){
+	   
+	   var checked=$("#CheckBoxID_"+id).attr("checked");
+	   if(checked=='checked' || checked==true){
+		   
+               //OpenCheckBox
+			   OpenOperate();
+			   
+			   var NowID=$("#DraftIdAll").val();
+			   var ids=NowID;
+
+
+			   if(NowID){
+								 var NowIDArray=NowID.split(',');
+								 var idtrue=1;
+								 for(var i=0;i<=NowIDArray.length-1;i++){ 
+									  if(NowIDArray[i]==id){
+											  
+											 idtrue=0;
+									  }
+								 }
+								 
+								 if(idtrue){
+											  if(ids){
+												  ids+=','+id;
+											  }else{
+												  ids+=id;
+											  }
+											  CheckBoxTable(id);
+								 }
+								  
+				
+			   }else{
+					 CheckBoxTable(id);
+					 ids+=id;
+			   }
+			   
+			   $("#DraftIdAll").val(ids);
+			   
+			   SetNULLCheckBox(ids);
+			   
+	   }else{
+		     DeleteCheckBoxID(id);
+			 
+			 SetNULLCheckBox(id);
+	   }
+	   
+	   
+	   
+}
+
+function CheckBoxTable(id){
+	
+	   var Table='<tr id="CheckBoxTR_'+id+'"><td>'+id+'号</td><td><a class="small blue awesome" onclick="DeleteCheckBoxID('+id+')">取消</a></td></tr>';
+
+	   $("#DraftBatch tr:nth-child(2)").after(Table);
+}
+
+function OpenOperate(){
+	
+	  if(!$("#loading").dialog("isOpen")){
+		  
+		  $("#loading").dialog({
+				  title:"批量操作稿件",	
+				  width: 300,
+				  modal: false,
+				  height:'auto'
+		  });
+	      
+		  $("#loading").dialog('open');
+		   
+		  $("#loading").html('<div class="loading">读取数据中...</div>');
+		  
+		  var table='<table width="100%" border="0" cellpadding="0" cellspacing="0" class="draft_batch" id="DraftBatch"><tr><td class="draft_batch_h3" style="width:200px;border: none;" colspan="2">审核评语 <textarea id="ProposalContent" class="form_input_text" style="width:250px;height:80px;margin-bottom:10px;"></textarea></td></tr><tr><td class="draft_batch_h3" style="width:200px;">选中编号<textarea id="DraftIdAll" disabled="disabled" style="display:none"></textarea></td><td class="draft_batch_h3">操作</td></tr><tr><td colspan="2" id="NULLCheckBox">无</td></tr><tr><td colspan="2" class="draft_batch_line"><a href="javascript:;" class="yesall_ico" onclick="DraftSelectAll()">全选</a> &nbsp;  <a href="javascript:;" class="notall_ico" onclick="DraftNotSelect()">全不选</a></td></tr><tr><td colspan="2" class="task_mini_operate"><a class="small orange awesome" onclick="ApplyDraft(0,1)"><span class="right_ico">中标</span></a> <a class="small blue awesome" onclick="ApplyDraft(0,0)"><span class="cross_ico">不合格</span></a> <a class="small blue awesome" onclick="DraftMessageAll()"><span class="message_ico">点评</span></a></td></tr></table><div id="AddMessageForm" style="margin-top:10px;display:none;"><textarea id="CommentContent" class="form_input_text" style="width:250px;height:100px;margin-bottom:10px;"></textarea><p style="text-align:center;margin-top:10px;"><input name="Submit" type="button" value="发布" onclick="SubmitAddComment(0)" class="form_button" style="width:60px"/></p></div>';
+		  
+		  if($("#loading").html().length<="50"){
+				$("#loading").html(table);
+		  }
+	  
+	  }
+	  
+	  
+	  $(window).scroll( function(){$("#loading").dialog( "option", "position", ['center','center'] );});
+}
+
+
+function ApplyDraft(did,type,title){
+	
+
+	    if(did>0){
+		      //单个
+			  var DraftID=did;
+			  
+		}else{
+		      //全部
+              var DraftID=$("#DraftIdAll").val();
+			  
+	    }
+		
+		var applytitle='';
+		
+		if(title){
+			 applytitle=title;
+		}
+		
+		if(confirm('您确认对'+DraftID+'号稿件'+applytitle+'操作?')){
+			  
+			  
+			  var proposal=$("#ProposalContent").val();
+			  
+			  if(!proposal){
+				  proposal='';
+			  }
+				  
+			  $("#loading").html('<div class="loading">提交数据中...</div>');
+				  
+			  $("#loading").dialog({ title: '提交数据' });
+					
+			  
+			  $("#loading").dialog('open');
+		
+					
+			  $.ajax({
+						type: "POST",
+						url: SURL+"/index.php?app={echo $this->app}&action=11",
+						data: 'draftid='+DraftID+'&type_d='+type+'&proposal_s='+proposal+'&tid={echo $this->tid}',
+						success: function(data){
+							 ShowDraft(0);
+							 ShowDraft(1);
+							 $("#loading").html(data);
+						}
+			 });
+			  
+		}
+}
+
+
+function DraftMessage(did){
+	  if(NowLogin()>0){
+			  $("#loading").html('<div class="loading">读取数据中...</div>');	  
+						
+			  $("#loading").dialog({
+					  title:did+"号稿件评论",	
+					  width: 500,
+					  modal: true,
+					  height:'auto'
+			  });		
+				
+				
+			  $("#loading").html('<textarea id="CommentContent_'+did+'" class="form_input_text" style="width:450px;height:100px;margin-bottom:10px;"></textarea><p style="text-align:center;margin-top:10px;"><input name="Submit" type="button" value="发布" onclick="SubmitAddComment('+did+')" class="form_button" style="width:60px"/></p>');
+			  
+			  $("#loading").dialog('open');
+	
+	  }else{
+			  return false;
+	  }
+}
+
+
+function SubmitAddComment(did){
+	
+		if(NowLogin()>0){					
+	
+				if(did>0){
+
+					  var content=$("#CommentContent_"+did);
+					  var DraftID=did;
+					  
+				}else{
+					
+					  var content=$("#CommentContent");
+					  var DraftID=$("#DraftIdAll").val();
+					  
+				}
+				
+				if (content.val()==""){
+					  alert("请输入评论内容!");
+					  content.focus();
+					  return false; 
+				}	
+				
+				$.PHPAPPOPENLOADING();	
+			    $.ajax({
+						type: "POST",
+						url: SURL+"/index.php?app={echo $this->app}&action=12",
+						data: 'draftid='+DraftID+'&content_s='+content.val()+'&tid={echo $this->tid}',
+						success: function(data){
+							  $.PHPAPPCLOSELOADING();
+							  $("#loading").html(data);
+							  
+							  if(did>0){
+						               AjaxComment(did);
+							  }else{
+									   var NowIDArray=DraftID.split(',');
+								
+									   for(var i=0;i<=NowIDArray.length-1;i++){ 
+		  
+											 AjaxComment(NowIDArray[i]);
+										   
+									   }						  
+								  
+							  }
+							  
+						}
+			   });	
+				
+		}else{
+				 return false;
+	    }
+		   
+}
+
+
+</script>

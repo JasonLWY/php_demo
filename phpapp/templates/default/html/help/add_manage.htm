@@ -1,0 +1,60 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<style type="text/css">.adstyle p {height:32px;}</style>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">关联分类</td>
+    <td id="catid">
+    {if !empty($manage['catid'])}
+         {echo $this->GetSelectCategory('category',$manage['catid'],'catid',$this->app)}
+    {else} 
+         {echo $this->SetSelectCategory('category',0,'catid',$this->app)}
+    {/if}
+    </td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">标题</td>
+    <td> <input name="subject_s" type="text" class="form_input_text form_input_width_300" value="{if !empty($manage['subject'])}{echo $manage['subject']}{/if}"/></td>
+  </tr>
+  
+  {if $fieldarray=$this->GetTableFieldArray('help')}
+  <!-- 自定义字段 -->
+      {for $fieldarray $field}
+       <tr>
+        <td class="width_160">{echo $field['name_phpapp']}：</td>
+        <td>
+        {echo $this->GetTableFieldForm($field,empty($manage)?'':$manage)}
+        </td>
+      </tr>
+      {/for}
+  <!-- 自定义字段 end -->
+  {/if}
+  
+  
+  <tr>
+    <td class="width_160">内容</td>
+    <td> 
+     {template editor:editor}
+    <script type="text/javascript">$(function(){$.PHPAPPEditor('Content','624','280');});</script>
+    <textarea name="content_s" id="Content" class="form_editor">{if !empty($manage['content'])}{echo $this->str($manage['content'],999999,0,1,0,1,1)}{/if}</textarea>
+    
+    </td>
+  </tr>
+  
+</table>
+
+<p style="padding-top:10px;">提示：<span style="color:#F30">( 帮助字段功能可以在 全局 ->自定义字段中添加 帮助表 phpapp_help)</span></p>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button" onclick="SubmitContent();"/></div>
+</form>
+
+

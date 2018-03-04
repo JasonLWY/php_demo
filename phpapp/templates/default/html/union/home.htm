@@ -1,0 +1,206 @@
+{template phpapp:header}
+
+<script type="text/javascript" src="{TURL}js/default.js"></script>
+
+<link href="{TURL}union.css" rel="stylesheet" type="text/css" />
+
+<link href="{TURL}form.css" rel="stylesheet" type="text/css" />
+
+<link href="{TURL}icon.css" rel="stylesheet" type="text/css" />
+
+{template union.js}
+
+{ad Union1}
+
+<div class="union_top">
+<ul>
+   <li style="margin-right:98px;">选择合适的代码呈现方式点击“复制代码”复制代码。</li>
+   
+   <li style="margin-right:98px;">将获取的代码粘贴到您的网站，展示给您的用户。</li>
+   
+   <li>用户从您的推广链接来到本站消费，您可以获得返点。</li>
+</ul>
+</div>
+
+
+
+<div class="default_main">
+   <div class="default_left">
+     
+     {template menu}
+     
+     <div class="default_ad">
+          <div class="default_slide" id="SlideList">
+               {php} $slidearray=$this->GetMysqlArray('*'," ".$this->GetTable('slide')." WHERE appid='$this->app' AND status=0 ORDER BY displayorder ASC");{/php}
+               {if $slidearray}
+                   <ul id="Slide" style="height:236px;overflow:hidden;">
+                       
+                       {for $slidearray $key=>$value}
+                             <li id="Slide_IMG_{echo $key+1}"><a href="{echo $value['link']}" target="_blank"><img src="{echo $value['image']}" /></a></li>
+                       {/for}
+                   
+                   </ul>
+                   
+                   <div class="slidetitle" id="SlideTitle">
+                       {for $slidearray $key=>$value}
+                             <li id="Title_Slide_IMG_{echo $key+1}"{if ($key+1)==1} class="focus"{/if}><a href="{echo $value['link']}" target="_blank">{echo $value['subject']}</a></li>
+                       {/for}
+                   </div>
+               {else}
+                    <p>暂无数据</p>
+               {/if}
+            
+          </div>
+          
+          
+     </div>
+     
+    
+     
+     <script type="text/javascript">
+           SetSlide('#SlideList','#Slide','#SlideTitle',4000);
+     </script>
+     
+     </div>
+     
+     <div class="default_right">
+     
+        
+           <div class="union_box union_member" style="height:260px;">
+               <h2>推广者信息</h2>
+               <ul>
+                  <li>{echo $this->GetUserAvatar($member['uid'])}</li>
+                  <li style="padding-left:12px;">
+                  
+                  <p>欢迎您！{echo $member['username']}</p>
+
+                  <p>推广收入：<span class="color_f60">{echo $member['union']}</span>元</p>
+                  
+                  <p><a href="member.php?app=20">查看推广收入明细</a></p>
+                  
+                  </li>
+                  
+                  <li style="padding-top:30px;">快捷推广链接：</li>
+                  <li><input name="Link" type="text" id="Link" size="3" class="form_input_text form_input_width_200"  value="{echo SURL}/index.php?app=2&action=2&u={echo $member['uid']}"/> </li>
+                  <li style="text-align:center;width:200px;padding-top:10px;"><a href="javascript:;" onclick="CopyURL('Link');return false;"  class="form_button" style="width:80px;padding:6px;color:#FFF;"><span style="color:#FFF">复制推广链接</span></a></li>
+               
+               </ul>
+           </div>
+           
+           
+
+     </div>
+
+</div>
+
+
+<div class="default_main">
+
+    <div class="default_left">
+    
+           
+           <div class="union_box union_item" style="height:160px;">
+               <h2>推广个人实名认证提成</h2>
+               <ul>
+                  <li class="union_certificate"></li>
+                  <li style="width:320px;">
+                        <p style="color:#999">通过您的宣传链接注册的会员通过实名认证</p>
+                        <p style="font-size:18px"><strong>你的收益 = <span class="color_f60">{echo floatval(PHPAPP::$config['personalcertificatemoney'])}</span> 元</strong></p>
+                        <p>一个实名个人认证会员你将得到 {echo floatval(PHPAPP::$config['personalcertificatemoney'])} 元 </p>
+                  </li>
+                  
+                  <li style="text-align:right;font-size:20px;font-family:'微软雅黑';width:200px;padding-top:26px;color:#F60"><strong>推广个人实名认证</strong></li>
+
+               </ul>
+           </div>
+           
+           
+           <div class="union_box union_item" style="height:160px;">
+               <h2>推广企业实名认证提成</h2>
+               <ul>
+                  <li class="union_certificate_company"></li>
+                  <li style="width:320px;">
+                        <p style="color:#999">通过您的宣传链接注册的会员通过实名认证</p>
+                        <p style="font-size:18px"><strong>你的收益 = <span class="color_f60">{echo floatval(PHPAPP::$config['companycertificatemoney'])}</span> 元</strong></p>
+                        <p>一个实名企业认证会员你将得到 {echo floatval(PHPAPP::$config['companycertificatemoney'])} 元 </p>
+                  </li>
+                  
+                  <li style="text-align:right;font-size:20px;font-family:'微软雅黑';width:200px;padding-top:26px;color:#F60"><strong>推广企业实名认证</strong></li>
+
+               </ul>
+           </div>
+           
+           {if $service}
+                {for $service $value}
+                    <div class="union_box union_item" style="height:160px;">
+                       <h2>推广{echo $value['subject']}提成</h2>
+                       <ul>
+                          <li class="{echo $value['icon']}"></li>
+                          <li style="width:320px;">
+                                <p style="color:#999">通过您的宣传链接注册的会员购买{echo $value['subject']}服务</p>
+                                <p style="font-size:18px"><strong>你的收益 {echo $value['price']} × {echo $value['rebate_phpapp']*100}% = <span class="color_f60">{echo ($value['price']* $value['rebate_phpapp'])}</span> 元</strong></p>
+                                <p>一个购买{echo $value['subject']}服务的会员你将得到 10% 提成 </p>
+                          </li>
+                          
+                          <li style="text-align:right;font-size:20px;font-family:'微软雅黑';width:200px;padding-top:26px;color:#F60"><strong>推广{echo $value['subject']}</strong></li>
+        
+                       </ul>
+                   </div>
+               {/for}
+          {/if}
+    </div>
+    
+    
+    <div class="default_right">
+          
+          <div class="banner">{ad Union2}</div>
+           
+          
+           <!--公告提现等-->
+          {block publish}
+          
+          
+          <div class="union_box uniontop" style="margin-bottom:10px;margin-top:10px;">
+               <h2>推广收入排行</h2>
+               <ul>
+                  {for $uniontop $key=>$value}
+                  <li><span class="uniontopnum"{if ($key+1)==1} style="color:#F30"{elseif ($key+1)==2}style="color:#F90"{elseif ($key+1)==3}style="color:#FC0"{/if}>{echo ($key+1)}</span> &nbsp;<a href="space.php?app=8&uid={echo $value['uid']}" target="_blank">{echo $value['username']}</a> <span class="color_f60">{echo $value['union']}</span> 元</li>
+                  {/for}
+               
+               </ul>
+           </div>
+           
+           <div class="banner" style="margin-top:10px;">{ad Union3}</div>
+           
+           <div class="union_box task_feed">
+               <h2>最新推广动态</h2>
+               
+                    <ul id="ScrollUnionFeed">
+
+                          {if $unionfeed}
+                               {for $unionfeed $value}
+                              <li>
+                                <em>{echo $this->Date('m-d H:i',$value['dateline'],1)}</em>
+                                <p><a href="space.php?app=8&uid={echo $value['uid']}" target="_blank" title="{echo $value['username']}">{echo $value['username']}</a> <span style="color:#999">{echo $this->FeedReplace($this->str($value['title_data'],16,1,0,1,0,1),$value['title_template'])}</span></p>
+                                </li>
+                               {/for}
+                          {else}
+                          
+                          <li>没有动态</li>
+                          {/if}
+                  
+                  </ul>
+                  
+                   <script type="text/javascript">
+				   SetScroll('#ScrollUnionFeed',3000);
+				  </script>
+           </div>
+           
+           
+           <div class="banner" style="margin-top:10px;">{ad Union4}</div>
+    
+    </div>
+
+</div>
+
+{template phpapp:footer}

@@ -1,0 +1,266 @@
+{if empty($sid)}
+{template member:menu}
+{/if}
+
+
+<link href="{TURL}form.css" rel="stylesheet" type="text/css" />
+
+<link href="{TURL}sellerservice.css" rel="stylesheet" type="text/css" />
+
+
+<script type="text/javascript">
+
+$(function() {
+		   
+	    $("#SubmitAdd").click( function () {
+
+			  var subject=$("#subject");
+			  if (subject.val()==""){
+				    alert("请输入服务名称!");
+				    subject.focus();
+				    return false; 
+			  }
+			  
+			  if (subject.val().length<"6"){
+		            alert("服务名称不能小于6个字节!");
+		            subject.focus();
+		            return false; 
+	          }
+			  
+			  
+			  var catids='';
+			  var selects='';
+			  $("#catid").find("select").each(function(){
+					  catids=catids+1;							   
+					  var value=$(this).val();
+					   
+					  if(value){
+						   selects=selects+1;
+					  }			 				 
+			  }); 
+			  
+	          if(catids!=selects){
+			        alert("请选择分类!");
+					return false;  
+			  }
+			  
+			  
+			  
+			  var price=$("#price");
+			  
+			  if (!price.val() || price.val()<1){
+		            alert("价格不能为空或为0!");
+		            price.focus();
+		            return false; 
+	          }
+			  
+			  
+              if (isNaN(price.val())){
+		            alert("您输入的价格格式错误，请重新输入!");
+		            money.focus();
+		            return false; 
+	          }
+			  
+			  
+			  
+			  var units=$("#unit");
+			  if (units.val()==""){
+				    alert("请输入单位名称!");
+				    units.focus();
+				    return false; 
+			  }
+
+			  
+			  
+			  var time=$("#time");
+			  
+			  if (!time.val() || time.val()<1){
+		            alert("时间不能为空或为0!");
+		            time.focus();
+		            return false; 
+	          }
+			  
+			  
+              if (isNaN(time.val())){
+		            alert("您输入的时间格式错误，请重新输入!");
+		            time.focus();
+		            return false; 
+	          }
+			  
+			  var isphoto=$("#logophotoshow").html();
+			  
+			  if(!isphoto){
+			  
+					var logo=$("#logo");
+					if (logo.val()==""){
+						  alert("请上传服务封面!");
+						  logo.focus();
+						  return false; 
+					}
+			  
+			  }
+			  
+			  $.SaveContent(); //保存内容
+			  
+			  var content=$("#Content");
+			  if (content.val()==""){
+				    alert("请输入服务内容!");
+				    content.focus();
+				    return false; 
+			  }
+		
+			  if (content.val().length<"6"){
+		            alert("服务内容不能小于6个字节!");
+		            content.focus();
+		            return false; 
+	          }
+			  
+			  
+			  $("#SubmitAdd").hide();
+			  
+			  $("#IsSubmit").show();
+			  
+              $("#ServiceForm").submit();
+			  
+			  
+			  
+	    });
+	  
+
+        $("#service_tabs").tabs();	
+		
+		GetServiceList('#ServiceList',2);
+		
+});	
+
+</script>
+
+{if $this->sid>0}
+
+<script type="text/javascript">
+
+       $("#ManageMenu li[class='now_meun_tab'] a").html('编辑服务');
+
+</script>
+{/if}
+
+
+{if empty($sid)}
+<form id="ServiceForm" action="{SURL}/member.php?app={echo $this->app}&action=1{if $this->sid>0}&sid={echo $this->sid}{/if}" target="ServiceFormIframe" method="post" enctype="multipart/form-data">
+{else}
+<form id="ServiceForm" target="ServiceFormIframe" action="{echo $this->MakeGetParameterURL()}" method="post" enctype="multipart/form-data">
+{/if}
+
+<div class="service_form">
+
+<h5>服务名称：<span class="help_small" title="服务名称"> </span></h5>
+
+<p>
+<input name="subject_s" type="text"  id="subject" size="50" maxlength="255" class="form_input_text form_input_width_500"  value="{if !empty($service['subject'])}{echo $service['subject']}{/if}"/>
+</p>
+  
+  
+{if $fieldarray=$this->GetTableFieldArray('task_seller_service')}
+<!-- 自定义字段 -->
+      {for $fieldarray $field}
+      <h5>{echo $field['name_phpapp']}：<span class="help_small" title="{echo $field['name_phpapp']}"> </span></h5>
+    
+      <p>{echo $this->GetTableFieldForm($field,empty($service)?'':$service)}</p>
+      
+      {/for}
+<!-- 自定义字段 end -->
+{/if}
+  
+<h5>服务分类：<span class="help_small" title="服务分类"> </span></h5>
+
+<p id="catid" style="height:26px;">
+    {if !empty($service['catid'])}
+         {echo $this->GetSelectCategory('category',$service['catid'],'catid',49)}
+    {else} 
+         {echo $this->SetSelectCategory('category',0,'catid',49)}
+    {/if}
+</p>
+
+
+<h5>服务报价：<span class="help_small" title="服务报价"> </span></h5>
+  
+<p>
+    <input name="price_d" type="text" id="price" size="10" maxlength="10" class="form_input_text" style="width:100px;"  value="{if !empty($service['price'])}{echo $service['price']}{/if}"/> 元/ 单位 <input name="unit_s" type="text" id="unit" size="10" maxlength="10" class="form_input_text"  style="width:100px;"  value="{if !empty($service['unit'])}{echo $service['unit']}{/if}"/> <span style="color:#999">如:个、页、张</span>
+</p>
+  
+ 
+<h5>完成周期：<span class="help_small" title="完成周期"> </span></h5> 
+
+<p><input name="time_d" type="text"  id="time" size="3" maxlength="3" class="form_input_text"  style="width:100px;" value="{if !empty($service['time'])}{echo $service['time']}{/if}"/>  天
+</p>
+
+
+
+<h5>服务封面：<span class="help_small" title="服务封面"> </span></h5>   
+
+<p>
+     <input name="logophoto" type="file" id="logo"/> <span style="color:#999">图片分辨率最低 200px * 200px 文件格式：jpg,gif,png 文件最大： {echo (PHPAPP::$config['oneimageuploadsize']/1024)}k</span>
+     
+     
+     {if !empty($service['logo'])}
+     		<p id="logophotoshow" style="padding-top:20px;padding-bottom:20px;">
+                {php}
+                $photo=$this->GetMysqlOne('thumb'," ".$this->GetTable('file')." WHERE fid='$service[logo]'");{/php}
+                {if $photo}  
+                     <img src="{echo $photo['thumb']}"/>
+                {/if}
+      		</p>                  
+     {/if}
+     
+</p>
+
+
+<h5>服务内容：<span class="help_small" title="服务内容"> </span></h5>   
+    
+<p>
+        {template editor:editor}
+      <script type="text/javascript">$(function(){$.PHPAPPEditor('Content','740','260');});</script>
+      
+      <textarea name="content_s" id="Content" class="form_editor">{if !empty($service['content'])}{echo $service['content']}{/if}</textarea>
+</p>
+
+
+{if empty($adminservice)}
+<div class="buyprops" style="padding-top:30px;">
+
+ <div id="service_tabs" style="border: none;padding:0px;">
+    
+    <ul>
+        <li><a href="#ServiceList"><span>购买增值服务</span></a></li>
+    </ul>
+
+    <div id="ServiceList" style="padding-left:0px;padding-right:0px;">
+          <div class="loading">读取数据中...</div>
+    </div>
+
+</div>
+
+</div>
+{/if}
+
+
+<div id="IsSubmit" class="loading_big" style="display:none;">提交数据中...</div>
+<p style="padding-bottom:10px;">
+    <input name="submit" type="submit" value="发布" id="SubmitAdd" class="form_button"/>
+</p>
+  
+
+<input type="hidden" id="BuyPropsID" name="props" value="{if !empty($service['props'])}{echo $service['props']}{/if}"/>
+<input type="hidden" name="SecurityForm_s" value="{echo $this->SecurityForm()}"/>
+</form>
+
+</div>
+
+
+</div>
+
+<iframe src="javascript:false;" id="ServiceFormIframe" style="display:none;height:0px;width:0px;" name="ServiceFormIframe"></iframe>
+
+{if empty($sid)}
+{template phpapp:footer}
+{/if}

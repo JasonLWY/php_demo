@@ -1,0 +1,104 @@
+.service_search_icon,.service_feed_icon,.service_top1_icon,.service_top2_icon,.service_draft_icon,.union_certificate,.union_certificate_company,.service_realnametask_icon,.service_maplocation_icon,.service_allowtender_icon,.service_checklink_icon,.service_flash_icon,.service_task_icon{
+	height: 40px;
+	width: 40px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	float: left;
+	margin-right: 20px;
+}
+
+.service_task_icon{
+	background-image: url(./images/prop/service_task_icon.png);
+}
+
+.service_flash_icon{
+	background-image: url(./images/prop/service_flash_icon.png);
+}
+.service_search_icon{
+    background-image: url(./images/prop/service_search_icon.png);
+}
+
+.service_feed_icon{
+	background-image: url(./images/prop/service_feed_icon.png);
+}
+
+.service_top1_icon{
+	background-image: url(./images/prop/service_top1_icon.png);
+}
+
+.service_top2_icon{
+	background-image: url(./images/prop/service_top2_icon.png);
+}
+
+.service_draft_icon{
+	background-image: url(./images/prop/service_draft_icon.png);
+}
+
+
+.union_certificate{
+	background-image: url(./images/prop/personal.png);
+}
+
+
+.union_certificate_company{
+	background-image: url(./images/prop/company.png);
+}
+
+.service_realnametask_icon{
+	background-image: url(./images/prop/service_realnametask_icon.png);
+}
+
+.service_maplocation_icon{
+	background-image: url(./images/prop/service_maplocation_icon.png);
+}
+
+.service_allowtender_icon{
+	background-image: url(./images/prop/service_allowtender_icon.png);
+}
+
+.service_checklink_icon{
+	background-image: url(./images/prop/service_checklink_icon.png);
+}
+
+
+
+.buyservice a{
+	background-image: url(./images/top_addtask_small_bg.png);
+	padding-top: 4px;
+	padding-right: 10px;
+	padding-bottom: 4px;
+	padding-left: 10px;
+	float: right;
+	background-repeat: repeat-x;
+	background-position: right top;
+	color: #333;
+}
+.buyservice a:link{color: #333;}
+
+.buyservice a:hover{
+	background-image: url(./images/top_addtask_small_bg.png);
+	background-repeat: repeat-x;
+	background-position: right bottom;
+	text-decoration:none;
+	color:#FFF;
+	background-color: #FC0;
+}
+.buyservice a:visited {
+	color: #333;
+}
+.buyservice a:active {
+	color: #333;
+}
+.buy_service_right{background-image: url(./images/right.png);	position: absolute;
+	background-repeat: no-repeat;
+	display: block;
+	height: 20px;
+	width: 20px;}
+.buy_service_balloon{
+	background-image: url(./images/balloon.png);
+	position: absolute;
+	background-repeat: no-repeat;
+	display: block;
+	height: 20px;
+	width: 20px;
+}

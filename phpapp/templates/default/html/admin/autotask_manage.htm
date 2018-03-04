@@ -1,0 +1,94 @@
+{template header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $this->GET['op']==1 || $this->GET['op']==2}
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">执行函数名</td>
+    <td>
+    
+    <input name="function_s" value="{if !empty($manage['runcode'])}{php}$runcode=unserialize($manage['runcode']);{/php}{echo $runcode['function']}{/if}" type="text" class="form_input_text form_input_width_200" /> (该应用main_phpapp.php文件中的函数)
+    </td>
+  </tr>
+  
+   <tr>
+    <td class="width_160">执行时间</td>
+    <td>
+    <input name="runtime_s" value="{if !empty($manage['runtime'])}{echo $this->Date('Y-m-d',$manage['runtime'])}{/if}" type="text" class="form_input_text form_input_width_200" /> (格式 2012-10-01)
+    </td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">所属应用</td>
+    <td>
+     <select name="appid_d">
+        {for $apparray $value}
+          <option value="{echo $value['id_phpapp']}" {if !empty($manage['app_phpapp'])}{if $manage['app_phpapp']==$value['id_phpapp']} selected="selected" {/if}{/if}>{echo $value['name_phpapp']}</option>
+        {/for}
+     </select> 
+   </td>
+  </tr>
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+
+
+
+{else}
+
+
+
+
+    {if $list}
+    
+    <div id="WindowsForm{echo $this->GET['menu']}">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+      <tr>
+        <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+        
+        {for $orderarr $key=>$value}
+        <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+        {/for} 
+        <td class="datalist_h2">执行函数名</td>
+        <td class="datalist_h2" style="width:60px;">操作</td>
+      </tr>
+
+							
+
+    {for $list $key=>$value}
+      <tr>
+        <td><input name="checkbox[]" type="checkbox" value="{echo $value['aid']}" {if !$value['system']}disabled="disabled"{/if}/></td>
+        <td>{echo $value['aid']}</td>
+        <td>{echo $value['appname']}</td>
+        <td>{if $value['system']==1}用户{else}系统{/if}</td>
+        <td>{echo $this->Date('Y-m-d H:i:s',$value['runtime'])}</td>
+        <td>{php}$runcode=unserialize($value['runcode']);{/php}{echo $runcode['function']}</td>
+        <td>{if $value['system']==1}<a href="{echo $this->MakeGetParameterURL(array('op'=>2,'id'=>$value['aid']))}">[编辑]</a>{else}-{/if}</td>
+      </tr>
+     {/for} 
+    
+    </table>
+    </div>
+    
+    <div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+    
+    <div class="phpapp_button"><input name="Submit" type="submit" value="删除" class="form_button"/></div>
+    
+    
+    
+    {/if}
+
+
+
+
+{/if}
+
+</form>

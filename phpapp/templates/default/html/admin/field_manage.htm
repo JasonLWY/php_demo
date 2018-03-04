@@ -1,0 +1,189 @@
+{template header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $this->GET['op']==1 || $this->GET['op']==2}
+
+<p style="padding-bottom:10px;padding-left:16px;">添加字段到 
+<select name="table_phpapp">
+{for $list $value}
+    <option value="{echo $value['Name']}"{if !empty($manage['table_phpapp'])}{if $manage['table_phpapp']==$value['Name']} selected="selected"{/if}{/if}>{echo $value['Name']}</option>
+{/for}
+</select>
+表
+</p>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+<tr>
+<td colspan="3"><strong>字段:</strong></td>
+</tr>
+<tr>
+<td class="width_160">字段名：</td>
+<td><input name="field_phpapp_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['field_phpapp'])}{echo $manage['field_phpapp']}" disabled="disabled{/if}"/></td>
+<td class="color_999">添加到数据表中的字段名,只能填字母组合</td>
+</tr>
+
+<tr>
+<td class="width_160">表单名：</td>
+<td><input name="name_phpapp_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['name_phpapp'])}{echo $manage['name_phpapp']}{/if}"/></td>
+<td class="color_999">显示在表单中的名字</td>
+</tr>
+
+<tr>
+<td colspan="3"><strong>表单类型:</strong></td>
+</tr>
+<tr>
+<td class="width_160">选择类型：</td>
+<td colspan="2">
+<select name="type_phpapp" id="TypePhpapp">
+{for $formtypearray $key=>$value}
+    <option value="{echo $key}"{if !empty($manage['table_phpapp'])}{if $manage['type_phpapp']==$key} selected="selected"{/if}{/if}>{echo $value}</option>
+{/for}
+</select>
+</td>
+</tr>
+
+
+<tr class="settext"{if !empty($manage['type_phpapp'])}{if $manage['type_phpapp']=='text' || $manage['type_phpapp']=='textarea'} style="display:block"{else} style="display:none"{/if}{/if}>
+<td class="width_160">默认值：</td>
+<td><input name="default_phpapp_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['default_phpapp'])}{echo $manage['default_phpapp']}{/if}"/></td>
+<td class="color_999">默认显示的数据</td>
+</tr>
+
+<tr class="settext"{if !empty($manage['type_phpapp'])}{if $manage['type_phpapp']=='text' || $manage['type_phpapp']=='textarea'} style="display:block"{else} style="display:none"{/if}{/if}>
+<td class="width_160">最小值长度：</td>
+<td><input name="smalllength_phpapp_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['smalllength_phpapp'])}{echo $manage['smalllength_phpapp']}{else}3{/if}"/></td>
+<td class="color_999">字符最小值长度</td>
+</tr>
+
+<tr class="settext"{if !empty($manage['type_phpapp'])}{if $manage['type_phpapp']=='text' || $manage['type_phpapp']=='textarea'} style="display:block"{else} style="display:none"{/if}{/if}>
+<td class="width_160">最大值长度：</td>
+<td><input name="maxlength_phpapp_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['maxlength_phpapp'])}{echo $manage['maxlength_phpapp']}{else}30{/if}"/></td>
+<td class="color_999">字符最大值长度</td>
+</tr>
+
+<tr class="settext"{if !empty($manage['type_phpapp'])}{if $manage['type_phpapp']=='text' || $manage['type_phpapp']=='textarea'} style="display:block"{else} style="display:none"{/if}{/if}>
+<td class="width_160">是否必填：</td>
+<td><input name="required_phpapp" type="radio" value="1" {if !empty($manage['required_phpapp'])}{if $manage['required_phpapp']==1}checked{/if}{else}checked{/if}/>是 <input name="required_phpapp" type="radio" value="2" {if !empty($manage['required_phpapp'])}{if $manage['required_phpapp']==2}checked{/if}{/if}/> 否</td>
+<td class="color_999">当选必填时,最小值生效系统要求用户是输入</td>
+</tr>
+
+
+<tr id="setselect"{if !empty($manage['type_phpapp'])}{if $manage['type_phpapp']=='text' || $manage['type_phpapp']=='textarea'} style="display:none"{/if}{/if}>
+<td class="width_160">设定值：</td>
+<td><textarea  rows="6"  name="value_phpapp_s" cols="50" class="form_textarea form_input_width_300">{if !empty($manage['value_phpapp'])}{echo $manage['value_phpapp']}{/if}</textarea></td>
+<td class="color_999">
+<p>每行一个数据，格式如下:</p>
+<p>100|100元</p>
+<p>1000|1000元</p>
+<p>10000|10000元</p>
+<p>提示：|左边为数据值,|右边为显示值</p>
+</td>
+</tr>
+
+<tr>
+<td class="width_160">预过滤值：</td>
+<td><input name="filter_phpapp" type="radio" value="1" {if !empty($manage['filter_phpapp'])}{if $manage['filter_phpapp']==1}checked{/if}{else}checked{/if}/>整型 <input name="filter_phpapp" type="radio" value="2" {if !empty($manage['filter_phpapp'])}{if $manage['filter_phpapp']==2}checked{else} disabled="disabled"{/if}{/if}/> 浮点型 <input name="filter_phpapp" type="radio" value="3" {if !empty($manage['filter_phpapp'])}{if $manage['filter_phpapp']==3}checked{else} disabled="disabled"{/if}{/if}/> 字符串</td>
+<td class="color_999">
+<p>提前过虑数据值,防止非法数据</p>
+<p>获取数据用 $this->POST['表单名']</p></td>
+</tr>
+
+<tr>
+<td class="width_160">提交方式：</td>
+<td><select name="submit_phpapp_d">
+  <option value="0" {if !empty($manage['submit_phpapp'])}{if $manage['submit_phpapp']==0} selected="selected" {/if}{/if}>传统POST</option>
+  <option value="1" {if !empty($manage['submit_phpapp'])}{if $manage['submit_phpapp']==1} selected="selected" {/if}{/if}>AjaxPOST</option>
+</select> 
+</td>
+<td class="color_999">设定提交方式系统可以正确识别</td>
+</tr>
+
+<tr>
+<td class="width_160">排序：</td>
+<td><input name="displayorder_phpapp_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['displayorder_phpapp'])}{echo $manage['displayorder_phpapp']}{else}0{/if}"/></td>
+<td class="color_999">值越大越排后</td>
+</tr>
+
+<tr>
+<td class="width_160">是否启用：</td>
+<td><select name="status_phpapp">
+  <option value="0" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==0} selected="selected" {/if}{/if}>启用</option>
+  <option value="1" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==1} selected="selected" {/if}{/if}>关闭</option>
+</select> 
+</td>
+<td class="color_999">是否启用</td>
+</tr>
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit_s" type="submit" value="提交" class="form_button"/></div>
+ 
+
+
+<script type="text/javascript">
+$("#TypePhpapp").change(function(){
+      var typeval =$(this).val();
+	  
+	  if(typeval=='text' || typeval=='textarea'){
+		    
+			$("#setselect").hide();
+			$(".settext").show();
+		  
+	  }else{
+		  
+		    $("#setselect").show();
+			$(".settext").hide();
+	  }
+	  
+});
+</script>
+
+{else}
+
+{if $list}
+
+ <div id="WindowsForm{echo $this->GET['menu']}">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+      <tr>
+        <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+        {for $orderarr $key=>$value}
+        <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+        {/for} 
+        
+        <td class="datalist_h2">操作</td>
+      </tr>
+      
+    {for $list $key=>$value}
+      <tr>
+       <td><input name="checkbox[]" type="checkbox" value="{echo $value['id_phpapp']}"/></td>
+        <td>{echo $value['id_phpapp']}</td>
+        <td>{echo $value['table_phpapp']}</td>
+        <td>{echo $value['field_phpapp']}</td>
+        <td>{if $value['status_phpapp']}关闭{else}启用{/if}</td>
+        <td><a href="{echo $this->MakeGetParameterURL(array('op'=>2,'id'=>$value['id_phpapp']))}">[编辑]</a></td>
+      </tr>
+     {/for} 
+    
+    </table>
+ </div>
+    <div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+
+    <div class="phpapp_button"><input name="Submit_s" type="submit" value="删除" class="form_button"/></div>
+    
+
+{else}
+<p>没有数据!</p>
+{/if} 
+
+{/if}
+
+
+{if $this->GET['op']==1}
+<script type="text/javascript">
+$("#setselect").hide();
+</script>
+{/if}
+
+
+</form>

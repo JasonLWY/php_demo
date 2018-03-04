@@ -1,0 +1,172 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  
+  <tr>
+  <td>用户组</td>
+  <td>
+  <select name="gid_d">
+  {for $usergrouparray $value}
+        <option value="{echo $value['gid']}" {if !empty($nowvalue['gid'])}{if $value['gid']==$nowvalue['gid']} selected="selected" {/if}{/if}>{echo $value['groupname']}</option>
+  {/for}
+  </select>
+  </td>
+  <td></td>
+  </tr>
+  
+  <tr>
+  <td class="datalist_h2" style="width:200px">提成设置</td>
+  <td class="datalist_h2">选项</td>
+  <td class="datalist_h2"></td>
+  </tr>
+  
+  <tr>
+  <td>手续费收取方式</td>
+  <td>
+  <select name="feetype_d" id="FeeType">
+  <option value="0" {if !empty($nowvalue['feetype'])}{if $nowvalue['feetype']==0} selected="selected" {/if}{/if}>百分比</option>
+  <option value="1" {if !empty($nowvalue['feetype'])}{if $nowvalue['feetype']==1} selected="selected" {/if}{/if}>固定</option>
+  </select>
+  </td>
+  <td>(所有推广费服务结束后系统才清算)</td>
+  </tr>
+  
+  <tr>
+  <td>该组中标交易扣除手续费</td>
+  <td>
+   <input name="taskfee_f" type="text" class="form_input_text form_input_width_200" value="{echo $nowvalue['taskfee']}" maxlength="8"/>
+  </td>
+  <td><span id="numbertype">{if !empty($nowvalue['feetype'])}{if $nowvalue['feetype']==1}如: 10 元每笔填 10{else}如: 20% 填 0.2 {/if}{else}如: 20% 填 0.2{/if}</span> (设置0为不收取费用)</td>
+  </tr>
+  
+  <tr>
+  <td>该组发布服务获得推广费</td>
+  <td>
+   <input name="addunionfee_f" type="text" class="form_input_text form_input_width_200" value="{echo $nowvalue['addunionfee']}" maxlength="8"/>
+  </td>
+  <td>如: 2% 填 0.02 (设置0为不支出费用)</td>
+  </tr>
+  
+  <tr>
+  <td>该组中标交易获得推广费</td>
+  <td>
+   <input name="unionfee_f" type="text" class="form_input_text form_input_width_200" value="{echo $nowvalue['unionfee']}" maxlength="8"/>
+  </td>
+  <td>如: 2% 填 0.02 (设置0为不支出费用)</td>
+  </tr>
+
+  <script type="text/javascript">
+
+      $(function(){	
+             $("#FeeType").change(function(){
+                   var value=$(this).val();	
+                   
+                   if(value==1){
+                       
+                         $("#numbertype").html('如: 10 元每笔填 10');
+                   
+                   }else{
+                         $("#numbertype").html('如: 20% 填 0.2');
+                   }
+                   
+             });
+      });
+   </script>
+
+  <tr>
+  <td class="datalist_h2" style="width:200px">服务权限</td>
+  <td class="datalist_h2" style="width:260px">选项</td>
+  <td class="datalist_h2"></td>
+  </tr>
+
+  <tr>
+  <td>该组是否允许发布服务</td>
+  <td>
+  <select name="addtask">
+  <option value="0" {if !empty($nowvalue['addtask'])}{if $nowvalue['addtask']==0} selected="selected" {/if}{/if}>允许</option>
+  <option value="1" {if !empty($nowvalue['addtask'])}{if $nowvalue['addtask']==1} selected="selected" {/if}{/if}>禁止</option>
+  </select>
+  </td>
+  <td></td>
+  </tr>
+  
+  <tr>
+  <td>该组是否允许看该服务</td>
+  <td>
+  <select name="appallow">
+  <option value="0" {if !empty($nowvalue['appallow'])}{if $nowvalue['appallow']==0} selected="selected" {/if}{/if}>允许</option>
+  <option value="1" {if !empty($nowvalue['appallow'])}{if $nowvalue['appallow']==1} selected="selected" {/if}{/if}>禁止</option>
+  </select>
+  </td>
+  <td></td>
+  </tr>
+  
+  
+  <tr>
+  <td>该组是否允许购买服务</td>
+  <td>
+  <select name="buyservice">
+  <option value="0" {if !empty($nowvalue['buyservice'])}{if $nowvalue['buyservice']==0} selected="selected" {/if}{/if}>允许</option>
+  <option value="1" {if !empty($nowvalue['buyservice'])}{if $nowvalue['buyservice']==1} selected="selected" {/if}{/if}>禁止</option>
+  </select>
+  </td>
+  <td></td>
+  </tr>
+  
+  <tr>
+  <td>服务是否要求实名雇用</td>
+  <td>
+  <select name="realnametask">
+  <option value="0" {if !empty($nowvalue['realnametask'])}{if $nowvalue['realnametask']==0} selected="selected" {/if}{/if}>是</option>
+  <option value="1" {if !empty($nowvalue['realnametask'])}{if $nowvalue['realnametask']==1} selected="selected" {/if}{/if}>否</option>
+  </select>
+  </td>
+  <td></td>
+  </tr>
+  
+  <tr>
+  <td>是否能修改服务</td>
+  <td>
+  <select name="edittask">
+  <option value="0" {if !empty($nowvalue['edittask'])}{if $nowvalue['edittask']==0} selected="selected" {/if}{/if}>允许</option>
+  <option value="1" {if !empty($nowvalue['edittask'])}{if $nowvalue['edittask']==1} selected="selected" {/if}{/if}>禁止</option>
+  </select>
+  </td>
+  <td></td>
+  </tr>
+  
+  <tr>
+  <td>每天发服务次数</td>
+  <td>
+  <input name="addnumbertask_d" type="text" class="form_input_text form_input_width_200" value="{if !empty($nowvalue['addnumbertask'])}{echo $nowvalue['addnumbertask']}{/if}" maxlength="8"/> 次
+  </td>
+  <td style="color:#666">(0 为不限)</td>
+  </tr>
+  
+  <tr>
+  <td>发布服务最大价格</td>
+  <td>
+  <input name="maxmoneytask_f" type="text" class="form_input_text form_input_width_200" value="{if !empty($nowvalue['maxmoneytask'])}{echo $nowvalue['maxmoneytask']}{/if}" maxlength="10"/> 元
+  </td>
+  <td style="color:#666">格式 0.00 元 (0 为不限)</td>
+  </tr>
+  
+  <tr>
+  <td>发布服务最低价格</td>
+  <td>
+  <input name="smallmoneytask_f" type="text" class="form_input_text form_input_width_200" value="{if !empty($nowvalue['smallmoneytask'])}{echo $nowvalue['smallmoneytask']}{/if}" maxlength="10"/> 元
+  </td>
+  <td style="color:#666">格式 0.00 元</td>
+  </tr>
+  
+  <tr>
+  <td colspan="3"></td>
+  </tr>
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+
+</form>

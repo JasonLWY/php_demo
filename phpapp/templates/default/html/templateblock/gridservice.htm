@@ -1,0 +1,90 @@
+{php}
+ 		//分类
+		$taskcategory=$this->GetMysqlArray('total,name,catid,nexts,color'," ".$this->GetTable('category')." WHERE type=49 AND upid=0 ORDER BY displayorder ASC LIMIT 0,6");
+
+{/php}
+
+
+<div class="data_list">
+<div class="data_category">
+    
+    <ul>
+      {if $taskcategory}
+           {for $taskcategory $category}
+           	 	 <li><a href="index.php?app=10&action={echo $category['catid']}&type=82">{echo $category['name']}</a></li>
+           {/for}
+      {/if}
+      <a href="{echo SURL}/index.php?app=82" class="small blue awesome" style="margin-top:5px;margin-left:20px;">更多服务分类</a>
+    </ul>
+    <h1>买服务</h1>
+</div>
+
+<ul class="box_list">
+
+    {if $taskcategory}
+      
+        {for $taskcategory $category}
+
+                 {php} $servicearr=$this->GetMysqlArray('a.*,b.thumb'," ".$this->GetTable('task_seller_service')." AS a LEFT JOIN ".$this->GetTable('file')." AS b ON a.logo=b.fid WHERE a.catid IN($category[nexts]) $citysql ORDER BY a.topbid DESC,a.dateline DESC LIMIT 0,4");
+                 {/php}
+                 
+                 {if $servicearr}
+                         
+                       <li class="box_show">
+       
+                        <div class="task_list">
+     
+                                 <h2><dfn><a href="index.php?app=10&action={echo $category['catid']}&type=82" class="small orange awesome" title="更多服务" target="_blank">更多</a></dfn><span><a href="index.php?app=10&action={echo $category['catid']}&type=82">{echo $category['name']}服务</a></span></h2>
+                                 <ul class="task_show_big">           
+                                 <li class="task_list_big">
+                             
+                                    <div class="task_avatar_big">
+                                    {if !empty($servicearr[0]['logo'])}
+                                                
+                                                {if $servicearr[0]['thumb']}  
+                                                     <a href="{echo SURL}{echo $value['url']}" target="_blank" title="{echo $servicearr[0]['subject']}"><img src="{SURL}/{echo $servicearr[0]['thumb']}"/></a>
+                                                {else}
+                                                      <img src="{SURL}/images/seller/nopic.gif"/>
+                                                {/if}
+                                     {else}
+                                         
+                                         
+                                         <img src="{SURL}/images/seller/nopic.gif"/>
+                                        
+                                                        
+                                     {/if}
+                                    </div>
+                                    
+                                   <p class="task_money"><span class="color_f60">￥{echo $servicearr[0]['price']}</span></p>
+                                   <p class="task_subject"><a href="{echo $servicearr[0]['url']}" target="_blank" title="{echo $servicearr[0]['subject']}">{echo $servicearr[0]['subject']}</a>                        
+                                   </p>
+                                 </li>
+                                </ul>
+                                         
+                        
+                               <ul>
+                               {for $servicearr $key=>$value}
+                                     {if $key!=0}
+                                         <li{if $key==3} style="background-image:none;"{/if}>
+                                         <p><dfn>{echo $this->Date('Y-m-d',$value['dateline'])} 发布</dfn><span class="color_f60">￥{echo $value['price']}</span> </p>
+                                         <p><a href="{echo $value['url']}" target="_blank" title="{echo $value['subject']}">{echo $value['subject']}</a></p>
+                                         </li>
+                            
+                                    {/if}
+                              {/for}
+                              </ul>
+                     
+                        </div>
+                    
+                     </li>
+                     
+               {/if}
+                        
+    
+           {/for}
+     {else}   
+     	  <p>暂无任务分类</p>
+     {/if}
+</ul>
+
+</div>

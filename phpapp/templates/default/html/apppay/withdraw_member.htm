@@ -1,0 +1,93 @@
+{template member:menu}
+
+<div class="MyMoney"><dfn style="float:left;font-size: 12px;font-style: normal;"><a href="{SURL}/member.php?app=5"><< 返回交易记录</a></dfn>目前可用余额 <span class="color_f60">{echo $member['money']}</span> 元,提现冻结 <span class="color_f60">{echo $this->memberlock}</span> 元</div>
+
+ <div class="warning">
+ <h3>系统提示：</h3>
+ <p>每日只能提现<strong>{echo PHPAPP::$config["withdrawnum"]}</strong>次,每次提现最大金额为<strong>{echo PHPAPP::$config["withdrawbig"]/10000}</strong>万元</p>
+</div>    
+          
+<div id="OnlinePay" style="padding-top:30px;">
+ 
+          
+          <p style="text-align:center">提现金额 <input type="text" name="PayMoney_f" id="PayMoney" class="form_input_text" style="width:100px"  value="{echo PHPAPP::$config['withdrawsmall']}" onkeypress="return regInput(this,/^\d*\.?\d{0,2}$/,String.fromCharCode(event.keyCode))" 
+            onpaste="return regInput(this,/^\d*\.?\d{0,2}$/,window.clipboardData.getData('Text'))" 
+            ondrop="return regInput(this,/^\d*\.?\d{0,2}$/,&#9;event.dataTransfer.getData('Text'))" 
+            maxLength=12 size=14/> 元
+
+          </p>
+          <p style="text-align:center;color:#999;padding-top:10px;">（输入格式如：123.12 元)</p>
+          
+          
+          
+          <p style="text-align: center;padding-bottom: 40px;padding-top: 20px;"><input name="Submit" type="submit" value="确定提现" onclick="return CheckWithdraw()" class="form_button" style="width:80px"/></p>
+</div> 
+
+
+
+ <script type="text/javascript">
+	  
+	function regInput(obj, reg, inputStr){
+		var docSel	= document.selection.createRange()
+		if (docSel.parentElement().tagName != "INPUT")	return false
+		oSel = docSel.duplicate()
+		oSel.text = ""
+		var srcRange	= obj.createTextRange()
+		oSel.setEndPoint("StartToStart", srcRange)
+		var str = oSel.text + inputStr + srcRange.text.substr(oSel.text.length)
+		return reg.test(str)
+	}
+
+	function CheckWithdraw(){
+		
+		  var paymoney=$("#PayMoney").val();
+			 
+		  if (isNaN(paymoney)){
+			  alert("您输入的提现金额格式错误，请重新输入!");
+			  $("#PayMoney").focus();
+			  return false;
+		  }	
+		  
+		 var paysmall='{echo PHPAPP::$config["withdrawsmall"]}';
+		
+		 if(paysmall > +paymoney){
+			 alert("提现金额不能小于 "+paysmall+" 元!");
+			 $("#PayMoney").focus();
+		     return false; 
+		 }
+		 
+		 
+
+				 $("#loading").dialog({
+						title:"提现",	
+						width: 300,
+						modal: true,
+						height:'auto'
+				 });
+				 
+				 $("#loading").dialog('open');
+				 
+				 $("#loading").html('<div class="loading">处理数据中...</div>');								  
+						
+						
+				 $.ajax({
+						type: "POST",
+						url: SURL+'/member.php?app=5&action=3&op=1',
+						data: '&paymoney_f='+paymoney,
+						success: function(data){
+							 $("#loading").html(data);
+						}
+		        });			
+
+		 
+		 
+		 
+	}
+	
+	
+</SCRIPT>
+
+
+</div>
+
+{template phpapp:footer}

@@ -1,0 +1,78 @@
+.search_show{
+	overflow: hidden;	
+    border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #E6E6E6;}
+
+.search_catid{
+	float: left;
+	width: 160px;
+	overflow: hidden;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #E6E6E6;
+	padding-top: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	padding-left: 30px;
+}
+
+.search_catid h5{
+	font-size: 12px;
+}
+
+.search_catid ul{
+	padding-top: 10px;
+}
+
+.search_catid ul li{
+	line-height: 22px;	
+}
+
+.search_list{
+	overflow: hidden;
+}
+
+.search_list h5{
+	font-size: 12px;
+	line-height: 36px;
+	font-weight: normal;
+}
+.search_list dl{
+	overflow: hidden;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #EEE;
+}
+
+.search_list dl dt{
+	font-size: 16px;
+	line-height: 36px;
+}
+
+.search_list dl dt a,.search_list dl dt a:link{
+	font-size: 16px;
+}
+
+.search_list dl dt a:hover{
+	color: #F60;
+	text-decoration: none;
+}
+
+.search_list dl dfn{
+	font-style: normal;
+	color: #CCC;
+	line-height: 22px;
+}
+.search_list dl dd{
+	line-height: 18px;
+	color: #666;
+}
+.is_catid a{
+	font-weight: bold;
+}
+.red{
+	color: #F00;
+	text-decoration: underline;
+}
+

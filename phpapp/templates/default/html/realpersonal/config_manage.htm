@@ -1,0 +1,30 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+<tr>
+<td style="width:200px;">是否强制手机认证</strong></td>
+<td>  
+<input class="radio" type="radio" name="personalisopenmobile_d" value="0"  {if PHPAPP::$config['personalisopenmobile']==0}checked{/if}>&nbsp;启用 <input class="radio" type="radio" name="personalisopenmobile_d" value="1" {if PHPAPP::$config['personalisopenmobile']==1}checked{/if}>&nbsp;关闭
+</td>
+<td class="color_999"></td>
+</tr> 
+
+<tr>
+<td style="width:200px;">认证随机金额</strong></td>
+<td>  
+<input type="text" name="smallverifymoney_f" value="{echo PHPAPP::$config['smallverifymoney']}" class="form_input_text form_input_width_100"> 元 (随机最小金额 如输入 0.2 时,系统会生成 0.2 元以下认证金额,该配置与公司认证共用)
+</td>
+<td class="color_999"></td>
+</tr> 
+
+
+</table>
+
+<p style="padding:10px;"><strong>提示：</strong>生成的金额网站要汇款给用户，用户收到金额后在网站输入验证通过认证。</p>
+
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button"/></div>
+
+</form>

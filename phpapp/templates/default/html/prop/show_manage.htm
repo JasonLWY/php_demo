@@ -1,0 +1,56 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $list}
+
+<div id="WindowsForm{echo $this->GET['menu']}">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+    
+    {for $orderarr $key=>$value}
+    <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+    {/for} 
+    
+    <td class="datalist_h2" style="width:70px">操作</td>
+    
+  </tr>
+
+{for $list $value}
+  <tr>
+    <td><input name="checkbox[]" type="checkbox" value="{$value['sid']}" /></td>
+    <td>{echo $value['sid']}</td>
+    <td>{echo $value['appid']}</td>
+    <td>{echo $value['groupname']}</td>
+    <td>{echo $value['subject']}</td>
+    <td><span class="color_f60">{echo $value['price']}</span></td>
+    <td>{echo $value['day']}</td>
+    <!--
+    <td>{if $value['count']}否{else}参与{/if}</td>
+    -->
+    <td>{echo $value['content']}</td>
+    <td>{echo $value['icon']}</td>
+    <td>{echo $value['displayorder']}</td>
+    <td>{if $value['status']}关闭{else}启用{/if}</td>
+    <td>{if $value['sell']}本站内置{else}出售{/if}</td>
+    <td>{if $value['type']==0}任务{elseif $value['type']==1}稿件{elseif $value['type']==2}服务{/if}</td>
+    <td><a href="{echo $this->MakeGetParameterURL(array('action'=>2,'id'=>$value['sid']))}">[编辑]</a></td>
+  </tr>
+ {/for} 
+
+</table>
+</div>
+<div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="删除" class="form_button"/></div>
+
+
+{else}
+
+
+<p>没有数据!</p>
+
+{/if}
+
+</form>

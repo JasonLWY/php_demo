@@ -1,0 +1,20 @@
+{if $files}
+
+    <div class="task_file_list">
+    <ul>
+    {for $files $file}
+           <li>
+           {if $file['filetype']==3}
+            <p><a href="{SURL}/index.php?app=18&fid={echo $file['fid']}" target="_blank">{echo $file['filename']}</a></p>
+            <p><embed width="290" height="24" type="application/x-shockwave-flash" wmode="transparent" menu="false" bgcolor="#FFFFFF" quality="high" src="{echo TURL}/swf/player.swf" allowscriptaccess="never" allownetworking="internal" flashvars="soundFile={echo SURL.'/'.$file['filepath']}">
+</p>
+           {else}
+               <p><a href="{SURL}/index.php?app=18&fid={echo $file['fid']}" target="_blank"><img src="{echo SURL}/{echo $this->ShowFileIcon($file['filename'])}"/></a></p>
+               <p><a href="{SURL}/index.php?app=18&fid={echo $file['fid']}" target="_blank">{echo $file['filename']}</a></p>
+           {/if}
+           </li>
+    {/for}
+    </ul>
+    </div>
+
+{/if}

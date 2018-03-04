@@ -1,0 +1,59 @@
+{template admin:header}
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $list}
+
+<div id="WindowsForm{echo $this->GET['menu']}">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall"  value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+    
+    {for $orderarr $key=>$value}
+    <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+    {/for} 
+    
+    <td class="datalist_h2" style="width:80px">操作</td>
+    
+  </tr>
+
+{for $list $value}
+  <tr>
+    <td><input name="checkbox[]" type="checkbox" value="{echo $value['rid']}" /></td>
+    <td>{echo $value['rid']}</td>
+    <td>{echo $value['oid']}</td>
+    <td>{echo $value['tid']}</td>
+    <td>{echo $value['serviceuid']}</td>
+    <td><a href='{echo SURL}/space.php?app=8&uid={echo $value['buyeruid']}' target="_blank" title="{echo $value['buyername']}">{echo $value['buyername']}</a></td>
+    <td><a href='{echo SURL}/space.php?app=8&uid={echo $value['selleruid']}' target="_blank" title="{echo $value['sellername']}">{echo $value['sellername']}</a></td>
+    <td style="width:200px;">{echo $value['project']}</td>
+    <td>{if $value['process']==1}<span style="color:#090">雇主申请中</span>{elseif $value['process']==2}<span class="color_f60">威客操作中</span>{elseif $value['process']==3}<span style="color:#060">处理完成</span>{/if}</td>
+    <td>{echo $this->Date("Y/m/d",$value['dateline'])}</td>
+    <td>
+    <p><a href="{echo $this->MakeGetParameterURL(array('action'=>2,'app'=>48,'menu'=>132))}&id={echo $value['oid']}" class="small blue awesome">查看订单</a></p>
+    <p style="margin-top:5px;"><a href="{echo $this->MakeGetParameterURL(array('action'=>2))}&rid={echo $value['rid']}&cid={echo $value['cid']}" class="small orange awesome">管理处理</a></p>
+    </td>
+  </tr>
+ {/for} 
+
+</table>
+
+</div>
+
+{if $ajaxpage->ShowPages()}
+		<div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+{/if}
+
+{if $this->IsAdmin()}
+	 <div class="phpapp_button"><input name="Delete" type="submit" value="删除" class="form_button"/></div>
+{/if}
+<p style="padding:10px">提示：管理员可以删除操作！</p>
+
+{else}
+
+ <p style="padding:10px">暂时没有退款数据！</p>
+ 
+{/if}    
+        
+ 

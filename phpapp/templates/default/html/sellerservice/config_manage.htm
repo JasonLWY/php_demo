@@ -1,0 +1,62 @@
+{template admin:header}
+
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+
+<tr>
+<td class="width_160">游客是否能查看本应用:</td>
+<td><input class="radio" type="radio" name="task_seller_tourist_d" value="0"  {if PHPAPP::$config['task_seller_tourist']==0}checked{/if}>&nbsp;可以 <input class="radio" type="radio" name="task_seller_tourist_d" value="1" {if PHPAPP::$config['task_seller_tourist']==1}checked{/if}>&nbsp;禁止</td>
+<td class="color_999"></td>
+</tr>
+
+<tr>
+<td class="width_160">系统自动审核:</td>
+<td><input class="radio" type="radio" name="task_seller_payauto_d" value="0"  {if PHPAPP::$config['task_seller_payauto']==0}checked{/if}>&nbsp;手动 <input class="radio" type="radio" name="task_seller_payauto_d" value="1" {if PHPAPP::$config['task_seller_payauto']==1}checked{/if}>&nbsp;自动</td>
+<td class="color_999">用户发布任务支付后是否自动审核</td>
+</tr>
+
+<tr>
+<td class="width_160">发布联系热线:</td>
+<td><input name="task_seller_phone_s" value="{echo PHPAPP::$config['task_seller_phone']}" type="text" class="form_input_text form_input_width_200" /></td>
+<td class="color_999">(购买服务右边显示的热线电话)</td>
+</tr>
+
+<tr>
+<td class="width_160">自动确认收货时间:</td>
+<td><input name="task_seller_autodelivery_d" value="{echo PHPAPP::$config['task_seller_autodelivery']}" type="text" class="form_input_text form_input_width_200" /> 天</td>
+<td class="color_999">中标后卖家自动发货时间</td>
+</tr>
+
+<tr>
+<td class="width_160">发布协议:</td>
+<td>
+{template editor:editor}
+<script type="text/javascript">$(function(){$.PHPAPPEditor('Content','624','280');});</script>
+<textarea name="task_seller_agree_s" id="Content" class="form_editor">{echo $this->str(PHPAPP::$config['task_seller_agree'],0,0,1,0,0,1)}</textarea></td>
+<td class="color_999">发布任务协议</td>
+</tr>
+
+<tr>
+<td class="width_160">任务标题帮助:</td>
+<td><textarea  rows="6"  name="task_seller_subject_help_s" class="form_textarea" style="width:624px">{echo PHPAPP::$config['task_seller_subject_help']}</textarea></td>
+<td class="color_999">(支持HTML)</td>
+</tr>
+
+<tr>
+<td class="width_160">任务内容帮助:</td>
+<td><textarea  rows="6"  name="task_seller_content_help_s" class="form_textarea" style="width:624px">{echo PHPAPP::$config['task_seller_content_help']}</textarea></td>
+<td class="color_999">(支持HTML)</td>
+</tr>
+
+
+</table>
+
+<div class="phpapp_button"><input type="submit" name="Submit_s" value="提交" class="form_button" onclick="SubmitContent();"/></div>
+
+</form>
+
+<script type="text/javascript">
+$('#EditorUpFile').hide();
+</script>

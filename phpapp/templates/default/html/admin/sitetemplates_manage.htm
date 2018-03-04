@@ -1,0 +1,66 @@
+{template header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+<tr>
+<td class="datalist_h2">
+模板名称
+</td>
+<td class="datalist_h2">
+预览图
+</td>
+<td class="datalist_h2">
+模板存放路径/样式存放路径
+</td>
+<td class="datalist_h2">
+模板样式
+</td>
+</tr> 
+
+{for $templatearr $value}
+    {if $value['filename']!='index.html' && $value['filename']!='index.htm'}
+        <tr>
+        <td class="width_160"><input name="S_TEMPLATE_s" type="radio" value="{echo $value['filename']}"{if $value['filename']==S_TEMPLATE}  checked="checked"{/if}/> {echo $value['filename']} 模板</td>
+        <td>
+         <img name="{echo $value['filename']}" src="{echo SURL}/phpapp/templates/{echo $value['filename']}/preview.png" />
+        </td>
+         <td>
+         <p>/phpapp/templates/{echo $value['filename']}/{echo PHPAPP::$config['templatepath']}/</p>
+         <p>/phpapp/templates/{echo $value['filename']}/style/{echo PHPAPP::$config['stylepath']}/</p>
+        </td>
+        <td>
+        {php} $templatestylearr=$this->ReadSysDir(SYS.'/templates/'.$value['filename'].'/style'); {/php}
+            <select name="stylepath_s" class="form_input_text">
+                  {for $templatestylearr $style}
+                        {if $value['filename']!='index.html' && $value['filename']!='index.htm'}
+                        		<option value="{echo $style['filename']}"{if $style['filename']==PHPAPP::$config['stylepath']} selected="selected"{/if}>{echo $style['filename']}</option>
+                        {/if}
+                  {/for} 
+            </select>
+        </td>
+        </tr> 
+    {/if}
+{/for} 
+
+<tr>
+<td>
+站点模板存放路径 ：
+</td>
+<td>
+<input name="templatepath_s" value="{echo PHPAPP::$config['templatepath']}" type="text" class="form_input_text form_input_width_100" />  (改它可以防止模板直接被下载)
+</td>
+<td>
+站点模板整体宽度 ：<input name="siteframewidth_d" value="{echo PHPAPP::$config['siteframewidth']}" type="text" class="form_input_text form_input_width_100" /> PX 
+</td>
+<td class="color_999">修改整体宽度有些页面还需要手动调整</td>
+</tr> 
+
+</table>
+
+<p class="color_999" style="padding-top:10px;">提示：修改 <strong>模板存放路径</strong> 的同时还要手动用FTP登录,修改模板下 <strong>{echo PHPAPP::$config['templatepath']}</strong>  目录名称为现在的 模板存放路径.</td>
+</p> 
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="使用" class="form_button"/></div>
+    
+</form>

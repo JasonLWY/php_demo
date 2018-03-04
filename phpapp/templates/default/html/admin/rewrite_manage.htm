@@ -1,0 +1,237 @@
+{template header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+{if $this->GET['op']==2}
+
+{if $rewritearray}
+<p>
+
+输入目录 <input name="rewritedir_s" value="{echo $rewritedir}" type="text" class="form_input_text form_input_width_200" /> 
+<input onclick="SubmitForm{echo $this->GET['menu']}('MakeRewriteForm')" name="Submit" type="submit" value="生成" class="form_button"/>
+</form>
+</p>
+<p style="color:#F00;padding-bottom:20px;"><strong>(以下规则默认为/根目录,不符合您的目录请在上面输入目录,例如 /phpapp/ 点生成)</strong></p>
+
+   
+       {if $rewritearray['apache']}
+       
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+            <tr>
+              <td class="datalist_h2">Apache Rewrite</td>
+            </tr>
+            
+            <tr>
+              <td style="padding:20px;">
+              
+                 <p>{php} echo htmlspecialchars('<IfModule mod_rewrite.c>',ENT_QUOTES);{/php}</p>
+                 <p>RewriteEngine On </p>
+                 <p>RewriteBase {echo $rewritedir}</p>
+                 
+                 {for $rewritearray['apache'] $value}
+                      <p>{echo $value}</p>
+                 {/for}
+                 <p>{php} echo htmlspecialchars('</IfModule>',ENT_QUOTES);{/php}</p>
+              </td>
+            </tr>
+              
+            </table>
+       
+       {/if}
+       
+       
+       {if $rewritearray['nginx']}
+       
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+            <tr>
+              <td class="datalist_h2">Nginx Rewrite</td>
+            </tr>
+            
+            <tr>
+              <td style="padding:20px;">
+                 
+                 {for $rewritearray['nginx'] $value}
+                      <p>{echo $value}</p>
+                 {/for}
+                 
+                 <p>if (!-e $request_filename){return 404;}</p>
+              </td>
+            </tr>
+              
+            </table>
+       
+       {/if}
+       
+
+       {if $rewritearray['iis']}
+       
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+            <tr>
+              <td class="datalist_h2">IIS Rewrite</td>
+            </tr>
+            
+            <tr>
+              <td style="padding:20px;">
+                 <p>[ISAPI_Rewrite]</p>
+                 <p>CacheClockRate 3600</p>
+                 <p>RepeatLimit 32</p>
+
+                 {for $rewritearray['iis'] $value}
+                      <p>{echo $value}</p>
+                 {/for}
+                 
+              </td>
+            </tr>
+              
+            </table>
+       
+       {/if}
+       
+       
+       {if $rewritearray['iis7']}
+       
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+            <tr>
+              <td class="datalist_h2">IIS7 Rewrite</td>
+            </tr>
+            
+            <tr>
+              <td style="padding:20px;">
+                 {php} echo htmlspecialchars('<rewrite><rules>',ENT_QUOTES);{/php}
+
+                 {for $rewritearray['iis7'] $value}
+                      <p>{php} echo htmlspecialchars($value,ENT_QUOTES);{/php}</p>
+                 {/for}
+                 
+                 {php} echo htmlspecialchars('</rules></rewrite>',ENT_QUOTES);{/php}
+              </td>
+            </tr>
+              
+            </table>
+       
+       {/if}
+       
+      
+
+{else}
+<p>暂没有数据生成!</p>
+{/if}
+
+{elseif $this->GET['op']==1 || $this->GET['op']==3}
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">名称</td>
+    <td>
+    <input name="name_phpapp_s" value="{if !empty($manage['name_phpapp'])}{echo $manage['name_phpapp']}{/if}" type="text" class="form_input_text form_input_width_300" /> 只能填英文字母组合
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">原URL地址</td>
+    <td>
+    <input name="original_phpapp_s" value="{if !empty($manage['original_phpapp'])}{echo $manage['original_phpapp']}{/if}" type="text" class="form_input_text form_input_width_300" /> (原地址)
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">Rewrite格式</td>
+    <td>
+    <input name="format_phpapp_s" value="{if !empty($manage['format_phpapp'])}{echo $manage['format_phpapp']}{/if}" type="text" class="form_input_text form_input_width_300" /> (根据地址修改格式)
+    </td>
+  </tr>
+  
+  
+    
+  <tr>
+    <td class="width_160">处理优先级</td>
+    <td>
+    <input name="displayorder_phpapp_d" value="{if !empty($manage['displayorder_phpapp'])}{echo $manage['displayorder_phpapp']}{/if}" type="text" class="form_input_text form_input_width_300" /> (值越大越靠后)
+    </td>
+  </tr>
+  
+  
+  
+   <tr>
+    <td class="width_160">是否启用</td>
+    <td>
+    <select name="status_phpapp_d">
+        <option value="0" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==0} selected="selected" {/if}{/if}>启用</option>
+        <option value="1" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==1} selected="selected" {/if}{/if}>关闭</option>
+    </select> 
+     </td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">使用方法</td>
+    <td>
+     <div style="padding-top:20px;padding-bottom:20px;">
+    <p>可用标签 {$numbertype} &nbsp; <span style="color:#999">(作用匹配数字型)</span></p>
+    <p>可用标签 {$abctype} &nbsp; <span style="color:#999">(作用匹配字母型)</span></p>
+    <p>可用标签 {$alltype} &nbsp; <span style="color:#999">(作用匹配全部型)</span></p>
+    <p>例如：<span class="color_f60">(原地址符号 & 用 {$andtype} 代替)</span></p>
+    <p>原地址 index.php{echo '?'}app={$alltype}{$andtype}action={$alltype}</p>
+    <p>Rewrite格式 index-app-{$numbertype}-action-{$numbertype}.html</p>
+    </div>
+    </td>
+  </tr>
+
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+
+
+
+{else}
+
+
+
+
+    {if $list}
+    
+    <div id="WindowsForm{echo $this->GET['menu']}">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+      <tr>
+        <td class="datalist_h2" style="width:46px"><input type="checkbox" name="checkboxall" value="1"  onclick="CheckboxAll('WindowsForm{echo $this->GET['menu']}')"/> 全选</td>
+        
+        {for $orderarr $key=>$value}
+        <td class="datalist_h2"><a href="{echo $this->MakeGetParameterURL(array('sqlorder'=>$key,'iforder'=>$iforder))}" id="order_{echo $this->GET['menu']}_{$key}"{if $key==$this->GET['sqlorder']} {if $this->GET['iforder']==2}  class="downorder"{else} class="uporder"{/if}{/if}>{$value['name']}</a></td>
+        {/for} 
+        <td class="datalist_h2">操作</td>
+      </tr>
+    
+    {for $list $key=>$value}
+      <tr>
+        <td><input name="checkbox[]" type="checkbox" value="{echo $value['id_phpapp']}"/></td>
+        <td>{echo $value['id_phpapp']}</td>
+        <td>{echo $value['name_phpapp']}</td>
+        <td>{echo $value['format_phpapp']}</td>
+        <td>{echo $value['displayorder_phpapp']}</td>
+        <td>{if $value['status_phpapp']}关闭{else}开启{/if}</td>
+        <td><a href="{echo $this->MakeGetParameterURL(array('op'=>3,'id'=>$value['id_phpapp']))}">[编辑]</a></td>
+      </tr>
+     {/for} 
+    
+    </table>
+    </div>
+    
+    <div class="ajax_page">{echo $ajaxpage->ShowPages()}</div>
+    
+    <div class="phpapp_button"><input name="Open" type="submit" value="开启" class="form_button"/> <input name="Close" type="submit" value="关闭" class="form_button"/> <input name="Submit" type="submit" value="删除" class="form_button"/></div>
+    
+    {else}
+    <p>暂无数据!</p>
+    {/if}
+
+
+
+
+{/if}
+
+</form>

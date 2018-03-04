@@ -1,0 +1,98 @@
+{template phpapp:header}
+
+{template search_top}
+
+<div class="help_list">
+
+     <div class="list_left"> 
+          
+          {ad Help68}
+          
+          <div class="help_category">
+          <h2>帮助导航</h2>
+          
+          <ul id="HelpCategory">
+             {php}
+                 $category=$this->GetMysqlArray('*'," ".$this->GetTable('category')." WHERE type='$this->app' AND upid=0  ORDER BY displayorder ASC");
+             {/php}
+             
+             {if $category}
+                   {for $category $value}
+                      
+                        <h3><a href='{echo SURL}/index.php?app={echo $this->app}&action=1&item={echo $value['catid']}' {if $value['classname']} class="{echo $value['classname']}"{/if}>{echo $value['name']}</a></h3>
+                       
+                       {php}
+                           $categorysubarr=$this->GetMysqlArray('*'," ".$this->GetTable('category')." WHERE type='$this->app' AND upid='$value[catid]'  ORDER BY displayorder ASC");
+                       {/php}
+                       
+                       {if $categorysubarr}
+                             {for $categorysubarr $categorysub}
+                       		 		<li><a href='{echo SURL}/index.php?app={echo $this->app}&action=1&item={echo $categorysub['catid']}' {if $categorysub['classname']} class="{echo $categorysub['classname']}"{/if}>{echo $categorysub['name']}</a></li>
+                             {/for}
+                       {/if}
+                   {/for}
+             {/if}
+          
+          </ul>
+          
+          </div>
+
+          
+          {ad Help69}
+
+         
+     </div>
+     
+     <div class="list_right"> 
+  
+
+      <div class="showhelp">
+            <h3 id="PathCatid">{echo $this->GetSelectCategory('category',intval($showhelp['catid']),'PathCatid','','',1)}</h3>
+            <h2>{echo $showhelp['subject']}</h2>  
+            
+            {if $fieldarray=$this->GetTableFieldArray('help')}
+           <!-- 自定义字段-->
+           <div class="fieldlist">
+                 {for $fieldarray $field}
+                 <p><strong>{echo $field['name_phpapp']}</strong>： {echo $this->str($showhelp[$field['field_phpapp']],99999,0,1,0,0,1)}</p>
+                 {/for}
+           </div>
+           <!-- 自定义字段 end-->
+           {/if}
+     
+     
+            <div style="padding:20px;">
+                {echo $this->str($showhelp['content'],9999999,0,1,0,0,1)}
+            </div>
+            
+            
+            {php} $files=$this->FileList($showhelp['hid'],1); {/php}
+            
+            {if $files}
+                 
+                 {template phpapp:file}
+                 
+            {/if}
+      </div>
+      
+              
+        {php} $uptask=$this->GetMysqlOne('hid,subject'," ".$this->GetTable('help')."  WHERE hid<'$hid'  ORDER BY hid DESC LIMIT 0,1"); {/php}
+        {php} $nexttask=$this->GetMysqlOne('hid,subject'," ".$this->GetTable('help')."  WHERE hid>'$hid' LIMIT 0,1"); {/php}
+        
+        <div class="nexttask" style="font-size:16px">
+        <ul>
+          <li><strong>上一个帮助</strong>{if $uptask}<a href="{echo SURL}/index.php?app=57&action=2&hid={echo $uptask['hid']}" title="{echo $uptask['subject']}">{echo $uptask['subject']}</a>{else}暂无数据{/if}</li>
+          <li><strong>下一个帮助</strong>{if $nexttask}<a href="{echo SURL}/index.php?app=57&action=2&hid={echo $nexttask['hid']}" title="{echo $nexttask['subject']}">{echo $nexttask['subject']}</a>{else}暂无数据{/if}</li>
+        </ul>
+        </div>
+              
+
+     </div>
+
+</div>
+
+
+
+{ad Help81}
+
+{template phpapp:footer}

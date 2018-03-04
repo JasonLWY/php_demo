@@ -1,0 +1,127 @@
+<script type="text/javascript">
+
+var zoom=12;
+var long=108.318421;
+var lat=22.800617;
+
+var Longitude=$('#MapLongitude').val();
+		
+var Latitude=$('#MapLatitude').val();
+		
+var MapZoom=$('#MapZoom').val();
+		
+if(Longitude){
+	long=Longitude;
+}
+
+if(Latitude){
+	lat=Latitude;
+}
+
+if(MapZoom){
+	zoom=MapZoom;
+}
+
+var map = new BMap.Map("SetMap"); 
+var point = new BMap.Point(long,lat);
+
+map.centerAndZoom(point,zoom);
+
+map.addControl(new BMap.NavigationControl()); 
+
+map.enableScrollWheelZoom();
+
+
+var marker = new BMap.Marker(point);        // ´´½¨±ê×¢  
+map.addOverlay(marker); 
+
+if(!Longitude){
+	
+	  function myFun(result){
+		  var cityName = result.name;
+		  map.setCenter(cityName);
+	  }
+	  var myCity = new BMap.LocalCity();
+	  myCity.get(myFun);
+
+}
+
+
+var gc = new BMap.Geocoder();    
+
+map.addEventListener("ondblclick", function(e){  
+	
+	  var pt = e.point;
+	  gc.getLocation(pt, function(rs){
+								  
+		      var addComp = rs.addressComponents;
+	  
+			  $.ajax({
+						type: "POST",
+						url: SURL+'/member.php?app=70&action=3&type=1',
+						data: '&district_s='+addComp.district,
+						success: function(data){
+							   if(data){
+							       $("#showselectcity").html(data);
+							   } 
+						}
+			  });	
+
+	  });  
+				
+	  map.removeOverlay(marker);  
+
+      $('#MapLongitude').val(e.point.lng);
+	   
+	  $('#MapLatitude').val(e.point.lat);  
+	  
+	  point = new BMap.Point(e.point.lng,e.point.lat);
+	  marker = new BMap.Marker(point);        
+      map.addOverlay(marker); 
+
+
+}); 
+
+map.addEventListener("zoomend", function(){  
+      $('#MapZoom').val(this.getZoom());  
+});  
+
+
+function SetMapPoint(){
+	
+	  var selectcity=$("#showselectcity select[name='showselectcity'] option[selected='selected']").html();
+	  
+	  
+	  if(!selectcity){
+	  
+	        selectcity=$("#showselectcity select[name='showselectcity'] option[selected]").html();
+	  
+	  }
+	  
+	  if(selectcity){
+	  
+			  var myGeo = new BMap.Geocoder();
+		
+			  myGeo.getPoint(selectcity, function(point){
+					if(point){
+						  map.centerAndZoom(point,12);
+						  map.removeOverlay(marker);  
+						  map.addOverlay(new BMap.Marker(point));
+						  
+						  $('#MapLongitude').val(point.lng);
+		 
+	                      $('#MapLatitude').val(point.lat);
+			  
+	                      map.addEventListener("zoomend", function(){  
+								 $('#MapZoom').val(this.getZoom());  
+						  });  
+					}
+			  });
+			  
+	  
+	  }
+
+
+}
+
+</script>

@@ -1,0 +1,203 @@
+{template member:menu}
+
+
+     
+{if $list}
+
+<div id="mailboxlist">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  <tr class="manage_process">
+    <td class="datalist_h2" style="width:46px"><input name="checkboxall" id="CheckboxAll" onclick="CheckboxAll('mailboxlist')" type="checkbox" value="1" /> 全选 </td>
+    <td class="datalist_h2" style="width:60px">状态</td>
+    <td class="datalist_h2" style="width:390px">标题</td>
+    {if $mailbox==1}<td class="datalist_h2" style="width:90px">发件人</td>{/if}
+    <td class="datalist_h2">发件时间</td>
+    {if $mailbox==2}<td class="datalist_h2" style="width:90px">操作</td>{/if}
+  </tr>
+
+{for $list $value}
+  <tr>
+    <td><input name="checkbox"  type="checkbox" value="{echo $value['sid']}"/></td>
+    <td class="datalist_h2">{if $value['new']==1}未阅{else}<span style="color:#999">已阅</span>{/if}</td>
+    <td class="datalist_h2"><a href='{echo SURL}/member.php?app=7&action=4&sid={echo $value['sid']}'>{echo $value['subject']}</a></td>
+    {if $mailbox==1}<td class="datalist_h2">{if $value['msgtoid']==0}<span style="color:#999">系统</span>{else}{php}$msgto=$this->GetLoginInfo($value['msgtoid']);{/php}{echo $msgto['username']}{/if}</td>{/if}
+    <td class="datalist_h2">{echo $this->Date('Y/m/d H:i:s',$value['dateline'])}</td>
+    {if $mailbox==2}<td class="datalist_h2" style="width:90px"><a href="member.php?app={echo $this->app}&action=3&sid={echo $value['sid']}">[编辑]</a></td>
+    {/if}
+  </tr>
+ {/for} 
+
+</table>
+
+</div>
+
+<div class="ajax_page">{echo $page->ShowPages()}</div>
+
+<div style="text-align:center"><input id="SubmitDelete" name="SubmitDelete" type="button" value="删除" class="form_button"/> <input id="SubmitNew" name="SubmitNew" type="button" value="设置已阅" class="form_button"/> <input id="SubmitDeleteAll" name="SubmitDelete" type="button" value="一键清空" class="form_button"/></div>
+
+{else}
+
+ <p style="padding:10px">您暂时没有消息数据</p>
+ 
+{/if}    
+      
+      
+      
+
+</td></tr></table>
+
+
+
+
+<script type="text/javascript">
+ 
+ $(function(){	
+			
+			
+	 $("#SubmitNew").click( function () {
+									  						  
+			var OderID='';
+			 $("#mailboxlist").find("input:checked[name!='checkboxall']").each(function(){
+					 var value=$(this).val();  
+					 
+					 if($(this).attr("disabled")!='disabled'){
+					 
+						   if(OderID){
+								OderID+=','+value;
+						   }else{
+								OderID=value;
+						   }
+					 }
+		
+			 }); 	
+			 
+			 if(!OderID){
+				 
+				  alert("请选择消息操作!");
+				  return false;
+			 }
+									  
+			if(confirm("是否设置消息已阅状态?")){
+					
+						$("#loading").dialog({
+								title:"消息操作",	
+								width: 300,
+								height:'auto'
+						});
+						   
+						$("#loading").dialog('open');
+						
+						$("#loading").html('<div class="loading">提交数据中...</div>');
+				    
+            
+                         $.ajax({
+                              type: "POST",
+                              url: SURL+"/member.php?app={echo $this->app}&action={echo $mailbox}&op=3",
+                              data: 'setnew=1&sid='+OderID,
+                              success: function(data){
+                                    $("#loading").html(data);
+                              }
+                         });	
+					 
+				
+				
+			    }								  
+												   
+	 });
+	 
+	 $("#SubmitDeleteAll").click( function () {
+											
+			if(confirm("是否删除所有消息!")){
+					
+						$("#loading").dialog({
+								title:"消息操作",	
+								width: 300,
+								height:'auto'
+						});
+						   
+						$("#loading").dialog('open');
+						
+						$("#loading").html('<div class="loading">提交数据中...</div>');
+				    
+            
+                         $.ajax({
+                              type: "POST",
+                              url: SURL+"/member.php?app={echo $this->app}&action={echo $mailbox}&op=2",
+                              data: 'deleteall=1',
+                              success: function(data){
+                                    $("#loading").html(data);
+                              }
+                         });	
+					 
+				
+				
+			    }			 				 
+	 });
+		   
+	 $("#SubmitDelete").click( function () {
+		     
+			 
+			      var OderID='';
+                   $("#mailboxlist").find("input:checked[name!='checkboxall']").each(function(){
+                           var value=$(this).val();  
+                           
+                           if($(this).attr("disabled")!='disabled'){
+                           
+								 if(OderID){
+									  OderID+=','+value;
+								 }else{
+									  OderID=value;
+								 }
+                           }
+              
+                   }); 	
+                   
+                   if(!OderID){
+                       
+                        alert("请选择消息操作!");
+                        return false;
+                   }
+				   
+				   
+				   
+				if(confirm("是否删除消息!")){
+					
+						$("#loading").dialog({
+								title:"消息操作",	
+								width: 300,
+								height:'auto'
+						});
+						   
+						$("#loading").dialog('open');
+						
+						$("#loading").html('<div class="loading">提交数据中...</div>');
+				    
+            
+                         $.ajax({
+                              type: "POST",
+                              url: SURL+"/member.php?app={echo $this->app}&action={echo $mailbox}&op=1",
+                              data: 'sid='+OderID,
+                              success: function(data){
+                                    $("#loading").html(data);
+                              }
+                         });	
+					 
+				
+				
+			    }
+             
+				   
+				   
+		 
+	 });
+	
+ });
+ 
+ 
+</script>
+
+
+
+
+{template phpapp:footer}

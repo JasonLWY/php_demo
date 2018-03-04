@@ -1,0 +1,110 @@
+{template admin:header}
+
+<form action="{echo $this->MakeGetParameterURL()}" method="post">
+
+<style type="text/css">.adstyle p {height:32px;}</style>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist" >
+  <tr>
+    <td class="datalist_h2 width_160">项目</td>
+    <td class="datalist_h2">数据值</td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">关联应用</td>
+    <td><select name="apps_phpapp">
+{for $appsarr $value}
+  <option value="{$value['id_phpapp']}" {if !empty($manage['apps_phpapp'])}{if $manage['apps_phpapp']==$value['id_phpapp']} selected="selected" {/if}{/if}>{$value['name_phpapp']} ID{echo $value['id_phpapp']}</option>
+{/for}
+</select></td>
+  </tr>
+  
+    <tr>
+    <td class="width_160">广告名称</td>
+    <td> <input name="name_phpapp_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['name_phpapp'])}{echo $manage['name_phpapp']}{/if}"/></td>
+  </tr>
+  
+  
+    <tr>
+    <td class="width_160">广告类型</td>
+    <td>
+        <select id="adtype" name="type_phpapp_s">
+        <option value="code"{if $nowtype=='code'} selected="selected"{/if}>Html代码</option>
+        <option value="txt"{if $nowtype=='txt'} selected="selected"{/if}>文字链接</option>
+        <option value="img"{if $nowtype=='img'} selected="selected"{/if}>图片</option>
+        <option value="flash"{if $nowtype=='flash'} selected="selected"{/if}>Flash动画</option>
+        </select>
+        
+        <script type="text/javascript">
+			var nowtype='{echo $nowtype}';
+			$(function(){	
+				   if(nowtype){
+					   $("#"+nowtype).show();
+				   }else{
+					   $("#code").show();
+				   }
+				   
+				   $("#adtype").change(function(){
+						 var adtype=$("#adtype").val();	
+						 $(".adstyle").hide();
+						 $("#"+adtype).show();
+				   });
+			});
+         </script>
+   </td>
+  </tr>
+  
+  
+   <tr>
+    <td class="width_160">广告内容</td>
+    <td> 
+    
+      <div id="code" style="display:none;padding-top:10px;" class="adstyle">
+          <textarea name="htmlcode" class="form_textarea form_input_width_300" rows="20" cols="80" style="width:80%">{if !empty($showad['htmlcode'])}{echo htmlspecialchars($showad['htmlcode'],ENT_QUOTES)}{/if}</textarea>
+          <p>请填写广告代码，支持html代码</p>
+      </div>
+      <div id="txt" style="display:none;" class="adstyle">
+      <p><b>文字内容：</b> <input type="text" size="70" name="txttitle" value="{if !empty($showad['txttitle'])}{echo $showad['txttitle']}{/if}" class="form_input_text form_input_width_300"/></p>
+      <p><b>文字链接：</b> <input type="text" size="70" name="txtlink" value="{if !empty($showad['txtlink'])}{echo $showad['txtlink']}{/if}" class="form_input_text form_input_width_300"/></p>
+      <p><b>文字颜色：</b> <input type="text" size="10" name="txtcolor" value="{if !empty($showad['txtcolor'])}{echo $showad['txtcolor']}{/if}" class="form_input_text form_input_width_300"/> 例如填 #FFF000</p>
+      <p><b>文字大小：</b> <input type="text" size="10" name="txtsize" value="{if !empty($showad['txtsize'])}{echo $showad['txtsize']}{/if}" class="form_input_text form_input_width_300"/> 例如填 12px</p>
+      </div>
+      <div id="img" style="display:none;" class="adstyle">
+      <p><b>图片地址：</b><input type="text" size="40" name="imgurl" value="{if !empty($showad['imgurl'])}{echo $showad['imgurl']}{/if}" class="form_input_text form_input_width_300"/></p>
+      <p><b>图片链接：</b><input type="text" size="40" name="imglink" value="{if !empty($showad['imglink'])}{echo $showad['imglink']}{/if}" class="form_input_text form_input_width_300"/></p>
+      <p><b>图片宽度：</b><input type="text" size="10" name="imgwidth_d" value="{if !empty($showad['imgwidth'])}{echo $showad['imgwidth']}{/if}" class="form_input_text form_input_width_300"/> 填数字 (留空默认)</p>
+      <p><b>图片高度：</b><input type="text" size="10" name="imgheight_d" value="{if !empty($showad['imgheight'])}{echo $showad['imgheight']}{/if}" class="form_input_text form_input_width_300"/> 填数字 (留空默认)</p>
+      <p><b>图片描述：</b><input type="text" size="40" name="imgdescrip" value="{if !empty($showad['imgdescrip'])}{echo $showad['imgdescrip']}{/if}" class="form_input_text form_input_width_300"/></p>
+      </div>
+      <div id="flash" style="display:none;" class="adstyle">
+      <p><b>flash链接：</b><input type="text" size="40" name="flashlink" value="{if !empty($showad['flashlink'])}{echo $showad['flashlink']}{/if}" class="form_input_text form_input_width_300"/></p>
+      <p><b>flash宽度：</b><input type="text" size="40" name="flashwidth_d" value="{if !empty($showad['flashwidth'])}{echo $showad['flashwidth']}{/if}" class="form_input_text form_input_width_300"/> 填数字 (留空默认)</p>
+      <p><b>flash高度：</b><input type="text" size="40" name="flashheight_d" value="{if !empty($showad['flashheight'])}{echo $showad['flashheight']}{/if}" class="form_input_text form_input_width_300"/> 填数字 (留空默认)</p>
+      </div>
+
+    
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="width_160">上下边距设置</td>
+    <td> <input name="margin_phpapp_s" type="text" class="form_input_text form_input_width_200" value="{if !empty($manage['margin_phpapp'])}{echo $manage['margin_phpapp']}{/if}"/> (例如：离上边距10px填 top:10px   离下边距10px填  bottom:10px 留空为不设置)</td>
+  </tr>
+  
+  
+   <tr>
+    <td class="width_160">是否启用</td>
+    <td>
+    <select name="status_phpapp">
+        <option value="0" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==0} selected="selected" {/if}{/if}>启用</option>
+        <option value="1" {if !empty($manage['status_phpapp'])}{if $manage['status_phpapp']==1} selected="selected" {/if}{/if}>关闭</option>
+    </select> 
+   </td>
+  </tr>
+  
+</table>
+
+<div class="phpapp_button"><input name="Submit" type="submit" value="确定" class="form_button"/></div>
+</form>
+
+

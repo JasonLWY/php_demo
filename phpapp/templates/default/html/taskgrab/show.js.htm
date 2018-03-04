@@ -1,0 +1,127 @@
+<script type="text/javascript">
+$(function(){	
+	$("#task_tabs").tabs();	
+	
+	$.PHPAPPMouseover('.task_bid_show','.task_draft_operate');
+});
+		  
+function TaskBids(tid,did){
+	
+	if(NowLogin()>0){
+		 
+		 $("#loading").dialog({
+			  title:"投标报价",	
+			  width: 700,
+			  position: ['center',50],
+			  modal: true
+		 });
+		 
+
+		  $("#loading").dialog('open');
+
+		  $("#loading").html('<div class="loading">加载数据中...</div>');
+		  $.ajax({
+			  type: "GET",
+			  url: SURL+'/index.php?app=83&action=6&tid='+tid+'&did='+did,
+			  success: function(data){
+				  $("#loading").html(data);
+				  ShowDraft(0);
+			  }
+		  });  
+	
+		  
+	}else{
+		  return false;
+	}
+	
+}
+
+function ShowDraft(type){
+	 $.PHPAPPOPENLOADING();
+	 $.get(SURL+"/index.php",{app:'83',action:'7',type:type,tid:'{echo $this->tid}'},
+			  
+			function (data){
+				  $("#DraftShow-"+type).html(data);
+				  $.PHPAPPCLOSELOADING();
+				  var isdraft=$(".task_div_line").length;
+				  if(isdraft){
+						SetCheckBox();
+				  }
+					  
+	  });   
+}
+
+function OpenDraftMessage(bid,uid){
+	 
+	 var MessageID=$('#AddDraftMessage'+bid);
+	 
+	 var UserID=$('.DraftUserID'+uid).html();
+	 
+	 $('#AddDraftMessage'+bid+' textarea').val('回复'+UserID+'：');
+	 
+	 $('#CommentContent_{echo $this->GET[type]}_'+bid).click().focus();
+
+}
+
+function ShowMessage(){
+	
+	  $.get(SURL+"/index.php",{app:'{echo $this->app}',action:'9',tid:'{echo $this->tid}'},
+			  
+		        function (data){
+				      $("#DraftShow-2").html(data);
+					  
+	  });   
+	
+}	
+
+function SubmitAddTaskMessage(){
+	
+		var content=$("#AddTaskMessage");
+
+		if (content.val()==""){
+				alert("请输入留言内容!");
+				content.focus();
+				return false; 
+		}	
+		
+		$.PHPAPPOPENLOADING();		
+
+		$.ajax({
+					type: "POST",
+					url: SURL+"/index.php?app={echo $this->app}&action=8",
+					data: 'tid_d={echo $this->tid}&Submit=1&content_s='+content.val(),
+					success: function(data){
+						  $.PHPAPPCLOSELOADING();
+						  ShowMessage();
+					}
+	   });			
+	
+}
+
+function OpenTaskMessage(uid){
+	 
+	 var UserID=$('.MessageUserID'+uid).html();
+	 
+	 $('#AddTaskMessage').val('回复'+UserID+'：');
+
+}
+
+function AjaxMessage(tid,page,sqlorder,iforder){
+          
+		 $.PHPAPPOPENLOADING();		
+	  	 $.ajax({
+				type: "GET",
+				url: SURL+'/index.php?',
+				data: "app={echo $this->app}&action=9&tid="+tid+"&page="+page,
+				success: function(data){
+					 $.PHPAPPCLOSELOADING();
+					 $("#DraftShow-2").html(data);
+				}
+	    });
+}
+
+</script>
+
+
+
+

@@ -1,0 +1,39 @@
+<!--
+{if $page->ShowPages()}
+<div class="ajax_page" style="margin-bottom:10px;">{echo $page->ShowPages()}</div>
+{/if}
+-->
+ 
+ <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>
+        <div id="TaskMaps" style="height:600px;width:100%;"></div>
+        <script type="text/javascript">
+       
+            var map = new BMap.Map("TaskMaps"); 
+            var point = new BMap.Point(110.848,31.6703); 
+			map.addControl(new BMap.NavigationControl()); 
+            map.centerAndZoom(point,6); 
+			map.enableScrollWheelZoom();                            //启用滚轮放大缩小
+		    window.setTimeout(function(){map.panTo(new BMap.Point(110.848,31.6703));},3000);
+			var mymarker=label='';
+			
+			{if $list}
+          
+                {for $list $key=>$value}
+				      {if $value['longitude'] && $value['latitude']}
+				       point = new BMap.Point('{echo $value["longitude"]}','{echo $value["latitude"]}'); 
+					   mymarker = new BMap.Marker(point); 
+					   label = new BMap.Label('<p><span class="color_f60">￥{echo $value["money"]} {if $value["addmoney"]>0} +{echo $value["addmoney"]}{/if}</span> {if $value["process"]==1}未担保{elseif $value["process"]==2}已担保未审核{elseif $value["process"]==3}审核中{elseif $value["process"]==4}{if $value["draft_success"]>0}<span style="color:#F60">已中标</span>{else}<span style="color:#060">进行中</span>{/if}{elseif $value["process"]==5}已结束{/if}</p><p><a href="{echo SURL}{echo $value["url"]}" target="_blank">{echo $value["subject"]}</a></p>',{offset:new BMap.Size(-40,-60),position:point});                                   
+					   label.setTitle('{echo $value["subject"]}'); 
+					   label.setStyle({border:"1px solid #CCC",fontSize:"13px",padding:"2px;"});               
+					   map.addOverlay(label); 
+					   map.addOverlay(mymarker); 
+					 {/if}
+			
+			    {/for}
+			
+			{/if}
+            
+        </script>
+       {if $page->ShowPages()}
+       <div class="ajax_page">{echo $page->ShowPages()}</div>
+       {/if}

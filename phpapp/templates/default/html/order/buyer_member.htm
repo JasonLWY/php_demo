@@ -1,0 +1,85 @@
+{template member:menu}
+
+<link href="{TURL}form.css" rel="stylesheet" type="text/css" />
+
+{php}
+$sortarray=array('1'=>'近三个月订单','2'=>'等待买家付款','3'=>'等待发货','4'=>'已发货','5'=>'成功的订单','7'=>'需要评价订单','6'=>'关闭的订单');
+{/php}
+<div class="manage_process">
+<ul>
+{for $sortarray $key=>$value}
+<li{if $key==$this->GET['sort']} class="nowsort"{/if}><a href="member.php?app=48&action=3&page={echo $this->page}&sort={echo $key}">{echo $value}</a></li>
+{/for}
+</ul>
+</div>
+      
+      
+{if $list}
+      <div id="orderlist">
+      
+      <div class="manage_operate" style="border-top:0px"><input name="checkboxall" id="CheckboxAll" onclick="CheckboxAll('orderlist')" type="checkbox" value="1" /> 全选 <a href="javascript:;" onclick="OpenDelivery('0')"><strong>批量确认收货</strong></a> &nbsp; <a href="javascript:;" onclick="OpenCredit('0')"><strong>批量评价</strong></a></div>
+       {if $page->ShowPages()}
+       		<div class="ajax_page" style="float:right;">{echo $page->ShowPages()}</div>
+       {/if}
+          {for $list $value}
+                <table width="100%" border="0" cellpadding="0" cellspacing="0" class="manage_table">
+                  <tr>
+                   <td colspan="5" class="order"><input name="checkbox" type="checkbox" value="{echo $value['cid']}" {if $value['process']>2 && $value['process']<6}{if $value['buyer']}disabled="disabled"{/if}{else}disabled="disabled"{/if}/> 订单编号：{echo $value['oid']} <span style="float:right;padding-right:10px;">成交时间：{echo $this->Date("Y-m-d H:i:s",$value['dateline'])}</span></td>
+                  </tr>
+                  <tr>
+                    <td style="width:40%">
+                     <p><a href="{echo SURL}{echo $value['url']}" target="_blank">{echo $value['tid']}号悬赏任务</a></p>
+                    <p><a href="{echo SURL}/member.php?app=48&action=4&oid={echo $value['oid']}"><strong>{echo $value['did']}号</strong>稿件中标</a></p>
+                    </td>
+                    {php} $buyer=$this->GetMysqlOne('a.uid,b.username,a.price'," ".$this->GetTable('task_draft')." AS a LEFT JOIN ".$this->GetTable('member')." AS b ON a.uid=b.uid WHERE did='$value[did]'");{/php}
+                    <td style="width:15%"><strong>{echo $value['money']}</strong></td>
+                    <td style="width:15%">
+                    <p>威客</p>
+                    <p>
+                    <a href="space.php?app=8&uid={echo $buyer['uid']}" target="_blank" title="{echo $buyer['username']}">{echo $buyer['username']}</a>
+                    </p></td>
+                    <td style="width:15%">
+                     <p>
+                    {if ($value['buyer']+$value['seller'])==2} 
+                         双方已评价
+                    {else}
+                     
+                        {if $value['buyer']==1} 
+                             我已评价
+                        {elseif $value['seller']==1}
+                            对方已评价
+                        {/if}
+
+                    {/if}
+                    </p>
+                    {echo $getprocess->GetBuyerProcessName('task_order_credit','task_order_credit',$value['cid'])}
+                    <p><a href="{echo SURL}/member.php?app=48&action=4&oid={echo $value['oid']}">订单详情</a></p>
+                    </td>
+                    <td style="width:15%">{echo $getprocess->GetBuyerProcessMenu('task_order_credit',$value['cid'])}</td>
+                  </tr>
+                </table>
+          {/for}
+      
+      
+      
+      <div class="manage_operate"><input name="checkboxall" id="CheckboxAll" onclick="CheckboxAll('orderlist')" type="checkbox" value="1" /> 全选 <a href="javascript:;" onclick="OpenDelivery('0')"><strong>批量确认收货</strong></a> &nbsp; <a href="javascript:;" onclick="OpenCredit('0')"><strong>批量评价</strong></a></div>
+      
+      
+       {if $page->ShowPages()}
+       		<div class="ajax_page" style="float:right;">{echo $page->ShowPages()}</div>
+       {/if}
+      
+      </div>
+      
+{else}
+	  <p style="padding:10px">您暂时没有订单数据</p>
+{/if}
+      
+      
+</div>
+  
+<!--
+{template phpapp:buyer_order.js}
+-->
+     
+{template phpapp:footer}

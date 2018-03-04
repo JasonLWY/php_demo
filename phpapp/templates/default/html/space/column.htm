@@ -1,0 +1,191 @@
+{php}
+            
+$user=$this->GetMysqlOne('b.username,b.uid,b.dateline AS regtime,b.usergroup,b.logintime,c.certificate,c.domainname,e.credit,e.hao,e.zhong,e.cha,d.credit AS credits,c.themes,c.residecity,g.speed,g.attitude,g.quality',"  (((".$this->GetTable('member')." AS b LEFT JOIN ".$this->GetTable('member_info')." AS c ON b.uid=c.uid)																																																																LEFT JOIN ".$this->GetTable('member_account')." AS d ON b.uid=d.uid)  LEFT JOIN ( SELECT credit,uid,hao,zhong,cha FROM ".$this->GetTable('credit')." WHERE type=1 ) AS e ON b.uid=e.uid ) LEFT JOIN ".$this->GetTable('credit_score')." AS g ON c.uid=g.uid WHERE b.uid='$this->spaceuid' ");
+
+if($this->app=82){
+     //SEO
+     PHPAPP::$SEO['title']=$service['subject'];
+	 PHPAPP::$SEO['keywords']=$service['keywords'];
+	 PHPAPP::$SEO['description']=$service['description'];
+
+}else{
+      //SEO
+      PHPAPP::$SEO['title']=$user['username'].'的个人空间';
+      PHPAPP::$SEO['keywords']=$user['username'].',空间';
+      PHPAPP::$SEO['description']=$user['username'].'的个人空间';
+}
+                            
+
+{/php}
+
+
+{template space:header}
+
+<link href="{TURL}space/stylelist.css" rel="stylesheet" type="text/css" />
+
+<link href="{TURL}form.css" rel="stylesheet" type="text/css" />
+
+<link href="{TURL}member.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="{TURL}js/member.js"></script>
+
+{template space:space.js}
+
+
+{if $user['themes']>0}
+      
+      {php}
+      
+        $spacestyle=$this->GetMysqlOne('dir'," ".$this->GetTable('space_style')." WHERE sid='$user[themes]'");
+        
+      {/php}
+      
+      {if $spacestyle}
+      
+          <link id="SpaceStyle" href="{TURL}space/themes/{echo $spacestyle['dir']}/css/space.css" rel="stylesheet" type="text/css" />
+      {else}
+          <link id="SpaceStyle" href="{TURL}space/themes/default/css/space.css" rel="stylesheet" type="text/css" />
+      {/if}
+      
+{else}
+      <link id="SpaceStyle" href="{TURL}space/themes/default/css/space.css" rel="stylesheet" type="text/css" />
+{/if}
+
+
+<script type="text/javascript">
+function AddFavoriteSpace(obj,url, title) {
+	 
+	 if($.browser.msie){
+		    window.external.addFavorite(url,title);
+	 }else{
+		   obj.setAttribute("rel", "sidebar"), obj.title = title, obj.href = url;
+	 }
+	 
+	 return false;
+    
+};
+</script>
+
+<div class="space_main">
+     
+    
+<div class="space_main_left space_main_left_width">
+
+<div class="space_box">
+    
+    <div class="avatar">{echo $this->GetUserAvatar($this->spaceuid,2,1)}</div>
+    
+    <div class="space_sign_name">{echo $user['username']}</div>
+        
+     
+     <div class="space_sign_url">
+
+                     <a href="{if $user['domainname']} http://{echo $user['domainname']}{echo PHPAPP::$config['domainname']} {else}{echo SURL}/space.php?app=8&uid={echo $user['uid']}{/if}" onClick="AddFavoriteSpace(this,this.href,this.title);" title="{echo $user['username']}" class="small blue awesome">收藏</a> 
+           
+
+      </div> 
+      
+      {if !PHPAPP::$config['userspacestyle']}
+      <div class="space_sign_url">
+      {if $this->uid==$this->spaceuid}<a href="javascript:;" id="ListSpaceStyle" class="small blue awesome" title="更换风格">更换风格</a>{/if}
+      </div>
+      {/if}
+      
+       <span id="residecity" class="space_residecity">
+                {if $user['residecity']}
+                     {echo $this->GetSelectCategory('category_city',$user['residecity'],'residecity','','',1)}
+                {/if}
+       </span>
+                
+     <div class="space_hire">
+                      <div class="space_hire_avatar">{echo $this->GetUserAvatar($this->spaceuid,0,1)}</div>
+                       <p><a href='{echo SURL}/index.php?app=82&action=2&uid={echo $this->spaceuid}'>雇用TA</a></p>
+                 </div>
+
+       
+    <div class="user_info">
+
+    
+        <p style="display:inline-block;padding-top:6px;">{echo $this->GetCertificateIcon($user['certificate'],array('Mobile'=>'手机','Mail'=>'邮箱','Personal'=>'个人实名','Company'=>'公司实名'))}</p>
+        
+   
+        <p>
+            {if $user['credit']}<span class="{echo $this->GetCreditLevel($user['credit'],1)}" title="卖家信用积分 {echo $user['credit']}"></span> 好评率 {echo $this->LevelRate($user['hao'],$user['zhong'],$user['cha'])}% {else}卖家暂无信用值{/if}
+        </p>
+     
+     
+      <div class="user_score">  
+      <div class="seller_score_name">
+       <p>工作速度</p>
+       
+       <p>工作态度</p>
+       
+       <p>完成质量</p>
+       </div>
+       
+       <div class="seller_score">
+       
+           <div class="seller_score_works_peed" title="{if $user['speed']}{echo $user['speed']}{else}0.0{/if}分"><ul style="width:{echo ($user['speed']*16)}px;"></ul></div>
+           
+           <div class="seller_score_works_attitude" title="{if $user['attitude']}{echo $user['attitude']}{else}0.0{/if}分"><ul style="width:{echo ($user['attitude']*16)}px;"></ul></div>
+       
+           <div class="seller_score_works_quality" title="{if $user['quality']}{echo $user['quality']}{else}0.0{/if}分"><ul style="width:{echo ($user['quality']*16)}px;"></ul></div>
+       </div>
+       </div>
+    
+      </div>
+
+</div>
+
+
+<div class="space_box">
+
+    {php}   
+        $apps=$this->GetMysqlArray('*'," ".$this->GetTable('apps')." WHERE id_phpapp IN(8,49,82) AND status_phpapp=0 ORDER BY displayorder_phpapp ASC");
+    {/php} 
+    <div class="space_navigation">
+    
+        <ul>
+        
+                {for $apps $value}
+     
+        <li{if $this->app==$value['id_phpapp']} class="tab"{else}{if $value['menu_phpapp']==1} style="display:none"{/if}{/if}><a href='{echo SURL}/space.php?app={echo $value['id_phpapp']}&uid={echo $this->spaceuid}'>{echo $value['name_phpapp']}</a></li>
+                     
+
+                 {/for}
+        
+        </ul>
+    
+    </div>
+    
+</div>   
+
+</div>   
+
+     
+     <div class="space_main_right space_main_right_width">
+
+      <div class="space_box space_list">
+      
+     {php}   
+     $appaction=$this->GetMysqlArray('*'," ".$this->GetTable('apps_action')." WHERE apps_phpapp=".$this->GET['app']." AND type_phpapp=3  ORDER BY displayorder_phpapp ASC");
+     {/php} 
+      
+      {if $appaction}
+      <div class="manage_menu" id="ManageMenu">
+      <ul>
+          {for $appaction $key=>$value}
+               {if $this->ac==0}
+                    {if $key==0} 
+                         <li class="now_meun_tab"><a href='{echo SURL}/space.php?app={echo $this->GET['app']}&uid={echo $this->spaceuid}'>{echo $value['name_phpapp']}</a></li>
+                    {else}    
+                    <li{if $this->ac==$value['aid_phpapp']} class="now_meun_tab"{else}{if $value['menu_phpapp']==1} style="display:none"{/if}{/if}><a href='{echo SURL}/space.php?app={echo $this->GET['app']}&action={echo $value['aid_phpapp']}&uid={echo $this->spaceuid}'>{echo $value['name_phpapp']}</a></li>
+                    
+                    {/if}
+               {else}
+       <li{if $this->ac==$value['aid_phpapp']} class="now_meun_tab"{else}{if $value['menu_phpapp']==1} style="display:none"{/if}{/if}><a href='{echo SURL}/space.php?app={echo $this->GET['app']}&action={echo $value['aid_phpapp']}&uid={echo $this->spaceuid}'>{echo $value['name_phpapp']}</a></li>
+               {/if}
+          {/for}
+      </ul>
+      </div>
+      {/if}

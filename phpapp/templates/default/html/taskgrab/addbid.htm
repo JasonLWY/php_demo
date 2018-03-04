@@ -1,0 +1,152 @@
+<form id="AddBidForm">
+    {if $fieldarray=$this->GetTableFieldArray('task_draft')}
+  <!-- 自定义字段 -->
+      {for $fieldarray $field}
+        <h3>{echo $field['name_phpapp']}：</h3>
+        <p>
+        {echo $this->GetTableFieldForm($field,empty($service)?'':$service)}
+        </p>
+      {/for}
+  <!-- 自定义字段 end -->
+  {/if}
+
+   <h3>报价：</h3>
+   <p>
+    <input name="price_d" type="text" id="BidPrice" size="8" maxlength="8" class="form_input_text" style="width:100px;"  value="{if !empty($draft['price'])}{echo $draft['price']}{/if}" title="投标报价"/> 元  <span style="color:#999">(您希望多少价格才接受该项目)</span>
+   </p>
+  
+  
+   <h3>完成周期：</h3>
+   <p><input name="time_d" type="text"  id="BidTime" size="3" maxlength="3" class="form_input_text"  style="width:100px;" value="{if !empty($draft['time'])}{echo $draft['time']}{/if}" title="完成周期"/>  天  <span style="color:#999">(您完成这个项目的最少时间)</span> </p>
+
+   <h3>简单描述：(200字内)</h3>
+   <p>
+      <textarea name="content_s" id="BidContent" class="form_editor" style="width:650px;height:100px;">{if !empty($draft['content'])}{echo $draft['content']}{/if}</textarea>
+   </p>
+ 
+ {if empty($admindraft)}  
+   <div class="buyprops">
+
+        <div id="service_tabs" style="border: none;padding:0px;">
+        
+            <ul>
+                <li><a href="#DraftServiceList"><span>购买增值服务</span></a></li>
+            </ul>
+        
+            <div id="DraftServiceList" style="padding-left:0px;padding-right:0px;">
+                  <div class="loading">读取数据中...</div>
+            </div>
+
+		</div>
+    </div>
+ {/if}
+
+    <input type="hidden" id="BuyPropsID" name="props" value="{if !empty($draft['props'])}{echo $draft['props']}{/if}"/>
+  {if empty($admindraft)} 
+   <p style="padding-top:10px;">
+    <input name="Submit" type="submit" value="发布投标" id="SubmitAddBid" class="form_button"/>
+   </p>
+  {else}
+   <p style="padding-top:10px;">
+    <input name="Submit" type="button" value="修改投标" id="SubmitEditDraft" class="form_button"/>
+   </p>
+  {/if}
+</form>
+
+
+<script type="text/javascript">
+{if $task['money']>0}
+      var taskmoney='{echo $task["money"]}';
+{else}
+      var taskmoney=0;
+{/if}
+</script>
+
+
+<script type="text/javascript">
+
+
+$(function() {
+		$("#service_tabs").tabs();	
+	 
+        GetServiceList('#DraftServiceList',1);
+
+		$("#SubmitAddBid").click( function () {    
+			  
+			  var price=$("#BidPrice");
+			  
+			  if (!price.val() || price.val()<1){
+					price.focus();
+					alert("请输入报价");
+					return false; 
+			  }
+			  
+			  if (isNaN(price.val())){
+					price.focus();
+					alert("您输入的报价格式错误，请重新输入!");
+					return false; 
+			  }
+			  
+	
+		      if(parseInt(price.val())<parseInt(taskmoney) && parseInt(taskmoney)>0){
+			       price.focus();
+		 	       alert("您输入的报价不能低于招标定金，请重新输入!");
+				   return false; 
+		      }
+			
+			  
+			  var time=$("#BidTime");
+			  
+			  if (!time.val() || time.val()<1){
+					time.focus();
+					alert("请输入工作周期");
+					return false; 
+			  }
+			  
+			  if (isNaN(time.val())){
+					time.focus();
+					alert("您输入的工作周期格式错误，请重新输入!");
+					return false; 
+			  }
+			  
+			  var content=$("#BidContent");
+			  if (content.val()==""){
+				    alert("请输入投标内容!");
+				    content.focus();
+				    return false; 
+			  }
+		
+			  if (content.val().length<"6"){
+		            alert("投标内容不能小于6个字节!");
+		            content.focus();
+		            return false; 
+	          }
+			  
+	  
+			  if(NowLogin()>0){
+	                 SubmitAddBid();
+			  }else{
+				     return false;
+			  }
+			  
+	  });	
+});	
+
+function SubmitAddBid(){
+
+	  var forms=GetFormAll('#AddBidForm');
+	  $("#loading").html('<div class="loading">提交数据中...</div>');
+	  $.PHPAPPOPENLOADING();
+      $.ajax({
+			type: "POST",
+			url: SURL+'/index.php?app=83&action=6&tid={echo $this->tid}&did={echo $did}',
+			data: forms,
+			success: function(data){
+				$.PHPAPPCLOSELOADING();
+				$("#loading").html(data);
+				ShowDraft(0);
+			}
+	  });  	
+}
+
+</script>

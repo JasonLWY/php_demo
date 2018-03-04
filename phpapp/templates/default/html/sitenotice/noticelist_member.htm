@@ -1,0 +1,141 @@
+{template member:menu}
+     
+{if $list}
+
+<div id="mailboxlist">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  <tr class="manage_process">
+    <td class="datalist_h2" style="width:46px"><input name="checkboxall" id="CheckboxAll" onclick="CheckboxAll('mailboxlist')" type="checkbox" value="1" /> 全选 </td>
+    <td class="datalist_h2" style="width:490px">标题</td>
+    <td class="datalist_h2">通知时间</td>
+  </tr>
+
+{for $list $value}
+  <tr>
+    <td><input name="checkbox"  type="checkbox" value="{echo $value['nid']}"/></td>
+    <td class="datalist_h2"><a href="{echo SURL}/member.php?app=45&action=2&nid={echo $value['nid']}">{if $value['uid']==0}<strong>{echo $value['subject']}</strong>{else}{echo $value['subject']}{/if}</a></td>
+    <td class="datalist_h2">{echo $this->Date('Y/m/d H:i:s',$value['dateline'])}</td>
+  </tr>
+{/for} 
+
+</table>
+
+</div>
+
+<div class="ajax_page">{echo $page->ShowPages()}</div>
+
+<div style="text-align:center"><input id="SubmitDelete" name="SubmitDelete" type="button" value="删除" class="form_button"/> <input id="SubmitDeleteAll" name="SubmitDelete" type="button" value="一键清空" class="form_button"/></div>
+
+{else}
+
+ <p style="padding:10px">暂时没有通知数据</p>
+ 
+{/if}    
+      
+      
+      
+
+
+
+
+<script type="text/javascript">
+ 
+ $(function(){	
+			
+	
+	 $("#SubmitDeleteAll").click( function () {
+											
+			if(confirm("是否删除所有通知!")){
+					
+						$("#loading").dialog({
+								title:"通知操作",	
+								width: 300,
+								height:'auto'
+						});
+						   
+						$("#loading").dialog('open');
+						
+						$("#loading").html('<div class="loading">提交数据中...</div>');
+				    
+            
+                         $.ajax({
+                              type: "POST",
+                              url: SURL+"/member.php?app=45&action=1",
+                              data: 'Submit=1&nid=0',
+                              success: function(data){
+                                    $("#loading").html(data);
+                              }
+                         });	
+					 
+				
+				
+			    }			 				 
+	 });
+		   
+	 $("#SubmitDelete").click( function () {
+		     
+			 
+			      var OderID='';
+                   $("#mailboxlist").find("input:checked[name!='checkboxall']").each(function(){
+                           var value=$(this).val();  
+                           
+                           if($(this).attr("disabled")!='disabled'){
+                           
+								 if(OderID){
+									  OderID+=','+value;
+								 }else{
+									  OderID=value;
+								 }
+                           }
+              
+                   }); 	
+                   
+                   if(!OderID){
+                       
+                        alert("请选择通知操作!");
+                        return false;
+                   }
+				   
+				   
+				   
+				if(confirm("是否删除通知!")){
+					
+						$("#loading").dialog({
+								title:"通知操作",	
+								width: 300,
+								height:'auto'
+						});
+						   
+						$("#loading").dialog('open');
+						
+						$("#loading").html('<div class="loading">提交数据中...</div>');
+				    
+            
+                         $.ajax({
+                              type: "POST",
+                              url: SURL+"/member.php?app=45&action=1",
+                              data: 'Submit=1&nid='+OderID,
+                              success: function(data){
+                                    $("#loading").html(data);
+                              }
+                         });	
+					 
+				
+				
+			    }
+             
+				   
+				   
+		 
+	 });
+	
+ });
+ 
+ 
+</script>
+
+
+</div>
+
+{template phpapp:footer}

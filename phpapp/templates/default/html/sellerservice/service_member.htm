@@ -1,0 +1,239 @@
+{template member:menu}
+
+
+     
+{if $list}
+
+<div id="tasklist">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datalist">
+  <tr class="manage_process">
+    <td class="datalist_h2" style="width:46px"><input name="checkboxall" id="CheckboxAll" onclick="CheckboxAll('tasklist')" type="checkbox" value="1" /> 全选 </td>
+    <td class="datalist_h2" style="width:320px">标题</td>
+    <td class="datalist_h2">价格</td>
+    <td class="datalist_h2">状态</td>
+    <td class="datalist_h2" style="width:60px">发布时间</td>
+    <td class="datalist_h2">操作</td>
+  </tr>
+
+{for $list $value}
+  <tr>
+    <td><input name="checkbox"  type="checkbox" value="{echo $value['sid']}"/></td>
+    <td class="datalist_h2" style="width:320px"><a href="{echo SURL}{echo $value['url']}" target="_blank">{echo $value['subject']}</a></td>
+    <td class="datalist_h2"><span class="color_f60">{echo $value['price']}</span> 元/{echo $value['unit']}</td>
+    <td class="datalist_h2">{if $value['status']>0}关闭{else}出售中{/if}</td>
+    <td class="datalist_h2">{echo $this->Date('Y/d/m H:i:s',$value['dateline'])}</td>
+    <td class="datalist_h2"><p><a href="member.php?app={echo $this->app}&action=1&sid={echo $value['sid']}">[编辑]</a></p><p><a href="{echo SURL.$value['url']}" target="_blank">[查看详情]</a></p></td></td>
+  </tr>
+ {/for} 
+
+</table>
+
+</div>
+
+<div class="ajax_page">{echo $page->ShowPages()}</div>
+
+<div style="text-align:center"><input id="SubmitDelete" name="SubmitDelete" type="button" value="删除" class="form_button"/> <input id="SubmitSell" name="SubmitSell" type="button" value="出售" class="form_button"/> <input id="SubmitClose" name="SubmitClose" type="button" value="关闭" class="form_button"/> <input id="SubmitDeleteAll" name="SubmitDelete" type="button" value="一键清空" class="form_button"/></div>
+
+{else}
+
+ <p style="padding:10px">您暂时没有数据</p>
+ 
+{/if}    
+      
+      
+      
+
+</td></tr></table>
+
+
+
+
+<script type="text/javascript">
+ 
+ $(function(){	
+			
+	 
+	 $("#SubmitDeleteAll").click( function () {
+											
+			if(confirm("是否删除所有服务!")){
+					
+						$("#loading").dialog({
+								title:"服务操作",	
+								width: 300,
+								height:'auto'
+						});
+						   
+						$("#loading").dialog('open');
+						
+						$("#loading").html('<div class="loading">提交数据中...</div>');
+				    
+            
+                         $.ajax({
+                              type: "POST",
+                              url: "member.php?app={echo $this->app}&action=3&op=2",
+                              data: 'deleteall=1',
+                              success: function(data){
+                                    $("#loading").html(data);
+                              }
+                         });	
+					 
+				
+				
+			    }			 				 
+	 });
+		   
+	 $("#SubmitDelete").click( function () {
+		    
+			 
+                var OderID=GetOderID();
+				
+				if(OderID){
+				   
+						   
+						if(confirm("是否删除服务!")){
+							
+								$("#loading").dialog({
+										title:"服务操作",	
+										width: 300,
+										height:'auto'
+								});
+								   
+								$("#loading").dialog('open');
+								
+								$("#loading").html('<div class="loading">提交数据中...</div>');
+							
+					
+								 $.ajax({
+									  type: "POST",
+									  url: "member.php?app={echo $this->app}&action=3&op=1",
+									  data: 'sid='+OderID,
+									  success: function(data){
+											$("#loading").html(data);
+									  }
+								 });	
+							 
+						
+						
+						}
+				
+				}
+             
+				   
+				   
+		 
+	 }); 
+	 
+	 
+	 $("#SubmitSell").click( function () {
+		    
+			 
+                var OderID=GetOderID();
+				
+				if(OderID){
+				   
+							
+						$("#loading").dialog({
+								title:"服务操作",	
+								width: 300,
+								height:'auto'
+						});
+						   
+						$("#loading").dialog('open');
+						
+						$("#loading").html('<div class="loading">提交数据中...</div>');
+					
+			
+						 $.ajax({
+							  type: "POST",
+							  url: "member.php?app={echo $this->app}&action=3&op=3",
+							  data: 'setsell=1&sid='+OderID,
+							  success: function(data){
+									$("#loading").html(data);
+							  }
+						 });	
+	
+				
+				}
+             
+				   
+				   
+		 
+	 }); 
+	 
+	 
+	  $("#SubmitClose").click( function () {
+		    
+			 
+                var OderID=GetOderID();
+				
+				if(OderID){
+				   
+							
+						$("#loading").dialog({
+								title:"服务操作",	
+								width: 300,
+								height:'auto'
+						});
+						   
+						$("#loading").dialog('open');
+						
+						$("#loading").html('<div class="loading">提交数据中...</div>');
+					
+			
+						 $.ajax({
+							  type: "POST",
+							  url: "member.php?app={echo $this->app}&action=3&op=4",
+							  data: 'setclose=1&sid='+OderID,
+							  success: function(data){
+									$("#loading").html(data);
+							  }
+						 });	
+	
+				
+				}
+             
+				   
+				   
+		 
+	 }); 
+	
+ });
+ 
+ 
+ function GetOderID(){
+	 
+	 
+	   var OderID='';
+	   $("#tasklist").find("input:checked[name!='checkboxall']").each(function(){
+			   var value=$(this).val();  
+			   
+			   if($(this).attr("disabled")!='disabled'){
+			   
+					 if(OderID){
+						  OderID+=','+value;
+					 }else{
+						  OderID=value;
+					 }
+			   }
+  
+	   }); 	
+	   
+	   if(!OderID){
+		   
+			alert("请选择服务操作!");
+			return false;
+	   }else{
+		   
+		    return OderID;
+	   }
+				   
+	 
+ }
+ 
+</script>
+
+
+
+
+{template phpapp:footer}

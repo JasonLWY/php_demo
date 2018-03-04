@@ -1,0 +1,135 @@
+<script type="text/javascript" src="{TURL}js/input.js"></script>
+
+<div class="uploadfile">
+
+
+ <div id="UploadPhotoTabs" style="border: none;padding:0px;">
+    
+    <ul>
+        <li><a href="#PhotoUpload" ><span>批量上传</span></a></li>
+        <li><a href="#PhotoShow" onclick="GetTempPhoto()"><span>图片列表</span></a></li>
+        <li><a href="#PhotoNet" ><span>网络图片</span></a></li>
+    </ul>
+
+
+    <div id="PhotoNet" style="padding-left:0px;padding-right:0px;">
+    
+           <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td style="padding-left:10px;">请输入图片地址</td>
+              <td>宽(可选)</td>
+              <td>高(可选)</td>
+            </tr>
+            <tr>
+              <td style="width:420px;padding-left:10px;"><input id="NetPicURL" type="text" class="form_input_text form_input_width_400"  value=""/></td>
+              <td style="width:80px;"><input id="NetPicWidth" type="text" class="form_input_text" style="width:40px;"  value="" maxlength="3"/> px</td>
+              <td style="text-align:left;"><input id="NetPicHeight" type="text" class="form_input_text"  style="width:40px;" value="" maxlength="3"/> px</td>
+            </tr>
+            <tr>
+              <td style="padding-left:10px;padding-top:12px;" colspan="3"><input type="button" value="确定" class="form_button" onclick="$.AddNetPic();"/> </td>
+            </tr>
+          </table>
+
+
+    </div>
+
+
+    <div id="PhotoShow" style="padding-left:0px;padding-right:0px;">  
+
+    </div>
+
+
+    <div id="PhotoUpload" style="padding-left:0px;padding-right:0px;">
+    
+    <script type="text/javascript" src="{TURL}js/swfobject.js"></script>
+        <script type="text/javascript">
+            var swfVersionStr = "10.2.0";
+            var flashvars = {};
+            var params = {};
+            params.quality = "high";
+            params.bgcolor = "#ffffff";
+            params.allowscriptaccess = "sameDomain";
+            params.allowfullscreen = "true";
+            var attributes = {};
+            attributes.id = "PhotoFlashID";
+            attributes.name = "UploadFile";
+            attributes.align = "middle";
+            swfobject.embedSWF(
+                "{TURL}swf/uploadfile.swf", "flashContent", 
+                "100%", "100%", 
+                swfVersionStr, 
+                flashvars, params, attributes);
+            swfobject.createCSS("#flashContent", "display:block;text-align:left;");
+        </script>
+        
+         <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="310" id="PhotoFlashID">
+                <param name="movie" value="{TURL}swf/uploadfile.swf" />
+                <param name="quality" value="high" />
+                <param name="allowScriptAccess" value="sameDomain" />
+                <param name="allowFullScreen" value="true" />
+                <!--[if !IE]>-->
+                <object type="application/x-shockwave-flash" data="{TURL}swf/uploadfile.swf" width="100%" height="310">
+                    <param name="quality" value="high" />
+                    <param name="allowScriptAccess" value="sameDomain" />
+                    <param name="allowFullScreen" value="true" />
+                    <param name="wmode" value="transparent">
+                <!--<![endif]-->
+                <!--[if gte IE 6]>-->
+                    <p> 
+                       您的 Flash Player 版本太低了不能使用该功能,请<a href="http://www.adobe.com/go/getflashplayer" target="_blank">点击这里获取最版本 Flash Player.</a>
+                    </p>
+                    <p> 
+                        Either scripts and active content are not permitted to run or Adobe Flash Player version
+                        10.2.0 or greater is not installed.
+                    </p>
+                <!--<![endif]-->
+                    <a href="http://www.adobe.com/go/getflashplayer">
+                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
+                    </a>
+                <!--[if !IE]>-->
+                </object>
+                <!--<![endif]-->
+            </object>
+   
+   
+   
+   
+   <div class="allowfiletype">
+     <p>文件尺寸: 单个文件最大上传 <span class="color_f60">{echo $oneupfilesize}KB</span> 总文件最大上传 <span class="color_f60">{echo $allupfilesize}MB</span> </p>
+     <p> 可用扩展名: {echo PHPAPP::$config['uploadphototype']} </p>
+   </div>
+
+    </div>
+ </div>
+
+
+</div>
+
+
+
+<script type="text/javascript">
+
+function GetSiteURL(){return '{echo SURL}/index.php?app=18&action=3&type=1&rand='+Math.random();}
+
+function GetTempPhoto(uid,page,sqlorder,iforder){
+	
+	     $("#PhotoShow").html('<div class="loading">读取数据中...</div>');
+
+	  	 $.ajax({
+				type: "GET",
+				url: SURL+'/index.php?',
+				data: "app=18&action=5&page="+page,
+				success: function(data){
+					 $("#PhotoShow").html(data);
+					 
+				}
+	    });
+}
+
+$(function(){	
+	  GetTempPhoto();	    
+	  $("#UploadPhotoTabs").tabs();	
+});
+
+
+</script>

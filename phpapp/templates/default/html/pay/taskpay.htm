@@ -1,0 +1,132 @@
+<link href="{TURL}pay.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+
+$(function() {
+    	$("#loading").dialog({
+			  title:"{if $type}购买增值服务{else}发布任务充值{/if}",			 
+			  position: ['center',160],
+              height:'auto'
+		});
+        $("#onlinepay_tabs").tabs();
+		
+		$("#PayTask").click( function () {
+				$("#onlinepay").hide(2000);
+				$("#onlinepayresult").show(2000);
+		});
+		
+		$("#ShowOnlinePay").click( function () {
+				$("#onlinepay").show(500);
+				$("#onlinepayresult").hide(500);							  
+		});
+		
+		{if $type}
+		    $("#PayTaskComplete").click( function () {
+			
+					$("#onlinepayresult").hide(500);
+					
+					$("#loading").html('<div class="loading">读取数据中...</div>');
+					$.ajax({
+						  type: "GET",
+						  url: SURL+"/index.php?app=49&action=6&tid={echo $tid}&props={echo $props}",
+						  success: function(data){
+								$("#loading").html(data);
+						  }
+                   });	
+					
+					
+			});
+		{else}
+			$("#PayTaskComplete").click( function () {
+			
+					$("#onlinepayresult").hide(500);
+					
+					$("#loading").html('<div class="loading">读取数据中...</div>');
+					$.get(SURL+"/index.php",{app:'{echo $this->app}',action:'4',tid:'{echo $tid}'},
+				  
+					function (data){
+						  $("#loading").html(data);
+					}); 
+					
+					
+			});
+		{/if}
+		
+		
+		
+});		
+</script>
+
+<div id="onlinepay">
+
+<form action="{echo SURL}/index.php?app=6" method="post" target="_blank">
+
+<div class="onlinepaylist">
+
+<p>亲爱的  {echo $this->username},您目前帐户余额为：￥ <span class="color_f60">{echo $user['money']}</span>  元, 总支付金额 ￥ <span class="color_f60">{echo $taskmoney+$totalservice}</span>  元 </p>
+<p>您此次发布的任务还需要支付￥ <span class="color_f60">{echo floor($paymoney*100)/100}</span> 元
+请选择下列支付方式进行充值：</p>
+
+
+{if $paytoolarr}
+<div id="onlinepay_tabs" style="border: none;">
+    
+    <ul>
+        {for $paytoolarr $key=>$value}
+
+        <li><a href="#fragment-{$key}" onclick="javascript:$('#PayToolID').val('{echo $value['id_phpapp']}');{if $value['type_phpapp']==0}$('#OnlinePay').show();{else}$('#OnlinePay').hide();{/if}"><span>{echo $value['name_phpapp']}</span></a></li>
+
+        {/for}
+    </ul>
+    {for $paytoolarr $key=>$value}
+          {if $value['type_phpapp']==0}
+                <div id="fragment-{$key}">
+                    {if $value['logo_phpapp']}
+                     <p style="text-align:center"><img src="{TURL}images/pay/{echo $value['logo_phpapp']}" alt="{echo $value['name_phpapp']}" /></p>
+                    {/if}
+                </div>
+          {else} 
+                 <div id="fragment-{$key}">
+                 {echo $this->str(PHPAPP::$config['bankinfoset'],0,0,1,0,0,1)}
+                 </div>
+          {/if}
+    {/for}
+</div>
+
+<div id="OnlinePay">
+
+      <p style="text-align:center">充值 <input type="text" class="form_input_text" style="width:80px" disabled="disabled" value="{echo floor($paymoney*100)/100}"/> 元
+      
+      <input name="PayMoney_f" type="hidden" value="{echo floor($paymoney*100)/100}"/>
+      <input name="PayToolID_d" id="PayToolID" type="hidden" value="{echo $paytoolarr[0]['id_phpapp']}" />
+        
+      </p>
+      
+      <p style="text-align: center;padding-bottom: 40px;padding-top: 20px;"><input name="Submit" type="submit" value="确定充值" id="PayTask" class="form_button"/></p>
+      
+</div>
+{else}
+     <p>没有支付工具</p>
+{/if}
+</div>
+
+
+</form>
+</div>
+
+
+
+<div id="onlinepayresult" style="display:none">
+<p>
+请您在新打开的网上银行页面上完成付款,付款完成前请不要关闭此窗口。
+</p>
+<p>
+完成付款后请根据您的情况点击下面的按钮：
+</p>
+<p>
+<strong><a href="#">付款遇到问题?</a></strong>
+</p>
+<p style="text-align: center;padding-bottom: 40px;padding-top: 20px;"><input name="Submit" type="button" value="上一步" id="ShowOnlinePay" class="form_button" style="width:80px"/> <input name="Submit" type="button" value="完成充值" id="PayTaskComplete" class="form_button" style="width:80px"/></p>
+
+</div>
+
